@@ -3,22 +3,22 @@ import tw from "tailwind-styled-components";
 export default function Home() {
   return (
     <>
-      <Wrapper>
-        <TitleContainer>
-          <TitleText>
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-primary-900">
             Admin
-          </TitleText>
-        </TitleContainer>
-        <MainContainer>
-          <LoginFormContainer className="space-y-6" action="#" method="POST">
-            <InputFormWrapper>
-              <LoginLabel
+          </h2>
+        </div>
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form className="space-y-6" action="#" method="POST">
+            <div>
+              <label
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 text-gray"
               >
                 이메일
-              </LoginLabel>
-              <InputContainer className="mt-2">
+              </label>
+              <div className="mt-2">
                 <Input
                   id="email"
                   name="email"
@@ -26,17 +26,17 @@ export default function Home() {
                   autoComplete="email"
                   required
                 />
-              </InputContainer>
-            </InputFormWrapper>
+              </div>
+            </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <LoginLabel
+                <label
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-500"
                 >
                   비밀번호
-                </LoginLabel>
+                </label>
                 <div className="text-sm">
                   <a
                     href="#"
@@ -60,7 +60,7 @@ export default function Home() {
             <div>
               <Button type="submit">로그인</Button>
             </div>
-          </LoginFormContainer>
+          </form>
 
           <p className="mt-10 text-center text-sm text-gray-light">
             계정이 없으십니까?{" "}
@@ -71,56 +71,29 @@ export default function Home() {
               회원가입
             </a>
           </p>
-        </MainContainer>
-      </Wrapper>
+        </div>
+      </div>
     </>
   );
 }
 
-const Wrapper = tw.div`
-flex 
-min-h-full 
-flex-1 
-flex-col 
-justify-center 
-px-6 py-12 
-lg:px-8
-`;
-
 const MainContainer = tw.div`
-mt-10 
-sm:mx-auto 
-sm:w-full 
-sm:max-w-sm
+
 `;
 
 const TitleContainer = tw.div`
-sm:mx-auto 
-sm:w-full 
-sm:max-w-sm
-`;
-
-const InputFormWrapper = tw.div`
 `;
 
 const InputContainer = tw.div`
-
 `;
 
 const TitleText = tw.h2`
-mt-10 
-text-center 
-text-2xl 
-font-bold 
-leading-9 
-tracking-tight 
-text-primary-900
 `;
 
 const FormContainer = tw.div`
 `;
 
-const LoginFormContainer = tw.form`
+const LoginForm = tw.form`
 `;
 
 const LoginLabel = tw.label`
