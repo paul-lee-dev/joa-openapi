@@ -1,12 +1,17 @@
 package com.joa.openapi.member.entity;
 
+import com.joa.openapi.account.entity.Account;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -25,4 +30,7 @@ public class Member {
     private String phone;
     private Integer bankId;
     private String dummyId;
+
+    @OneToMany(mappedBy = "member")
+    private List<Account> accountList = new ArrayList<>();
 }

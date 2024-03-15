@@ -1,11 +1,13 @@
 package com.joa.openapi.account.entity;
 
 import com.joa.openapi.common.entity.BaseEntity;
+import com.joa.openapi.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.SQLRestriction;
 
 import static lombok.AccessLevel.PROTECTED;
@@ -32,4 +34,8 @@ public class Account extends BaseEntity {
     private Integer term;
     private String withdrawAccount;
     private Long amount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member holder;
 }
