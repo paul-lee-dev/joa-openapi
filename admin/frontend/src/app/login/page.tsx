@@ -5,20 +5,13 @@ export default function Home() {
     <>
       <Wrapper>
         <TitleContainer>
-          <TitleText>
-            Admin
-          </TitleText>
+          <TitleText>Admin</TitleText>
         </TitleContainer>
         <MainContainer>
-          <LoginFormContainer className="space-y-6" action="#" method="POST">
+          <LoginFormContainer action="#" method="POST">
             <InputFormWrapper>
-              <LoginLabel
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray"
-              >
-                이메일
-              </LoginLabel>
-              <InputContainer className="mt-2">
+              <LoginLabel htmlFor="email">이메일</LoginLabel>
+              <InputContainer>
                 <Input
                   id="email"
                   name="email"
@@ -29,24 +22,14 @@ export default function Home() {
               </InputContainer>
             </InputFormWrapper>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <LoginLabel
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-500"
-                >
-                  비밀번호
-                </LoginLabel>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-gray-500 hover:text-pink-400"
-                  >
-                    비밀번호 찾기
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
+            <InputFormWrapper>
+              <PasswordAlign>
+                <LoginLabel htmlFor="password">비밀번호</LoginLabel>
+                <FindPWContainer>
+                  <FindPW href="#">비밀번호 찾기</FindPW>
+                </FindPWContainer>
+              </PasswordAlign>
+              <InputContainer>
                 <Input
                   id="password"
                   name="password"
@@ -54,23 +37,17 @@ export default function Home() {
                   autoComplete="current-password"
                   required
                 />
-              </div>
-            </div>
+              </InputContainer>
+            </InputFormWrapper>
 
             <div>
               <Button type="submit">로그인</Button>
             </div>
           </LoginFormContainer>
 
-          <p className="mt-10 text-center text-sm text-gray-light">
-            계정이 없으십니까?{" "}
-            <a
-              href="#"
-              className="font-semibold leading-6 text-gray-500 hover:text-primary"
-            >
-              회원가입
-            </a>
-          </p>
+          <SignUpParagraph>
+            계정이 없으십니까? <SignUpAnchor href="#">회원가입</SignUpAnchor>
+          </SignUpParagraph>
         </MainContainer>
       </Wrapper>
     </>
@@ -104,7 +81,7 @@ const InputFormWrapper = tw.div`
 `;
 
 const InputContainer = tw.div`
-
+mt-2
 `;
 
 const TitleText = tw.h2`
@@ -117,19 +94,41 @@ tracking-tight
 text-primary-900
 `;
 
-const FormContainer = tw.div`
+const FindPWContainer = tw.div`
+text-sm
 `;
 
 const LoginFormContainer = tw.form`
+space-y-6
 `;
 
 const LoginLabel = tw.label`
+block text-sm font-medium leading-6 text-gray-500
 `;
 
 const FindPW = tw.a`
+font-semibold 
+text-gray-500 
+hover:text-pink-400
 `;
 
-const SignUpContainer = tw.p`
+const PasswordAlign = tw.div`
+flex 
+items-center 
+justify-between
+`;
+
+const SignUpParagraph = tw.p`
+mt-10 
+text-center 
+text-sm 
+text-gray-light
+`;
+const SignUpAnchor = tw.a`
+font-semibold 
+leading-6 
+text-gray-500 
+hover:text-primary
 `;
 
 const Input = tw.input`
