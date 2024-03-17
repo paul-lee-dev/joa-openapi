@@ -4,9 +4,6 @@ export default function Home() {
   return (
     <>
       <Wrapper>
-        <TitleContainer>
-          <TitleText>Admin</TitleText>
-        </TitleContainer>
         <MainContainer>
           <LoginFormContainer action="#" method="POST">
             <InputFormWrapper>
@@ -23,12 +20,20 @@ export default function Home() {
             </InputFormWrapper>
 
             <InputFormWrapper>
-              <PasswordAlign>
-                <LoginLabel htmlFor="password">비밀번호</LoginLabel>
-                <FindPWContainer>
-                  <FindPW href="#">비밀번호 찾기</FindPW>
-                </FindPWContainer>
-              </PasswordAlign>
+              <LoginLabel htmlFor="tel">전화번호</LoginLabel>
+              <InputContainer>
+                <Input
+                  id="tel"
+                  name="tel"
+                  type="tel"
+                  autoComplete="tel"
+                  required
+                />
+              </InputContainer>
+            </InputFormWrapper>
+
+            <InputFormWrapper>
+              <LoginLabel htmlFor="password">비밀번호</LoginLabel>
               <InputContainer>
                 <Input
                   id="password"
@@ -41,13 +46,22 @@ export default function Home() {
             </InputFormWrapper>
 
             <InputFormWrapper>
-              <Button type="submit">로그인</Button>
+              <LoginLabel htmlFor="passwordCheck">비밀번호 확인</LoginLabel>
+              <InputContainer>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                />
+              </InputContainer>
+            </InputFormWrapper>
+
+            <InputFormWrapper>
+              <Button type="submit">회원가입</Button>
             </InputFormWrapper>
           </LoginFormContainer>
-
-          <SignUpParagraph>
-            계정이 없으십니까? <SignUpAnchor href="#">회원가입</SignUpAnchor>
-          </SignUpParagraph>
         </MainContainer>
       </Wrapper>
     </>
@@ -71,31 +85,11 @@ sm:w-full
 sm:max-w-sm
 `;
 
-const TitleContainer = tw.div`
-sm:mx-auto 
-sm:w-full 
-sm:max-w-sm
-`;
-
 const InputFormWrapper = tw.div`
 `;
 
 const InputContainer = tw.div`
 mt-2
-`;
-
-const TitleText = tw.h2`
-mt-10 
-text-center 
-text-2xl 
-font-bold 
-leading-9 
-tracking-tight 
-text-primary-900
-`;
-
-const FindPWContainer = tw.div`
-text-sm
 `;
 
 const LoginFormContainer = tw.form`
@@ -104,31 +98,6 @@ space-y-6
 
 const LoginLabel = tw.label`
 block text-sm font-medium leading-6 text-gray-500
-`;
-
-const FindPW = tw.a`
-font-semibold 
-text-gray-500 
-hover:text-pink-400
-`;
-
-const PasswordAlign = tw.div`
-flex 
-items-center 
-justify-between
-`;
-
-const SignUpParagraph = tw.p`
-mt-10 
-text-center 
-text-sm 
-text-gray-light
-`;
-const SignUpAnchor = tw.a`
-font-semibold 
-leading-6 
-text-gray-500 
-hover:text-primary
 `;
 
 const Input = tw.input`
