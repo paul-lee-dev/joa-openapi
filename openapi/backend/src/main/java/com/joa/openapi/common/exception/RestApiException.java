@@ -1,6 +1,6 @@
-package com.joa.openapi.error.exception;
+package com.joa.openapi.common.exception;
 
-import com.joa.openapi.error.errorcode.ErrorCode;
+import com.joa.openapi.common.errorcode.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

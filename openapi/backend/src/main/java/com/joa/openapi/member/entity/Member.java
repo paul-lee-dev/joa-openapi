@@ -1,6 +1,7 @@
 package com.joa.openapi.member.entity;
 
 import com.joa.openapi.account.entity.Account;
+import com.joa.openapi.common.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -21,7 +22,7 @@ import static lombok.AccessLevel.PROTECTED;
 @AllArgsConstructor
 @SQLRestriction("is_deleted = 0")
 @NoArgsConstructor(access = PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     private String id;
@@ -31,6 +32,6 @@ public class Member {
     private Integer bankId;
     private String dummyId;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "holder")
     private List<Account> accountList = new ArrayList<>();
 }

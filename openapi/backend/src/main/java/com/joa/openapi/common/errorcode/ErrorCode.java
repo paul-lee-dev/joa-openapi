@@ -1,4 +1,4 @@
-package com.joa.openapi.error.errorcode;
+package com.joa.openapi.common.errorcode;
 
 import org.springframework.http.HttpStatus;
 
