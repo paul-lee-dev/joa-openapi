@@ -1,10 +1,10 @@
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import Header from './Header';
+import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PiggyBank2 from '../assets/piggy-bank2.png';
-import BottomPopup from './BottomPopup';
-import CommonInput from './CommonInput';
-import BottomButton from './BottomButton';
+import BottomPopup from '../components/BottomPopup';
+import CommonInput from '../components/CommonInput';
+import BottomButton from '../components/BottomButton';
 import {useState} from 'react';
 
 function Intro(): React.JSX.Element {

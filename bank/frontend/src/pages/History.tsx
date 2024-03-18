@@ -5,13 +5,13 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import Header from './Header';
+import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import HistoryItem from './HistoryItem';
-import BottomPopup from './BottomPopup';
+import HistoryItem from '../components/HistoryItem';
+import BottomPopup from '../components/BottomPopup';
 import {useState} from 'react';
-import BottomButton from './BottomButton';
-import FilterOption from './FilterOption';
+import BottomButton from '../components/BottomButton';
+import FilterOption from '../components/FilterOption';
 
 interface IHistory {
   date: string;

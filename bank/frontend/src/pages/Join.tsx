@@ -1,15 +1,13 @@
 import {
-  Image,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import Header from './Header';
-import {useState} from 'react';
-import BottomButton from './BottomButton';
-import CommonInput from './CommonInput';
+import Header from '../components/Header';
+import BottomButton from '../components/BottomButton';
+import CommonInput from '../components/CommonInput';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 function Join(): React.JSX.Element {
