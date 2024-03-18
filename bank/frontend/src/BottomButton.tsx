@@ -2,7 +2,7 @@ import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 interface IProps {
-  title: String;
+  title: string;
 }
 
 function BottomButton({title}: IProps): React.JSX.Element {

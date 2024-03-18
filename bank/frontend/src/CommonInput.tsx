@@ -1,7 +1,7 @@
 import {Text, TextInput, View} from 'react-native';
 
 interface IProps {
-  label: String;
+  label: string;
   children?: React.ReactNode;
 }
 

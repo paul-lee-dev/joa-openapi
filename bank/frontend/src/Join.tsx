@@ -47,7 +47,7 @@ function Join(): React.JSX.Element {
               <TextInput className="border-b border-gray-800/50" />
               <View className="absolute right-0 top-0 translate-y-3 p-2">
                 <Icon
-                  name={'remove-red-eye'}
+                  name={'visibility-off'}
                   color={'#777'}
                   onPress={() => {}}
                   size={20}
@@ -60,7 +60,7 @@ function Join(): React.JSX.Element {
               <TextInput className="border-b border-gray-800/50" />
               <View className="absolute right-0 top-0 translate-y-3 p-2">
                 <Icon
-                  name={'remove-red-eye'}
+                  name={'visibility-off'}
                   color={'#777'}
                   onPress={() => {}}
                   size={20}

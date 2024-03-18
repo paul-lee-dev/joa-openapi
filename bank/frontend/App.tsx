@@ -1,3 +1,4 @@
+import History from './src/History';
 import Intro from './src/Intro';
 import Join from './src/Join';
 import Main from './src/Main';
@@ -9,7 +10,8 @@ function App(): React.JSX.Element {
   // return <Splash />;
   // return <Main />;
   // return <Intro />;
-  return <Join />;
+  // return <Join />;
+  return <History />;
 }
 
 export default App;
