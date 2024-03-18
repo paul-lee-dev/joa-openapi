@@ -1,5 +1,6 @@
+// "use client";
 import "@/app/ui/global.css";
-import tw from "tailwind-styled-components"
+import RecoidContextProvider from "./recoilContextProvider";
 
 export const metadata = {
   title: "Next.js",
@@ -13,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <RecoidContextProvider>{children}</RecoidContextProvider>
+      </body>
     </html>
   );
 }

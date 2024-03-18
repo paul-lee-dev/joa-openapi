@@ -3,22 +3,15 @@ import tw from "tailwind-styled-components";
 export default function Home() {
   return (
     <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-primary-900">
-            Admin
-          </h2>
-        </div>
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray"
-              >
-                이메일
-              </label>
-              <div className="mt-2">
+      <Wrapper>
+        <TitleContainer>
+          <TitleText>Admin</TitleText>
+        </TitleContainer>
+        <MainContainer>
+          <LoginFormContainer action="#" method="POST">
+            <InputFormWrapper>
+              <LoginLabel htmlFor="email">이메일</LoginLabel>
+              <InputContainer>
                 <Input
                   id="email"
                   name="email"
@@ -26,27 +19,17 @@ export default function Home() {
                   autoComplete="email"
                   required
                 />
-              </div>
-            </div>
+              </InputContainer>
+            </InputFormWrapper>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-500"
-                >
-                  비밀번호
-                </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-gray-500 hover:text-pink-400"
-                  >
-                    비밀번호 찾기
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
+            <InputFormWrapper>
+              <PasswordAlign>
+                <LoginLabel htmlFor="password">비밀번호</LoginLabel>
+                <FindPWContainer>
+                  <FindPW href="#">비밀번호 찾기</FindPW>
+                </FindPWContainer>
+              </PasswordAlign>
+              <InputContainer>
                 <Input
                   id="password"
                   name="password"
@@ -54,28 +37,99 @@ export default function Home() {
                   autoComplete="current-password"
                   required
                 />
-              </div>
-            </div>
+              </InputContainer>
+            </InputFormWrapper>
 
-            <div>
+            <InputFormWrapper>
               <Button type="submit">로그인</Button>
-            </div>
-          </form>
+            </InputFormWrapper>
+          </LoginFormContainer>
 
-          <p className="mt-10 text-center text-sm text-gray-light">
-            계정이 없으십니까?{" "}
-            <a
-              href="#"
-              className="font-semibold leading-6 text-gray-500 hover:text-primary"
-            >
-              회원가입
-            </a>
-          </p>
-        </div>
-      </div>
+          <SignUpParagraph>
+            계정이 없으십니까? <SignUpAnchor href="#">회원가입</SignUpAnchor>
+          </SignUpParagraph>
+        </MainContainer>
+      </Wrapper>
     </>
   );
 }
+
+const Wrapper = tw.div`
+flex 
+min-h-full 
+flex-1 
+flex-col 
+justify-center 
+px-6 py-12 
+lg:px-8
+`;
+
+const MainContainer = tw.div`
+mt-10 
+sm:mx-auto 
+sm:w-full 
+sm:max-w-sm
+`;
+
+const TitleContainer = tw.div`
+sm:mx-auto 
+sm:w-full 
+sm:max-w-sm
+`;
+
+const InputFormWrapper = tw.div`
+`;
+
+const InputContainer = tw.div`
+mt-2
+`;
+
+const TitleText = tw.h2`
+mt-10 
+text-center 
+text-2xl 
+font-bold 
+leading-9 
+tracking-tight 
+text-primary-900
+`;
+
+const FindPWContainer = tw.div`
+text-sm
+`;
+
+const LoginFormContainer = tw.form`
+space-y-6
+`;
+
+const LoginLabel = tw.label`
+block text-sm font-medium leading-6 text-gray-500
+`;
+
+const FindPW = tw.a`
+font-semibold 
+text-gray-500 
+hover:text-pink-400
+`;
+
+const PasswordAlign = tw.div`
+flex 
+items-center 
+justify-between
+`;
+
+const SignUpParagraph = tw.p`
+mt-10 
+text-center 
+text-sm 
+text-gray-light
+`;
+const SignUpAnchor = tw.a`
+font-semibold 
+leading-6 
+text-gray-500 
+hover:text-primary
+`;
 
 const Input = tw.input`
 block 
