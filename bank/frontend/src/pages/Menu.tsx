@@ -1,13 +1,13 @@
 import {ScrollView, Text, TextInput, View} from 'react-native';
 import Header from '../components/Header';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function Menu(): React.JSX.Element {
   return (
     <View className="w-full h-full bg-gray-100">
       <Header
         menu={[
-          {title: 'settings', onPress: () => {}},
+          {title: 'cog-outline', onPress: () => {}},
           {title: 'close', onPress: () => {}},
         ]}
       />
@@ -44,7 +44,7 @@ function Menu(): React.JSX.Element {
         </View>
       </View>
       <View className="w-full h-14 border-4 border-gray-300 flex flex-row items-center px-4">
-        <Icon name={'search'} color={'#444'} onPress={() => {}} size={40} />
+        <Icon name={'magnify'} color={'#444'} onPress={() => {}} size={40} />
         <TextInput
           className="px-4 text-xl font-bold"
           placeholder="메뉴를 검색해보세요."

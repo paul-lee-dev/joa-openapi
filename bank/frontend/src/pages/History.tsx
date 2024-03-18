@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 import Header from '../components/Header';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HistoryItem from '../components/HistoryItem';
 import BottomPopup from '../components/BottomPopup';
 import {useState} from 'react';
@@ -75,7 +75,7 @@ function History(): React.JSX.Element {
               size={20}
             />
             <Icon
-              name={'settings'}
+              name={'cog-outline'}
               color={'#777'}
               onPress={() => {}}
               size={20}
@@ -90,7 +90,12 @@ function History(): React.JSX.Element {
       <ScrollView className="w-full">
         <View className="w-full flex">
           <View className="flex flex-row items-center justify-between w-full h-12 px-2 border-b border-gray-300">
-            <Icon name={'search'} color={'#777'} onPress={() => {}} size={25} />
+            <Icon
+              name={'magnify'}
+              color={'#777'}
+              onPress={() => {}}
+              size={25}
+            />
             <TextInput className="flex-grow" />
             <TouchableWithoutFeedback
               onPress={() => {
@@ -99,7 +104,7 @@ function History(): React.JSX.Element {
               <View className="flex flex-row items-center">
                 <Text className="text-sm font-light">1개월·전체·최신순</Text>
                 <Icon
-                  name={'keyboard-arrow-down'}
+                  name={'chevron-down'}
                   color={'#777'}
                   onPress={() => {}}
                   size={25}

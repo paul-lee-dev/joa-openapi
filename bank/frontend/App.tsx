@@ -16,10 +16,10 @@ function App(): React.JSX.Element {
   // return <Join />;
   // return <History />;
   // return <Transfer />;
-  // return <TransferAmount />;
+  return <TransferAmount />;
   // return <TransferConfirm />;
   // return <TransferResult />;
-  return <Menu />;
+  // return <Menu />;
 }
 
 export default App;
