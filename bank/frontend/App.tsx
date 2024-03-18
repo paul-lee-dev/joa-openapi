@@ -3,6 +3,7 @@ import Intro from './src/pages/Intro';
 import Join from './src/pages/Join';
 import Main from './src/pages/Main';
 import Menu from './src/pages/Menu';
+import Search from './src/pages/Search';
 import Setting from './src/pages/Setting';
 import Splash from './src/pages/Splash';
 import Transfer from './src/pages/Transfer';
@@ -21,7 +22,8 @@ function App(): React.JSX.Element {
   // return <TransferConfirm />;
   // return <TransferResult />;
   // return <Menu />;
-  return <Setting />;
+  // return <Setting />;
+  return <Search />;
 }
 
 export default App;
