@@ -1,10 +1,11 @@
 import {Image, ScrollView, Text, View} from 'react-native';
-import Header from './Header';
+import Header from '../components/Header';
 import Money from '../assets/money.png';
 import Waage from '../assets/waage.png';
 import Dollar from '../assets/dollar.png';
 import Book from '../assets/book.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Footer from '../components/Footer';
 
 function Main(): React.JSX.Element {
   return (
@@ -94,11 +95,7 @@ function Main(): React.JSX.Element {
             </View>
           </View>
         </View>
-        <View className="w-full p-10 flex items-center">
-          <Text className="text-gray-400 text-sm font-light">
-            COPYRIGHT© {new Date().getFullYear()} JOA BANK
-          </Text>
-        </View>
+        <Footer />
       </ScrollView>
     </View>
   );
