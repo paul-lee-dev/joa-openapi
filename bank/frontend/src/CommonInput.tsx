@@ -2,13 +2,14 @@ import {Text, TextInput, View} from 'react-native';
 
 interface IProps {
   label: String;
+  children?: React.ReactNode;
 }
 
-function CommonInput({label}: IProps): React.JSX.Element {
+function CommonInput({label, children}: IProps): React.JSX.Element {
   return (
-    <View className="w-full px-6 py-4">
+    <View className="w-full px-6 py-8">
       <Text className="text-lg font-semibold text-slate-700">{label}</Text>
-      <TextInput className="border-b" />
+      {children || <TextInput className="border-b border-gray-800/50" />}
     </View>
   );
 }

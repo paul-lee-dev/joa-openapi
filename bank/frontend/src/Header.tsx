@@ -7,7 +7,7 @@ interface IMenu {
 }
 
 interface IProps {
-  stack: boolean;
+  stack?: string;
   menu: IMenu[];
 }
 
@@ -24,11 +24,17 @@ function Header({stack, menu}: IProps): React.JSX.Element {
           />
         ) : null}
 
-        <Text className="text-2xl font-semibold">JOA BANK</Text>
+        <Text className="text-2xl font-semibold">{stack || 'JOA BANK'}</Text>
       </View>
       <View className=" w-24 flex flex-row justify-around items-center">
         {menu.map(m => (
-          <Icon name={m.title} color={'#000'} onPress={m.onPress} size={30} />
+          <Icon
+            key={m.title}
+            name={m.title}
+            color={'#000'}
+            onPress={m.onPress}
+            size={30}
+          />
         ))}
       </View>
     </View>
