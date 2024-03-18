@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountCreateRequestDto {
+
     private String nickname;
     private Integer password;
     private Boolean isDormant;
