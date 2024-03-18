@@ -1,13 +1,13 @@
-/** @type {import('tailwindcss').Config} */
 const baseColors = require("tailwindcss/colors");
+/** @type {import('tailwindcss').Config} */
 
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-
-    // Or if using `src` directory:
+    "/node_modules/@material-tailwind/react/components/**/*.{js,ts,jsx,tsx}",
+    "/node_modules/@material-tailwind/react/theme/components/**/*.{js,ts,jsx,tsx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {

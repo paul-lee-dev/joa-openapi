@@ -1,4 +1,5 @@
 // "use client";
+
 import "@/app/ui/global.css";
 import RecoilContextProvider from "./recoilContextProvider";
 
@@ -14,9 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <RecoilContextProvider>{children}</RecoilContextProvider>
-      </body>
+      <RecoilContextProvider>{children}</RecoilContextProvider>
     </html>
   );
 }
