@@ -3,6 +3,7 @@ import Intro from './src/pages/Intro';
 import Join from './src/pages/Join';
 import Main from './src/pages/Main';
 import Menu from './src/pages/Menu';
+import Setting from './src/pages/Setting';
 import Splash from './src/pages/Splash';
 import Transfer from './src/pages/Transfer';
 import TransferAmount from './src/pages/TransferAmount';
@@ -16,10 +17,11 @@ function App(): React.JSX.Element {
   // return <Join />;
   // return <History />;
   // return <Transfer />;
-  return <TransferAmount />;
+  // return <TransferAmount />;
   // return <TransferConfirm />;
   // return <TransferResult />;
   // return <Menu />;
+  return <Setting />;
 }
 
 export default App;
