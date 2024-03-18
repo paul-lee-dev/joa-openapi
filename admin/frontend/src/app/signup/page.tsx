@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import tw from "tailwind-styled-components";
 import { ModalState, VerificationState } from "./state";
 
-export default function SignUp() {
+export default function SignUpPage() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(ModalState);
   const [verificationCode, setVerificationCode] =
     useRecoilState(VerificationState);

@@ -6,7 +6,7 @@ export const todoListState = atom({
   default: [],
 });
 
-export default function RecoidContextProvider({
+export default function RecoilContextProvider({
   children,
 }: {
   children: React.ReactNode;

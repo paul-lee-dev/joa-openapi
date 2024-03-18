@@ -1,6 +1,6 @@
 // "use client";
 import "@/app/ui/global.css";
-import RecoidContextProvider from "./recoilContextProvider";
+import RecoilContextProvider from "./recoilContextProvider";
 
 export const metadata = {
   title: "Next.js",
@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <RecoidContextProvider>{children}</RecoidContextProvider>
+        <RecoilContextProvider>{children}</RecoilContextProvider>
       </body>
     </html>
   );
