@@ -24,7 +24,7 @@ function Main(): React.JSX.Element {
           </Text>
         </View>
         <View className="w-full p-6 pb-12 flex space-y-4">
-          <View className="w-full py-4 px-6 rounded-3xl flex flex-row justify-between items-center shadow-md shadow-black  bg-gray-50">
+          <View className="w-full py-4 px-6 rounded-3xl flex flex-row justify-between items-center shadow-sm shadow-black  bg-gray-50">
             <View className="flex flex-grow space-y-1">
               <Text className="text-md font-medium">조아은행 발행 적금</Text>
               <Text className="text-md font-semibold">
@@ -33,7 +33,7 @@ function Main(): React.JSX.Element {
             </View>
             <Image source={Money} className="w-16 h-12" />
           </View>
-          <View className="w-full py-4 px-6 relative rounded-3xl bg-pink-200 flex space-y-2 shadow-md shadow-black">
+          <View className="w-full py-4 px-6 relative rounded-3xl bg-pink-200 flex space-y-2 shadow-sm shadow-black">
             <View className="absolute top-4 right-4">
               <Icon
                 name={'more-vert'}
@@ -69,25 +69,25 @@ function Main(): React.JSX.Element {
               <View className="bg-slate-400 w-1 h-1" />
             </View>
           </View>
-          <View className="w-full h-14 bg-gray-50 rounded-3xl flex items-center justify-center shadow-md shadow-black">
+          <View className="w-full h-14 bg-gray-50 rounded-3xl flex items-center justify-center shadow-sm shadow-black">
             <Icon name={'add'} color={'#777'} onPress={() => {}} size={25} />
           </View>
         </View>
         <View className="w-full px-6 flex flex-row space-x-4">
-          <View className="bg-gray-50 w-32 h-32 border rounded-2xl flex p-6 justify-center space-y-3">
+          <View className="bg-gray-50 w-32 h-32 rounded-2xl shadow-sm shadow-black flex p-6 justify-center space-y-3">
             <Image source={Waage} className="w-10 h-10" />
             <View>
               <Text className="font-bold text-md ">예적금 상품</Text>
               <Text className="font-bold text-md">비교하기</Text>
             </View>
           </View>
-          <View className="bg-gray-50 w-32 h-32 border rounded-2xl flex p-6 justify-center space-y-5">
+          <View className="bg-gray-50 w-32 h-32 rounded-2xl shadow-sm shadow-black flex p-6 justify-center space-y-5">
             <Image source={Dollar} className="w-10 h-10" />
             <View>
               <Text className="font-bold text-md ">환율 조회</Text>
             </View>
           </View>
-          <View className="bg-gray-50 w-32 h-32 border rounded-2xl flex p-6 justify-center space-y-3">
+          <View className="bg-gray-50 w-32 h-32 rounded-2xl shadow-sm shadow-black flex p-6 justify-center space-y-3">
             <Image source={Book} className="w-10 h-10" />
             <View>
               <Text className="font-bold text-md ">돈이 되는</Text>
