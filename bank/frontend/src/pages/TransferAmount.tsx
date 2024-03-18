@@ -1,7 +1,5 @@
-import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import Header from '../components/Header';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import BottomButton from '../components/BottomButton';
 
 function TransferAmount(): React.JSX.Element {
   return (
