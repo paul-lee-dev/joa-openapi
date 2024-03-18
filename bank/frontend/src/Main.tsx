@@ -10,7 +10,6 @@ function Main(): React.JSX.Element {
   return (
     <View className="w-full h-full bg-gray-100">
       <Header
-        stack={false}
         menu={[
           {title: 'search', onPress: () => {}},
           {title: 'menu', onPress: () => {}},

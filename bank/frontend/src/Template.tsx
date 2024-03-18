@@ -9,7 +9,6 @@ function Template(): React.JSX.Element {
   return (
     <View className="w-full h-full">
       <Header
-        stack={false}
         menu={[
           {title: 'search', onPress: () => {}},
           {title: 'menu', onPress: () => {}},
