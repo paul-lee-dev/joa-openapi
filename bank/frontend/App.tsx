@@ -1,3 +1,4 @@
+import AccountDetail from './src/pages/AccountDetail';
 import CreateAccount from './src/pages/CreateAccount';
 import History from './src/pages/History';
 import Intro from './src/pages/Intro';
@@ -25,7 +26,8 @@ function App(): React.JSX.Element {
   // return <Menu />;
   // return <Setting />;
   // return <Search />;
-  return <CreateAccount />;
+  // return <CreateAccount />;
+  return <AccountDetail />;
 }
 
 export default App;
