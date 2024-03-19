@@ -2,32 +2,36 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-function TransferAmount(): React.JSX.Element {
+function ChangePasswordVerify(): React.JSX.Element {
   return (
     <View className="w-full h-full bg-gray-100 flex">
-      <Header stack="이체" menu={[{title: 'close', onPress: () => {}}]} />
-      <View className="flex flex-grow justify-center space-y-8 pb-8s px-8">
-        <View className="flex space-y-2">
-          <View className="flex flex-row">
-            <Text className="text-2xl font-bold">저금예금[입출금]</Text>
-            <Text className="text-2xl font-medium">에서</Text>
-          </View>
-          <Text className="text-sm font-medium">잔액 1,001,220원</Text>
+      <Header
+        stack="휴대폰 인증"
+        menu={[{title: 'close', onPress: () => {}}]}
+      />
+      <View className="flex flex-grow justify-center items-center space-y-2">
+        <View className="w-14 h-14 m-6 bg-pink-300 rounded-full flex justify-center items-center">
+          <Icon
+            name={'cellphone-check'}
+            color={'#fff'}
+            onPress={() => {}}
+            size={35}
+          />
         </View>
-        <View className="flex space-y-2">
-          <View className="flex flex-row">
-            <Text className="text-2xl font-bold">내 입출금통장</Text>
-            <Text className="text-2xl font-medium">으로</Text>
+        <Text className="text-2xl font-medium">인증번호를 입력해주세요</Text>
+        <View className="flex flex-row space-x-2 pt-2">
+          <View className="w-14 h-14 flex justify-center items-center rounded-lg border border-gray-300 shadow-sm">
+            <Text className="text-4xl font-medium">?</Text>
           </View>
-          <Text className="text-sm font-medium">신한은행 1234-12-123-1234</Text>
-        </View>
-        <View className="flex space-y-2">
-          <Text className="w-full text-2xl font-bold">금액 입력</Text>
-          <TouchableOpacity className="w-full flex">
-            <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100">
-              잔액 1,001,220원 입력
-            </Text>
-          </TouchableOpacity>
+          <View className="w-14 h-14 flex justify-center items-center rounded-lg border border-gray-300 shadow-sm">
+            <Text className="text-4xl font-medium">?</Text>
+          </View>
+          <View className="w-14 h-14 flex justify-center items-center rounded-lg border border-gray-300 shadow-sm">
+            <Text className="text-4xl font-medium">?</Text>
+          </View>
+          <View className="w-14 h-14 flex justify-center items-center rounded-lg border border-gray-300 shadow-sm">
+            <Text className="text-4xl font-medium">?</Text>
+          </View>
         </View>
       </View>
       <View className="w-full h-16">
@@ -70,9 +74,7 @@ function TransferAmount(): React.JSX.Element {
           </TouchableOpacity>
         </View>
         <View className="flex flex-row justify-around">
-          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
-            <Text className="text-4xl font-bold text-gray-400">00</Text>
-          </TouchableOpacity>
+          <View className="w-20 h-20 flex justify-center items-center " />
           <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">0</Text>
           </TouchableOpacity>
@@ -90,4 +92,4 @@ function TransferAmount(): React.JSX.Element {
   );
 }
 
-export default TransferAmount;
+export default ChangePasswordVerify;
