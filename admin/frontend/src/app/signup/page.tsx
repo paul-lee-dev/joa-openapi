@@ -1,13 +1,12 @@
 "use client";
 
-import { useRecoilState } from "recoil";
+import { useState } from "react";
 import tw from "tailwind-styled-components";
-import { ModalState, VerificationState } from "./state";
 
 export default function SignUpPage() {
-  const [isModalOpen, setIsModalOpen] = useRecoilState(ModalState);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [verificationCode, setVerificationCode] =
-    useRecoilState(VerificationState);
+    useState('');
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
