@@ -44,7 +44,7 @@ public class AdminService implements UserDetailsService {
                         .email(request.getEmail())
                         .phone(request.getPhone())
                         .build();
-        admin.setPassword(encoder.encode(request.getPassword()));
+        admin.updatePassword(encoder.encode(request.getPassword()));
         return adminRepository.save(admin).getAdminId().toString();
     }
 
@@ -82,7 +82,7 @@ public class AdminService implements UserDetailsService {
 
     //회원정보 조회
     @Transactional(readOnly = true)
-    public AdminInfoResponseDto getAdminInfo(String adminId) {
+    public AdminInfoResponseDto getInfo(String adminId) {
         Admin admin = adminRepository.findByAdminId(UUID.fromString(adminId));
         AdminInfoResponseDto response = modelMapper.map(admin, AdminInfoResponseDto.class);
         return response;
@@ -90,12 +90,12 @@ public class AdminService implements UserDetailsService {
 
     //회원정보 수정
     @Transactional
-    public AdminInfoResponseDto updateAdminInfo(String adminId, AdminUpdateRequestDto request) {
+    public AdminInfoResponseDto update(String adminId, AdminUpdateRequestDto request) {
         Admin admin = adminRepository.findByAdminId(UUID.fromString(adminId));
-        if (request.getName()!=null) admin.changeName(request.getName());
-        if (request.getPassword()!=null) admin.setPassword(encoder.encode(request.getPassword()));
-        if (request.getEmail()!=null) admin.changeEmail(request.getEmail());
-        if (request.getPhone()!=null) admin.changePhone(request.getPhone());
+        if (request.getName()!=null) admin.updateName(request.getName());
+        if (request.getPassword()!=null) admin.updatePassword(encoder.encode(request.getPassword()));
+        if (request.getEmail()!=null) admin.updateEmail(request.getEmail());
+        if (request.getPhone()!=null) admin.updatePhone(request.getPhone());
         adminRepository.save(admin);
         AdminInfoResponseDto response = modelMapper.map(admin, AdminInfoResponseDto.class);
         return response;
@@ -103,7 +103,7 @@ public class AdminService implements UserDetailsService {
 
     //회원 탈퇴
     @Transactional
-    public String deleteAdminInfo(String adminId) {
+    public String delete(String adminId) {
         Admin admin = adminRepository.findByAdminId(UUID.fromString(adminId));
         admin.deleteSoftly();
         return admin.getAdminId().toString();

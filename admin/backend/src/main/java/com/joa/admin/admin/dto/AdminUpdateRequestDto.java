@@ -8,10 +8,7 @@ import java.util.UUID;
 public class AdminUpdateRequestDto {
 
     private String name;
-
     private String password;
-
     private String email;
-
     private String phone;
 }

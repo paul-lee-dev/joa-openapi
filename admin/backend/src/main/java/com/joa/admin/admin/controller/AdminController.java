@@ -30,15 +30,15 @@ public class AdminController {
     //이메일 중복 검사
     @GetMapping("email/{keyword}")
     public ResponseEntity<?> confirmEmail(@PathVariable String keyword) {
-        boolean isValid = adminService.confirmEmail(keyword);
-        return ResponseEntity.ok(ApiResponse.success("사용 가능한 이메일입니다.",null));
+        adminService.confirmEmail(keyword);
+        return ResponseEntity.ok(ApiResponse.success("사용 가능한 이메일입니다."));
     }
 
     //TODO: 휴대폰 중복 검사 API 적용
     @GetMapping("phone/{keyword}")
     public ResponseEntity<?> confirmPhone(@PathVariable String keyword) {
-        boolean isValid = adminService.confirmPhone(keyword);
-        return ResponseEntity.ok(ApiResponse.success("사용 가능한 번호입니다.",null));
+        adminService.confirmPhone(keyword);
+        return ResponseEntity.ok(ApiResponse.success("사용 가능한 번호입니다."));
     }
 
     //로그인
@@ -50,23 +50,23 @@ public class AdminController {
 
     //access token 갱신
     @GetMapping("reissue")
-    public ResponseEntity<?> refreshAccessToken(HttpServletRequest request, HttpServletResponse response) {
-        AdminTokenResponseDto tokenResponse = adminService.reissueAccessToken(request, response);
-        return ResponseEntity.ok(ApiResponse.success("액세스 토큰 갱신에 성공했습니다.", tokenResponse));
+    public ResponseEntity<?> refreshAccessToken(HttpServletRequest request, HttpServletResponse httpServletResponse) {
+        AdminTokenResponseDto response = adminService.reissueAccessToken(request, httpServletResponse);
+        return ResponseEntity.ok(ApiResponse.success("액세스 토큰 갱신에 성공했습니다.", response));
     }
 
     //로그아웃
     @GetMapping("logout")
-    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> logout(HttpServletRequest request) {
         adminService.logout(request);
-        return ResponseEntity.ok(ApiResponse.success("로그아웃에 성공했습니다.", null));
+        return ResponseEntity.ok(ApiResponse.success("로그아웃에 성공했습니다."));
     }
 
     //회원정보 조회
     @GetMapping
     public ResponseEntity<?> info() {
         String adminId = SecurityUtil.getCurrentAdminId();
-        AdminInfoResponseDto response = adminService.getAdminInfo(adminId);
+        AdminInfoResponseDto response = adminService.getInfo(adminId);
         return ResponseEntity.ok(ApiResponse.success("회원 정보 조회에 성공했습니다.", response));
     }
 
@@ -74,15 +74,15 @@ public class AdminController {
     @PatchMapping
     public ResponseEntity<?> update(@RequestBody AdminUpdateRequestDto request) {
         String adminId = SecurityUtil.getCurrentAdminId();
-        AdminInfoResponseDto response = adminService.updateAdminInfo(adminId, request);
+        AdminInfoResponseDto response = adminService.update(adminId, request);
         return ResponseEntity.ok(ApiResponse.success("회원 정보 수정에 성공했습니다.", response));
     }
 
     //회원 탈퇴
     @DeleteMapping
-    public ResponseEntity<?> leave() {
+    public ResponseEntity<?> delete() {
         String adminId = SecurityUtil.getCurrentAdminId();
-        String deletedAdminId = adminService.deleteAdminInfo(adminId);
+        String deletedAdminId = adminService.delete(adminId);
         AdminIdResponseDto response = new AdminIdResponseDto(deletedAdminId);
         return ResponseEntity.ok(ApiResponse.success("회원 탈퇴에 성공했습니다.", response));
     }

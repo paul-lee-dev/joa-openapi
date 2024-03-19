@@ -19,17 +19,11 @@ public class Admin extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "BINARY(16)")
     private UUID adminId;
-
     private String name;
-
     private String email;
-
     private String password;
-
     private String phone;
-
 //    private Bank bank;
-
 //    private Dummy dummy;
 
     @Builder
@@ -39,19 +33,19 @@ public class Admin extends BaseEntity {
         this.phone = phone;
     }
 
-    public void setPassword(String password) {
+    public void updatePassword(String password) {
         this.password = password;
     }
 
-    public void changeName(String name) {
+    public void updateName(String name) {
         this.name = name;
     }
 
-    public void changeEmail(String email) {
+    public void updateEmail(String email) {
         this.email = email;
     }
 
-    public void changePhone(String phone) {
+    public void updatePhone(String phone) {
         this.phone = phone;
     }
 }

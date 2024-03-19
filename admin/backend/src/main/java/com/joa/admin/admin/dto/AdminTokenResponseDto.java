@@ -8,6 +8,5 @@ import lombok.Data;
 public class AdminTokenResponseDto {
 
     private String accessToken;
-
     private String refreshToken;
 }
