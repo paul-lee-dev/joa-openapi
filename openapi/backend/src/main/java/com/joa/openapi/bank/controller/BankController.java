@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,35 +20,34 @@ public class BankController {
     private final BankService bankService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse> create(@RequestBody BankCreateRequestDto req, @RequestHeader("Authorization") UUID adminId, @RequestHeader("apiKey") String apiKey) {
+    public ResponseEntity<?> create(@RequestBody BankRequestDto req, @RequestHeader("Authorization") UUID adminId, @RequestHeader("apiKey") String apiKey) {
         // apikey 검사하는 로직 필요
-        System.out.println("관리자 : " + adminId + ", apikey : " + apiKey);
-        Bank bank = bankService.create(req, adminId);
-        return ResponseEntity.ok(ApiResponse.success("은행생성에 성공했습니다.",  bank));
+        BankRequestDto bankRequestDto = bankService.create(req, adminId);
+        return ResponseEntity.ok(ApiResponse.success("은행생성에 성공했습니다.",  bankRequestDto));
     }
 
     @PatchMapping("/{bankId}")
-    public ResponseEntity<ApiResponse> update(@RequestBody BankUpdateRequestDto req, @PathVariable(value = "bankId") UUID bankId) {
-        Bank bank = bankService.update(req, bankId);
-        return ResponseEntity.ok(ApiResponse.success("은행수정에 성공했습니다.", bank));
+    public ResponseEntity<?> update(@RequestBody BankRequestDto req, @PathVariable(value = "bankId") UUID bankId) {
+        BankRequestDto bankRequestDto = bankService.update(req, bankId);
+        return ResponseEntity.ok(ApiResponse.success("은행수정에 성공했습니다.", bankRequestDto));
     }
 
     @DeleteMapping("/{bankId}")
-    public ResponseEntity<ApiResponse> delete(@PathVariable(value = "bankId") UUID bankId) {
-        System.out.println(bankId);
+    public ResponseEntity<?> delete(@PathVariable(value = "bankId") UUID bankId) {
         bankService.delete(bankId);
-        return ResponseEntity.ok(ApiResponse.success("은행삭제에 성공했습니다.", bankId));
+        String bankName = bankService.serachBankName(bankId);
+        return ResponseEntity.ok(ApiResponse.success(bankName + "은행삭제에 성공했습니다. \n 삭제일시 : " + LocalDateTime.now(), bankId));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<ApiResponse> searchAll(@RequestHeader("Authorization") UUID adminId) {
-        List<Bank> bankList = bankService.searchAll(adminId);
-        return ResponseEntity.ok(ApiResponse.success("은행목록검색에 성공했습니다.", bankList));
+    public ResponseEntity<?> searchAll(@RequestHeader("Authorization") UUID adminId) {
+        List<BankRequestDto> bankRequestDtoList = bankService.searchAll(adminId);
+        return ResponseEntity.ok(ApiResponse.success("은행목록검색에 성공했습니다.", bankRequestDtoList));
     }
 
     @GetMapping("/{bankId}")
-    public ResponseEntity<ApiResponse> search(@PathVariable(value = "bankId") UUID bankId) {
-        Bank bank = bankService.serachBank(bankId);
-        return ResponseEntity.ok(ApiResponse.success("특정은행검색에 성공했습니다.", bank));
+    public ResponseEntity<?> search(@PathVariable(value = "bankId") UUID bankId) {
+        BankRequestDto bankRequestDto = bankService.serachBank(bankId);
+        return ResponseEntity.ok(ApiResponse.success("특정은행검색에 성공했습니다.", bankRequestDto));
     }
 }

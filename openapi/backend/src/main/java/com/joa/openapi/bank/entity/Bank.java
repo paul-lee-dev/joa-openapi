@@ -1,6 +1,6 @@
 package com.joa.openapi.bank.entity;
 
-import com.joa.openapi.bank.dto.BankUpdateRequestDto;
+import com.joa.openapi.bank.dto.BankRequestDto;
 import com.joa.openapi.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,7 +25,7 @@ public class Bank extends BaseEntity {
     private String description;
     private String uri;
 
-    public void update(BankUpdateRequestDto req) {
+    public void update(BankRequestDto req) {
         if(req.getName() != null)
             this.name = req.getName();
         if(req.getDescription() != null)
