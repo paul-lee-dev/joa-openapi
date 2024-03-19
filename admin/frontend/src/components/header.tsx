@@ -3,7 +3,6 @@ import tw from "tailwind-styled-components";
 
 export default function Header() {
   return (
-    <>
       <Wrapper>
         <Title>Admin</Title>
         <UserContainer>
@@ -11,7 +10,6 @@ export default function Header() {
           <HiUser></HiUser>
         </UserContainer>
       </Wrapper>
-    </>
   );
 }
 
