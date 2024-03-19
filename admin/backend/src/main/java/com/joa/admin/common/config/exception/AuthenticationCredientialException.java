@@ -1,4 +1,4 @@
-package com.joa.admin.admin.config.exception.custom;
+package com.joa.admin.common.config.exception.custom;
 
 
 import org.springframework.http.HttpStatus;
