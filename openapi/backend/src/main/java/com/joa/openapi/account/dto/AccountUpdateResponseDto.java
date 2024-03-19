@@ -2,7 +2,10 @@ package com.joa.openapi.account.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joa.openapi.account.entity.Account;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountCreateResponseDto {
+public class AccountUpdateResponseDto {
 
     private String id;
     private String nickname;
@@ -22,9 +25,13 @@ public class AccountCreateResponseDto {
     private Integer term;
     private String withdrawAccount;
     private Long amount;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime updatedAt;
 
-    public static AccountCreateResponseDto toDto(Account account) {
-        return AccountCreateResponseDto.builder()
+    public static AccountUpdateResponseDto toDto(Account account) {
+        return AccountUpdateResponseDto.builder()
                 .id(account.getId())
                 .nickname(account.getNickname())
                 .balance(account.getBalance())
@@ -35,6 +42,8 @@ public class AccountCreateResponseDto {
                 .term(account.getTerm())
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
+                .createdAt(account.getCreatedAt())
+                .updatedAt(account.getUpdatedAt())
                 .build();
     }
 }

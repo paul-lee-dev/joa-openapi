@@ -1,5 +1,6 @@
 package com.joa.openapi.account.entity;
 
+import com.joa.openapi.account.dto.AccountUpdateRequestDto;
 import com.joa.openapi.common.entity.BaseEntity;
 import com.joa.openapi.member.entity.Member;
 import jakarta.persistence.*;
@@ -9,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.SQLRestriction;
+
+import java.time.LocalDate;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -39,5 +42,19 @@ public class Account extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member holder;
 
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
+    public void updateWithdrawAccount(String withdrawAccount) {
+        this.withdrawAccount = withdrawAccount;
+    }
+
+    public void updateLimit(Long limit) {
+        this.transferLimit = limit;
+    }
+
+    public void updatePassword(Integer password) {
+        this.password = password;
+    }
 }
