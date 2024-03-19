@@ -1,7 +1,6 @@
 "use client";
-import Table from "@/components/table";
+import Table from "@/components/bankTable";
 import tw from "tailwind-styled-components";
-import { HiUpload } from "react-icons/hi";
 import { useState } from "react";
 
 const BankList = () => {
