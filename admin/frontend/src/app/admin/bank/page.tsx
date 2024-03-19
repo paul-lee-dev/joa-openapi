@@ -47,11 +47,13 @@ const BankList = () => {
                 >
                   은행 로고 (추가)
                 </label>
-                <div className="mt-2 items-center gap-y-3 grid grid-col-2">
-                  <div className="float-left">
-                    <HiUpload />
-                  </div>
-                </div>
+                <form className="max-w-lg mx-auto">
+                  <input
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
+                    id="bank_logo"
+                    type="file"
+                  />
+                </form>
               </div>
               <SmallBtn onClick={toggleModal}>확인</SmallBtn>
             </InputContainerWithButton>
