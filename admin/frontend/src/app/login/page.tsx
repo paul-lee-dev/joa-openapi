@@ -1,6 +1,6 @@
 import tw from "tailwind-styled-components";
 
-export default function Home() {
+export default function LoginPage() {
   return (
     <>
       <Wrapper>
