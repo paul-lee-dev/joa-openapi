@@ -1,30 +1,15 @@
 "use client";
 import Table from "@/components/table";
-import { useRecoilState } from "recoil";
-import { ModalState, VerificationState } from "./state";
 import tw from "tailwind-styled-components";
-import { HiUserCircle } from "react-icons/hi2";
 import { HiUpload } from "react-icons/hi";
+import { useState } from "react";
 
 const BankList = () => {
-  const [isModalOpen, setIsModalOpen] = useRecoilState(ModalState);
-  const [verificationCode, setVerificationCode] =
-    useRecoilState(VerificationState);
+  const [isModalOpen, setModalState] = useState(false);
 
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+    setModalState(!isModalOpen);
     console.log("Toggle modal");
-  };
-
-  const handleVerificationCodeChange = (event: {
-    target: { value: string | ((currVal: string) => string) };
-  }) => {
-    setVerificationCode(event.target.value);
-  };
-
-  const handleSubmitVerificationCode = () => {
-    setIsModalOpen(!isModalOpen);
-    console.log("Verifying code:", verificationCode);
   };
 
   return (
@@ -62,14 +47,13 @@ const BankList = () => {
                 >
                   은행 로고 (추가)
                 </label>
-                <div className="mt-2 items-center gap-x-3 gap-y-3 grid grid-col-2">
-                  <Input placeholder="은행 설명" required />
+                <div className="mt-2 items-center gap-y-3 grid grid-col-2">
                   <div className="float-left">
                     <HiUpload />
                   </div>
                 </div>
               </div>
-              <SmallBtn onClick={handleSubmitVerificationCode}>확인</SmallBtn>
+              <SmallBtn onClick={toggleModal}>확인</SmallBtn>
             </InputContainerWithButton>
           </ModalContent>
         </Modal>
@@ -125,10 +109,8 @@ const SmallBtn = tw.button`
 const InputContainerWithButton = tw.div`
   mt-2
   items-center
-  space-x-4
   grid 
   grid-cols-1
-  gap-x-8
   gap-y-6 
 `;
 
