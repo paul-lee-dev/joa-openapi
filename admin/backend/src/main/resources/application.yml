@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3307/joa?serverTimezone=UTC # mysql 8.2, mysql workbench 8.0.21 / mac? 8.0.34
+    url: jdbc:mysql://127.0.0.1:3306/joa?serverTimezone=UTC # mysql 8.2, mysql workbench 8.0.21 / mac? 8.0.34
     username: root
-    password: ssafy
+    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   config:
     import:
@@ -10,7 +10,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
