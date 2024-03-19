@@ -1,9 +1,11 @@
 package com.joa.openapi.account.controller;
 
 import com.joa.openapi.account.dto.AccountCreateRequestDto;
-import com.joa.openapi.account.entity.Account;
+import com.joa.openapi.account.dto.AccountCreateResponseDto;
 import com.joa.openapi.account.service.AccountService;
+import com.joa.openapi.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +17,9 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody AccountCreateRequestDto req, @RequestHeader String memberId) {
-        Account account = accountService.create(req, memberId);
-        return ResponseEntity.ok(account.getId());
+    public ResponseEntity<?> create(@RequestBody AccountCreateRequestDto req, @RequestHeader("memberId") String memberId) {
+        AccountCreateResponseDto account = accountService.create(req, memberId);
+        return new ResponseEntity<>(ApiResponse.success("계좌 개설 성공", account), HttpStatus.OK);
     }
 
 //    @PatchMapping("/{boardId}")

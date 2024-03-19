@@ -8,7 +8,7 @@ import {
 import Header from '../components/Header';
 import BottomButton from '../components/BottomButton';
 import CommonInput from '../components/CommonInput';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function Join(): React.JSX.Element {
   return (
@@ -16,7 +16,7 @@ function Join(): React.JSX.Element {
       <Header
         stack="회원가입"
         menu={[
-          {title: 'home', onPress: () => {}},
+          {title: 'home-outline', onPress: () => {}},
           {title: 'menu', onPress: () => {}},
         ]}
       />
@@ -45,7 +45,7 @@ function Join(): React.JSX.Element {
               <TextInput className="border-b border-gray-800/50" />
               <View className="absolute right-0 top-0 translate-y-3 p-2">
                 <Icon
-                  name={'visibility-off'}
+                  name={'eye-off-outline'}
                   color={'#777'}
                   onPress={() => {}}
                   size={20}
@@ -58,7 +58,7 @@ function Join(): React.JSX.Element {
               <TextInput className="border-b border-gray-800/50" />
               <View className="absolute right-0 top-0 translate-y-3 p-2">
                 <Icon
-                  name={'visibility-off'}
+                  name={'eye-off-outline'}
                   color={'#777'}
                   onPress={() => {}}
                   size={20}

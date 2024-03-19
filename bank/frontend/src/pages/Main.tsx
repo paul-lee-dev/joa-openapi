@@ -1,10 +1,10 @@
 import {Image, ScrollView, Text, View} from 'react-native';
 import Header from '../components/Header';
-import Money from '../assets/money.png';
-import Waage from '../assets/waage.png';
-import Dollar from '../assets/dollar.png';
-import Book from '../assets/book.png';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Money from '../../assets/money.png';
+import Waage from '../../assets/waage.png';
+import Dollar from '../../assets/dollar.png';
+import Book from '../../assets/book.png';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Footer from '../components/Footer';
 
 function Main(): React.JSX.Element {
@@ -12,7 +12,7 @@ function Main(): React.JSX.Element {
     <View className="w-full h-full bg-gray-100">
       <Header
         menu={[
-          {title: 'search', onPress: () => {}},
+          {title: 'magnify', onPress: () => {}},
           {title: 'menu', onPress: () => {}},
         ]}
       />
@@ -36,7 +36,7 @@ function Main(): React.JSX.Element {
           <View className="w-full py-4 px-6 relative rounded-3xl bg-pink-200 flex space-y-2 shadow-sm shadow-black">
             <View className="absolute top-4 right-4">
               <Icon
-                name={'more-vert'}
+                name={'dots-vertical'}
                 color={'#777'}
                 onPress={() => {}}
                 size={20}
@@ -70,7 +70,7 @@ function Main(): React.JSX.Element {
             </View>
           </View>
           <View className="w-full h-14 bg-gray-50 rounded-3xl flex items-center justify-center shadow-sm shadow-black">
-            <Icon name={'add'} color={'#777'} onPress={() => {}} size={25} />
+            <Icon name={'plus'} color={'#777'} onPress={() => {}} size={25} />
           </View>
         </View>
         <View className="w-full px-6 flex flex-row space-x-4">

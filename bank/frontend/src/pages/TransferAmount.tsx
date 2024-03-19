@@ -1,7 +1,6 @@
-import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import Header from '../components/Header';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import BottomButton from '../components/BottomButton';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function TransferAmount(): React.JSX.Element {
   return (
@@ -78,7 +77,12 @@ function TransferAmount(): React.JSX.Element {
             <Text className="text-4xl font-bold text-gray-400">0</Text>
           </View>
           <View className="w-20 h-20 flex justify-center items-center ">
-            <Text className="text-4xl font-bold text-gray-400">{'<-'}</Text>
+            <Icon
+              name={'arrow-left'}
+              color={'#9ca3af'}
+              onPress={() => {}}
+              size={36}
+            />
           </View>
         </View>
       </View>
