@@ -1,9 +1,155 @@
+"use client";
 import Table from "@/components/table";
+import { useRecoilState } from "recoil";
+import { ModalState, VerificationState } from "./state";
+import tw from "tailwind-styled-components";
+import { HiUserCircle } from "react-icons/hi2";
+import { HiUpload } from "react-icons/hi";
 
 const BankList = () => {
+  const [isModalOpen, setIsModalOpen] = useRecoilState(ModalState);
+  const [verificationCode, setVerificationCode] =
+    useRecoilState(VerificationState);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+    console.log("Toggle modal");
+  };
+
+  const handleVerificationCodeChange = (event: {
+    target: { value: string | ((currVal: string) => string) };
+  }) => {
+    setVerificationCode(event.target.value);
+  };
+
+  const handleSubmitVerificationCode = () => {
+    setIsModalOpen(!isModalOpen);
+    console.log("Verifying code:", verificationCode);
+  };
+
   return (
-      <Table></Table>
+    <>
+      <SmallBtn className="" type="button" onClick={toggleModal}>
+        추가
+      </SmallBtn>
+      <Table />
+      {isModalOpen && (
+        <Modal>
+          <ModalContent>
+            <InputContainerWithButton>
+              <div className="col-span-full">
+                <label
+                  htmlFor="photo"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  은행 이름
+                </label>
+                <Input placeholder="은행명" required />
+              </div>
+              <div className="col-span-full">
+                <label
+                  htmlFor="photo"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  은행 설명
+                </label>
+                <Input placeholder="은행 설명" required />
+              </div>
+              <div className="col-span-full">
+                <label
+                  htmlFor="photo"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  은행 로고 (추가)
+                </label>
+                <div className="mt-2 items-center gap-x-3 gap-y-3 grid grid-col-2">
+                  <Input placeholder="은행 설명" required />
+                  <div className="float-left">
+                    <HiUpload />
+                  </div>
+                </div>
+              </div>
+              <SmallBtn onClick={handleSubmitVerificationCode}>확인</SmallBtn>
+            </InputContainerWithButton>
+          </ModalContent>
+        </Modal>
+      )}
+    </>
   );
 };
 
 export default BankList;
+
+const Input = tw.input`
+block 
+w-full 
+rounded-md 
+border-0 
+px-1.5
+py-1.5
+text-gray-700
+ring-1
+ring-inset 
+ring-gray-300 
+placeholder:text-gray-400 
+focus:outline-none
+focus:ring-2 
+focus:ring-inset 
+focus:ring-pink-500 
+sm:text-sm 
+sm:leading-6
+`;
+
+const SmallBtn = tw.button`
+  flex
+  justify-center
+  w-fit
+  rounded-md 
+  bg-pink-400
+  px-3
+  py-1.5
+  text-xs
+  font-semibold
+  leading-6
+  text-white
+  shadow-sm
+  hover:bg-pink-500
+  focus-visible:outline
+  focus-visible:outline-2
+  focus-visible:outline-offset-2
+  focus-visible:outline-pink-600
+  whitespace-nowrap
+  float-right
+`;
+
+const InputContainerWithButton = tw.div`
+  mt-2
+  items-center
+  space-x-4
+  grid 
+  grid-cols-1
+  gap-x-8
+  gap-y-6 
+`;
+
+const Modal = tw.div`
+  fixed
+  top-0
+  left-0
+  w-full
+  h-full
+  flex
+  items-center
+  justify-center
+  bg-gray-700
+  bg-opacity-75
+  z-50
+`;
+
+const ModalContent = tw.div`
+  bg-white
+  rounded-lg
+  p-8
+  max-w-md
+  w-full
+`;
