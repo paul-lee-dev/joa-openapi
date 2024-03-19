@@ -8,9 +8,9 @@ function Setting(): React.JSX.Element {
       <Header stack="설정" menu={[{title: 'menu', onPress: () => {}}]} />
       <ScrollView className="w-full flex-grow">
         <View>
-          <CommonMenuItem title={'알림설정'} />
-          <CommonMenuItem title={'앱 환경설정'} />
-          <CommonMenuItem title={'은행코드 변경'} />
+          <CommonMenuItem title={'알림설정'} underline={true} />
+          <CommonMenuItem title={'앱 환경설정'} underline={true} />
+          <CommonMenuItem title={'은행코드 변경'} underline={true} />
         </View>
       </ScrollView>
     </View>
