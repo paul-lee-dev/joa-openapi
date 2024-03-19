@@ -1,6 +1,7 @@
 package com.joa.openapi.bank.service;
 
 import com.joa.openapi.bank.dto.BankRequestDto;
+import com.joa.openapi.bank.dto.BankResponseDto;
 import com.joa.openapi.bank.entity.Bank;
 import com.joa.openapi.bank.errorcode.BankErrorCode;
 import com.joa.openapi.bank.repository.BankRepository;
@@ -24,7 +25,7 @@ public class BankService {
     private final BankRepository bankRepository;
 
     @Transactional
-    public BankRequestDto create(BankRequestDto req, UUID adminId) {
+    public BankResponseDto create(BankRequestDto req, UUID adminId) {
         Bank bank = Bank.builder()
                 .adminId(adminId)
                 .description(req.getDescription())
@@ -34,15 +35,15 @@ public class BankService {
 
         bankRepository.save(bank);
 
-        return BankRequestDto.toDto(bank);
+        return BankResponseDto.toDto(bank);
     }
 
     @Transactional
-    public BankRequestDto update(BankRequestDto req, UUID uuid) {
+    public BankResponseDto update(BankRequestDto req, UUID uuid) {
         Optional<Bank> Optional = bankRepository.findById(uuid);
         Bank bank = Optional.orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         bank.update(req);
-        return BankRequestDto.toDto(bank);
+        return BankResponseDto.toDto(bank);
     }
 
     @Transactional
@@ -52,28 +53,18 @@ public class BankService {
         bank.deleteSoftly();
     }
 
-    @Transactional
-    public List<BankRequestDto> searchAll(UUID adminId) {
+    public List<BankResponseDto> searchAll(UUID adminId) {
         List<Bank> bankList = bankRepository.findByAdminId(adminId);
-        List<BankRequestDto> bankRequestDtoList = new ArrayList<>();
+        List<BankResponseDto> bankResponseDtoList = new ArrayList<>();
         for (Bank bank:bankList) {
-            bankRequestDtoList.add(BankRequestDto.toDto(bank));
+            bankResponseDtoList.add(BankResponseDto.toDto(bank));
         }
-        return bankRequestDtoList;
+        return bankResponseDtoList;
     }
 
-    @Transactional
-    public BankRequestDto serachBank(UUID uuid) {
+    public BankResponseDto serachBank(UUID uuid) {
         Optional<Bank> Optional = bankRepository.findById(uuid);
         Bank bank = Optional.orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
-        return BankRequestDto.toDto(bank);
-    }
-
-    // 은행 이름 검색
-    @Transactional
-    public String serachBankName(UUID uuid) {
-        Optional<Bank> Optional = bankRepository.findById(uuid);
-        Bank bank = Optional.orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
-        return bank.getName();
+        return BankResponseDto.toDto(bank);
     }
 }
