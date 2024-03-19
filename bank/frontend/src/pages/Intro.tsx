@@ -1,7 +1,7 @@
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Header from '../components/Header';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import PiggyBank2 from '../assets/piggy-bank2.png';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import PiggyBank2 from '../../assets/piggy-bank2.png';
 import BottomPopup from '../components/BottomPopup';
 import CommonInput from '../components/CommonInput';
 import BottomButton from '../components/BottomButton';
@@ -13,7 +13,7 @@ function Intro(): React.JSX.Element {
     <View className="w-full h-full bg-gray-100">
       <Header
         menu={[
-          {title: 'search', onPress: () => {}},
+          {title: 'magnify', onPress: () => {}},
           {title: 'menu', onPress: () => {}},
         ]}
       />
@@ -31,7 +31,7 @@ function Intro(): React.JSX.Element {
           />
           <TouchableOpacity className="w-full h-24 bg-pink-200 shadow-sm shadow-black flex flex-row space-x-8 items-center px-8">
             <Icon
-              name={'person-outline'}
+              name={'account-outline'}
               color={'#777'}
               onPress={() => {}}
               size={30}

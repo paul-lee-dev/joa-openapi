@@ -1,5 +1,6 @@
 import {Text, TouchableOpacity, View} from 'react-native';
 import Header from '../components/Header';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function TransferAmount(): React.JSX.Element {
   return (
@@ -36,48 +37,53 @@ function TransferAmount(): React.JSX.Element {
       </View>
       <View className="px-8 py-4">
         <View className="flex flex-row justify-around">
-          <View className="w-20 h-20 flex justify-center items-center ">
+          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">1</Text>
-          </View>
-          <View className="w-20 h-20 flex justify-center items-center ">
+          </TouchableOpacity>
+          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">2</Text>
-          </View>
-          <View className="w-20 h-20 flex justify-center items-center ">
+          </TouchableOpacity>
+          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">3</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View className="flex flex-row justify-around">
-          <View className="w-20 h-20 flex justify-center items-center ">
+          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">4</Text>
-          </View>
-          <View className="w-20 h-20 flex justify-center items-center ">
+          </TouchableOpacity>
+          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">5</Text>
-          </View>
-          <View className="w-20 h-20 flex justify-center items-center ">
+          </TouchableOpacity>
+          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">6</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View className="flex flex-row justify-around">
-          <View className="w-20 h-20 flex justify-center items-center ">
+          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">7</Text>
-          </View>
-          <View className="w-20 h-20 flex justify-center items-center ">
+          </TouchableOpacity>
+          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">8</Text>
-          </View>
-          <View className="w-20 h-20 flex justify-center items-center ">
+          </TouchableOpacity>
+          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">9</Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View className="flex flex-row justify-around">
-          <View className="w-20 h-20 flex justify-center items-center ">
+          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">00</Text>
-          </View>
-          <View className="w-20 h-20 flex justify-center items-center ">
+          </TouchableOpacity>
+          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">0</Text>
-          </View>
-          <View className="w-20 h-20 flex justify-center items-center ">
-            <Text className="text-4xl font-bold text-gray-400">{'<-'}</Text>
-          </View>
+          </TouchableOpacity>
+          <TouchableOpacity className="w-20 h-20 flex justify-center items-center ">
+            <Icon
+              name={'arrow-left'}
+              color={'#9ca3af'}
+              onPress={() => {}}
+              size={36}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </View>

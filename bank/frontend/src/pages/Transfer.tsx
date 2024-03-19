@@ -1,6 +1,12 @@
-import {ScrollView, Text, TextInput, View} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Header from '../components/Header';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AccountItem from '../components/AccountItem';
 
 function Transfer(): React.JSX.Element {
@@ -12,11 +18,13 @@ function Transfer(): React.JSX.Element {
           <Text className="font-semibold text-base">저축예금[입출금]</Text>
         </View>
         <View className="w-full flex flex-row items-center space-x-2">
-          <Text className="text-2xl underline text-gray-400">
-            123-123456-12-123
-          </Text>
+          <TouchableOpacity>
+            <Text className="text-2xl underline text-gray-400">
+              123-123456-12-123
+            </Text>
+          </TouchableOpacity>
           <Icon
-            name={'keyboard-arrow-down'}
+            name={'chevron-down'}
             color={'#777'}
             onPress={() => {}}
             size={20}
@@ -33,7 +41,7 @@ function Transfer(): React.JSX.Element {
             className="flex-grow text-2xl px-4"
           />
           <Icon
-            name={'camera-alt'}
+            name={'camera-outline'}
             color={'#777'}
             onPress={() => {}}
             size={30}
@@ -46,7 +54,7 @@ function Transfer(): React.JSX.Element {
             <View className="w-full flex flex-row justify-between items-center px-6 py-4">
               <Text className="font-bold text-base px-2">내 계좌</Text>
               <Icon
-                name={'keyboard-arrow-down'}
+                name={'chevron-down'}
                 color={'#777'}
                 onPress={() => {}}
                 size={30}
@@ -59,7 +67,7 @@ function Transfer(): React.JSX.Element {
             <View className="w-full flex flex-row justify-between items-center px-6 py-4">
               <Text className="font-bold text-bas px-2">최근 거래 계좌</Text>
               <Icon
-                name={'keyboard-arrow-down'}
+                name={'chevron-down'}
                 color={'#777'}
                 onPress={() => {}}
                 size={30}
