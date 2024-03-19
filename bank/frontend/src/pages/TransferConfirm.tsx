@@ -1,4 +1,4 @@
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import BottomButton from '../components/BottomButton';
@@ -19,7 +19,7 @@ function TransferConfirm(): React.JSX.Element {
         <View className="h-48 flex justify-evenly">
           <View className="flex flex-row justify-between px-6">
             <Text className="font-bold text-sm">받는 분에게 표시</Text>
-            <View className="flex flex-row">
+            <TouchableOpacity className="flex flex-row">
               <Text className="font-semibold text-sm">이유로</Text>
               <Icon
                 name={'chevron-right'}
@@ -27,7 +27,7 @@ function TransferConfirm(): React.JSX.Element {
                 onPress={() => {}}
                 size={20}
               />
-            </View>
+            </TouchableOpacity>
           </View>
           <View className="flex flex-row justify-between px-6">
             <Text className="font-bold text-sm">출금 계좌</Text>

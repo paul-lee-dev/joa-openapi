@@ -11,7 +11,6 @@ import tw from "tailwind-styled-components";
 
 export default function Sidebar() {
   return (
-    <>
       <Wrapper id="sidebar">
         <SidebarContainer>
           <ListAnchor href="#">
@@ -48,7 +47,6 @@ export default function Sidebar() {
           </ListAnchor>
         </SidebarContainer>
       </Wrapper>
-    </>
   );
 }
 

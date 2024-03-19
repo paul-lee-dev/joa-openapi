@@ -43,27 +43,27 @@ function Join(): React.JSX.Element {
           <CommonInput label={'비밀번호'}>
             <View className="w-full relative">
               <TextInput className="border-b border-gray-800/50" />
-              <View className="absolute right-0 top-0 translate-y-3 p-2">
+              <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
                 <Icon
                   name={'eye-off-outline'}
                   color={'#777'}
                   onPress={() => {}}
                   size={20}
                 />
-              </View>
+              </TouchableOpacity>
             </View>
           </CommonInput>
           <CommonInput label={'비밀번호 확인'}>
             <View className="w-full relative">
               <TextInput className="border-b border-gray-800/50" />
-              <View className="absolute right-0 top-0 translate-y-3 p-2">
+              <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
                 <Icon
                   name={'eye-off-outline'}
                   color={'#777'}
                   onPress={() => {}}
                   size={20}
                 />
-              </View>
+              </TouchableOpacity>
             </View>
           </CommonInput>
         </View>

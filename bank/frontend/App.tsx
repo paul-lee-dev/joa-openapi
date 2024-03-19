@@ -1,3 +1,11 @@
+import AccountDetail from './src/pages/AccountDetail';
+import ChangeAccountLimit from './src/pages/ChangeAccountLimit';
+import ChangeAccountName from './src/pages/ChangeAccountName';
+import ChangePassword from './src/pages/ChangePassword';
+import ChangePasswordResult from './src/pages/ChangePasswordResult';
+import ChangePasswordStart from './src/pages/ChangePasswordStart';
+import ChangePasswordVerify from './src/pages/ChangePasswordVerify';
+import CreateAccount from './src/pages/CreateAccount';
 import History from './src/pages/History';
 import Intro from './src/pages/Intro';
 import Join from './src/pages/Join';
@@ -23,7 +31,15 @@ function App(): React.JSX.Element {
   // return <TransferResult />;
   // return <Menu />;
   // return <Setting />;
-  return <Search />;
+  // return <Search />;
+  // return <CreateAccount />;
+  // return <AccountDetail />;
+  // return <ChangePasswordStart />;
+  // return <ChangePasswordVerify />;
+  // return <ChangePassword />;
+  // return <ChangePasswordResult />;
+  // return <ChangeAccountName />;
+  return <ChangeAccountLimit />;
 }
 
 export default App;

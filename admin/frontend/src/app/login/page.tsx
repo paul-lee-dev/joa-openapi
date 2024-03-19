@@ -2,55 +2,53 @@ import tw from "tailwind-styled-components";
 
 export default function LoginPage() {
   return (
-    <>
-      <Wrapper>
-        <TitleContainer>
-          <TitleText>Admin</TitleText>
-        </TitleContainer>
-        <MainContainer>
-          <LoginFormContainer action="#" method="POST">
-            <InputFormWrapper>
-              <LoginLabel htmlFor="email">이메일</LoginLabel>
-              <InputContainer>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                />
-              </InputContainer>
-            </InputFormWrapper>
+    <Wrapper>
+      <TitleContainer>
+        <TitleText>Admin</TitleText>
+      </TitleContainer>
+      <MainContainer>
+        <LoginFormContainer action="#" method="POST">
+          <InputFormWrapper>
+            <LoginLabel htmlFor="email">이메일</LoginLabel>
+            <InputContainer>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+              />
+            </InputContainer>
+          </InputFormWrapper>
 
-            <InputFormWrapper>
-              <PasswordAlign>
-                <LoginLabel htmlFor="password">비밀번호</LoginLabel>
-                <FindPWContainer>
-                  <FindPW href="#">비밀번호 찾기</FindPW>
-                </FindPWContainer>
-              </PasswordAlign>
-              <InputContainer>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                />
-              </InputContainer>
-            </InputFormWrapper>
+          <InputFormWrapper>
+            <PasswordAlign>
+              <LoginLabel htmlFor="password">비밀번호</LoginLabel>
+              <FindPWContainer>
+                <FindPW href="#">비밀번호 찾기</FindPW>
+              </FindPWContainer>
+            </PasswordAlign>
+            <InputContainer>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+              />
+            </InputContainer>
+          </InputFormWrapper>
 
-            <InputFormWrapper>
-              <Button type="submit">로그인</Button>
-            </InputFormWrapper>
-          </LoginFormContainer>
+          <InputFormWrapper>
+            <Button type="submit">로그인</Button>
+          </InputFormWrapper>
+        </LoginFormContainer>
 
-          <SignUpParagraph>
-            계정이 없으십니까? <SignUpAnchor href="#">회원가입</SignUpAnchor>
-          </SignUpParagraph>
-        </MainContainer>
-      </Wrapper>
-    </>
+        <SignUpParagraph>
+          계정이 없으십니까? <SignUpAnchor href="#">회원가입</SignUpAnchor>
+        </SignUpParagraph>
+      </MainContainer>
+    </Wrapper>
   );
 }
 

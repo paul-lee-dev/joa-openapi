@@ -1,4 +1,4 @@
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface IMenu {
@@ -28,13 +28,9 @@ function Header({stack, menu}: IProps): React.JSX.Element {
       </View>
       <View className=" w-24 flex flex-row justify-end space-x-4 pr-2 items-center">
         {menu.map(m => (
-          <Icon
-            key={m.title}
-            name={m.title}
-            color={'#000'}
-            onPress={m.onPress}
-            size={30}
-          />
+          <TouchableOpacity onPress={m.onPress} key={m.title}>
+            <Icon name={m.title} color={'#000'} size={30} />
+          </TouchableOpacity>
         ))}
       </View>
     </View>

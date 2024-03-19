@@ -1,21 +1,17 @@
 package com.joa.openapi.account.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class AccountCreateRequestDto {
 
     private String nickname;
     private Integer password;
-    private Boolean isDormant;
-    private Long transferLimit;
-    private Integer term;
+    private final Long transferLimit = 100L;
+    private final Integer term = 12;
     private String withdrawAccount;
-    private Long amount;
+    private final Long amount = 0L;
 }
