@@ -1,4 +1,4 @@
-package com.joa.admin.common.config.security;
+package com.joa.admin.common.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

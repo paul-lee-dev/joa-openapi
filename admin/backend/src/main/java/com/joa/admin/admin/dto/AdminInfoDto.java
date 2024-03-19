@@ -5,7 +5,7 @@ import lombok.*;
 import java.util.UUID;
 
 @Data
-public class AdminInfoResponseDto {
+public class AdminInfoDto {
 
     private UUID adminId;
 

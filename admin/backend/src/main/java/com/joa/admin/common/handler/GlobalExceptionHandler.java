@@ -1,8 +1,8 @@
-package com.joa.openapi.common.handler;
+package com.joa.admin.common.handler;
 
-import com.joa.openapi.common.response.ApiResponse;
-import com.joa.openapi.common.errorcode.ErrorCode;
-import com.joa.openapi.common.exception.RestApiException;
+import com.joa.admin.common.errorcode.ErrorCode;
+import com.joa.admin.common.exception.RestApiException;
+import com.joa.admin.common.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -1,4 +1,4 @@
-package com.joa.admin.common.config.redis;
+package com.joa.admin.common.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

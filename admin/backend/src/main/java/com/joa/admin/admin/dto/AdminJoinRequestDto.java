@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AdminJoinRequest {
+public class AdminJoinRequestDto {
 
     @NotBlank(message = "사용자 이메일을 입력해주세요.")
     @Email(message = "이메일 형식에 맞지 않습니다.")

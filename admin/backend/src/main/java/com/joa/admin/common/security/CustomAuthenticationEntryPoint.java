@@ -1,7 +1,7 @@
-package com.joa.admin.common.config.security;
+package com.joa.admin.common.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.joa.admin.admin.errorcode.MemberErrorCode;
+import com.joa.admin.admin.errorcode.AdminErrorCode;
 import com.joa.admin.common.exception.RestApiException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +14,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 
 @Slf4j(topic = "UNAUTHORIZATION_EXCEPTION_HANDLER")
@@ -29,7 +28,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
                          AuthenticationException authException) throws IOException {
         log.error("Not Authenticated Request", authException);
 
-        String responseBody = objectMapper.writeValueAsString(new RestApiException(MemberErrorCode.UNAUTHORIZED));
+        String responseBody = objectMapper.writeValueAsString(new RestApiException(AdminErrorCode.UNAUTHORIZED));
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setCharacterEncoding("UTF-8");

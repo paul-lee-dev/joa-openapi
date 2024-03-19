@@ -1,4 +1,4 @@
-package com.joa.openapi.common.response;
+package com.joa.admin.common.response;
 
 import lombok.AccessLevel;
 import lombok.Getter;

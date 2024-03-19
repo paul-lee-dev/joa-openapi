@@ -1,4 +1,4 @@
-package com.joa.bank.common.entity;
+package com.joa.admin.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

@@ -1,4 +1,4 @@
-package com.joa.admin.common.config.querydsl;
+package com.joa.admin.common.config;
 
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;

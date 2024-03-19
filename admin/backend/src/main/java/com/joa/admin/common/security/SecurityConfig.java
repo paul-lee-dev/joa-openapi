@@ -1,4 +1,4 @@
-package com.joa.admin.common.config.security;
+package com.joa.admin.common.security;
 
 
 import com.joa.admin.admin.service.AdminService;

@@ -1,7 +1,7 @@
-package com.joa.admin.common.config.security;
+package com.joa.admin.common.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.joa.admin.admin.errorcode.MemberErrorCode;
+import com.joa.admin.admin.errorcode.AdminErrorCode;
 import com.joa.admin.common.exception.RestApiException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +29,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
                        AccessDeniedException accessDeniedException) throws IOException, ServletException {
         log.error("No Authorities", accessDeniedException);
 
-        String responseBody = objectMapper.writeValueAsString(new RestApiException(MemberErrorCode.ACCESS_DENIED));
+        String responseBody = objectMapper.writeValueAsString(new RestApiException(AdminErrorCode.ACCESS_DENIED));
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.FORBIDDEN.value());
         response.setCharacterEncoding("UTF-8");
