@@ -1,11 +1,4 @@
-import {
-  ScrollView,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Header from '../components/Header';
 import CommonMenuItem from '../components/CommonMenuItem';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';

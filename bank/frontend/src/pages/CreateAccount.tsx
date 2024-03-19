@@ -1,4 +1,4 @@
-import {ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Header from '../components/Header';
 import BottomButton from '../components/BottomButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -38,11 +38,11 @@ function CreateAccount(): React.JSX.Element {
                 <Text className="text-base text-gray-50">더 강력하게</Text>
               </View>
             </View>
-            <View className="w-80 h-14 bg-purple-900/70 flex justify-center items-center">
+            <TouchableOpacity className="w-80 h-14 bg-purple-900/70 flex justify-center items-center">
               <Text className="text-xl text-gray-50 font-medium">
                 자세히보기
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
           <View className="w-full flex p-6">
             <Text className="text-2xl mb-4 font-semibold">

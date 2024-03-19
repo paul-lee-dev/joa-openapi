@@ -1,4 +1,10 @@
-import {ScrollView, Text, TextInput, View} from 'react-native';
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AccountItem from '../components/AccountItem';
@@ -12,9 +18,11 @@ function Transfer(): React.JSX.Element {
           <Text className="font-semibold text-base">저축예금[입출금]</Text>
         </View>
         <View className="w-full flex flex-row items-center space-x-2">
-          <Text className="text-2xl underline text-gray-400">
-            123-123456-12-123
-          </Text>
+          <TouchableOpacity>
+            <Text className="text-2xl underline text-gray-400">
+              123-123456-12-123
+            </Text>
+          </TouchableOpacity>
           <Icon
             name={'chevron-down'}
             color={'#777'}
