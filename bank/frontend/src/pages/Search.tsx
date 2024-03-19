@@ -1,9 +1,13 @@
 import {ScrollView, Text, TextInput, View} from 'react-native';
 import Header from '../components/Header';
-import CommonMenuItem from '../components/CommonMenuItem';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import ToggleSwitch from '../components/ToggleSwitch';
+import {useState} from 'react';
 
 function Search(): React.JSX.Element {
+  const [isAutosave, setIsAutosave] = useState<boolean>(true);
+  const toggleAutosave = () => setIsAutosave(previousState => !previousState);
+
   return (
     <View className="w-full h-full bg-gray-100 flex">
       <Header
@@ -25,10 +29,14 @@ function Search(): React.JSX.Element {
       <ScrollView className="w-full flex-grow">
         <View className="w-full bg-gray-200 flex space-y-6">
           <View className="w-full h-40 bg-gray-100">
-            <View className="w-full flex flex-row justify-between items-center px-10">
+            <View className="w-full flex flex-row justify-between items-center px-8">
               <Text className="text-xl font-medium">최근검색어</Text>
-              <View>
+              <View className="flex flex-row justify-between items-center">
                 <Text className="text-sm font-medium">자동저장</Text>
+                <ToggleSwitch
+                  isEnabled={isAutosave}
+                  toggleSwitch={toggleAutosave}
+                />
               </View>
             </View>
             <View className="w-full flex-grow flex">
