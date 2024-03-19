@@ -1,13 +1,39 @@
 import { HiUser } from "react-icons/hi";
+import tw from "tailwind-styled-components";
 
 export default function Header() {
   return (
-    <header className="bg-green-800 text-white py-4 px-6 flex justify-between items-center">
-      <h1 className="text-xl font-semibold">Overview</h1>
-      <div className="flex items-center">
-        <span className="mr-2">Username</span>
-        <HiUser></HiUser>
-      </div>
-    </header>
+    <>
+      <Wrapper>
+        <Title>Admin</Title>
+        <UserContainer>
+          <UserName>Username</UserName>
+          <HiUser></HiUser>
+        </UserContainer>
+      </Wrapper>
+    </>
   );
 }
+
+const Wrapper = tw.header`
+bg-pink-200
+text-gray-800 
+py-4 
+px-6 
+flex 
+justify-between 
+items-center
+`;
+
+const Title = tw.h1`
+text-xl 
+font-semibold
+`;
+
+const UserContainer = tw.div`
+flex items-center
+`;
+
+const UserName = tw.span`
+mr-2
+`;

@@ -11,6 +11,7 @@ export default function SignUpPage() {
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+    console.log("Toggle modal");
   };
 
   const handleVerificationCodeChange = (event: {
@@ -23,6 +24,7 @@ export default function SignUpPage() {
     setIsModalOpen(!isModalOpen);
     console.log("Verifying code:", verificationCode);
   };
+
   return (
     <>
       <Wrapper>
@@ -74,10 +76,9 @@ export default function SignUpPage() {
               <LoginLabel htmlFor="passwordCheck">비밀번호 확인</LoginLabel>
               <InputContainer>
                 <Input
-                  id="password"
-                  name="password"
+                  id="passwordCheck"
+                  name="passwordCheck"
                   type="password"
-                  autoComplete="current-password"
                   required
                 />
               </InputContainer>

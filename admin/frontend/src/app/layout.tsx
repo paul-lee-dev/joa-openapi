@@ -1,6 +1,3 @@
-// "use client";
-
-import "@/app/ui/global.css";
 import RecoilContextProvider from "./recoilContextProvider";
 
 export const metadata = {
@@ -15,7 +12,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <RecoilContextProvider>{children}</RecoilContextProvider>
+      <body id={"root"}>
+        <RecoilContextProvider>{children}</RecoilContextProvider>
+      </body>
     </html>
   );
 }

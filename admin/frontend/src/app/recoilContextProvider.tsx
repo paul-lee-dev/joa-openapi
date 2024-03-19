@@ -1,5 +1,8 @@
 "use client";
 
+import React, { ReactNode } from "react";
+import "@/styles/global.css";
+
 import { RecoilRoot, atom } from "recoil";
 export const todoListState = atom({
   key: "TodoList",
