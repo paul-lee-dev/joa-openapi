@@ -36,7 +36,7 @@ public class BankController {
     public ResponseEntity<?> delete(@PathVariable(value = "bankId") UUID bankId) {
         bankService.delete(bankId);
         String bankName = bankService.serachBankName(bankId);
-        return ResponseEntity.ok(ApiResponse.success(bankName + "은행삭제에 성공했습니다. \n 삭제일시 : " + LocalDateTime.now(), bankId));
+        return ResponseEntity.ok(ApiResponse.success(bankName + "은행삭제에 성공했습니다. 삭제일시 : " + LocalDateTime.now(), bankId));
     }
 
     @GetMapping("/search")
