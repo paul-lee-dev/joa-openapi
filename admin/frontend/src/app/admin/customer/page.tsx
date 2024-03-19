@@ -1,8 +1,7 @@
-import Table from "@/components/table";
-
+import CustomerTable from "@/components/customerTable";
 const CustomerList = () => {
   return (
-    <Table></Table>
+    <CustomerTable></CustomerTable>
   );
 };
 
