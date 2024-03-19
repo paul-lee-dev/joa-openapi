@@ -5,15 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DummyMemberRequestDto<T> {
-    private String name;
+public class DummyMemberRequestDto {
+
     private Integer count;
-    private T bank;
-    private T data;
-
-
+    private UUID bankId;
 }
