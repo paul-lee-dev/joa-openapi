@@ -30,8 +30,8 @@ public class AccountService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public AccountCreateResponseDto create(AccountCreateRequestDto req, String memberId) {
-        String accountId = "12345";
+    public AccountCreateResponseDto create(String memberId, AccountCreateRequestDto req) {
+        String accountId = "1234";
 
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
 
@@ -63,16 +63,51 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountUpdateResponseDto update(AccountUpdateRequestDto req, String memberId) {
+    public AccountUpdateResponseDto update(String memberId, AccountUpdateRequestDto req) {
         Account account = accountRepository.findById(req.getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
-        authorityValidation(account, memberId);
-        account.update(req);
+        authorityValidation(memberId, account);
+
+        if(req.getNickname() != null)
+            account.updateNickname(req.getNickname());
+        if (req.getWithdrawAccount() != null)
+            account.updateWithdrawAccount(req.getWithdrawAccount());
+
+        accountRepository.save(account);
 
         return AccountUpdateResponseDto.toDto(account);
     }
 
+    @Transactional
+    public Long updateLimit(String memberId, AccountUpdateRequestDto req) {
+        Account account = accountRepository.findById(req.getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
+        authorityValidation(memberId, account);
+
+        if(req.getTransferLimit() != null)
+            account.updateLimit(req.getTransferLimit());
+
+        accountRepository.save(account);
+
+        return account.getTransferLimit();
+    }
+
+    @Transactional
+    public void updatePassword(String memberId, AccountUpdateRequestDto req) {
+        Account account = accountRepository.findById(req.getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        authorityValidation(memberId, account);
+
+        if(req.getPassword() != null)
+            account.updatePassword(req.getPassword());
+
+        accountRepository.save(account);
+    }
+
+    public void authorityValidation(String memberId, Account account) {
+        if (!account.getHolder().getId().equals(memberId))
+            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+    }
 
     /**
      *
@@ -81,10 +116,5 @@ public class AccountService {
      */
     public String createAccountId(){
         return null;
-    }
-
-    public void authorityValidation(Account account, String memberId) {
-        if (!account.getHolder().getId().equals(memberId))
-            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
     }
 }

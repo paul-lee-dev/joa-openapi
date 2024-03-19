@@ -19,20 +19,26 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestHeader("memberId") String memberId, @RequestBody AccountCreateRequestDto req) {
-        AccountCreateResponseDto account = accountService.create(req, memberId);
-        return ResponseEntity.ok(ApiResponse.success("계좌 개설에 성공했습니다.", account));
+        AccountCreateResponseDto response = accountService.create(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("계좌 개설에 성공했습니다.", response));
     }
 
     @PatchMapping
     public ResponseEntity<?> update(@RequestHeader("memberId") String memberId, @RequestBody AccountUpdateRequestDto req) {
-        AccountUpdateResponseDto account = accountService.update(req, memberId);
-        return ResponseEntity.ok(ApiResponse.success("계좌 수정에 성공했습니다.", account));
+        AccountUpdateResponseDto response = accountService.update(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("계좌 수정에 성공했습니다.", response));
     }
 
     @PatchMapping("/limit")
     public ResponseEntity<?> updateLimit(@RequestHeader("memberId") String memberId, @RequestBody AccountUpdateRequestDto req) {
-        AccountUpdateResponseDto account = accountService.update(req, memberId);
-        return ResponseEntity.ok(ApiResponse.success("이체한도 변경에 성공했습니다.", account));
+        Long limit = accountService.updateLimit(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("이체한도 변경에 성공했습니다.", limit));
+    }
+
+    @PatchMapping("/password")
+    public ResponseEntity<?> updatePassword(@RequestHeader("memberId") String memberId, @RequestBody AccountUpdateRequestDto req) {
+        accountService.updatePassword(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("비밀번호 변경에 성공했습니다."));
     }
 
 

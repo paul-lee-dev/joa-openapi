@@ -42,10 +42,19 @@ public class Account extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member holder;
 
-    public void update(AccountUpdateRequestDto req) {
-        if(req.getNickname() != null)
-            this.nickname = req.getNickname();
-        if(req.getWithdrawAccount() != null)
-            this.withdrawAccount = req.getWithdrawAccount();
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updateWithdrawAccount(String withdrawAccount) {
+        this.withdrawAccount = withdrawAccount;
+    }
+
+    public void updateLimit(Long limit) {
+        this.transferLimit = limit;
+    }
+
+    public void updatePassword(Integer password) {
+        this.password = password;
     }
 }

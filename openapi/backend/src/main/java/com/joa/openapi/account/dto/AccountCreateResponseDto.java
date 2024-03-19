@@ -22,8 +22,6 @@ public class AccountCreateResponseDto {
     private Integer term;
     private String withdrawAccount;
     private Long amount;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime createdAt;
 
     public static AccountCreateResponseDto toDto(Account account) {
         return AccountCreateResponseDto.builder()
@@ -37,7 +35,6 @@ public class AccountCreateResponseDto {
                 .term(account.getTerm())
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
-                .createdAt(account.getCreatedAt())
                 .build();
     }
 }
