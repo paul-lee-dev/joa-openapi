@@ -4,13 +4,14 @@ import { useRecoilState } from "recoil";
 import tw from "tailwind-styled-components";
 import { ModalState, VerificationState } from "./state";
 
-export default function SignUp() {
+export default function SignUpPage() {
   const [isModalOpen, setIsModalOpen] = useRecoilState(ModalState);
   const [verificationCode, setVerificationCode] =
     useRecoilState(VerificationState);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+    console.log("Toggle modal");
   };
 
   const handleVerificationCodeChange = (event: {
@@ -23,6 +24,7 @@ export default function SignUp() {
     setIsModalOpen(!isModalOpen);
     console.log("Verifying code:", verificationCode);
   };
+
   return (
     <>
       <Wrapper>
@@ -74,10 +76,9 @@ export default function SignUp() {
               <LoginLabel htmlFor="passwordCheck">비밀번호 확인</LoginLabel>
               <InputContainer>
                 <Input
-                  id="password"
-                  name="password"
+                  id="passwordCheck"
+                  name="passwordCheck"
                   type="password"
-                  autoComplete="current-password"
                   required
                 />
               </InputContainer>
