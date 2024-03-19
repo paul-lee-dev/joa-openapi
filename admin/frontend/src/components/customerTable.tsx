@@ -27,18 +27,51 @@ export default function CustomerTable() {
       joinDate: "2023-06-30",
       recentTransactionAmount: 75000,
     },
+    {
+      id: 4,
+      name: "구본승",
+      clientId: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
+      customerId: "rootwin",
+      phoneNumber: "010-9876-9876",
+      joinDate: "2023-06-30",
+      recentTransactionAmount: -75000,
+    },
+    {
+      id: 5,
+      name: "구본승",
+      clientId: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
+      customerId: "rootwin",
+      phoneNumber: "010-9876-9876",
+      joinDate: "2023-06-30",
+      recentTransactionAmount: 75000,
+    },
+    {
+      id: 6,
+      name: "구본승",
+      clientId: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
+      customerId: "rootwin",
+      phoneNumber: "010-9876-9876",
+      joinDate: "2023-06-30",
+      recentTransactionAmount: -75000,
+    },
+    {
+      id: 7,
+      name: "구본승",
+      clientId: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
+      customerId: "rootwin",
+      phoneNumber: "010-9876-9876",
+      joinDate: "2023-06-30",
+      recentTransactionAmount: 75000,
+    },
   ];
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className="w-full text-sm text-left text-gray-500 ">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th
-              scope="col"
-              className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
-            >
-              고객 명
+            <th scope="col" className="px-6 py-3">
+              ClientName
             </th>
             <th scope="col" className="px-6 py-3">
               ClientID
@@ -64,9 +97,9 @@ export default function CustomerTable() {
           {Customers.map((customer) => (
             <tr
               key={customer.id}
-              className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600"
+              className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
-              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                 {customer.name}
               </td>
               <td className="px-6 py-4">{customer.clientId}</td>
@@ -86,7 +119,7 @@ export default function CustomerTable() {
               <td className="px-6 py-4">
                 <a
                   href="#"
-                  className="font-medium text-pink-400 dark:text-pink-200 hover:text-pink-500"
+                  className="font-medium text-pink-400 hover:text-pink-500"
                 >
                   자세히
                 </a>
