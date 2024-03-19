@@ -4,8 +4,7 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Getter
-@Builder
+@Data
 public class AdminResponseDto {
 
     private UUID adminId;

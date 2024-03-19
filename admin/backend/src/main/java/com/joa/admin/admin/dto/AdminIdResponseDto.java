@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AdminJoinResponse {
+public class AdminIdResponseDto {
 
     private String adminId;
 }

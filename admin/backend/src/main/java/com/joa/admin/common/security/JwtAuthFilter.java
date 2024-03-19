@@ -1,13 +1,11 @@
-package com.joa.admin.common.config.security.jwt;
+package com.joa.admin.common.config.security;
 
 import com.joa.admin.admin.service.AdminService;
-import com.joa.admin.common.config.security.user.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -1,11 +1,7 @@
-package com.joa.admin.admin.config.security;
+package com.joa.admin.common.config.security;
 
 
-import com.joa.admin.admin.config.exception.CustomAccessDeniedHandler;
-import com.joa.admin.admin.config.exception.CustomAuthenticationEntryPoint;
-import com.joa.admin.admin.config.security.jwt.JwtAuthFilter;
-import com.joa.admin.admin.config.security.jwt.JwtUtil;
-import com.joa.admin.admin.config.security.user.CustomUserDetailsService;
+import com.joa.admin.admin.service.AdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @AllArgsConstructor
 public class SecurityConfig  {
-    private final CustomUserDetailsService customUserDetailsService;
+    private final AdminService adminService;
     private final JwtUtil jwtUtil;
     private final CustomAccessDeniedHandler accessDeniedHandler;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
@@ -50,7 +46,7 @@ public class SecurityConfig  {
 
 
         //JwtAuthFilter를 UsernamePasswordAuthenticationFilter 앞에 추가
-        http.addFilterBefore(new JwtAuthFilter(customUserDetailsService, jwtUtil), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtAuthFilter(adminService, jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
         http.exceptionHandling((exceptionHandling) -> exceptionHandling
                 .authenticationEntryPoint(authenticationEntryPoint)
@@ -67,6 +63,4 @@ public class SecurityConfig  {
 
         return http.build();
     }
-
-
 }

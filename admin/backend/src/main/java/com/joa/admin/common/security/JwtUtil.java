@@ -1,12 +1,9 @@
-package com.joa.admin.common.config.security.jwt;
+package com.joa.admin.common.config.security;
 
-import com.joa.admin.admin.dto.AdminInfoDto;
-import com.joa.admin.common.config.security.user.CustomUserDetailsService;
 import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -41,17 +38,17 @@ public class JwtUtil {
     private String refreshHeader;
 
     //Access Token 생성
-    public String createAccessToken(AdminInfoDto admin) {
-        return createToken(admin, accessTokenExpTime);
+    public String createAccessToken(String adminId) {
+        return createToken(adminId, accessTokenExpTime);
     }
 
     //Refresh Token 생성
-    public String createRefreshToken(AdminInfoDto admin) {
-        String refreshToken = createToken(admin, refreshTokenExpTime);
+    public String createRefreshToken(String adminId) {
+        String refreshToken = createToken(adminId, refreshTokenExpTime);
 
         //redis에 저장
         redisTemplate.opsForValue().set(
-                admin.getEmail(),
+                adminId,
                 refreshToken,
                 refreshTokenExpTime,
                 TimeUnit.MILLISECONDS
@@ -60,9 +57,9 @@ public class JwtUtil {
     }
 
     //JWT 생성
-    private String createToken(AdminInfoDto admin, long expireTime) {
+    private String createToken(String adminId, long expireTime) {
         Claims claims = Jwts.claims();
-        claims.put("email", admin.getEmail());
+        claims.put("id", adminId);
 
         ZonedDateTime now = ZonedDateTime.now();
         ZonedDateTime tokenValidity = now.plusSeconds(expireTime);
@@ -75,6 +72,13 @@ public class JwtUtil {
                 .compact();
     }
 
+    //Access Token 추출
+    public Optional<String> extractAccessToken(HttpServletRequest request) {
+        return Optional.ofNullable(request.getHeader(accessHeader))
+                .filter(token -> token.startsWith(BEARER))
+                .map(token -> token.replace(BEARER, ""));
+    }
+
     //Refresh Token 추출
     public Optional<String> extractRefreshToken(HttpServletRequest request) {
         return Optional.ofNullable(request.getHeader(refreshHeader))
@@ -82,9 +86,9 @@ public class JwtUtil {
                 .map(token -> token.replace(BEARER, ""));
     }
 
-    //Token에서 admin email 추출
+    //Token에서 admin uuid를 String으로 추출
     public String getUserId(String token) {
-        return parseClaims(token).get("email", String.class);
+        return parseClaims(token).get("id", String.class);
     }
 
     //JWT 검증
@@ -113,8 +117,8 @@ public class JwtUtil {
         }
     }
 
-    public void logout(String email) {
+    public void logout(String id) {
         // Redis에서 해당 userId로 저장된 Refresh Token이 있는지 여부 확인
-        if ( redisTemplate.opsForValue().get(email) != null) redisTemplate.delete(email); // Refresh Token 삭제
+        if ( redisTemplate.opsForValue().get(id) != null) redisTemplate.delete(id); // Refresh Token 삭제
     }
 }

@@ -1,7 +1,8 @@
-package com.joa.admin.admin.config.exception;
+package com.joa.admin.common.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
+import com.joa.admin.admin.errorcode.MemberErrorCode;
+import com.joa.admin.common.exception.RestApiException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -25,12 +26,10 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
-                         AuthenticationException authException) throws IOException, ServletException {
+                         AuthenticationException authException) throws IOException {
         log.error("Not Authenticated Request", authException);
 
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto(HttpStatus.UNAUTHORIZED.value(), authException.getMessage(), LocalDateTime.now());
-
-        String responseBody = objectMapper.writeValueAsString(errorResponseDto);
+        String responseBody = objectMapper.writeValueAsString(new RestApiException(MemberErrorCode.UNAUTHORIZED));
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setCharacterEncoding("UTF-8");
