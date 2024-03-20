@@ -7,15 +7,13 @@ import tw from "tailwind-styled-components";
 export default function Admin({ children }: { children: React.ReactNode }) {
   return (
     <Wrapper>
-      <AdminContainer>
+      <Sidebar />
+      <MainContainer>
         <Header />
-        <Sidebar />
-        <MainContainer>
-          <ChildrenContainer>
-            <Children>{children}</Children>
-          </ChildrenContainer>
-        </MainContainer>
-      </AdminContainer>
+        <AdminContainer>
+          <Children>{children}</Children>
+        </AdminContainer>
+      </MainContainer>
     </Wrapper>
   );
 }
@@ -23,24 +21,20 @@ export default function Admin({ children }: { children: React.ReactNode }) {
 const Wrapper = tw.div`
 flex
 h-full
-w-full`;
+w-full
+`;
+
+const MainContainer = tw.div`
+flex-none 
+transition-all
+`;
 
 const AdminContainer = tw.div`
 h-full
-w-full`;
-
-const MainContainer = tw.div`
-mx-2.5  
-flex-none 
-transition-all 
-md:pr-2
-xl:ml-[323px]`;
-
-const ChildrenContainer = tw.div`
+w-full
 `;
 
 const Children = tw.div`
 mx-auto
 min-h-screen
-p-2
-!pt-[10px] md:p-2`;
+`;

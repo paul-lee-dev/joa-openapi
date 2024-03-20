@@ -1,7 +1,7 @@
 "use client";
-import Table from "@/components/bankTable";
 import tw from "tailwind-styled-components";
 import { useState } from "react";
+import BankTable from "@/components/bankTable";
 
 const BankList = () => {
   const [isModalOpen, setModalState] = useState(false);
@@ -13,10 +13,10 @@ const BankList = () => {
 
   return (
     <>
-      <SmallBtn className="" type="button" onClick={toggleModal}>
+      <BankTable />
+      <SmallBtn type="button" onClick={toggleModal}>
         추가
       </SmallBtn>
-      <Table />
       {isModalOpen && (
         <Modal>
           <ModalContent>

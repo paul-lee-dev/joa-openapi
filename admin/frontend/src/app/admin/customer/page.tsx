@@ -1,8 +1,6 @@
 import CustomerTable from "@/components/customerTable";
 const CustomerList = () => {
-  return (
-    <CustomerTable></CustomerTable>
-  );
+  return <CustomerTable></CustomerTable>;
 };
 
 export default CustomerList;
