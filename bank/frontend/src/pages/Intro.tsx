@@ -5,10 +5,17 @@ import PiggyBank2 from '../../assets/piggy-bank2.png';
 import BottomPopup from '../components/BottomPopup';
 import CommonInput from '../components/CommonInput';
 import BottomButton from '../components/BottomButton';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {ParamListBase} from '@react-navigation/native';
 
-function Intro(): React.JSX.Element {
+type IntroScreenProps = NativeStackScreenProps<ParamListBase, 'Intro'>;
+
+function Intro({navigation}: IntroScreenProps): React.JSX.Element {
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+  const toJoin = useCallback(() => {
+    navigation.navigate('Join');
+  }, [navigation]);
   return (
     <View className="w-full h-full bg-gray-100">
       <Header
@@ -29,7 +36,9 @@ function Intro(): React.JSX.Element {
             source={PiggyBank2}
             className="w-36 h-36 absolute -top-24 -right-4 z-10"
           />
-          <TouchableOpacity className="w-full h-24 bg-pink-200 shadow-sm shadow-black flex flex-row space-x-8 items-center px-8">
+          <TouchableOpacity
+            onPress={toJoin}
+            className="w-full h-24 bg-pink-200 shadow-sm shadow-black flex flex-row space-x-8 items-center px-8">
             <Icon
               name={'account-outline'}
               color={'#777'}

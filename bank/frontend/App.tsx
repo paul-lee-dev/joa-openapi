@@ -37,6 +37,11 @@ function App(): React.JSX.Element {
           component={Main}
           options={{title: 'ZOA BANK'}}
         />
+        <Stack.Screen
+          name="Join"
+          component={Join}
+          options={{title: 'ZOA BANK'}}
+        />
       </Stack.Navigator>
       {/* <Stack.Screen name="Details">
         {props => <DetailsScreen {...props} />}
