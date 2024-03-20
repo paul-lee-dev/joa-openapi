@@ -2,6 +2,7 @@
 import tw from "tailwind-styled-components";
 import { useState } from "react";
 import BankTable from "@/components/table/bankTable";
+import Pagination from "@/components/pagination";
 
 const BankList = () => {
   const [isModalOpen, setModalState] = useState(false);
@@ -14,6 +15,11 @@ const BankList = () => {
   return (
     <>
       <BankTable />
+      <Pagination
+        currentPage={0}
+        totalPages={5}
+        onPageChange={function (page: number): void {}}
+      ></Pagination>
       <SmallBtn type="button" onClick={toggleModal}>
         추가
       </SmallBtn>

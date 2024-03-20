@@ -1,11 +1,12 @@
 "use client";
 
 import Pagination from "@/components/pagination";
-import AccountTable from "@/components/table/accountTable";
-const AccountList = () => {
+import TransactionTable from "@/components/table/transactionTable";
+
+const Dashboard = () => {
   return (
     <>
-      <AccountTable></AccountTable>
+      <TransactionTable></TransactionTable>
       <Pagination
         currentPage={0}
         totalPages={5}
@@ -15,4 +16,4 @@ const AccountList = () => {
   );
 };
 
-export default AccountList;
+export default Dashboard;
