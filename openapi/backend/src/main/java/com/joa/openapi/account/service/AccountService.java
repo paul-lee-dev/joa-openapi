@@ -32,9 +32,8 @@ public class AccountService {
 
     @Transactional
     public AccountCreateResponseDto create(UUID memberId, AccountCreateRequestDto req) {
+        // 계좌번호 임시 랜덤 생성
         String accountId = String.valueOf(Math.random());
-
-        log.info("memberId:{}",memberId);
 
         Member member = memberRepository.findByMemberId(memberId);
 

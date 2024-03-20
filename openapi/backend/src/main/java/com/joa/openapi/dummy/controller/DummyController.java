@@ -37,11 +37,6 @@ public class DummyController {
     @PostMapping("/account")
     public ResponseEntity<?> createAccount(@RequestBody DummyAccountRequestDto req, @RequestHeader("bankId") UUID bankId, @RequestHeader("adminId") UUID adminId, @RequestHeader("productId") UUID productId) {
         DummyResponseDto dummyResponseDto = dummyService.createAccount(req, bankId, adminId, productId);
-        log.info("{}은행에 더미계좌 생성", bankId);
-        log.info("더미계좌 생성 갯수 : {}", req.getCount());
-        for (int i = 0; i < req.getCount(); i++) {
-            log.info("{}번째 계좌 생성, 계좌별명:{}", i+1, dummyService.makeNeyhuing(4));
-        }
         return ResponseEntity.ok(ApiResponse.success("계좌 더미데이터 생성 성공", dummyResponseDto));
     }
 
