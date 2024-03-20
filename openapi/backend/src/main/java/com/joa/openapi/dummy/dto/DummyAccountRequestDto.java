@@ -15,5 +15,5 @@ import java.util.UUID;
 public class DummyAccountRequestDto {
 
     private Integer count;
-    private List<String> users;
+    private List<UUID> users;
 }

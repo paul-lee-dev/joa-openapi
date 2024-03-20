@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/v1/account")
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestHeader("memberId") String memberId, @RequestBody AccountCreateRequestDto req) {
+    public ResponseEntity<?> create(@RequestHeader("memberId") UUID memberId, @RequestBody AccountCreateRequestDto req) {
         AccountCreateResponseDto response = accountService.create(memberId, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 개설에 성공했습니다.", response));
     }
