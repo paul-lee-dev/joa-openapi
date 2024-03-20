@@ -10,10 +10,66 @@ export default function transactionTable() {
       date: "2023-12-02",
       amount: 100000,
     },
+    {
+      id: 2,
+      name: "예금통장",
+      from: "1010101010",
+      to: "1010101011",
+      date: "2023-12-02",
+      amount: 100000,
+    },
+    {
+      id: 3,
+      name: "예금통장",
+      from: "1010101010",
+      to: "1010101011",
+      date: "2023-12-02",
+      amount: 100000,
+    },
+    {
+      id: 4,
+      name: "예금통장",
+      from: "1010101010",
+      to: "1010101011",
+      date: "2023-12-02",
+      amount: 100000,
+    },
+    {
+      id: 5,
+      name: "예금통장",
+      from: "1010101010",
+      to: "1010101011",
+      date: "2023-12-02",
+      amount: 100000,
+    },
+    {
+      id: 6,
+      name: "예금통장",
+      from: "1010101010",
+      to: "1010101011",
+      date: "2023-12-02",
+      amount: 100000,
+    },
+    {
+      id: 7,
+      name: "예금통장",
+      from: "1010101010",
+      to: "1010101011",
+      date: "2023-12-02",
+      amount: 100000,
+    },
+    {
+      id: 8,
+      name: "예금통장",
+      from: "1010101010",
+      to: "1010101011",
+      date: "2023-12-02",
+      amount: 100000,
+    },
   ];
 
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div className="relative overflow-x-auto shadow-sm sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
