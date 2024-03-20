@@ -1,8 +1,7 @@
 "use client";
-import Table from "@/components/table";
 import tw from "tailwind-styled-components";
-import { HiUpload } from "react-icons/hi";
 import { useState } from "react";
+import BankTable from "@/components/table/bankTable";
 
 const BankList = () => {
   const [isModalOpen, setModalState] = useState(false);
@@ -14,10 +13,10 @@ const BankList = () => {
 
   return (
     <>
-      <SmallBtn className="" type="button" onClick={toggleModal}>
+      <BankTable />
+      <SmallBtn type="button" onClick={toggleModal}>
         추가
       </SmallBtn>
-      <Table />
       {isModalOpen && (
         <Modal>
           <ModalContent>
@@ -47,11 +46,13 @@ const BankList = () => {
                 >
                   은행 로고 (추가)
                 </label>
-                <div className="mt-2 items-center gap-y-3 grid grid-col-2">
-                  <div className="float-left">
-                    <HiUpload />
-                  </div>
-                </div>
+                <form className="max-w-lg mx-auto">
+                  <input
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
+                    id="bank_logo"
+                    type="file"
+                  />
+                </form>
               </div>
               <SmallBtn onClick={toggleModal}>확인</SmallBtn>
             </InputContainerWithButton>

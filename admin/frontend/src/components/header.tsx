@@ -3,17 +3,17 @@ import tw from "tailwind-styled-components";
 
 export default function Header() {
   return (
-      <Wrapper>
-        <Title>Admin</Title>
-        <UserContainer>
-          <UserName>Username</UserName>
-          <HiUser></HiUser>
-        </UserContainer>
-      </Wrapper>
+    <Wrapper>
+      <Title>Admin</Title>
+      <UserContainer>
+        <UserName>Username</UserName>
+        <HiUser></HiUser>
+      </UserContainer>
+    </Wrapper>
   );
 }
 
-const Wrapper = tw.header`
+const Wrapper = tw.nav`
 bg-pink-200
 text-gray-800 
 py-4 

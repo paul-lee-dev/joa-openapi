@@ -4,6 +4,9 @@ spring:
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+  config:
+    import:
+      - optional:env/env.yml
 
   jpa:
     hibernate:
@@ -12,3 +15,25 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+  data:
+    redis:
+      host: localhost #로컬이 아닌 경우 redis로 변경
+      port: 6379
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+
+error:
+  printStackTrace: true
+
+jwt:
+  secret: ${JWT_SECRET_KEY}
+  access:
+    expiration: 10800000 # 3600000 : 60(분) * 60(초) * 1000 -> 1 시간
+    header: Authorization
+  refresh:
+    expiration: 1209600000 # 2주
+    header: Authorization-refresh

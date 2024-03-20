@@ -1,7 +1,4 @@
-import {
-  HiCurrencyDollar,
-  HiDocument,
-} from "react-icons/hi";
+import { HiCurrencyDollar, HiDocument } from "react-icons/hi";
 import {
   HiAdjustmentsHorizontal,
   HiBanknotes,
@@ -11,42 +8,42 @@ import tw from "tailwind-styled-components";
 
 export default function Sidebar() {
   return (
-      <Wrapper id="sidebar">
-        <SidebarContainer>
-          <ListAnchor href="#">
-            <HiDocument></HiDocument>
-            <ListName>Overview</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <HiBanknotes></HiBanknotes>
-            <ListName>은행</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <HiCurrencyDollar></HiCurrencyDollar>
-            <ListName>상품</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <HiCurrencyDollar></HiCurrencyDollar>
-            <ListName>계좌</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <HiCurrencyDollar></HiCurrencyDollar>
-            <ListName>고객</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <HiCurrencyDollar></HiCurrencyDollar>
-            <ListName>거래내역</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <HiAdjustmentsHorizontal></HiAdjustmentsHorizontal>
-            <ListName>자동생성</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <HiCog6Tooth></HiCog6Tooth>
-            <ListName>설정</ListName>
-          </ListAnchor>
-        </SidebarContainer>
-      </Wrapper>
+    <Wrapper id="sidebar">
+      <SidebarContainer>
+        <ListAnchor href="#">
+          <HiDocument></HiDocument>
+          <ListName>Overview</ListName>
+        </ListAnchor>
+        <ListAnchor href="#">
+          <HiBanknotes></HiBanknotes>
+          <ListName>은행</ListName>
+        </ListAnchor>
+        <ListAnchor href="#">
+          <HiCurrencyDollar></HiCurrencyDollar>
+          <ListName>상품</ListName>
+        </ListAnchor>
+        <ListAnchor href="#">
+          <HiCurrencyDollar></HiCurrencyDollar>
+          <ListName>계좌</ListName>
+        </ListAnchor>
+        <ListAnchor href="#">
+          <HiCurrencyDollar></HiCurrencyDollar>
+          <ListName>고객</ListName>
+        </ListAnchor>
+        <ListAnchor href="#">
+          <HiCurrencyDollar></HiCurrencyDollar>
+          <ListName>거래내역</ListName>
+        </ListAnchor>
+        <ListAnchor href="#">
+          <HiAdjustmentsHorizontal></HiAdjustmentsHorizontal>
+          <ListName>자동생성</ListName>
+        </ListAnchor>
+        <ListAnchor href="#">
+          <HiCog6Tooth></HiCog6Tooth>
+          <ListName>설정</ListName>
+        </ListAnchor>
+      </SidebarContainer>
+    </Wrapper>
   );
 }
 
@@ -55,8 +52,7 @@ lg:block
 hidden 
 bg-white 
 w-64 
-h-screen 
-fixed 
+h-screen
 rounded-none 
 border-slate-400
 `;
