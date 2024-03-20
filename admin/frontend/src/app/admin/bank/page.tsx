@@ -1,7 +1,7 @@
 "use client";
 import tw from "tailwind-styled-components";
 import { useState } from "react";
-import BankTable from "@/components/bankTable";
+import BankTable from "@/components/table/bankTable";
 
 const BankList = () => {
   const [isModalOpen, setModalState] = useState(false);
