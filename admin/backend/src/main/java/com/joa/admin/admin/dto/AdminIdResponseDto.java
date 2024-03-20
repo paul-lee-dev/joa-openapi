@@ -15,8 +15,6 @@ import java.util.UUID;
 public class AdminIdResponseDto {
 
     private String adminId;
-//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    private LocalDateTime createdAt;
-//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-//    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

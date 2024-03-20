@@ -21,8 +21,7 @@ public class AdminController {
     //회원가입
     @PostMapping
     public ResponseEntity<?> join(@Valid @RequestBody AdminJoinRequestDto request) {
-        String adminId = adminService.addAdmin(request);
-        AdminIdResponseDto response = new AdminIdResponseDto(adminId);
+        AdminIdResponseDto response = adminService.addAdmin(request);
         return ResponseEntity.ok(ApiResponse.success("회원 가입에 성공했습니다.",response));
     }
     //
@@ -82,8 +81,7 @@ public class AdminController {
     @DeleteMapping
     public ResponseEntity<?> delete() {
         String adminId = SecurityUtil.getCurrentAdminId();
-        String deletedAdminId = adminService.delete(adminId);
-        AdminIdResponseDto response = new AdminIdResponseDto(deletedAdminId);
+        AdminIdResponseDto response = adminService.delete(adminId);
         return ResponseEntity.ok(ApiResponse.success("회원 탈퇴에 성공했습니다.", response));
     }
 }

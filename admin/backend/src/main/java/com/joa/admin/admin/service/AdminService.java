@@ -29,23 +29,23 @@ import java.util.UUID;
 public class AdminService implements UserDetailsService {
 
     private final AdminRepository adminRepository;
-
     private final ModelMapper modelMapper;
-
     private final PasswordEncoder encoder;
-
     private final JwtUtil jwtUtil;
 
     //회원가입
     @Transactional
-    public String addAdmin(AdminJoinRequestDto request) {
+    public AdminIdResponseDto addAdmin(AdminJoinRequestDto request) {
         Admin admin = Admin.builder()
                         .name(request.getName())
                         .email(request.getEmail())
                         .phone(request.getPhone())
                         .build();
         admin.updatePassword(encoder.encode(request.getPassword()));
-        return adminRepository.save(admin).getAdminId().toString();
+        Admin newAdmin = adminRepository.save(admin);
+        AdminIdResponseDto response = new AdminIdResponseDto(newAdmin.getAdminId().toString(),
+                newAdmin.getCreatedAt(), newAdmin.getUpdatedAt());
+        return response;
     }
 
     //이메일 중복 검증
@@ -96,17 +96,19 @@ public class AdminService implements UserDetailsService {
         if (request.getPassword()!=null) admin.updatePassword(encoder.encode(request.getPassword()));
         if (request.getEmail()!=null) admin.updateEmail(request.getEmail());
         if (request.getPhone()!=null) admin.updatePhone(request.getPhone());
-        adminRepository.save(admin);
-        AdminInfoResponseDto response = modelMapper.map(admin, AdminInfoResponseDto.class);
+        Admin updatedAdmin = adminRepository.save(admin);
+        AdminInfoResponseDto response = modelMapper.map(updatedAdmin, AdminInfoResponseDto.class);
         return response;
     }
 
     //회원 탈퇴
     @Transactional
-    public String delete(String adminId) {
+    public AdminIdResponseDto delete(String adminId) {
         Admin admin = adminRepository.findByAdminId(UUID.fromString(adminId));
         admin.deleteSoftly();
-        return admin.getAdminId().toString();
+        AdminIdResponseDto response = new AdminIdResponseDto(admin.getAdminId().toString(),
+                admin.getCreatedAt(), admin.getUpdatedAt());
+        return response;
     }
 
     //access token 갱신
