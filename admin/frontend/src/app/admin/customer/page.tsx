@@ -1,4 +1,4 @@
-import CustomerTable from "@/components/customerTable";
+import CustomerTable from "@/components/table/customerTable";
 const CustomerList = () => {
   return <CustomerTable></CustomerTable>;
 };
