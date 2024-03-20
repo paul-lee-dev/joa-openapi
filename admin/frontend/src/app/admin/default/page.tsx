@@ -1,4 +1,4 @@
-import Table from "@/components/bankTable";
+import Table from "@/components/table/bankTable";
 
 const Dashboard = () => {
   return <Table></Table>;
