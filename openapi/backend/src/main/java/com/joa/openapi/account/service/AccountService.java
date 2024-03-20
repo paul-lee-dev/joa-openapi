@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -30,7 +31,7 @@ public class AccountService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public AccountCreateResponseDto create(String memberId, AccountCreateRequestDto req) {
+    public AccountCreateResponseDto create(UUID memberId, AccountCreateRequestDto req) {
         String accountId = "1234";
 
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));

@@ -57,16 +57,17 @@ public class MemberService {
 
     //회원정보 조회
     @Transactional(readOnly = true)
-    public MemberInfoResponseDto getInfo(String memberId) {
-        Member member = memberRepository.findByMemberId(UUID.fromString(memberId));
+    public MemberInfoResponseDto getInfo(UUID memberId) {
+
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
         MemberInfoResponseDto response = modelMapper.map(member, MemberInfoResponseDto.class);
         return response;
     }
 
     //회원정보 수정
     @Transactional
-    public MemberInfoResponseDto update(String memberId, MemberUpdateRequestDto request) {
-        Member member = memberRepository.findByMemberId(UUID.fromString(memberId));
+    public MemberInfoResponseDto update(UUID memberId, MemberUpdateRequestDto request) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
         if (request.getName()!=null) member.updateName(request.getName());
         if (request.getPassword() !=null) member.updatePassword(request.getPassword());
 //        if (request.getPassword()!=null) member.updatePassword(encoder.encode(request.getPassword()));
@@ -79,8 +80,8 @@ public class MemberService {
 
     //회원 탈퇴
     @Transactional
-    public MemberIdResponseDto delete(String memberId) {
-        Member member = memberRepository.findByMemberId(UUID.fromString(memberId));
+    public MemberIdResponseDto delete(UUID memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
         member.deleteSoftly();
         MemberIdResponseDto response = new MemberIdResponseDto(member.getMemberId().toString(),
                 member.getCreatedAt(), member.getUpdatedAt());
