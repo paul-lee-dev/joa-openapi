@@ -105,7 +105,7 @@ public class AccountService {
     }
 
     public void authorityValidation(String memberId, Account account) {
-        if (!account.getHolder().getId().equals(memberId))
+        if (!account.getHolder().getMemberId().equals(memberId))
             throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
     }
 
