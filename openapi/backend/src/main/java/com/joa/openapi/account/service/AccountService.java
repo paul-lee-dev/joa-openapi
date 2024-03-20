@@ -33,6 +33,8 @@ public class AccountService {
     public AccountCreateResponseDto create(String memberId, AccountCreateRequestDto req) {
         String accountId = "1234";
 
+        log.info("memberId:{}",memberId);
+
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
 
         String startDateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
