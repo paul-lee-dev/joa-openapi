@@ -24,7 +24,9 @@ function Header({stack, menu}: IProps): React.JSX.Element {
           />
         ) : null}
 
-        <Text className="text-2xl font-semibold">{stack || 'JOA BANK'}</Text>
+        <Text className="text-2xl font-semibold text-gray-700">
+          {stack || 'JOA BANK'}
+        </Text>
       </View>
       <View className=" w-24 flex flex-row justify-end space-x-4 pr-2 items-center">
         {menu.map(m => (

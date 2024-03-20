@@ -1,3 +1,4 @@
+import {NavigationContainer, ParamListBase} from '@react-navigation/native';
 import AccountDetail from './src/pages/AccountDetail';
 import ChangeAccountLimit from './src/pages/ChangeAccountLimit';
 import ChangeAccountName from './src/pages/ChangeAccountName';
@@ -18,28 +19,48 @@ import Transfer from './src/pages/Transfer';
 import TransferAmount from './src/pages/TransferAmount';
 import TransferConfirm from './src/pages/TransferConfirm';
 import TransferResult from './src/pages/TransferResult';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
-  // return <Splash />;
-  // return <Main />;
-  // return <Intro />;
-  // return <Join />;
-  // return <History />;
-  // return <Transfer />;
-  // return <TransferAmount />;
-  // return <TransferConfirm />;
-  // return <TransferResult />;
-  // return <Menu />;
-  // return <Setting />;
-  // return <Search />;
-  // return <CreateAccount />;
-  // return <AccountDetail />;
-  // return <ChangePasswordStart />;
-  // return <ChangePasswordVerify />;
-  // return <ChangePassword />;
-  // return <ChangePasswordResult />;
-  // return <ChangeAccountName />;
-  return <ChangeAccountLimit />;
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Intro">
+        <Stack.Screen
+          name="Intro"
+          component={Intro}
+          options={{title: 'ZOA BANK'}}
+        />
+        <Stack.Screen
+          name="Main"
+          component={Main}
+          options={{title: 'ZOA BANK'}}
+        />
+      </Stack.Navigator>
+      {/* <Stack.Screen name="Details">
+        {props => <DetailsScreen {...props} />}
+      </Stack.Screen> */}
+      {/* <Splash /> */}
+      {/* <Join /> */}
+      {/* <History /> */}
+      {/* <Transfer /> */}
+      {/* <TransferAmount /> */}
+      {/* <TransferConfirm /> */}
+      {/* <TransferResult /> */}
+      {/* <Menu /> */}
+      {/* <Setting /> */}
+      {/* <Search /> */}
+      {/* <CreateAccount /> */}
+      {/* <AccountDetail /> */}
+      {/* <ChangePasswordStart /> */}
+      {/* <ChangePasswordVerify /> */}
+      {/* <ChangePassword /> */}
+      {/* <ChangePasswordResult /> */}
+      {/* <ChangeAccountName /> */}
+      {/* <ChangeAccountLimit /> */}
+    </NavigationContainer>
+  );
 }
 
 export default App;

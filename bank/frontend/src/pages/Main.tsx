@@ -23,8 +23,8 @@ function Main(): React.JSX.Element {
       />
       <ScrollView className="w-full h-full bg-gray-100">
         <View className="w-full px-10 py-6">
-          <Text className="text-lg font-semibold">이정호님,</Text>
-          <Text className="text-lg font-semibold">
+          <Text className="text-lg font-semibold text-gray-700">이정호님,</Text>
+          <Text className="text-lg font-semibold text-gray-700">
             조아은행에 오신 것을 환영합니다.
           </Text>
         </View>
@@ -36,8 +36,10 @@ function Main(): React.JSX.Element {
               <Text className="text-xs text-gray-50">3</Text>
             </View>
             <View className="flex flex-grow space-y-1">
-              <Text className="text-md font-medium">조아은행 발행 적금</Text>
-              <Text className="text-md font-semibold">
+              <Text className="text-md font-medium text-gray-700">
+                조아은행 발행 적금
+              </Text>
+              <Text className="text-md font-semibold text-gray-700">
                 조건없이 최대 연 4.3% (세전)
               </Text>
             </View>
@@ -53,11 +55,13 @@ function Main(): React.JSX.Element {
               />
             </View>
             <View className="w-full">
-              <Text className="text-md">저축예금[입출금]</Text>
-              <Text className="text-md">123-123456-12-123</Text>
+              <Text className="text-md text-gray-700">저축예금[입출금]</Text>
+              <Text className="text-md text-gray-700">123-123456-12-123</Text>
             </View>
             <View className="w-full flex flex-row items-center justify-center space-x-2">
-              <Text className="text-2xl font-bold">999,999,999원</Text>
+              <Text className="text-2xl font-bold text-gray-700">
+                999,999,999원
+              </Text>
               <TouchableOpacity>
                 <Icon
                   name={'refresh'}
@@ -91,21 +95,23 @@ function Main(): React.JSX.Element {
           <TouchableOpacity className="bg-gray-50 w-32 h-32 rounded-2xl shadow-sm shadow-black flex p-6 justify-center space-y-3">
             <Image source={Waage} className="w-10 h-10" />
             <View>
-              <Text className="font-bold text-md ">예적금 상품</Text>
-              <Text className="font-bold text-md">비교하기</Text>
+              <Text className="font-bold text-md text-gray-700">
+                예적금 상품
+              </Text>
+              <Text className="font-bold text-md text-gray-700">비교하기</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity className="bg-gray-50 w-32 h-32 rounded-2xl shadow-sm shadow-black flex p-6 justify-center space-y-5">
             <Image source={Dollar} className="w-10 h-10" />
             <View>
-              <Text className="font-bold text-md ">환율 조회</Text>
+              <Text className="font-bold text-md text-gray-700">환율 조회</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity className="bg-gray-50 w-32 h-32 rounded-2xl shadow-sm shadow-black flex p-6 justify-center space-y-3">
             <Image source={Book} className="w-10 h-10" />
             <View>
-              <Text className="font-bold text-md ">돈이 되는</Text>
-              <Text className="font-bold text-md">이야기</Text>
+              <Text className="font-bold text-md text-gray-700">돈이 되는</Text>
+              <Text className="font-bold text-md text-gray-700">이야기</Text>
             </View>
           </TouchableOpacity>
         </View>
