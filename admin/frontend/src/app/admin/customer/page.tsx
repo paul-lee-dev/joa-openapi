@@ -1,9 +1,6 @@
-import Table from "@/components/table";
-
+import CustomerTable from "@/components/customerTable";
 const CustomerList = () => {
-  return (
-    <Table></Table>
-  );
+  return <CustomerTable></CustomerTable>;
 };
 
 export default CustomerList;
