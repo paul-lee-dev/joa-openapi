@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -30,10 +31,11 @@ public class AccountService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public AccountCreateResponseDto create(String memberId, AccountCreateRequestDto req) {
-        String accountId = "1234";
+    public AccountCreateResponseDto create(UUID memberId, AccountCreateRequestDto req) {
+        // 계좌번호 임시 랜덤 생성
+        String accountId = String.valueOf(Math.random());
 
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
+        Member member = memberRepository.findByMemberId(memberId);
 
         String startDateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
