@@ -108,30 +108,41 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
             <Icon name={'plus'} color={'#777'} onPress={() => {}} size={25} />
           </TouchableOpacity>
         </View>
-        <View className="w-full px-6 flex flex-row space-x-4">
-          <TouchableOpacity className="bg-gray-50 w-32 h-32 rounded-2xl shadow-sm shadow-black flex p-6 justify-center space-y-3">
-            <Image source={Waage} className="w-10 h-10" />
-            <View>
-              <Text className="font-bold text-md text-gray-700">
-                예적금 상품
-              </Text>
-              <Text className="font-bold text-md text-gray-700">비교하기</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity className="bg-gray-50 w-32 h-32 rounded-2xl shadow-sm shadow-black flex p-6 justify-center space-y-5">
-            <Image source={Dollar} className="w-10 h-10" />
-            <View>
-              <Text className="font-bold text-md text-gray-700">환율 조회</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity className="bg-gray-50 w-32 h-32 rounded-2xl shadow-sm shadow-black flex p-6 justify-center space-y-3">
-            <Image source={Book} className="w-10 h-10" />
-            <View>
-              <Text className="font-bold text-md text-gray-700">돈이 되는</Text>
-              <Text className="font-bold text-md text-gray-700">이야기</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          className="w-full">
+          <View className="px-6 py-1 flex flex-row space-x-4">
+            <TouchableOpacity className="bg-gray-50 w-32 h-32 rounded-2xl shadow-sm shadow-black flex p-6 justify-center space-y-3">
+              <Image source={Waage} className="w-10 h-10" />
+              <View>
+                <Text className="font-bold text-md text-gray-700">
+                  예적금 상품
+                </Text>
+                <Text className="font-bold text-md text-gray-700">
+                  비교하기
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity className="bg-gray-50 w-32 h-32 rounded-2xl shadow-sm shadow-black flex p-6 justify-center space-y-5">
+              <Image source={Dollar} className="w-10 h-10" />
+              <View>
+                <Text className="font-bold text-md text-gray-700">
+                  환율 조회
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity className="bg-gray-50 w-32 h-32 rounded-2xl shadow-sm shadow-black flex p-6 justify-center space-y-3">
+              <Image source={Book} className="w-10 h-10" />
+              <View>
+                <Text className="font-bold text-md text-gray-700">
+                  돈이 되는
+                </Text>
+                <Text className="font-bold text-md text-gray-700">이야기</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
         <Footer />
       </ScrollView>
       {createModalOpen && (
