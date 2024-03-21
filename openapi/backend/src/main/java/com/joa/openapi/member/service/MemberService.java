@@ -33,10 +33,9 @@ public class MemberService {
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .build();
-        Member newMember = memberRepository.save(member);
-        MemberIdResponseDto response = new MemberIdResponseDto(newMember.getMemberId().toString(),
-                newMember.getCreatedAt(), newMember.getUpdatedAt());
-        return response;
+
+        memberRepository.save(member);
+        return MemberIdResponseDto.toDto(member);
     }
 
     //이메일 중복 검증
@@ -82,7 +81,7 @@ public class MemberService {
     public MemberIdResponseDto delete(String memberId) {
         Member member = memberRepository.findByMemberId(UUID.fromString(memberId));
         member.deleteSoftly();
-        MemberIdResponseDto response = new MemberIdResponseDto(member.getMemberId().toString(),
+        MemberIdResponseDto response = new MemberIdResponseDto(member.getId().toString(),
                 member.getCreatedAt(), member.getUpdatedAt());
         return response;
     }
