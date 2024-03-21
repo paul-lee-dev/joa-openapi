@@ -9,21 +9,27 @@ import com.joa.openapi.dummy.dto.DummyMemberRequestDto;
 import com.joa.openapi.dummy.dto.DummyResponseDto;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.dummy.repository.DummyRepository;
+import com.joa.openapi.member.entity.Member;
+import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class DummyService {
 
     private final DummyRepository dummyRepository;
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
     private final AccountService accountService;
     private final MakeNeyhuingName makeNeyhuingName;
 
@@ -84,6 +90,10 @@ public class DummyService {
     public void deleteDummy(UUID dummyId) {
         Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
         if (dummy.getMemberCount() != null) {
+            List<Member> memberList = memberRepository.findByDummyHolder(dummy);
+            for (Member member: memberList) {
+                log.info("{}",member.getName());
+            }
             memberService.delete(dummyId);
         } else if (dummy.getAccountCount() != null) {
 
