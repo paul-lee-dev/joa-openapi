@@ -21,13 +21,13 @@ function TransferAmount({
         goBack={() => navigation.pop()}
         menu={[{title: 'close', onPress: () => navigation.popToTop()}]}
       />
-      <View className="flex flex-grow justify-center space-y-8 pb-8s px-8">
+      <View className="flex flex-grow justify-center space-y-8 pb-2 px-8">
         <View className="flex space-y-2">
           <View className="flex flex-row">
-            <Text className="text-2xl font-bold text-gray-700">
+            <Text className="text-xl font-bold text-gray-700">
               저금예금[입출금]
             </Text>
-            <Text className="text-2xl font-medium text-gray-700">에서</Text>
+            <Text className="text-xl font-medium text-gray-700">에서</Text>
           </View>
           <Text className="text-sm font-medium text-gray-700">
             잔액 1,001,220원
@@ -35,20 +35,22 @@ function TransferAmount({
         </View>
         <View className="flex space-y-2">
           <View className="flex flex-row">
-            <Text className="text-2xl font-bold text-gray-700">
+            <Text className="text-xl font-bold text-gray-700">
               내 입출금통장
             </Text>
-            <Text className="text-2xl font-medium text-gray-700">으로</Text>
+            <Text className="text-xl font-medium text-gray-700">으로</Text>
           </View>
           <Text className="text-sm font-medium text-gray-700">
             신한은행 1234-12-123-1234
           </Text>
         </View>
         <View className="flex space-y-2">
-          <Text className="w-full text-2xl font-bold text-gray-700">
+          <Text className="w-full text-xl font-bold text-gray-700">
             {amount === '' ? '금액 입력' : amount}
           </Text>
-          <TouchableOpacity className="w-full flex">
+          <TouchableOpacity
+            onPress={() => setAmount('1001220')}
+            className="w-full flex">
             <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
               잔액 1,001,220원 입력
             </Text>
@@ -64,7 +66,7 @@ function TransferAmount({
           </TouchableOpacity>
         )}
       </View>
-      <View className="px-8 py-4">
+      <View className="px-8 py-1">
         <View className="flex flex-row justify-around">
           <TouchableOpacity
             onPress={() => setAmount(prev => prev + '1')}
