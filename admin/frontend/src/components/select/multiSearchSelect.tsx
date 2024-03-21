@@ -31,12 +31,14 @@ const MyAsyncSelect = () => (
     theme={(theme) => ({
       ...theme,
       borderRadius: 8,
+
       colors: {
         ...theme.colors,
         primary25: "pink",
         primary: "hotpink",
       },
     })}
+    className="mt-2"
   />
 );
 
