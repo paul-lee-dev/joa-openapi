@@ -8,14 +8,28 @@ import {
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AccountItem from '../components/AccountItem';
+import {RootStackParamList} from '../../App';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import BottomButton from '../components/BottomButton';
 
-function Transfer(): React.JSX.Element {
+type TransferScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Transfer'
+>;
+
+function Transfer({navigation}: TransferScreenProps): React.JSX.Element {
   return (
     <View className="w-full h-full bg-gray-100">
-      <Header stack="이체" menu={[{title: 'close', onPress: () => {}}]} />
+      <Header
+        stack="이체"
+        goBack={() => navigation.pop()}
+        menu={[{title: 'close', onPress: () => navigation.popToTop()}]}
+      />
       <View className="w-full h-36 border-t border-b border-gray-300 my-6 flex justify-evenly py-2 px-6">
         <View className="w-full">
-          <Text className="font-semibold text-base">저축예금[입출금]</Text>
+          <Text className="font-semibold text-base text-gray-700">
+            저축예금[입출금]
+          </Text>
         </View>
         <View className="w-full flex flex-row items-center space-x-2">
           <TouchableOpacity>
@@ -31,14 +45,15 @@ function Transfer(): React.JSX.Element {
           />
         </View>
         <View className="w-full flex items-end">
-          <Text>출금가능금액: 1,001,220원</Text>
+          <Text className="text-gray-700">출금가능금액: 1,001,220원</Text>
         </View>
       </View>
       <View className="h-24 w-full p-6">
         <View className="w-full border-b border-gray-400 flex flex-row items-center pr-2">
           <TextInput
             placeholder="계좌번호 입력"
-            className="flex-grow text-2xl px-4"
+            placeholderTextColor="#374151"
+            className="flex-grow text-xl px-4 text-gray-700 placeholder:text-gray-700"
           />
           <Icon
             name={'camera-outline'}
@@ -48,11 +63,13 @@ function Transfer(): React.JSX.Element {
           />
         </View>
       </View>
-      <ScrollView className="w-full">
+      <ScrollView className="w-full mb-16">
         <View className="w-full flex">
           <View className="w-full">
             <View className="w-full flex flex-row justify-between items-center px-6 py-4">
-              <Text className="font-bold text-base px-2">내 계좌</Text>
+              <Text className="font-bold text-base px-2 text-gray-700">
+                내 계좌
+              </Text>
               <Icon
                 name={'chevron-down'}
                 color={'#777'}
@@ -65,7 +82,9 @@ function Transfer(): React.JSX.Element {
           </View>
           <View className="w-full">
             <View className="w-full flex flex-row justify-between items-center px-6 py-4">
-              <Text className="font-bold text-bas px-2">최근 거래 계좌</Text>
+              <Text className="font-bold text-bas px-2 text-gray-700">
+                최근 거래 계좌
+              </Text>
               <Icon
                 name={'chevron-down'}
                 color={'#777'}
@@ -78,6 +97,10 @@ function Transfer(): React.JSX.Element {
           </View>
         </View>
       </ScrollView>
+      <BottomButton
+        title="확인"
+        onPress={() => navigation.navigate('TransferAmount')}
+      />
     </View>
   );
 }

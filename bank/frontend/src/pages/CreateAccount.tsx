@@ -2,12 +2,25 @@ import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Header from '../components/Header';
 import BottomButton from '../components/BottomButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {RootStackParamList} from '../../App';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-function CreateAccount(): React.JSX.Element {
+type CreateAccountScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'CreateAccount'
+>;
+
+function CreateAccount({
+  navigation,
+}: CreateAccountScreenProps): React.JSX.Element {
   return (
     <View className="w-full h-full bg-gray-100 flex">
-      <Header stack="계좌 개설" menu={[{title: 'close', onPress: () => {}}]} />
-      <ScrollView className="w-full flex-grow">
+      <Header
+        stack="계좌 개설"
+        goBack={() => navigation.pop()}
+        menu={[{title: 'close', onPress: () => navigation.popToTop()}]}
+      />
+      <ScrollView className="w-full flex-grow mb-16">
         <View>
           <View className="w-full h-96 bg-purple-400 items-center p-8 justify-between">
             <View className="w-full flex space-y-3">
@@ -45,21 +58,21 @@ function CreateAccount(): React.JSX.Element {
             </TouchableOpacity>
           </View>
           <View className="w-full flex p-6">
-            <Text className="text-2xl mb-4 font-semibold">
+            <Text className="text-2xl mb-4 font-semibold text-gray-700">
               누구나 쉽고 스마트하게
             </Text>
-            <Text className="text-base font-medium">
+            <Text className="text-base font-medium text-gray-700">
               통장의 많은 정보와 기능들을 쉽고 편리하게 이용할 수 있도록
               디자인했습니다.
             </Text>
-            <Text className="text-base font-medium">
+            <Text className="text-base font-medium text-gray-700">
               간편하게 이체, 거래내역 자세히보기도 바로바로, 중요한 내용은
               놓치지 않고 확인할 수 있습니다.
             </Text>
           </View>
         </View>
       </ScrollView>
-      <BottomButton title={'신청하기'} />
+      <BottomButton title={'신청하기'} onPress={() => navigation.popToTop()} />
     </View>
   );
 }

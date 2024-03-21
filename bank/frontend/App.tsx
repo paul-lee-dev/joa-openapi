@@ -21,26 +21,62 @@ import TransferConfirm from './src/pages/TransferConfirm';
 import TransferResult from './src/pages/TransferResult';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  AccountDetail: undefined;
+  ChangeAccountLimit: undefined;
+  ChangeAccountName: undefined;
+  ChangePassword: undefined;
+  ChangePasswordResult: undefined;
+  ChangePasswordStart: undefined;
+  ChangePasswordVerify: undefined;
+  CreateAccount: undefined;
+  History: undefined;
+  Intro: undefined;
+  Join: undefined;
+  Main: undefined;
+  Menu: undefined;
+  Search: undefined;
+  Setting: undefined;
+  Splash: undefined;
+  Transfer: undefined;
+  TransferAmount: undefined;
+  TransferConfirm: undefined;
+  TransferResult: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const globalOption = {options: {headerShown: false}};
 
 function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Intro">
+        <Stack.Screen name="Intro" component={Intro} {...globalOption} />
+        <Stack.Screen name="Main" component={Main} {...globalOption} />
+        <Stack.Screen name="Join" component={Join} {...globalOption} />
+        <Stack.Screen name="Search" component={Search} {...globalOption} />
+        <Stack.Screen name="Menu" component={Menu} {...globalOption} />
+        <Stack.Screen name="Setting" component={Setting} {...globalOption} />
+        <Stack.Screen name="Transfer" component={Transfer} {...globalOption} />
         <Stack.Screen
-          name="Intro"
-          component={Intro}
-          options={{title: 'ZOA BANK'}}
+          name="TransferAmount"
+          component={TransferAmount}
+          {...globalOption}
         />
         <Stack.Screen
-          name="Main"
-          component={Main}
-          options={{title: 'ZOA BANK'}}
+          name="TransferConfirm"
+          component={TransferConfirm}
+          {...globalOption}
         />
         <Stack.Screen
-          name="Join"
-          component={Join}
-          options={{title: 'ZOA BANK'}}
+          name="TransferResult"
+          component={TransferResult}
+          {...globalOption}
+        />
+        <Stack.Screen
+          name="CreateAccount"
+          component={CreateAccount}
+          {...globalOption}
         />
       </Stack.Navigator>
       {/* <Stack.Screen name="Details">
@@ -49,14 +85,7 @@ function App(): React.JSX.Element {
       {/* <Splash /> */}
       {/* <Join /> */}
       {/* <History /> */}
-      {/* <Transfer /> */}
-      {/* <TransferAmount /> */}
-      {/* <TransferConfirm /> */}
-      {/* <TransferResult /> */}
-      {/* <Menu /> */}
-      {/* <Setting /> */}
-      {/* <Search /> */}
-      {/* <CreateAccount /> */}
+
       {/* <AccountDetail /> */}
       {/* <ChangePasswordStart /> */}
       {/* <ChangePasswordVerify /> */}

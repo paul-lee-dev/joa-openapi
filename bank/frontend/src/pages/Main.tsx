@@ -1,4 +1,11 @@
-import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Header from '../components/Header';
 import Money from '../../assets/money.png';
 import Waage from '../../assets/waage.png';
@@ -9,16 +16,20 @@ import Footer from '../components/Footer';
 import BottomPopup from '../components/BottomPopup';
 import {useState} from 'react';
 import CommonMenuItem from '../components/CommonMenuItem';
+import {RootStackParamList} from '../../App';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-function Main(): React.JSX.Element {
+type MainScreenProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
+
+function Main({navigation}: MainScreenProps): React.JSX.Element {
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
 
   return (
     <View className="w-full h-full bg-gray-100">
       <Header
         menu={[
-          {title: 'magnify', onPress: () => {}},
-          {title: 'menu', onPress: () => {}},
+          {title: 'magnify', onPress: () => navigation.navigate('Search')},
+          {title: 'menu', onPress: () => navigation.navigate('Menu')},
         ]}
       />
       <ScrollView className="w-full h-full bg-gray-100">
@@ -72,11 +83,17 @@ function Main(): React.JSX.Element {
               </TouchableOpacity>
             </View>
             <View className="w-full flex flex-row items-center justify-center space-x-2">
+              <Pressable
+                onPress={() => navigation.navigate('Transfer')}
+                className="flex items-center justify-center w-12 h-6 bg-pink-300 rounded-full">
+                <Text className="text-sm font-semibold shadow-md text-gray-700">
+                  이체
+                </Text>
+              </Pressable>
               <View className="flex items-center justify-center w-12 h-6 bg-pink-300 rounded-full">
-                <Text className="text-sm font-semibold shadow-md">이체</Text>
-              </View>
-              <View className="flex items-center justify-center w-12 h-6 bg-pink-300 rounded-full">
-                <Text className="text-sm font-semibold shadow-md">결제</Text>
+                <Text className="text-sm font-semibold shadow-md text-gray-700">
+                  결제
+                </Text>
               </View>
             </View>
             <View className="w-full flex flex-row justify-center items-center pt-2 space-x-1">
@@ -118,12 +135,16 @@ function Main(): React.JSX.Element {
         <Footer />
       </ScrollView>
       {createModalOpen && (
-        <BottomPopup>
+        <BottomPopup close={() => setCreateModalOpen(false)}>
           <View className="w-full flex flex-grow space-y-8">
             <CommonMenuItem
               title={'입출금통장'}
               subtitle={'손쉬운 계좌개설'}
               underline={false}
+              onPress={() => {
+                setCreateModalOpen(false);
+                navigation.navigate('CreateAccount');
+              }}
             />
             <CommonMenuItem
               title={'정기예금'}
