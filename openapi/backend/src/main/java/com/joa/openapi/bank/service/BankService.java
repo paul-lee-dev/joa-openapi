@@ -60,15 +60,6 @@ public class BankService {
         return bankResponseDtoList;
     }
 
-    public List<BankResponseDto> searchAll(UUID adminId) {
-        List<Bank> bankList = bankRepository.findByAdminId(adminId);
-        List<BankResponseDto> bankResponseDtoList = new ArrayList<>();
-        for (Bank bank:bankList) {
-            bankResponseDtoList.add(BankResponseDto.toDto(bank));
-        }
-        return bankResponseDtoList;
-    }
-
     public BankResponseDto serachBank(UUID uuid) {
         Bank bank = bankRepository.findById(uuid).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         return BankResponseDto.toDto(bank);
