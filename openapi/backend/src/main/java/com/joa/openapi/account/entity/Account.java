@@ -27,7 +27,7 @@ public class Account extends BaseEntity {
     private String id;
     private String nickname;
     private Long balance;
-    private Integer password;
+    private String password;
     private Boolean isDormant;
     private Long transferLimit;
     private Integer paymentNum;
@@ -54,7 +54,7 @@ public class Account extends BaseEntity {
         this.transferLimit = limit;
     }
 
-    public void updatePassword(Integer password) {
+    public void updatePassword(String password) {
         this.password = password;
     }
 }

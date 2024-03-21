@@ -1,14 +1,10 @@
 package com.joa.openapi.account.service;
 
-import com.joa.openapi.account.dto.AccountCreateRequestDto;
-import com.joa.openapi.account.dto.AccountCreateResponseDto;
-import com.joa.openapi.account.dto.AccountUpdateRequestDto;
-import com.joa.openapi.account.dto.AccountUpdateResponseDto;
+import com.joa.openapi.account.dto.*;
 import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.account.errorcode.AccountErrorCode;
 import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
-import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.repository.MemberRepository;
@@ -35,16 +31,19 @@ public class AccountService {
         // 계좌번호 임시 랜덤 생성
         String accountId = String.valueOf(Math.random());
 
-        Member member = memberRepository.findByMemberId(memberId);
+        Member member = memberRepository.findById(memberId);
 
         String startDateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate startDate = LocalDate.parse(startDateStr, formatter);
         String endDateStr = startDate.plusMonths(req.getTerm()).minusDays(1).format(formatter);
 
+        if(req.getPassword() == null || req.getPassword().trim().isBlank())
+            throw new RestApiException(AccountErrorCode.PASSWORD_REQUIRED);
+
         Account account = Account.builder()
                 .id(accountId)
-                .nickname(req.getNickname())
+                .nickname(req.getNickname()) /* TODO 예적금 상품 연결시키면 디폴트 닉네임 예적금 상품명 */
                 .balance(req.getAmount())
                 .password(req.getPassword())
                 .isDormant(false)
@@ -54,7 +53,7 @@ public class AccountService {
                 .startDate(startDateStr)
                 .endDate(endDateStr)
                 .term(req.getTerm())
-                .withdrawAccount(req.getWithdrawAccount())
+                .withdrawAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
                 .amount(req.getAmount())
                 .holder(member)
                 .build();
@@ -66,14 +65,18 @@ public class AccountService {
 
     @Transactional
     public AccountUpdateResponseDto update(UUID memberId, AccountUpdateRequestDto req) {
-        Account account = accountRepository.findById(req.getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         authorityValidation(memberId, account);
 
-        if(req.getNickname() != null)
+        /* TODO withdrawAccount가 존재하는지 확인 */
+
+        if(req.getNickname() != null && !req.getPassword().trim().isBlank())
             account.updateNickname(req.getNickname());
-        if (req.getWithdrawAccount() != null)
+        if (req.getWithdrawAccount() != null && !req.getPassword().trim().isBlank()){
+            accountRepository.findById(req.getWithdrawAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_WITHDRAW_ACCOUNT));
             account.updateWithdrawAccount(req.getWithdrawAccount());
+        }
 
         accountRepository.save(account);
 
@@ -82,11 +85,11 @@ public class AccountService {
 
     @Transactional
     public Long updateLimit(UUID memberId, AccountUpdateRequestDto req) {
-        Account account = accountRepository.findById(req.getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         authorityValidation(memberId, account);
 
-        if(req.getTransferLimit() != null)
+        if(req.getTransferLimit() != null && req.getTransferLimit() >= 20)
             account.updateLimit(req.getTransferLimit());
 
         accountRepository.save(account);
@@ -96,19 +99,36 @@ public class AccountService {
 
     @Transactional
     public void updatePassword(UUID memberId, AccountUpdateRequestDto req) {
-        Account account = accountRepository.findById(req.getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         authorityValidation(memberId, account);
 
-        if(req.getPassword() != null)
+        if(req.getPassword() != null && !req.getPassword().trim().isBlank())
             account.updatePassword(req.getPassword());
 
         accountRepository.save(account);
     }
 
+    @Transactional
+    public String delete(UUID memberId, AccountDeleteRequestDto req) {
+        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        authorityValidation(memberId, account);
+        checkPassword(account, req.getPassword());
+
+        account.deleteSoftly();
+
+        return account.getId();
+    }
+
     public void authorityValidation(UUID memberId, Account account) {
         if (!account.getHolder().getId().equals(memberId))
             throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+    }
+
+    public void checkPassword(Account account, String password){
+        if(!account.getPassword().equals(password))
+            throw new RestApiException(AccountErrorCode.PASSWORD_MISMATCH);
     }
 
     /**

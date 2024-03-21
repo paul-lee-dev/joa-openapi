@@ -1,9 +1,6 @@
 package com.joa.openapi.account.controller;
 
-import com.joa.openapi.account.dto.AccountCreateRequestDto;
-import com.joa.openapi.account.dto.AccountCreateResponseDto;
-import com.joa.openapi.account.dto.AccountUpdateRequestDto;
-import com.joa.openapi.account.dto.AccountUpdateResponseDto;
+import com.joa.openapi.account.dto.*;
 import com.joa.openapi.account.service.AccountService;
 import com.joa.openapi.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -43,11 +40,9 @@ public class AccountController {
         return ResponseEntity.ok(ApiResponse.success("비밀번호 변경에 성공했습니다."));
     }
 
-
-//    @DeleteMapping("/{boardId}")
-//    public ResponseEntity<Void> delete(@PathVariable(value = "boardId") Long boardId){
-//        String memberId = MemberUtil.getMemberId();
-//        accountService.delete(boardId, memberId);
-//        return ResponseEntity.ok().build();
-//    }
+    @DeleteMapping
+    public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId, @RequestBody AccountDeleteRequestDto req){
+        String accountId = accountService.delete(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("계좌 해지에 성공했습니다.", accountId));
+    }
 }

@@ -9,7 +9,7 @@ import lombok.*;
 public class AccountCreateRequestDto {
 
     private String nickname;
-    private Integer password;
+    private String password;
     private final Long transferLimit = 100L;
     private final Integer term = 12;
     private String withdrawAccount;

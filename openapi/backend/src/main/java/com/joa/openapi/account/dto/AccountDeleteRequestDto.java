@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountUpdateRequestDto {
+public class AccountDeleteRequestDto {
 
     private String accountId;
-    private String nickname;
     private String password;
-    private Long transferLimit;
-    private String withdrawAccount;
 }
