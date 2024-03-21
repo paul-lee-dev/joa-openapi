@@ -35,7 +35,7 @@ public class AccountService {
         // 계좌번호 임시 랜덤 생성
         String accountId = String.valueOf(Math.random());
 
-        Member member = memberRepository.findByMemberId(memberId);
+        Member member = memberRepository.findById(memberId);
 
         String startDateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");

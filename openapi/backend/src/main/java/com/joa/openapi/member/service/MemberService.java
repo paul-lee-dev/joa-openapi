@@ -57,7 +57,7 @@ public class MemberService {
     //회원정보 조회
     @Transactional(readOnly = true)
     public MemberInfoResponseDto getInfo(String memberId) {
-        Member member = memberRepository.findByMemberId(UUID.fromString(memberId));
+        Member member = memberRepository.findById(UUID.fromString(memberId));
         MemberInfoResponseDto response = modelMapper.map(member, MemberInfoResponseDto.class);
         return response;
     }
@@ -65,7 +65,7 @@ public class MemberService {
     //회원정보 수정
     @Transactional
     public MemberInfoResponseDto update(String memberId, MemberUpdateRequestDto request) {
-        Member member = memberRepository.findByMemberId(UUID.fromString(memberId));
+        Member member = memberRepository.findById(UUID.fromString(memberId));
         if (request.getName()!=null) member.updateName(request.getName());
         if (request.getPassword() !=null) member.updatePassword(request.getPassword());
 //        if (request.getPassword()!=null) member.updatePassword(encoder.encode(request.getPassword()));
@@ -79,7 +79,7 @@ public class MemberService {
     //회원 탈퇴
     @Transactional
     public MemberIdResponseDto delete(String memberId) {
-        Member member = memberRepository.findByMemberId(UUID.fromString(memberId));
+        Member member = memberRepository.findById(UUID.fromString(memberId));
         member.deleteSoftly();
         MemberIdResponseDto response = new MemberIdResponseDto(member.getId().toString(),
                 member.getCreatedAt(), member.getUpdatedAt());
