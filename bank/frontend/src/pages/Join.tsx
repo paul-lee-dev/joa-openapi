@@ -9,15 +9,20 @@ import Header from '../components/Header';
 import BottomButton from '../components/BottomButton';
 import CommonInput from '../components/CommonInput';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {RootStackParamList} from '../../App';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-function Join(): React.JSX.Element {
+type JoinScreenProps = NativeStackScreenProps<RootStackParamList, 'Join'>;
+
+function Join({navigation}: JoinScreenProps): React.JSX.Element {
   return (
     <View className="w-full h-full bg-gray-100">
       <Header
         stack="회원가입"
+        goBack={() => navigation.popToTop()}
         menu={[
-          {title: 'home-outline', onPress: () => {}},
-          {title: 'menu', onPress: () => {}},
+          {title: 'home-outline', onPress: () => navigation.popToTop()},
+          {title: 'menu', onPress: () => navigation.navigate('Menu')},
         ]}
       />
       <ScrollView className="w-full mb-16">
@@ -27,22 +32,26 @@ function Join(): React.JSX.Element {
           <CommonInput label={'전화번호'}>
             <View className="w-full flex space-y-4">
               <View className="w-full relative">
-                <TextInput className="border-b border-gray-800/50" />
+                <TextInput className="border-b border-gray-800/50 text-gray-700" />
                 <TouchableOpacity className="absolute top-0 right-0 translate-y-3 border border-gray-400 rounded-full p-1 flex justify-center items-center">
-                  <Text className="text-sm font-medium">인증번호 전송</Text>
+                  <Text className="text-sm font-medium text-gray-700">
+                    인증번호 전송
+                  </Text>
                 </TouchableOpacity>
               </View>
               <View className="w-full relative">
-                <TextInput className="border-b border-gray-800/50" />
+                <TextInput className="border-b border-gray-800/50 text-gray-700" />
                 <TouchableOpacity className="absolute top-0 right-0 translate-y-3 border border-gray-400 rounded-full p-1 flex justify-center items-center">
-                  <Text className="text-sm font-medium">인증번호 확인</Text>
+                  <Text className="text-sm font-medium text-gray-700">
+                    인증번호 확인
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
           </CommonInput>
           <CommonInput label={'비밀번호'}>
             <View className="w-full relative">
-              <TextInput className="border-b border-gray-800/50" />
+              <TextInput className="border-b border-gray-800/50 text-gray-700" />
               <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
                 <Icon
                   name={'eye-off-outline'}
@@ -55,7 +64,7 @@ function Join(): React.JSX.Element {
           </CommonInput>
           <CommonInput label={'비밀번호 확인'}>
             <View className="w-full relative">
-              <TextInput className="border-b border-gray-800/50" />
+              <TextInput className="border-b border-gray-800/50 text-gray-700" />
               <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
                 <Icon
                   name={'eye-off-outline'}
@@ -68,7 +77,10 @@ function Join(): React.JSX.Element {
           </CommonInput>
         </View>
       </ScrollView>
-      <BottomButton title={'회원가입'} />
+      <BottomButton
+        title={'회원가입'}
+        onPress={() => navigation.navigate('Intro')}
+      />
     </View>
   );
 }

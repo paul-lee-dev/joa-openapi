@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DummyRequestDto {
+public class DummyMemberRequestDto {
 
     private Integer count;
 }
