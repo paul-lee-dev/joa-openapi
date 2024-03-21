@@ -3,6 +3,7 @@ package com.joa.openapi.common.response;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -22,6 +23,7 @@ public class ApiResponse<T> {
     private String status;
     private String message;
     private T data;
+    private PageResponse<T> page;
 
     public static <T> ApiResponse<T> success(T data) {
         return new ApiResponse<>(SUCCESS_STATUS, null, data);
@@ -37,6 +39,15 @@ public class ApiResponse<T> {
 
     public static ApiResponse<?> success(String message) {
         return new ApiResponse<>(SUCCESS_STATUS, message, null);
+    }
+
+    public static <T> ApiResponse<T> success(String message, Page<T> page) {
+        PageResponse<T> pageResponse = PageResponse.fromPage(page);
+        ApiResponse<T> response = new ApiResponse<>();
+        response.status = SUCCESS_STATUS;
+        response.message = message;
+        response.page = PageResponse.fromPage(page);
+        return response;
     }
 
     // Hibernate Validator에 의해 유효하지 않은 데이터로 인해 API 호출이 거부될때 반환

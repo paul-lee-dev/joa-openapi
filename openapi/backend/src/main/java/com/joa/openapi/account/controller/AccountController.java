@@ -1,12 +1,12 @@
 package com.joa.openapi.account.controller;
 
-import com.joa.openapi.account.dto.AccountCreateRequestDto;
-import com.joa.openapi.account.dto.AccountCreateResponseDto;
-import com.joa.openapi.account.dto.AccountUpdateRequestDto;
-import com.joa.openapi.account.dto.AccountUpdateResponseDto;
+import com.joa.openapi.account.dto.*;
 import com.joa.openapi.account.service.AccountService;
 import com.joa.openapi.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,11 +43,21 @@ public class AccountController {
         return ResponseEntity.ok(ApiResponse.success("비밀번호 변경에 성공했습니다."));
     }
 
+    @DeleteMapping
+    public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId, @RequestBody AccountDeleteRequestDto req) {
+        String accountId = accountService.delete(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("계좌 해지에 성공했습니다.", accountId));
+    }
 
-//    @DeleteMapping("/{boardId}")
-//    public ResponseEntity<Void> delete(@PathVariable(value = "boardId") Long boardId){
-//        String memberId = MemberUtil.getMemberId();
-//        accountService.delete(boardId, memberId);
-//        return ResponseEntity.ok().build();
-//    }
+    @PostMapping("/balance")
+    public ResponseEntity<?> getBalance(@RequestHeader("memberId") UUID memberId, @RequestBody AccountGetBalanceRequestDto req) {
+        AccountGetBalanceResponseDto balance = accountService.getBalance(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("계좌 잔액 조회에 성공했습니다.", balance));
+    }
+
+    @PostMapping("/member")
+    public ResponseEntity<?> getAccounts(@RequestHeader("memberId") UUID memberId, @PageableDefault Pageable pageable) {
+        Page<AccountGetAccountsResponseDto> accountsPage = accountService.getAccounts(memberId, pageable);
+        return ResponseEntity.ok(ApiResponse.success("계좌 조회에 성공했습니다.", accountsPage));
+    }
 }
