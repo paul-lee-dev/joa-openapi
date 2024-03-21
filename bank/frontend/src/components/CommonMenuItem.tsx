@@ -5,16 +5,18 @@ interface IProps {
   title: string;
   underline: boolean;
   subtitle?: string;
+  onPress?: () => void;
 }
 
 function CommonMenuItem({
   title,
   underline,
   subtitle,
+  onPress,
 }: IProps): React.JSX.Element {
   return (
     <View className="w-full px-6 py-2">
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={onPress}>
         {underline ? (
           <View className="w-full h-16 border-b border-slate-400/50 flex flex-row justify-between items-center">
             <View className="flex">

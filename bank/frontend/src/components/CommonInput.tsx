@@ -7,9 +7,11 @@ interface IProps {
 
 function CommonInput({label, children}: IProps): React.JSX.Element {
   return (
-    <View className="w-full px-6 py-8">
+    <View className="w-full px-6 py-8 relative">
       <Text className="text-lg font-semibold text-slate-700">{label}</Text>
-      {children || <TextInput className="border-b border-gray-800/50" />}
+      {children || (
+        <TextInput className="border-b border-gray-800/50 text-gray-700" />
+      )}
     </View>
   );
 }
