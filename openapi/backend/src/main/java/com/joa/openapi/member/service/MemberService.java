@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
+
 @Slf4j
 @Service
 @Transactional
@@ -32,21 +33,36 @@ public class MemberService {
 
     //회원가입
     @Transactional
-    public MemberIdResponseDto addMember(MemberJoinRequestDto request, UUID bankId, UUID dummyId) {
-
-        Bank bank = bankRepository.findById(bankId).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
-        Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(()->new RestApiException(DummyErrorCode.NO_DUMMY));
-
+    public MemberIdResponseDto addMember(MemberJoinRequestDto request) {
+        Bank bank = bankRepository.findById(request.getBankId()).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
         Member member = Member.builder()
                 .name(request.getName())
                 .password(request.getPassword())
                 .email(request.getEmail())
                 .phone(request.getPhone())
+                .bankHolder(bank)
                 .build();
-        Member newMember = memberRepository.save(member);
-        MemberIdResponseDto response = new MemberIdResponseDto(newMember.getId().toString(),
-                newMember.getCreatedAt(), newMember.getUpdatedAt());
-        return response;
+
+        memberRepository.save(member);
+        return MemberIdResponseDto.toDto(member);
+    }
+
+    @Transactional
+    public MemberIdResponseDto addMember(MemberJoinRequestDto request, UUID dummyId) {
+        log.info("dummyId:{}",dummyId);
+        Bank bank = bankRepository.findById(request.getBankId()).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
+        Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(()->new RestApiException(DummyErrorCode.NO_DUMMY));
+        Member member = Member.builder()
+                .name(request.getName())
+                .password(request.getPassword())
+                .email(request.getEmail())
+                .phone(request.getPhone())
+                .bankHolder(bank)
+                .dummyHolder(dummy)
+                .build();
+
+        memberRepository.save(member);
+        return MemberIdResponseDto.toDto(member);
     }
 
     //이메일 중복 검증
@@ -68,7 +84,7 @@ public class MemberService {
     //회원정보 조회
     @Transactional(readOnly = true)
     public MemberInfoResponseDto getInfo(String memberId) {
-        Member member = memberRepository.findByMemberId(UUID.fromString(memberId));
+        Member member = memberRepository.findById(UUID.fromString(memberId));
         MemberInfoResponseDto response = modelMapper.map(member, MemberInfoResponseDto.class);
         return response;
     }
@@ -76,7 +92,7 @@ public class MemberService {
     //회원정보 수정
     @Transactional
     public MemberInfoResponseDto update(String memberId, MemberUpdateRequestDto request) {
-        Member member = memberRepository.findByMemberId(UUID.fromString(memberId));
+        Member member = memberRepository.findById(UUID.fromString(memberId));
         if (request.getName()!=null) member.updateName(request.getName());
         if (request.getPassword() !=null) member.updatePassword(request.getPassword());
 //        if (request.getPassword()!=null) member.updatePassword(encoder.encode(request.getPassword()));
@@ -90,7 +106,7 @@ public class MemberService {
     //회원 탈퇴
     @Transactional
     public MemberIdResponseDto delete(String memberId) {
-        Member member = memberRepository.findByMemberId(UUID.fromString(memberId));
+        Member member = memberRepository.findById(UUID.fromString(memberId));
         member.deleteSoftly();
         MemberIdResponseDto response = new MemberIdResponseDto(member.getId().toString(),
                 member.getCreatedAt(), member.getUpdatedAt());

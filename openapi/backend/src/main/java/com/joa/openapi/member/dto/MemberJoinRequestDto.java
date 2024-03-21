@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -22,4 +24,5 @@ public class MemberJoinRequestDto {
     private String password;
     @NotBlank(message = "휴대폰 번호를 입력해주세요.")
     private String phone;
+    private UUID bankId;
 }

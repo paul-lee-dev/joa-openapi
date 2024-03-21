@@ -25,7 +25,7 @@ public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "BINARY(16)")
-    private UUID Id;
+    private UUID id;
     private String name;
     private String password;
     private String phone;
@@ -43,11 +43,13 @@ public class Member extends BaseEntity {
     private List<Account> accountList = new ArrayList<>();
 
     @Builder
-    public Member(String name, String password, String email, String phone) {
+    public Member(String name, String password, String email, String phone, Bank bankHolder, Dummy dummyHolder) {
         this.name = name;
         this.password = password;
         this.email = email;
         this.phone = phone;
+        this.bankHolder = bankHolder;
+        this.dummyHolder = dummyHolder;
     }
 
     public void updatePassword(String password) {

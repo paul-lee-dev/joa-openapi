@@ -23,26 +23,20 @@ public class DummyController {
     private final BankService bankService;
 
     @PostMapping("/member")
-    public ResponseEntity<?> createMember(@RequestBody DummyMemberRequestDto req, @RequestHeader("bankId") UUID bankId, @RequestHeader("adminId") UUID adminId) {
-        DummyResponseDto dummyResponseDto = dummyService.createMember(req, bankId, adminId);
+    public ResponseEntity<?> createMember(@RequestBody DummyMemberRequestDto req, @RequestHeader("adminId") UUID adminId) {
+        DummyResponseDto dummyResponseDto = dummyService.createMember(req, adminId);
         return ResponseEntity.ok(ApiResponse.success("멤버 더미데이터 생성 성공했습니다.", dummyResponseDto));
     }
 
     @PostMapping("/account")
-    public ResponseEntity<?> createAccount(@RequestBody DummyAccountRequestDto req, @RequestHeader("bankId") UUID bankId, @RequestHeader("adminId") UUID adminId, @RequestHeader("productId") UUID productId) {
-        DummyResponseDto dummyResponseDto = dummyService.createAccount(req, bankId, adminId, productId);
+    public ResponseEntity<?> createAccount(@RequestBody DummyAccountRequestDto req, @RequestHeader("adminId") UUID adminId) {
+        DummyResponseDto dummyResponseDto = dummyService.createAccount(req, adminId);
         return ResponseEntity.ok(ApiResponse.success("계좌 더미데이터 생성 성공했습니다.", dummyResponseDto));
     }
 
     @PostMapping("/transaction")
-    public ResponseEntity<?> createTransaction(@RequestBody DummyMemberRequestDto req, @RequestHeader("bankId") UUID bankId, @RequestHeader("adminId") UUID adminId) {
-        log.info("req:{}", req);
-        DummyResponseDto dummyResponseDto = dummyService.createTransaction(req, bankId, adminId);
-        log.info("{}은행에 더미거래내역 생성", bankId);
-        log.info("더미거래내역 생성 갯수 : {}", req.getCount());
-        for (int i = 0; i < req.getCount(); i++) {
-            log.info("{}번째 거래내역 생성", i+1);
-        }
+    public ResponseEntity<?> createTransaction(@RequestBody DummyMemberRequestDto req, @RequestHeader("adminId") UUID adminId) {
+        DummyResponseDto dummyResponseDto = dummyService.createTransaction(req, adminId);
         return ResponseEntity.ok(ApiResponse.success("거래내역 더미데이터 생성 성공했습니다.", dummyResponseDto));
     }
 }
