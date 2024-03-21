@@ -1,7 +1,9 @@
 package com.joa.openapi.member.entity;
 
 import com.joa.openapi.account.entity.Account;
+import com.joa.openapi.bank.entity.Bank;
 import com.joa.openapi.common.entity.BaseEntity;
+import com.joa.openapi.dummy.entity.Dummy;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,13 +25,19 @@ public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "BINARY(16)")
-    private UUID memberId;
+    private UUID Id;
     private String name;
     private String password;
     private String phone;
     private String email;
-//    private Integer bankId;
-//    private String dummyId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bank_id")
+    private Bank bankHolder;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dummy_id")
+    private Dummy dummyHolder;
 
     @OneToMany(mappedBy = "holder")
     private List<Account> accountList = new ArrayList<>();

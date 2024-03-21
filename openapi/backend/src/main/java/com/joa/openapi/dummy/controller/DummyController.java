@@ -25,12 +25,6 @@ public class DummyController {
     @PostMapping("/member")
     public ResponseEntity<?> createMember(@RequestBody DummyMemberRequestDto req, @RequestHeader("bankId") UUID bankId, @RequestHeader("adminId") UUID adminId) {
         DummyResponseDto dummyResponseDto = dummyService.createMember(req, bankId, adminId);
-        log.info("{}은행에 더미멤버 생성", bankId);
-        log.info("더미멤버 생성 갯수 : {}", req.getCount());
-        for (int i = 0; i < req.getCount(); i++) {
-            log.info("{}번째 멤버:{}, 은행코드:{}, 더미생성내역아이디:{}", i+1, dummyService.makeName(3), bankId, dummyResponseDto.getDummyId());
-        }
-
         return ResponseEntity.ok(ApiResponse.success("멤버 더미데이터 생성 성공했습니다.", dummyResponseDto));
     }
 

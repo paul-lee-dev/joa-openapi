@@ -1,7 +1,12 @@
 package com.joa.openapi.member.service;
 
-
+import com.joa.openapi.bank.entity.Bank;
+import com.joa.openapi.bank.errorcode.BankErrorCode;
+import com.joa.openapi.bank.repository.BankRepository;
 import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.dummy.entity.Dummy;
+import com.joa.openapi.dummy.errorcode.DummyErrorCode;
+import com.joa.openapi.dummy.repository.DummyRepository;
 import com.joa.openapi.member.dto.*;
 import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.errorcode.MemberErrorCode;
@@ -14,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-
 @Slf4j
 @Service
 @Transactional
@@ -22,11 +26,17 @@ import java.util.UUID;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final BankRepository bankRepository;
+    private final DummyRepository dummyRepository;
     private final ModelMapper modelMapper;
 
     //회원가입
     @Transactional
-    public MemberIdResponseDto addMember(MemberJoinRequestDto request) {
+    public MemberIdResponseDto addMember(MemberJoinRequestDto request, UUID bankId, UUID dummyId) {
+
+        Bank bank = bankRepository.findById(bankId).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
+        Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(()->new RestApiException(DummyErrorCode.NO_DUMMY));
+
         Member member = Member.builder()
                 .name(request.getName())
                 .password(request.getPassword())
@@ -34,7 +44,7 @@ public class MemberService {
                 .phone(request.getPhone())
                 .build();
         Member newMember = memberRepository.save(member);
-        MemberIdResponseDto response = new MemberIdResponseDto(newMember.getMemberId().toString(),
+        MemberIdResponseDto response = new MemberIdResponseDto(newMember.getId().toString(),
                 newMember.getCreatedAt(), newMember.getUpdatedAt());
         return response;
     }
@@ -82,7 +92,7 @@ public class MemberService {
     public MemberIdResponseDto delete(String memberId) {
         Member member = memberRepository.findByMemberId(UUID.fromString(memberId));
         member.deleteSoftly();
-        MemberIdResponseDto response = new MemberIdResponseDto(member.getMemberId().toString(),
+        MemberIdResponseDto response = new MemberIdResponseDto(member.getId().toString(),
                 member.getCreatedAt(), member.getUpdatedAt());
         return response;
     }
