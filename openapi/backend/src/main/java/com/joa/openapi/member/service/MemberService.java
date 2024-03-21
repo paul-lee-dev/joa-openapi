@@ -33,10 +33,9 @@ public class MemberService {
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .build();
-        Member newMember = memberRepository.save(member);
-        MemberIdResponseDto response = new MemberIdResponseDto(newMember.getId().toString(),
-                newMember.getCreatedAt(), newMember.getUpdatedAt());
-        return response;
+
+        memberRepository.save(member);
+        return MemberIdResponseDto.toDto(member);
     }
 
     //이메일 중복 검증
