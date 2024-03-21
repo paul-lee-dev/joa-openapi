@@ -4,6 +4,9 @@ import com.joa.openapi.account.dto.*;
 import com.joa.openapi.account.service.AccountService;
 import com.joa.openapi.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,8 +50,14 @@ public class AccountController {
     }
 
     @PostMapping("/balance")
-    public ResponseEntity<?> getBalance(@RequestHeader("memberId") UUID memberId, @RequestBody AccountGetRequestDto req) {
-        AccountBalanceResponseDto balance = accountService.getBalance(memberId, req);
+    public ResponseEntity<?> getBalance(@RequestHeader("memberId") UUID memberId, @RequestBody AccountGetBalanceRequestDto req) {
+        AccountGetBalanceResponseDto balance = accountService.getBalance(memberId, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 잔액 조회에 성공했습니다.", balance));
+    }
+
+    @PostMapping("/member")
+    public ResponseEntity<?> getAccounts(@RequestHeader("memberId") UUID memberId, @PageableDefault Pageable pageable) {
+        Page<AccountGetAccountsResponseDto> accountsPage = accountService.getAccounts(memberId, pageable);
+        return ResponseEntity.ok(ApiResponse.success("계좌 조회에 성공했습니다.", accountsPage));
     }
 }

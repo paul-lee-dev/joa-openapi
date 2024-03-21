@@ -12,6 +12,8 @@ import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -132,12 +134,17 @@ public class AccountService {
         return account.getId();
     }
 
-    public AccountBalanceResponseDto getBalance(UUID memberId, AccountGetRequestDto req) {
+    public AccountGetBalanceResponseDto getBalance(UUID memberId, AccountGetBalanceRequestDto req) {
         Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         authorityValidation(memberId, account);
 
-        return AccountBalanceResponseDto.toDto(account);
+        return AccountGetBalanceResponseDto.toDto(account);
+    }
+
+    public Page<AccountGetAccountsResponseDto> getAccounts(UUID memberId, Pageable pageable) {
+        Page<Account> accountsPage = accountRepository.findByHolderId(memberId, pageable);
+        return accountsPage.map(AccountGetAccountsResponseDto::toDto);
     }
 
     public void authorityValidation(UUID memberId, Account account) {

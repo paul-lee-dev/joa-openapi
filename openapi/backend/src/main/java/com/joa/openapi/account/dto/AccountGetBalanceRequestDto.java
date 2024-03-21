@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountGetRequestDto {
+public class AccountGetBalanceRequestDto {
 
     private String accountId;
 }
