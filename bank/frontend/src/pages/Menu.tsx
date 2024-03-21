@@ -1,4 +1,5 @@
 import {
+  Pressable,
   ScrollView,
   Text,
   TextInput,
@@ -10,11 +11,25 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../App';
+import clsx from 'clsx';
 
 type MenuScreenProps = NativeStackScreenProps<RootStackParamList, 'Menu'>;
+type MenuType = '뱅킹관리' | '이체' | '조회';
 
 function Menu({navigation}: MenuScreenProps): React.JSX.Element {
   const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [keyword, setKeyword] = useState<string>('');
+  const [menu, setMenu] = useState<MenuType>('뱅킹관리');
+  const detailMenu = {
+    뱅킹관리: [
+      {title: '계좌 개설', onPress: () => {}},
+      {title: '계좌 해지', onPress: () => {}},
+      {title: '이체한도변경', onPress: () => {}},
+      {title: '계좌 비밀번호 변경', onPress: () => {}},
+    ],
+    이체: [],
+    조회: [],
+  };
 
   return (
     <View className="w-full h-full bg-gray-100">
@@ -85,58 +100,57 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
           className="px-4 text-xl font-bold text-gray-700"
           placeholder="메뉴를 검색해보세요."
           placeholderTextColor="#374151"
+          onChangeText={setKeyword}
         />
       </View>
       <View className="w-full flex-grow flex flex-row">
         <View className="w-36 h-full bg-gray-200 py-4">
           <View className="w-full h-16 flex justify-center">
-            <TouchableOpacity className="w-[110%] z-10 ml-4 bg-pink-200 px-4 py-2 rounded-full shadow-sm shadow-black">
+            <Pressable
+              onPress={() => setMenu('뱅킹관리')}
+              className={clsx(
+                'w-[110%] z-10 ml-4 px-4 py-2 rounded-full',
+                menu === '뱅킹관리' && 'bg-pink-200 shadow-sm shadow-black',
+              )}>
               <Text className="text-xl font-medium text-gray-700">
                 뱅킹 관리
               </Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
           <View className="w-full h-16 flex justify-center">
-            <TouchableOpacity className="w-[110%] z-10 ml-4 px-4 py-2 rounded-full">
+            <Pressable
+              onPress={() => setMenu('이체')}
+              className={clsx(
+                'w-[110%] z-10 ml-4 px-4 py-2 rounded-full',
+                menu === '이체' && 'bg-pink-200 shadow-sm shadow-black',
+              )}>
               <Text className="text-xl font-medium text-gray-700">이체</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
           <View className="w-full h-16 flex justify-center">
-            <TouchableOpacity className="w-[110%] z-10 ml-4 px-4 py-2 rounded-full">
+            <Pressable
+              onPress={() => setMenu('조회')}
+              className={clsx(
+                'w-[110%] z-10 ml-4 px-4 py-2 rounded-full',
+                menu === '조회' && 'bg-pink-200 shadow-sm shadow-black',
+              )}>
               <Text className="text-xl font-medium text-gray-700">조회</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         </View>
         <ScrollView className="flex-grow -z-10">
           <View className="w-full py-4">
-            <View className="w-full h-16 flex justify-center">
-              <TouchableOpacity className="px-2 pl-12 py-2">
-                <Text className="text-lg font-medium text-gray-700">
-                  계좌 개설
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View className="w-full h-16 flex justify-center">
-              <TouchableOpacity className="px-2 pl-12 py-2">
-                <Text className="text-lg font-medium text-gray-700">
-                  계좌 해지
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View className="w-full h-16 flex justify-center">
-              <TouchableOpacity className="px-2 pl-12 py-2">
-                <Text className="text-lg font-medium text-gray-700">
-                  이체한도변경
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View className="w-full h-16 flex justify-center">
-              <TouchableOpacity className="px-2 pl-12 py-2">
-                <Text className="text-lg font-medium text-gray-700">
-                  계좌 비밀번호 변경
-                </Text>
-              </TouchableOpacity>
-            </View>
+            {detailMenu[menu].map(m => (
+              <View className="w-full h-16 flex justify-center">
+                <TouchableOpacity
+                  onPress={m.onPress}
+                  className="px-2 pl-12 py-2">
+                  <Text className="text-lg font-medium text-gray-700">
+                    {m.title}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ))}
           </View>
         </ScrollView>
       </View>
