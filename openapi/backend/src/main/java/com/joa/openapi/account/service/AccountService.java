@@ -65,7 +65,7 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountUpdateResponseDto update(String memberId, AccountUpdateRequestDto req) {
+    public AccountUpdateResponseDto update(UUID memberId, AccountUpdateRequestDto req) {
         Account account = accountRepository.findById(req.getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         authorityValidation(memberId, account);
@@ -81,7 +81,7 @@ public class AccountService {
     }
 
     @Transactional
-    public Long updateLimit(String memberId, AccountUpdateRequestDto req) {
+    public Long updateLimit(UUID memberId, AccountUpdateRequestDto req) {
         Account account = accountRepository.findById(req.getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         authorityValidation(memberId, account);
@@ -95,7 +95,7 @@ public class AccountService {
     }
 
     @Transactional
-    public void updatePassword(String memberId, AccountUpdateRequestDto req) {
+    public void updatePassword(UUID memberId, AccountUpdateRequestDto req) {
         Account account = accountRepository.findById(req.getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         authorityValidation(memberId, account);
@@ -106,8 +106,8 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    public void authorityValidation(String memberId, Account account) {
-        if (!account.getHolder().getMemberId().equals(memberId))
+    public void authorityValidation(UUID memberId, Account account) {
+        if (!account.getHolder().getId().equals(memberId))
             throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
     }
 

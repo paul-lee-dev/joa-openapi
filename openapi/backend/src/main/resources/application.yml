@@ -17,4 +17,7 @@ spring:
         dialect:
 
   jwt:
+    header:
     secret:
+    access-token-validity-in-seconds :
+    refresh-token-validity-in-seconds :

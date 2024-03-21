@@ -34,7 +34,7 @@ public class MemberService {
                 .phone(request.getPhone())
                 .build();
         Member newMember = memberRepository.save(member);
-        MemberIdResponseDto response = new MemberIdResponseDto(newMember.getMemberId().toString(),
+        MemberIdResponseDto response = new MemberIdResponseDto(newMember.getId().toString(),
                 newMember.getCreatedAt(), newMember.getUpdatedAt());
         return response;
     }
@@ -82,7 +82,7 @@ public class MemberService {
     public MemberIdResponseDto delete(String memberId) {
         Member member = memberRepository.findByMemberId(UUID.fromString(memberId));
         member.deleteSoftly();
-        MemberIdResponseDto response = new MemberIdResponseDto(member.getMemberId().toString(),
+        MemberIdResponseDto response = new MemberIdResponseDto(member.getId().toString(),
                 member.getCreatedAt(), member.getUpdatedAt());
         return response;
     }
