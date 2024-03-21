@@ -14,7 +14,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountUpdateResponseDto {
+public class AccountGetAccountsResponseDto {
 
     private String accountId;
     private String nickname;
@@ -34,8 +34,8 @@ public class AccountUpdateResponseDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime updatedAt;
 
-    public static AccountUpdateResponseDto toDto(Account account) {
-        return AccountUpdateResponseDto.builder()
+    public static AccountGetAccountsResponseDto toDto(Account account) {
+        return AccountGetAccountsResponseDto.builder()
                 .accountId(account.getId())
                 .nickname(account.getNickname())
                 .balance(account.getBalance())
@@ -47,7 +47,7 @@ public class AccountUpdateResponseDto {
                 .depositAccount(account.getDepositAccount())
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
-                .dummyId(account.getDummy().getDummyId())
+                .dummyId((account.getDummy() == null) ? null : account.getDummy().getDummyId())
                 .createdAt(account.getCreatedAt())
                 .updatedAt(account.getUpdatedAt())
                 .build();

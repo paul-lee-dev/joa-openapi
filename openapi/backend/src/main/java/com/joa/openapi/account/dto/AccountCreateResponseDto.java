@@ -5,6 +5,7 @@ import com.joa.openapi.account.entity.Account;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AccountCreateResponseDto {
 
-    private String id;
+    private String accountId;
     private String nickname;
     private Long balance;
     private Boolean isDormant;
@@ -20,12 +21,14 @@ public class AccountCreateResponseDto {
     private String startDate;
     private String endDate;
     private Integer term;
+    private String depositAccount;
     private String withdrawAccount;
     private Long amount;
+    private UUID dummyId;
 
     public static AccountCreateResponseDto toDto(Account account) {
         return AccountCreateResponseDto.builder()
-                .id(account.getId())
+                .accountId(account.getId())
                 .nickname(account.getNickname())
                 .balance(account.getBalance())
                 .isDormant(account.getIsDormant())
@@ -33,8 +36,10 @@ public class AccountCreateResponseDto {
                 .startDate(account.getStartDate())
                 .endDate(account.getEndDate())
                 .term(account.getTerm())
+                .depositAccount(account.getDepositAccount())
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
+                .dummyId(account.getDummy().getDummyId())
                 .build();
     }
 }
