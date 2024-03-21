@@ -6,7 +6,7 @@ import BankSelect from "@/components/select/bank";
 import MyAsyncSelect from "@/components/select/multiSearchSelect";
 import tw from "tailwind-styled-components";
 
-export default function AccountCreate() {
+export default function AccountDetail() {
   return (
     <>
       <Form>
@@ -26,28 +26,14 @@ export default function AccountCreate() {
             htmlFor={"customer"}
           ></MyAsyncSelect>
         </div>
-        <div className="flex justify-end">
-          <Button id={"detailSubmit"} name={"생성"}></Button>
+        <div className="flex gap-6 justify-end">
+          <Button id={"edit"} name={"수정"}></Button>
+          <Button id={"delete"} name={"삭제"}></Button>
         </div>
       </Form>
     </>
   );
 }
-
 const Form = tw.form`
 
 `;
-
-// {
-// 	"name" : String,
-// 	"count" : Integer,
-// 	"bank" : {
-// 		"bankId" : String
-// 		},
-// 	"data" : {
-// 		"memberId" : String,
-// 		"product" : [
-// 			{"productName" : String,},
-// 		],
-// 	}
-// }
