@@ -1,4 +1,11 @@
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PiggyBank2 from '../../assets/piggy-bank2.png';
@@ -8,14 +15,33 @@ import BottomButton from '../components/BottomButton';
 import {useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../App';
+import {Controller, useForm} from 'react-hook-form';
+
+interface LoginForm {
+  email: string;
+  password: string;
+}
 
 type IntroScreenProps = NativeStackScreenProps<RootStackParamList, 'Intro'>;
 
 function Intro({navigation}: IntroScreenProps): React.JSX.Element {
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+    reset,
+  } = useForm<LoginForm>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const onSubmit = (data: LoginForm) => console.log(data);
   useEffect(() => {
-    setLoginModalOpen(false);
-  }, []);
+    reset();
+  }, [loginModalOpen, reset]);
 
   return (
     <View className="w-full h-full bg-gray-100">
@@ -72,23 +98,73 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
       </View>
       {loginModalOpen && (
         <BottomPopup close={() => setLoginModalOpen(false)}>
-          <View className="w-full flex flex-grow space-y-8">
-            <CommonInput label={'이메일'} />
-            <CommonInput label={'비밀번호'} />
-            <View className="w-full flex flex-row justify-center space-x-8">
-              <TouchableOpacity onPress={() => navigation.navigate('Join')}>
-                <Text className="text-gray-700">회원가입</Text>
-              </TouchableOpacity>
-              <Text className="text-gray-700">|</Text>
-              <TouchableOpacity>
-                <Text className="text-gray-700">비밀번호 찾기</Text>
-              </TouchableOpacity>
+          <ScrollView className="w-full flex flex-grow">
+            <View className="w-full space-y-6 mb-17 py-2 ">
+              <CommonInput label={'이메일'}>
+                <Controller
+                  control={control}
+                  rules={{required: true}}
+                  render={({field: {onChange, onBlur, value}}) => (
+                    <TextInput
+                      className="border-b border-gray-800/50 text-gray-700"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                    />
+                  )}
+                  name="email"
+                />
+                {errors.email && (
+                  <Text className="absolute bottom-2 left-8 text-red-400">
+                    이메일을 입력해주세요.
+                  </Text>
+                )}
+              </CommonInput>
+              <CommonInput label={'비밀번호'}>
+                <Controller
+                  control={control}
+                  rules={{required: true}}
+                  render={({field: {onChange, onBlur, value}}) => (
+                    <View className="w-full relative">
+                      <TextInput
+                        className="border-b border-gray-800/50 text-gray-700"
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                        secureTextEntry={!showPassword}
+                      />
+                      <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
+                        <Icon
+                          name={
+                            showPassword ? 'eye-outline' : 'eye-off-outline'
+                          }
+                          color={'#777'}
+                          onPress={() => setShowPassword(!showPassword)}
+                          size={20}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                  name="password"
+                />
+                {errors.password && (
+                  <Text className="absolute bottom-2 left-8 text-red-400">
+                    비밀번호를 입력해주세요.
+                  </Text>
+                )}
+              </CommonInput>
+              <View className="w-full flex flex-row justify-center space-x-8">
+                <TouchableOpacity onPress={() => navigation.navigate('Join')}>
+                  <Text className="text-gray-700">회원가입</Text>
+                </TouchableOpacity>
+                <Text className="text-gray-700">|</Text>
+                <TouchableOpacity>
+                  <Text className="text-gray-700">비밀번호 찾기</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-          <BottomButton
-            title={'로그인'}
-            onPress={() => navigation.replace('Main')}
-          />
+          </ScrollView>
+          <BottomButton title={'로그인'} onPress={handleSubmit(onSubmit)} />
         </BottomPopup>
       )}
     </View>
