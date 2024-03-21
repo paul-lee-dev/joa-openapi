@@ -19,7 +19,7 @@ public class Bank extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "BINARY(16)")
-    private UUID bankId;
+    private UUID Id;
     private UUID adminId;
     private String name;
     private String description;

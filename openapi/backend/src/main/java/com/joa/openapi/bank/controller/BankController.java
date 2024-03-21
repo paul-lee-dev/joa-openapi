@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,8 +38,10 @@ public class BankController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchAll(@RequestHeader("Authorization") UUID adminId) {
-        List<BankResponseDto> bankResponseDtoList = bankService.searchAll(adminId);
+    public ResponseEntity<?> searchAll(@RequestParam(value = "name", required = false) String name, @RequestHeader("adminId") UUID adminId) {
+        List<BankResponseDto> bankResponseDtoList;
+        if (name == null) bankResponseDtoList = bankService.searchAll("", adminId);
+        else bankResponseDtoList = bankService.searchAll(name, adminId);
         return ResponseEntity.ok(ApiResponse.success("은행목록검색에 성공했습니다.", bankResponseDtoList));
     }
 
