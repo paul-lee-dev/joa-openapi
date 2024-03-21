@@ -2,6 +2,7 @@ package com.joa.openapi.account.entity;
 
 import com.joa.openapi.account.dto.AccountUpdateRequestDto;
 import com.joa.openapi.common.entity.BaseEntity;
+import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,10 @@ public class Account extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member holder;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dummy_id")
+    private Dummy dummy;
 
     public void updateNickname(String nickname) {
         this.nickname = nickname;

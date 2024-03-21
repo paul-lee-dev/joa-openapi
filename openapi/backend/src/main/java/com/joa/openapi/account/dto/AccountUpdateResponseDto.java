@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -26,6 +27,8 @@ public class AccountUpdateResponseDto {
     private String depositAccount;
     private String withdrawAccount;
     private Long amount;
+    private UUID dummyId;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdAt;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
@@ -44,6 +47,7 @@ public class AccountUpdateResponseDto {
                 .depositAccount(account.getDepositAccount())
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
+                .dummyId(account.getDummy().getDummyId())
                 .createdAt(account.getCreatedAt())
                 .updatedAt(account.getUpdatedAt())
                 .build();

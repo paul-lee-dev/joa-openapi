@@ -5,6 +5,7 @@ import com.joa.openapi.account.entity.Account;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -23,6 +24,7 @@ public class AccountCreateResponseDto {
     private String depositAccount;
     private String withdrawAccount;
     private Long amount;
+    private UUID dummyId;
 
     public static AccountCreateResponseDto toDto(Account account) {
         return AccountCreateResponseDto.builder()
@@ -37,6 +39,7 @@ public class AccountCreateResponseDto {
                 .depositAccount(account.getDepositAccount())
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
+                .dummyId(account.getDummy().getDummyId())
                 .build();
     }
 }

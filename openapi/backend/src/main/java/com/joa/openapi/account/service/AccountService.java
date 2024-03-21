@@ -6,6 +6,8 @@ import com.joa.openapi.account.errorcode.AccountErrorCode;
 import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.dummy.entity.Dummy;
+import com.joa.openapi.dummy.repository.DummyRepository;
 import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -25,6 +28,7 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final MemberRepository memberRepository;
+    private final DummyRepository dummyRepository;
 
     @Transactional
     public AccountCreateResponseDto create(UUID memberId, AccountCreateRequestDto req) {
@@ -32,6 +36,9 @@ public class AccountService {
         String accountId = String.valueOf(Math.random());
 
         Member member = memberRepository.findById(memberId);
+
+        Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
+                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT))); /* TODO: 더미 에러 코드로 변경 */
 
         String startDateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -57,6 +64,7 @@ public class AccountService {
                 .withdrawAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
                 .amount(req.getAmount())
                 .holder(member)
+                .dummy(optionalDummy.orElse(null))
                 .build();
 
         accountRepository.save(account);
@@ -133,8 +141,14 @@ public class AccountService {
     }
 
     public void authorityValidation(UUID memberId, Account account) {
-        if (!account.getHolder().getId().equals(memberId))
-            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+        if(account.getDummy() != null){
+            Dummy dummy = dummyRepository.findById(account.getDummy().getDummyId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT)); /* TODO: 더미 에러 코드로 변경 */
+            if(!dummy.getAdminId().equals(memberId))
+                throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+        } else{
+            if (!account.getHolder().getId().equals(memberId))
+                throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+        }
     }
 
     public void checkPassword(Account account, String password){
