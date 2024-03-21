@@ -35,6 +35,7 @@ public class Account extends BaseEntity {
     private String startDate;
     private String endDate;
     private Integer term;
+    private String depositAccount;
     private String withdrawAccount;
     private Long amount;
 
@@ -44,6 +45,10 @@ public class Account extends BaseEntity {
 
     public void updateNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void updateDepositAccount(String withdrawAccount) {
+        this.withdrawAccount = withdrawAccount;
     }
 
     public void updateWithdrawAccount(String withdrawAccount) {

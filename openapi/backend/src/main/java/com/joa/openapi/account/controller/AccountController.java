@@ -41,8 +41,14 @@ public class AccountController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId, @RequestBody AccountDeleteRequestDto req){
+    public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId, @RequestBody AccountDeleteRequestDto req) {
         String accountId = accountService.delete(memberId, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 해지에 성공했습니다.", accountId));
+    }
+
+    @PostMapping("/balance")
+    public ResponseEntity<?> getBalance(@RequestHeader("memberId") UUID memberId, @RequestBody AccountGetRequestDto req) {
+        AccountBalanceResponseDto balance = accountService.getBalance(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("계좌 잔액 조회에 성공했습니다.", balance));
     }
 }

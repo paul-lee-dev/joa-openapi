@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AccountCreateResponseDto {
 
-    private String id;
+    private String accountId;
     private String nickname;
     private Long balance;
     private Boolean isDormant;
@@ -20,12 +20,13 @@ public class AccountCreateResponseDto {
     private String startDate;
     private String endDate;
     private Integer term;
+    private String depositAccount;
     private String withdrawAccount;
     private Long amount;
 
     public static AccountCreateResponseDto toDto(Account account) {
         return AccountCreateResponseDto.builder()
-                .id(account.getId())
+                .accountId(account.getId())
                 .nickname(account.getNickname())
                 .balance(account.getBalance())
                 .isDormant(account.getIsDormant())
@@ -33,6 +34,7 @@ public class AccountCreateResponseDto {
                 .startDate(account.getStartDate())
                 .endDate(account.getEndDate())
                 .term(account.getTerm())
+                .depositAccount(account.getDepositAccount())
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
                 .build();

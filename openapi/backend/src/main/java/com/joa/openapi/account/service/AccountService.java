@@ -53,6 +53,7 @@ public class AccountService {
                 .startDate(startDateStr)
                 .endDate(endDateStr)
                 .term(req.getTerm())
+                .depositAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
                 .withdrawAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
                 .amount(req.getAmount())
                 .holder(member)
@@ -69,10 +70,12 @@ public class AccountService {
 
         authorityValidation(memberId, account);
 
-        /* TODO withdrawAccount가 존재하는지 확인 */
-
         if(req.getNickname() != null && !req.getPassword().trim().isBlank())
             account.updateNickname(req.getNickname());
+        if (req.getDepositAccount() != null && !req.getPassword().trim().isBlank()){
+            accountRepository.findById(req.getDepositAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_WITHDRAW_ACCOUNT));
+            account.updateDepositAccount(req.getDepositAccount());
+        }
         if (req.getWithdrawAccount() != null && !req.getPassword().trim().isBlank()){
             accountRepository.findById(req.getWithdrawAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_WITHDRAW_ACCOUNT));
             account.updateWithdrawAccount(req.getWithdrawAccount());
@@ -119,6 +122,14 @@ public class AccountService {
         account.deleteSoftly();
 
         return account.getId();
+    }
+
+    public AccountBalanceResponseDto getBalance(UUID memberId, AccountGetRequestDto req) {
+        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        authorityValidation(memberId, account);
+
+        return AccountBalanceResponseDto.toDto(account);
     }
 
     public void authorityValidation(UUID memberId, Account account) {
