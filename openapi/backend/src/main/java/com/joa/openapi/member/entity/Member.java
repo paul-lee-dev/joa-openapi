@@ -23,7 +23,7 @@ public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "BINARY(16)")
-    private UUID memberId;
+    private UUID id;
     private String name;
     private String password;
     private String phone;
