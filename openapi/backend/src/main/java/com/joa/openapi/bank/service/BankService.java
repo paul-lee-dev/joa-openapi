@@ -40,16 +40,14 @@ public class BankService {
 
     @Transactional
     public BankResponseDto update(BankRequestDto req, UUID uuid) {
-        Optional<Bank> Optional = bankRepository.findById(uuid);
-        Bank bank = Optional.orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+        Bank bank = bankRepository.findById(uuid).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         bank.update(req);
         return BankResponseDto.toDto(bank);
     }
 
     @Transactional
     public void delete(UUID uuid) {
-        Optional<Bank> Optional = bankRepository.findById(uuid);
-        Bank bank = Optional.orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+        Bank bank = bankRepository.findById(uuid).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         bank.deleteSoftly();
     }
 
@@ -63,8 +61,7 @@ public class BankService {
     }
 
     public BankResponseDto serachBank(UUID uuid) {
-        Optional<Bank> Optional = bankRepository.findById(uuid);
-        Bank bank = Optional.orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+        Bank bank = bankRepository.findById(uuid).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         return BankResponseDto.toDto(bank);
     }
 }
