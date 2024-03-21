@@ -10,6 +10,7 @@ type SearchScreenProps = NativeStackScreenProps<RootStackParamList, 'Search'>;
 
 function Search({navigation}: SearchScreenProps): React.JSX.Element {
   const [isAutosave, setIsAutosave] = useState<boolean>(true);
+  const [keyword, setKeyword] = useState<string>('');
   const toggleAutosave = () => setIsAutosave(previousState => !previousState);
 
   return (
@@ -28,6 +29,7 @@ function Search({navigation}: SearchScreenProps): React.JSX.Element {
             placeholder="메뉴, 상품을 찾아보세요"
             placeholderTextColor="#374151"
             className="text-xl font-medium text-gray-700"
+            onChangeText={setKeyword}
           />
           <Icon name={'magnify'} color={'#000'} size={30} />
         </View>
