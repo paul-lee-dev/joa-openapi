@@ -51,8 +51,8 @@ public class BankService {
         bank.deleteSoftly();
     }
 
-    public List<BankResponseDto> searchAll(UUID adminId) {
-        List<Bank> bankList = bankRepository.findByAdminId(adminId);
+    public List<BankResponseDto> searchAll(String name, UUID adminId) {
+        List<Bank> bankList = bankRepository.findByAdminIdAndNameContaining(adminId, name);
         List<BankResponseDto> bankResponseDtoList = new ArrayList<>();
         for (Bank bank:bankList) {
             bankResponseDtoList.add(BankResponseDto.toDto(bank));

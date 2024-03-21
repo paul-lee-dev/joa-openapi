@@ -28,7 +28,7 @@ public class BankResponseDto {
 
     public static BankResponseDto toDto(Bank bank) {
         return BankResponseDto.builder()
-                .bankId(bank.getBankId())
+                .bankId(bank.getId())
                 .adminId(bank.getAdminId())
                 .name(bank.getName())
                 .description(bank.getDescription())
