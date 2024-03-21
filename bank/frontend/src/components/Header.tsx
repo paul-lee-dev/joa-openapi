@@ -8,10 +8,11 @@ interface IMenu {
 
 interface IProps {
   stack?: string;
+  goBack?: () => void;
   menu: IMenu[];
 }
 
-function Header({stack, menu}: IProps): React.JSX.Element {
+function Header({stack, goBack, menu}: IProps): React.JSX.Element {
   return (
     <View className="w-full h-16 flex flex-row justify-between px-4">
       <View className=" w-40 flex flex-row items-center flex-grow ">
@@ -19,12 +20,14 @@ function Header({stack, menu}: IProps): React.JSX.Element {
           <Icon
             name={'chevron-left'}
             color={'#000'}
-            onPress={() => {}}
+            onPress={goBack}
             size={30}
           />
         ) : null}
 
-        <Text className="text-2xl font-semibold">{stack || 'JOA BANK'}</Text>
+        <Text className="text-2xl font-semibold text-gray-700">
+          {stack || 'JOA BANK'}
+        </Text>
       </View>
       <View className=" w-24 flex flex-row justify-end space-x-4 pr-2 items-center">
         {menu.map(m => (
