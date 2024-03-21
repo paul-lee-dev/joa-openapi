@@ -2,11 +2,14 @@ package com.joa.openapi.dummy.service;
 
 import com.joa.openapi.account.dto.AccountCreateRequestDto;
 import com.joa.openapi.account.service.AccountService;
+import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.dummy.ErrorCode.DummyErrorCode;
 import com.joa.openapi.dummy.dto.DummyAccountRequestDto;
 import com.joa.openapi.dummy.dto.DummyMemberRequestDto;
 import com.joa.openapi.dummy.dto.DummyResponseDto;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.dummy.repository.DummyRepository;
+import com.joa.openapi.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +23,7 @@ import java.util.UUID;
 public class DummyService {
 
     private final DummyRepository dummyRepository;
+    private final MemberService memberService;
     private final AccountService accountService;
     private final MakeNeyhuingName makeNeyhuingName;
 
@@ -28,7 +32,7 @@ public class DummyService {
         String dummyName = "멤버" + req.getCount() + "명 만들기";
         Dummy dummy = Dummy.builder()
                 .dummyName(dummyName)
-                .userCount(req.getCount())
+                .memberCount(req.getCount())
                 .adminId(adminId)
                 .build();
 
@@ -73,6 +77,29 @@ public class DummyService {
 
         dummyRepository.save(dummy);
 
+        return DummyResponseDto.toDto(dummy);
+    }
+
+    @Transactional
+    public void deleteDummy(UUID dummyId) {
+        Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
+        if (dummy.getMemberCount() != null) {
+            memberService.delete(dummyId);
+        } else if (dummy.getAccountCount() != null) {
+
+        } else if (dummy.getTransactionCount() != null) {
+
+        }
+        dummy.deleteSoftly();
+    }
+
+    @Transactional
+    public void deleteAllDummy() {
+
+    }
+
+    public DummyResponseDto search(UUID dummyId) {
+        Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
         return DummyResponseDto.toDto(dummy);
     }
 

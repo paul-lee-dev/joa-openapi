@@ -18,9 +18,9 @@ public class Dummy extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "BINARY(16)")
-    private UUID dummyId;
+    private UUID Id;
     private String dummyName;
-    private Integer userCount;
+    private Integer memberCount;
     private Integer accountCount;
     private Integer transactionCount;
     private UUID adminId;

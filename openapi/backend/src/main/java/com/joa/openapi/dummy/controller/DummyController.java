@@ -51,4 +51,12 @@ public class DummyController {
         }
         return ResponseEntity.ok(ApiResponse.success("거래내역 더미데이터 생성 성공했습니다.", dummyResponseDto));
     }
+
+    @DeleteMapping("/{dummyId}")
+    public ResponseEntity<?> deleteDummy(@PathVariable(value = "dummyId") UUID dummyId) {
+        DummyResponseDto dummyResponseDto = dummyService.search(dummyId);
+        dummyService.deleteDummy(dummyId);
+        return ResponseEntity.ok(ApiResponse.success("해당 더미데이터 삭제 성공했습니다.", dummyResponseDto));
+    }
+
 }

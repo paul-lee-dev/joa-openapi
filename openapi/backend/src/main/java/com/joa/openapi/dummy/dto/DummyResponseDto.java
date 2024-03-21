@@ -29,10 +29,10 @@ public class DummyResponseDto {
 
     public static DummyResponseDto toDto(Dummy dummy) {
         return DummyResponseDto.builder()
-                .dummyId(dummy.getDummyId())
+                .dummyId(dummy.getId())
                 .adminId(dummy.getAdminId())
                 .dummyName(dummy.getDummyName())
-                .userCount(dummy.getUserCount())
+                .userCount(dummy.getMemberCount())
                 .accountCount(dummy.getAccountCount())
                 .transactionCount(dummy.getTransactionCount())
                 .createdAt(dummy.getCreatedAt())
