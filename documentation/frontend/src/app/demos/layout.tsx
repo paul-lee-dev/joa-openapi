@@ -1,21 +1,15 @@
 "use client";
 
-import Header from "@/components/header";
-import Sidebar from "@/components/sidebar";
 import tw from "tailwind-styled-components";
 
 export default function Joa({ children }: { children: React.ReactNode }) {
   return (
     <Wrapper>
-      <AdminContainer>
-        <Header />
-        <Sidebar />
+      <DemoContainer>
         <MainContainer>
-          <ChildrenContainer>
             <Children>{children}</Children>
-          </ChildrenContainer>
         </MainContainer>
-      </AdminContainer>
+      </DemoContainer>
     </Wrapper>
   );
 }
@@ -25,7 +19,7 @@ flex
 h-full
 w-full`;
 
-const AdminContainer = tw.div`
+const DemoContainer = tw.div`
 h-full
 w-full`;
 
@@ -34,10 +28,7 @@ mx-2.5
 flex-none 
 transition-all 
 md:pr-2
-xl:ml-[323px]`;
-
-const ChildrenContainer = tw.div`
-`;
+xl:mx-[323px]`;
 
 const Children = tw.div`
 mx-auto

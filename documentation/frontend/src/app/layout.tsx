@@ -1,4 +1,6 @@
 import RecoilContextProvider from "./recoilContextProvider";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export const metadata = {
   title: "Next.js",
@@ -13,8 +15,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body id={"root"}>
-        <RecoilContextProvider>{children}</RecoilContextProvider>
+        <RecoilContextProvider>
+          <Header />
+          {children}
+          <Footer />
+        </RecoilContextProvider>
       </body>
     </html>
   );
 }
+
+

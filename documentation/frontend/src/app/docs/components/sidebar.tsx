@@ -1,12 +1,3 @@
-import {
-  HiCurrencyDollar,
-  HiDocument,
-} from "react-icons/hi";
-import {
-  HiAdjustmentsHorizontal,
-  HiBanknotes,
-  HiCog6Tooth,
-} from "react-icons/hi2";
 import tw from "tailwind-styled-components";
 
 export default function Sidebar() {
@@ -15,36 +6,31 @@ export default function Sidebar() {
       <Wrapper id="sidebar">
         <SidebarContainer>
           <ListAnchor href="#">
-            <HiDocument></HiDocument>
-            <ListName>Overview</ListName>
+            <ListName>서비스 소개(Introduction)</ListName>
           </ListAnchor>
           <ListAnchor href="#">
-            <HiBanknotes></HiBanknotes>
-            <ListName>은행</ListName>
+            <ListName>시작하기(Getting Started)</ListName>
           </ListAnchor>
           <ListAnchor href="#">
-            <HiCurrencyDollar></HiCurrencyDollar>
-            <ListName>상품</ListName>
+            <ListName>관리자(Admin)</ListName>
           </ListAnchor>
           <ListAnchor href="#">
-            <HiCurrencyDollar></HiCurrencyDollar>
-            <ListName>계좌</ListName>
+            <ListName>은행(Bank)</ListName>
           </ListAnchor>
           <ListAnchor href="#">
-            <HiCurrencyDollar></HiCurrencyDollar>
-            <ListName>고객</ListName>
+            <ListName>고객(Member)</ListName>
           </ListAnchor>
           <ListAnchor href="#">
-            <HiCurrencyDollar></HiCurrencyDollar>
-            <ListName>거래내역</ListName>
+            <ListName>예적금상품(Product)</ListName>
           </ListAnchor>
           <ListAnchor href="#">
-            <HiAdjustmentsHorizontal></HiAdjustmentsHorizontal>
-            <ListName>자동생성</ListName>
+            <ListName>계좌(Account)</ListName>
           </ListAnchor>
           <ListAnchor href="#">
-            <HiCog6Tooth></HiCog6Tooth>
-            <ListName>설정</ListName>
+            <ListName>거래내역(Transaction)</ListName>
+          </ListAnchor>
+          <ListAnchor href="#">
+            <ListName>더미데이터(Dummy)</ListName>
           </ListAnchor>
         </SidebarContainer>
       </Wrapper>

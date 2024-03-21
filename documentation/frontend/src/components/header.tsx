@@ -1,4 +1,5 @@
 import tw from "tailwind-styled-components";
+import Link from 'next/link';
 
 export default function Header() {
   return (
@@ -6,10 +7,10 @@ export default function Header() {
       <Wrapper>
         <Title>joa-openapi</Title>
         <MenuContainer>
-          <MenuItem>Home</MenuItem>
-          <MenuItem>Demos</MenuItem>
-          <MenuItem>Test Beds</MenuItem>
-          <MenuItem>Docs</MenuItem>
+          <MenuItem><Link href="/home">Home</Link></MenuItem>
+          <MenuItem><Link href="/demos">Demos</Link></MenuItem>
+          <MenuItem><Link href="/testbeds">Test Beds</Link></MenuItem>
+          <MenuItem><Link href="/docs">Docs</Link></MenuItem>
           <MenuItem>Admin</MenuItem>
         </MenuContainer>
       </Wrapper>
