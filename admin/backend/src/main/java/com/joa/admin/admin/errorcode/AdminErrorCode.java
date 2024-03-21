@@ -16,7 +16,9 @@ public enum AdminErrorCode implements ErrorCode {
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "로그인 후 이용해 주세요."),
     NO_AUTH(HttpStatus.UNAUTHORIZED, "인증 정보가 없습니다."),
     ACCESS_DENIED(HttpStatus.FORBIDDEN, "권한이 없습니다."),
-    TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다.");
+    TOKEN_INVALID(HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다."),
+    ALREADY_ISSUED_API_KEY(HttpStatus.CONFLICT, "이미 발급된 API 키가 존재합니다."),
+    NO_API_KEY(HttpStatus.BAD_REQUEST, "API 키가 존재하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

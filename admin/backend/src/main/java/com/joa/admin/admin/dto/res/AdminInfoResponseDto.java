@@ -1,4 +1,4 @@
-package com.joa.admin.admin.dto;
+package com.joa.admin.admin.dto.res;
 
 import lombok.Data;
 

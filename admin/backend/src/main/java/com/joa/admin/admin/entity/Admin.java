@@ -1,5 +1,6 @@
 package com.joa.admin.admin.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.joa.admin.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -23,6 +24,10 @@ public class Admin extends BaseEntity {
     private String email;
     private String password;
     private String phone;
+
+    @OneToOne(mappedBy = "admin")
+    private Api api;
+
 //    private Bank bank;
 //    private Dummy dummy;
 
@@ -48,4 +53,5 @@ public class Admin extends BaseEntity {
     public void updatePhone(String phone) {
         this.phone = phone;
     }
+
 }
