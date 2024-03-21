@@ -38,7 +38,10 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
   });
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const onSubmit = (data: LoginForm) => console.log(data);
+  const onSubmit = (data: LoginForm) => {
+    console.log(data);
+    navigation.replace('Main');
+  };
   useEffect(() => {
     reset();
   }, [loginModalOpen, reset]);
