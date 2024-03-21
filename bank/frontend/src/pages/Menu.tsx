@@ -18,6 +18,7 @@ type MenuType = '뱅킹관리' | '이체' | '조회';
 
 function Menu({navigation}: MenuScreenProps): React.JSX.Element {
   const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [keyword, setKeyword] = useState<string>('');
   const [menu, setMenu] = useState<MenuType>('뱅킹관리');
   const detailMenu = {
     뱅킹관리: [
@@ -99,6 +100,7 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
           className="px-4 text-xl font-bold text-gray-700"
           placeholder="메뉴를 검색해보세요."
           placeholderTextColor="#374151"
+          onChangeText={setKeyword}
         />
       </View>
       <View className="w-full flex-grow flex flex-row">
