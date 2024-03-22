@@ -31,7 +31,7 @@ public class DummyResponseDto {
         return DummyResponseDto.builder()
                 .dummyId(dummy.getId())
                 .adminId(dummy.getAdminId())
-                .dummyName(dummy.getDummyName())
+                .dummyName(dummy.getName())
                 .userCount(dummy.getMemberCount())
                 .accountCount(dummy.getAccountCount())
                 .transactionCount(dummy.getTransactionCount())
