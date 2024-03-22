@@ -107,12 +107,12 @@ public class DummyService {
     public DummyResponseDto deleteDummy(UUID dummyId) {
         Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
         if (dummy.getMemberCount() != null) {
-            List<Member> memberList = memberRepository.findByDummyHolder(dummy);
+            List<Member> memberList = memberRepository.findByDummyId(dummyId);
             for (Member member: memberList) {
                 memberService.delete(member.getId());
             }
         } else if (dummy.getAccountCount() != null) {
-            List<Account> accountList = accountRepository.findByDummy(dummy);
+            List<Account> accountList = accountRepository.findByDummyId(dummyId);
             for (Account account: accountList) {
                 AccountDeleteRequestDto dto = AccountDeleteRequestDto.builder()
                         .accountId(account.getId())

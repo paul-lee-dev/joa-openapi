@@ -40,7 +40,7 @@ public class MemberService {
                 .password(request.getPassword())
                 .email(request.getEmail())
                 .phone(request.getPhone())
-                .bankHolder(bank)
+                .bank(bank)
                 .build();
 
         memberRepository.save(member);
@@ -57,8 +57,8 @@ public class MemberService {
                 .password(request.getPassword())
                 .email(request.getEmail())
                 .phone(request.getPhone())
-                .bankHolder(bank)
-                .dummyHolder(dummy)
+                .bank(bank)
+                .dummy(dummy)
                 .build();
 
         memberRepository.save(member);

@@ -14,5 +14,5 @@ import java.util.UUID;
 public interface AccountRepository extends JpaRepository<Account, String> {
 
     Page<Account> findByHolderId(UUID memberId, Pageable pageable);
-    List<Account> findByDummy(Dummy dummy);
+    List<Account> findByDummyId(UUID dummyId);
 }
