@@ -3,7 +3,7 @@ package com.joa.openapi.dummy.service;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MakeNeyhuingName {
+public class NeyhuingName {
 
     // 더미데이터 멤버이름 만들기 by 녜힁
     public String makeNeyhuing(int size) {

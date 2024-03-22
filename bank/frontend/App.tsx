@@ -1,25 +1,17 @@
-import {NavigationContainer, ParamListBase} from '@react-navigation/native';
-import AccountDetail from './src/pages/AccountDetail';
-import ChangeAccountLimit from './src/pages/ChangeAccountLimit';
-import ChangeAccountName from './src/pages/ChangeAccountName';
-import ChangePassword from './src/pages/ChangePassword';
-import ChangePasswordResult from './src/pages/ChangePasswordResult';
-import ChangePasswordStart from './src/pages/ChangePasswordStart';
-import ChangePasswordVerify from './src/pages/ChangePasswordVerify';
-import CreateAccount from './src/pages/CreateAccount';
-import History from './src/pages/History';
-import Intro from './src/pages/Intro';
-import Join from './src/pages/Join';
-import Main from './src/pages/Main';
-import Menu from './src/pages/Menu';
-import Search from './src/pages/Search';
-import Setting from './src/pages/Setting';
-import Splash from './src/pages/Splash';
-import Transfer from './src/pages/Transfer';
-import TransferAmount from './src/pages/TransferAmount';
-import TransferConfirm from './src/pages/TransferConfirm';
-import TransferResult from './src/pages/TransferResult';
+import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import CreateAccount from '@/pages/CreateAccount';
+import Intro from '@/pages/Intro';
+import Join from '@/pages/Join';
+import Main from '@/pages/Main';
+import Menu from '@/pages/Menu';
+import Search from '@/pages/Search';
+import Setting from '@/pages/Setting';
+import Transfer from '@/pages/Transfer';
+import TransferAmount from '@/pages/TransferAmount';
+import TransferConfirm from '@/pages/TransferConfirm';
+import TransferResult from '@/pages/TransferResult';
+import {RecoilRoot} from 'recoil';
 
 export type RootStackParamList = {
   AccountDetail: undefined;
@@ -49,51 +41,57 @@ const globalOption = {options: {headerShown: false}};
 
 function App(): React.JSX.Element {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Intro">
-        <Stack.Screen name="Intro" component={Intro} {...globalOption} />
-        <Stack.Screen name="Main" component={Main} {...globalOption} />
-        <Stack.Screen name="Join" component={Join} {...globalOption} />
-        <Stack.Screen name="Search" component={Search} {...globalOption} />
-        <Stack.Screen name="Menu" component={Menu} {...globalOption} />
-        <Stack.Screen name="Setting" component={Setting} {...globalOption} />
-        <Stack.Screen name="Transfer" component={Transfer} {...globalOption} />
-        <Stack.Screen
-          name="TransferAmount"
-          component={TransferAmount}
-          {...globalOption}
-        />
-        <Stack.Screen
-          name="TransferConfirm"
-          component={TransferConfirm}
-          {...globalOption}
-        />
-        <Stack.Screen
-          name="TransferResult"
-          component={TransferResult}
-          {...globalOption}
-        />
-        <Stack.Screen
-          name="CreateAccount"
-          component={CreateAccount}
-          {...globalOption}
-        />
-      </Stack.Navigator>
-      {/* <Stack.Screen name="Details">
+    <RecoilRoot>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Intro">
+          <Stack.Screen name="Intro" component={Intro} {...globalOption} />
+          <Stack.Screen name="Main" component={Main} {...globalOption} />
+          <Stack.Screen name="Join" component={Join} {...globalOption} />
+          <Stack.Screen name="Search" component={Search} {...globalOption} />
+          <Stack.Screen name="Menu" component={Menu} {...globalOption} />
+          <Stack.Screen name="Setting" component={Setting} {...globalOption} />
+          <Stack.Screen
+            name="Transfer"
+            component={Transfer}
+            {...globalOption}
+          />
+          <Stack.Screen
+            name="TransferAmount"
+            component={TransferAmount}
+            {...globalOption}
+          />
+          <Stack.Screen
+            name="TransferConfirm"
+            component={TransferConfirm}
+            {...globalOption}
+          />
+          <Stack.Screen
+            name="TransferResult"
+            component={TransferResult}
+            {...globalOption}
+          />
+          <Stack.Screen
+            name="CreateAccount"
+            component={CreateAccount}
+            {...globalOption}
+          />
+        </Stack.Navigator>
+        {/* <Stack.Screen name="Details">
         {props => <DetailsScreen {...props} />}
       </Stack.Screen> */}
-      {/* <Splash /> */}
-      {/* <Join /> */}
-      {/* <History /> */}
+        {/* <Splash /> */}
+        {/* <Join /> */}
+        {/* <History /> */}
 
-      {/* <AccountDetail /> */}
-      {/* <ChangePasswordStart /> */}
-      {/* <ChangePasswordVerify /> */}
-      {/* <ChangePassword /> */}
-      {/* <ChangePasswordResult /> */}
-      {/* <ChangeAccountName /> */}
-      {/* <ChangeAccountLimit /> */}
-    </NavigationContainer>
+        {/* <AccountDetail /> */}
+        {/* <ChangePasswordStart /> */}
+        {/* <ChangePasswordVerify /> */}
+        {/* <ChangePassword /> */}
+        {/* <ChangePasswordResult /> */}
+        {/* <ChangeAccountName /> */}
+        {/* <ChangeAccountLimit /> */}
+      </NavigationContainer>
+    </RecoilRoot>
   );
 }
 

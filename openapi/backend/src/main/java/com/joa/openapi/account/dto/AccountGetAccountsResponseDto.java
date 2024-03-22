@@ -47,7 +47,7 @@ public class AccountGetAccountsResponseDto {
                 .depositAccount(account.getDepositAccount())
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
-                .dummyId((account.getDummy() == null) ? null : account.getDummy().getDummyId())
+                .dummyId((account.getDummy() == null) ? null : account.getDummy().getId())
                 .createdAt(account.getCreatedAt())
                 .updatedAt(account.getUpdatedAt())
                 .build();

@@ -15,5 +15,7 @@ import java.util.UUID;
 public class DummyAccountRequestDto {
 
     private Integer count;
+    private UUID bankId;
+    private UUID productId;
     private List<UUID> users;
 }

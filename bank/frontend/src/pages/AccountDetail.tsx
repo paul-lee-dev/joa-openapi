@@ -1,7 +1,7 @@
+import CommonMenuItem from '@/components/CommonMenuItem';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import Header from '../components/Header';
-import CommonMenuItem from '../components/CommonMenuItem';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Header} from 'react-native/Libraries/NewAppScreen';
 
 function AccountDetail(): React.JSX.Element {
   return (

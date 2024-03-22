@@ -17,5 +17,5 @@ public class AccountCreateRequestDto {
     private String depositAccount;
     private String withdrawAccount;
     private final Long amount = 0L;
-    private final UUID dummyId = null;
+    private UUID dummyId = null;
 }

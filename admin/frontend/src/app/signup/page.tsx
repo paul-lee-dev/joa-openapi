@@ -5,8 +5,7 @@ import tw from "tailwind-styled-components";
 
 export default function SignUpPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [verificationCode, setVerificationCode] =
-    useState('');
+  const [verificationCode, setVerificationCode] = useState("");
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -31,7 +30,7 @@ export default function SignUpPage() {
           <LoginFormContainer action="#" method="POST">
             <InputFormWrapper>
               <LoginLabel htmlFor="email">이메일</LoginLabel>
-              <InputContainer>
+              <InputContainerWithButton>
                 <Input
                   id="email"
                   name="email"
@@ -39,12 +38,15 @@ export default function SignUpPage() {
                   autoComplete="email"
                   required
                 />
-              </InputContainer>
+                <PhoneCallCheckBtn type="button" onClick={toggleModal}>
+                  확인
+                </PhoneCallCheckBtn>
+              </InputContainerWithButton>
             </InputFormWrapper>
 
             <InputFormWrapper>
               <LoginLabel htmlFor="tel">전화번호</LoginLabel>
-              <InputContainerWithButton>
+              <InputContainer>
                 <Input
                   id="tel"
                   name="tel"
@@ -52,10 +54,7 @@ export default function SignUpPage() {
                   autoComplete="tel"
                   required
                 />
-                <PhoneCallCheckBtn type="button" onClick={toggleModal}>
-                  확인
-                </PhoneCallCheckBtn>
-              </InputContainerWithButton>
+              </InputContainer>
             </InputFormWrapper>
 
             <InputFormWrapper>

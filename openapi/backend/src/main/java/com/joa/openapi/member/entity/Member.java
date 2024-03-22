@@ -1,7 +1,9 @@
 package com.joa.openapi.member.entity;
 
 import com.joa.openapi.account.entity.Account;
+import com.joa.openapi.bank.entity.Bank;
 import com.joa.openapi.common.entity.BaseEntity;
+import com.joa.openapi.dummy.entity.Dummy;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,18 +30,26 @@ public class Member extends BaseEntity {
     private String password;
     private String phone;
     private String email;
-//    private Integer bankId;
-//    private String dummyId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bank_id")
+    private Bank bank;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dummy_id")
+    private Dummy dummy;
 
     @OneToMany(mappedBy = "holder")
     private List<Account> accountList = new ArrayList<>();
 
     @Builder
-    public Member(String name, String password, String email, String phone) {
+    public Member(String name, String password, String email, String phone, Dummy dummy, Bank bank) {
         this.name = name;
         this.password = password;
         this.email = email;
         this.phone = phone;
+        this.dummy = dummy;
+        this.bank = bank;
     }
 
     public void updatePassword(String password) {
