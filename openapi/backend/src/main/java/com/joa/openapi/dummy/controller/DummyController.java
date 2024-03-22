@@ -1,10 +1,10 @@
 package com.joa.openapi.dummy.controller;
 
-import com.joa.openapi.bank.service.BankService;
 import com.joa.openapi.common.response.ApiResponse;
 import com.joa.openapi.dummy.dto.DummyAccountRequestDto;
 import com.joa.openapi.dummy.dto.DummyMemberRequestDto;
 import com.joa.openapi.dummy.dto.DummyResponseDto;
+import com.joa.openapi.dummy.dto.DummyUpdateRequestDto;
 import com.joa.openapi.dummy.service.DummyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,6 @@ import java.util.UUID;
 public class DummyController {
 
     private final DummyService dummyService;
-    private final BankService bankService;
 
     @PostMapping("/member")
     public ResponseEntity<?> createMember(@RequestBody DummyMemberRequestDto req, @RequestHeader("adminId") UUID adminId) {
@@ -52,5 +51,23 @@ public class DummyController {
     public ResponseEntity<?> delete(@RequestHeader(value = "adminId") UUID adminId) {
         List<DummyResponseDto> dummyResponseDtoList = dummyService.deleteAllDummy(adminId);
         return ResponseEntity.ok(ApiResponse.success("전체 더미데이터 삭제 성공했습니다.", dummyResponseDtoList));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchAll(@RequestHeader(value = "adminId") UUID adminId) {
+        List<DummyResponseDto> dummyResponseDtoList = dummyService.searchAll(adminId);
+        return ResponseEntity.ok(ApiResponse.success("전체 더미데이터 검색 성공했습니다.", dummyResponseDtoList));
+    }
+
+    @GetMapping("/{dummyId}")
+    public ResponseEntity<?> search(@PathVariable(value = "dummyId") UUID dummyId) {
+        DummyResponseDto dummyResponseDto = dummyService.search(dummyId);
+        return ResponseEntity.ok(ApiResponse.success("해당 더미데이터 검색 성공했습니다.", dummyResponseDto));
+    }
+
+    @PatchMapping("/{dummyId}")
+    public ResponseEntity<?> update(@PathVariable(value = "dummyId") UUID dummyId, @RequestBody DummyUpdateRequestDto req) {
+        DummyResponseDto dummyResponseDto = dummyService.update(dummyId, req);
+        return ResponseEntity.ok(ApiResponse.success("해당 더미데이터 수정 성공했습니다.", dummyResponseDto));
     }
 }
