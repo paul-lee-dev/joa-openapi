@@ -33,23 +33,23 @@ public class Member extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_id")
-    private Bank bankHolder;
+    private Bank bank;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dummy_id")
-    private Dummy dummyHolder;
+    private Dummy dummy;
 
     @OneToMany(mappedBy = "holder")
     private List<Account> accountList = new ArrayList<>();
 
     @Builder
-    public Member(String name, String password, String email, String phone, Dummy dummyHolder, Bank bankHolder) {
+    public Member(String name, String password, String email, String phone, Dummy dummy, Bank bank) {
         this.name = name;
         this.password = password;
         this.email = email;
         this.phone = phone;
-        this.dummyHolder = dummyHolder;
-        this.bankHolder = bankHolder;
+        this.dummy = dummy;
+        this.bank = bank;
     }
 
     public void updatePassword(String password) {

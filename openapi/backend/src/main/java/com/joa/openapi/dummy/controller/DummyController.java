@@ -43,16 +43,14 @@ public class DummyController {
 
     @DeleteMapping("/{dummyId}")
     public ResponseEntity<?> deleteDummy(@PathVariable(value = "dummyId") UUID dummyId) {
-        DummyResponseDto dummyResponseDto = dummyService.search(dummyId);
-        dummyService.deleteDummy(dummyId);
+        DummyResponseDto dummyResponseDto = dummyService.deleteDummy(dummyId);
         return ResponseEntity.ok(ApiResponse.success("해당 더미데이터 삭제 성공했습니다.", dummyResponseDto));
     }
 
     // TODO: adminId는 토큰을 통해 가져오게 하기
     @DeleteMapping()
     public ResponseEntity<?> delete(@RequestHeader(value = "adminId") UUID adminId) {
-        List<DummyResponseDto> dummyResponseDtoList = dummyService.searchAll(adminId);
-        dummyService.deleteAllDummy(adminId);
+        List<DummyResponseDto> dummyResponseDtoList = dummyService.deleteAllDummy(adminId);
         return ResponseEntity.ok(ApiResponse.success("전체 더미데이터 삭제 성공했습니다.", dummyResponseDtoList));
     }
 }

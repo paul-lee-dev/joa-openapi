@@ -104,7 +104,7 @@ public class DummyService {
     }
 
     @Transactional
-    public void deleteDummy(UUID dummyId) {
+    public DummyResponseDto deleteDummy(UUID dummyId) {
         Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
         if (dummy.getMemberCount() != null) {
             List<Member> memberList = memberRepository.findByDummyHolder(dummy);
@@ -124,14 +124,17 @@ public class DummyService {
 
         }
         dummy.deleteSoftly();
+        return DummyResponseDto.toDto(dummy);
     }
 
     @Transactional
-    public void deleteAllDummy(UUID adminId) {
+    public List<DummyResponseDto> deleteAllDummy(UUID adminId) {
         List<Dummy> dummyList = dummyRepository.findAllByAdminId(adminId);
+        List<DummyResponseDto> dummyResponseDtoList = new ArrayList<>();
         for (Dummy dummy: dummyList) {
-            deleteDummy(dummy.getId());
+            dummyResponseDtoList.add(deleteDummy(dummy.getId()));
         }
+        return dummyResponseDtoList;
     }
 
     public DummyResponseDto search(UUID dummyId) {

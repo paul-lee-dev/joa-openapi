@@ -27,7 +27,7 @@ public class Bank extends BaseEntity {
     private String description;
     private String uri;
 
-    @OneToMany(mappedBy = "bankHolder")
+    @OneToMany(mappedBy = "bank")
     private List<Member> memberList = new ArrayList<>();
 
 //    @ManyToOne(fetch = FetchType.LAZY)

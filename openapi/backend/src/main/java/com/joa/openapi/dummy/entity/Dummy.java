@@ -28,6 +28,6 @@ public class Dummy extends BaseEntity {
     private Integer transactionCount;
     private UUID adminId;
 
-    @OneToMany(mappedBy = "dummyHolder")
+    @OneToMany(mappedBy = "dummy")
     private List<Member> memberList = new ArrayList<>();
 }
