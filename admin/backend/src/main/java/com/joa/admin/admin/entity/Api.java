@@ -18,6 +18,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Getter
@@ -33,9 +34,7 @@ public class Api extends BaseEntity {
     @Column(columnDefinition = "BINARY(16)")
     private UUID apiKey;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
+    private UUID adminId;
 
     public void updateApiKey(UUID apiKey) {
         this.apiKey = apiKey;

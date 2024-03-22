@@ -177,18 +177,16 @@ public class AdminService implements UserDetailsService {
     // API key 발급
     @Transactional
     public String issuedApiKey(String adminId) {
-        Admin admin = adminRepository.findByAdminId(UUID.fromString(adminId));
+        int apiCount = apiRepository.countByAdminId(UUID.fromString(adminId));
 
-        // 이미 발급 받은 API가 있을 때, 해당 API 키를 반환
-        if (admin.getApi() != null) {
-            return admin.getApi().getApiKey().toString();
+        if(apiCount > 0) {
+            throw new RestApiException(AdminErrorCode.ALREADY_API_KEY);
         }
 
-        // API가 없을 때 새로운 API 키 발급
         UUID apiKey = UUID.randomUUID();
         Api api = Api.builder()
             .apiKey(apiKey)
-            .admin(admin)
+            .adminId(UUID.fromString(adminId))
             .build();
 
         apiRepository.save(api);
@@ -199,10 +197,9 @@ public class AdminService implements UserDetailsService {
     // API key 재발급
     @Transactional
     public String reissuedApiKey(String adminId) {
-        Admin admin = adminRepository.findByAdminId(UUID.fromString(adminId));
+        int apiCount = apiRepository.countByAdminId(UUID.fromString(adminId));
 
-        // 발급 받은 api가 없을 때
-        if (admin.getApi() == null) {
+        if (apiCount < 1) {
             throw new RestApiException(AdminErrorCode.NO_API_KEY);
         }
 
@@ -216,14 +213,13 @@ public class AdminService implements UserDetailsService {
     // API key 삭제
     @Transactional
     public void deleteApiKey(String adminId) {
-        Admin admin = adminRepository.findByAdminId(UUID.fromString(adminId));
 
-        // 발급 받은 api가 없을 때
-        if (admin.getApi() == null) {
+        Api api = apiRepository.findByAdminId(UUID.fromString(adminId));
+
+        if(apiRepository.countByAdminId(UUID.fromString(adminId)) < 1) {
             throw new RestApiException(AdminErrorCode.NO_API_KEY);
         }
 
-        Api api = admin.getApi();
         api.deleteSoftly();
 
     }

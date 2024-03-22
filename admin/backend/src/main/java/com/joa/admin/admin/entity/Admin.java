@@ -25,9 +25,6 @@ public class Admin extends BaseEntity {
     private String password;
     private String phone;
 
-    @OneToOne(mappedBy = "admin")
-    private Api api;
-
 //    private Bank bank;
 //    private Dummy dummy;
 
