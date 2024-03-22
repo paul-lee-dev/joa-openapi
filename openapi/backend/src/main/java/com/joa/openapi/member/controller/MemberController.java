@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
@@ -38,14 +40,14 @@ public class MemberController {
 
     //회원정보 조회
     @GetMapping
-    public ResponseEntity<?> info(@RequestHeader("memberId") String memberId) {
+    public ResponseEntity<?> info(@RequestHeader("memberId") UUID memberId) {
         MemberInfoResponseDto response = memberService.getInfo(memberId);
         return ResponseEntity.ok(ApiResponse.success("회원 정보 조회에 성공했습니다.", response));
     }
 
     //회원정보 수정
     @PatchMapping
-    public ResponseEntity<?> update(@RequestHeader("memberId") String memberId,
+    public ResponseEntity<?> update(@RequestHeader("memberId") UUID memberId,
                                     @RequestBody MemberUpdateRequestDto request) {
         MemberInfoResponseDto response = memberService.update(memberId, request);
         return ResponseEntity.ok(ApiResponse.success("회원 정보 수정에 성공했습니다.", response));
@@ -53,7 +55,7 @@ public class MemberController {
 
     //회원 탈퇴
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestHeader("memberId") String memberId) {
+    public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId) {
         MemberIdResponseDto response = memberService.delete(memberId);
         return ResponseEntity.ok(ApiResponse.success("회원 탈퇴에 성공했습니다.", response));
     }
