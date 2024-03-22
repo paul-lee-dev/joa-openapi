@@ -12,6 +12,9 @@ import TransferAmount from '@/pages/TransferAmount';
 import TransferConfirm from '@/pages/TransferConfirm';
 import TransferResult from '@/pages/TransferResult';
 import {RecoilRoot} from 'recoil';
+import React from 'react';
+import CreateAccountConfirm from '@/pages/CreateAccountConfirm';
+import CreateAccountResult from '@/pages/CreateAccountResult';
 
 export type RootStackParamList = {
   AccountDetail: undefined;
@@ -40,6 +43,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const globalOption = {options: {headerShown: false}};
 
 function App(): React.JSX.Element {
+  return <CreateAccountResult />;
   return (
     <RecoilRoot>
       <NavigationContainer>
