@@ -1,10 +1,19 @@
 import BottomButton from '@/components/BottomButton';
 import CommonInput from '@/components/CommonInput';
 import Header from '@/components/Header';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from 'App';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-function CreateAccountConfirm(): React.JSX.Element {
+type CreateAccountConfirmScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'CreateAccountConfirm'
+>;
+
+function CreateAccountConfirm({
+  navigation,
+}: CreateAccountConfirmScreenProps): React.JSX.Element {
   return (
     <View className="w-full h-full bg-gray-100 flex">
       <Header
@@ -56,7 +65,10 @@ function CreateAccountConfirm(): React.JSX.Element {
           </CommonInput>
         </View>
       </View>
-      <BottomButton title={'신청하기'} />
+      <BottomButton
+        title={'신청하기'}
+        onPress={() => navigation.navigate('CreateAccountResult')}
+      />
     </View>
   );
 }

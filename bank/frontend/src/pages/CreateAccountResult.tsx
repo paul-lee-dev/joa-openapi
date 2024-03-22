@@ -1,9 +1,18 @@
 import BottomButton from '@/components/BottomButton';
 import Header from '@/components/Header';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from 'App';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-function CreateAccountResult(): React.JSX.Element {
+type CreateAccountResultScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'CreateAccountResult'
+>;
+
+function CreateAccountResult({
+  navigation,
+}: CreateAccountResultScreenProps): React.JSX.Element {
   return (
     <View className="w-full h-full bg-gray-100 flex">
       <Header
@@ -41,7 +50,7 @@ function CreateAccountResult(): React.JSX.Element {
           </View>
         </View>
       </View>
-      <BottomButton title={'확인'} />
+      <BottomButton title={'확인'} onPress={() => navigation.popToTop()} />
     </View>
   );
 }
