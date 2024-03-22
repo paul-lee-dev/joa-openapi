@@ -6,16 +6,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import PiggyBank2 from '../../assets/piggy-bank2.png';
-import BottomPopup from '../components/BottomPopup';
-import CommonInput from '../components/CommonInput';
-import BottomButton from '../components/BottomButton';
 import {useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../App';
 import {Controller, useForm} from 'react-hook-form';
+import {RootStackParamList} from 'App';
+import Header from '@/components/Header';
+import PiggyBank2 from '@/assets/piggy-bank2.png';
+import BottomPopup from '@/components/BottomPopup';
+import CommonInput from '@/components/CommonInput';
+import BottomButton from '@/components/BottomButton';
 
 interface LoginForm {
   email: string;

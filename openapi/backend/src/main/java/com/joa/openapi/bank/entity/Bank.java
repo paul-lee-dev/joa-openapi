@@ -2,10 +2,13 @@ package com.joa.openapi.bank.entity;
 
 import com.joa.openapi.bank.dto.BankRequestDto;
 import com.joa.openapi.common.entity.BaseEntity;
+import com.joa.openapi.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,6 +26,9 @@ public class Bank extends BaseEntity {
     private String name;
     private String description;
     private String uri;
+
+    @OneToMany(mappedBy = "bank")
+    private List<Member> memberList = new ArrayList<>();
 
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "admin_id")

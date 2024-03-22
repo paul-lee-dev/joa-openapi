@@ -1,9 +1,9 @@
 import {Text, View} from 'react-native';
-import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import BottomButton from '../components/BottomButton';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../App';
+import {RootStackParamList} from 'App';
+import Header from '@/components/Header';
+import BottomButton from '@/components/BottomButton';
 
 type TransferResultScreenProps = NativeStackScreenProps<
   RootStackParamList,
