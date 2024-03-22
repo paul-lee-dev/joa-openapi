@@ -1,4 +1,40 @@
 spring:
+#  mail:
+#    host: smtp.naver.com
+#    port: 465
+#    username: sulim0314@naver.com
+#    password: Nrd
+#    properties:
+#      mail:
+#        debug: true
+#        smtp:
+#          ssl:
+#            enable: true
+#            trust: smtp.gmail.com
+#            protocols: TLSv1.2
+#          auth: true
+#          timeout: 5000
+#          starttls:
+#            enable: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587 # 587, 465, 25
+    username: joa13site@gmail.com
+    password: nryowoqhrnmbzrxr
+    properties:
+      mail:
+        debug: true
+        smtp:
+          ssl:
+            enable: true
+            trust: smtp.gmail.com
+            protocols: TLSv1.2
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+
   datasource:
     url: jdbc:mysql://127.0.0.1:3307/joa?serverTimezone=UTC # mysql 8.2, mysql workbench 8.0.21 / mac? 8.0.34
     username: root
