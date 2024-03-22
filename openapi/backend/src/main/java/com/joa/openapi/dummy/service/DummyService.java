@@ -39,12 +39,13 @@ public class DummyService {
     private final AccountService accountService;
     private final AccountRepository accountRepository;
     private final NeyhuingName neyhuingName;
+    public String name;
 
     @Transactional
     public DummyResponseDto createMember(DummyMemberRequestDto req, UUID adminId) {
-        String dummyName = "멤버" + req.getCount() + "명 만들기";
+        name = "멤버" + req.getCount() + "명 만들기";
         Dummy dummy = Dummy.builder()
-                .name(dummyName)
+                .name(name)
                 .memberCount(req.getCount())
                 .adminId(adminId)
                 .build();
@@ -64,9 +65,9 @@ public class DummyService {
 
     @Transactional
     public DummyResponseDto createAccount(DummyAccountRequestDto req, UUID adminId) {
-        String dummyName = "계좌" + req.getCount() + "개 만들기";
+        name = "계좌" + req.getCount() + "개 만들기";
         Dummy dummy = Dummy.builder()
-                .name(dummyName)
+                .name(name)
                 .accountCount(req.getCount())
                 .adminId(adminId)
                 .build();
@@ -90,9 +91,9 @@ public class DummyService {
 
     @Transactional
     public DummyResponseDto createTransaction(DummyMemberRequestDto req, UUID adminId) {
-        String dummyName = "거래내역" + req.getCount() + "개 만들기";
+        name = "거래내역" + req.getCount() + "개 만들기";
         Dummy dummy = Dummy.builder()
-                .name(dummyName)
+                .name(name)
                 .transactionCount(req.getCount())
                 .adminId(adminId)
                 .build();

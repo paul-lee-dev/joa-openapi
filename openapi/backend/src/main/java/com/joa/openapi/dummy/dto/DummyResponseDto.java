@@ -18,7 +18,7 @@ public class DummyResponseDto {
 
     private UUID dummyId;
     private UUID adminId;
-    private String dummyName;
+    private String name;
     private Integer userCount;
     private Integer accountCount;
     private Integer transactionCount;
@@ -31,7 +31,7 @@ public class DummyResponseDto {
         return DummyResponseDto.builder()
                 .dummyId(dummy.getId())
                 .adminId(dummy.getAdminId())
-                .dummyName(dummy.getName())
+                .name(dummy.getName())
                 .userCount(dummy.getMemberCount())
                 .accountCount(dummy.getAccountCount())
                 .transactionCount(dummy.getTransactionCount())
