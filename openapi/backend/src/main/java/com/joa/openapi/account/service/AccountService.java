@@ -52,7 +52,7 @@ public class AccountService {
 
         Account account = Account.builder()
                 .id(accountId)
-                .nickname(req.getNickname()) /* TODO 예적금 상품 연결시키면 디폴트 닉네임 예적금 상품명 */
+                .name(req.getNickname()) /* TODO 예적금 상품 연결시키면 디폴트 닉네임 예적금 상품명 */
                 .balance(req.getAmount())
                 .password(req.getPassword())
                 .isDormant(false)
@@ -65,6 +65,7 @@ public class AccountService {
                 .depositAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
                 .withdrawAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
                 .amount(req.getAmount())
+                .bankId(req.getBankId())
                 .holder(member)
                 .dummy(optionalDummy.orElse(null))
                 .build();
@@ -147,9 +148,13 @@ public class AccountService {
         return accountsPage.map(AccountGetAccountsResponseDto::toDto);
     }
 
+    public Page<AccountSearchResponseDto> search(AccountSearchRequestDto req, Pageable pageable) {
+        return accountRepository.searchAccountCustom(req, pageable);
+    }
+
     public void authorityValidation(UUID memberId, Account account) {
         if(account.getDummy() != null){
-            Dummy dummy = dummyRepository.findById(account.getDummy().getDummyId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT)); /* TODO: 더미 에러 코드로 변경 */
+            Dummy dummy = dummyRepository.findById(account.getDummy().getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT)); /* TODO: 더미 에러 코드로 변경 */
             if(!dummy.getAdminId().equals(memberId))
                 throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
         } else{

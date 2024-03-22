@@ -32,7 +32,7 @@ public class DummyService {
     public DummyResponseDto createMember(DummyMemberRequestDto req, UUID adminId) {
         String dummyName = "멤버" + req.getCount() + "명 만들기";
         Dummy dummy = Dummy.builder()
-                .dummyName(dummyName)
+                .name(dummyName)
                 .userCount(req.getCount())
                 .adminId(adminId)
                 .build();
@@ -53,7 +53,7 @@ public class DummyService {
     public DummyResponseDto createAccount(DummyAccountRequestDto req, UUID adminId) {
         String dummyName = "계좌" + req.getCount() + "개 만들기";
         Dummy dummy = Dummy.builder()
-                .dummyName(dummyName)
+                .name(dummyName)
                 .accountCount(req.getCount())
                 .adminId(adminId)
                 .build();
@@ -78,7 +78,7 @@ public class DummyService {
     public DummyResponseDto createTransaction(DummyMemberRequestDto req, UUID adminId) {
         String dummyName = "거래내역" + req.getCount() + "개 만들기";
         Dummy dummy = Dummy.builder()
-                .dummyName(dummyName)
+                .name(dummyName)
                 .transactionCount(req.getCount())
                 .adminId(adminId)
                 .build();
