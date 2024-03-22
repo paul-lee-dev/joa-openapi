@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -47,4 +48,11 @@ public class DummyController {
         return ResponseEntity.ok(ApiResponse.success("해당 더미데이터 삭제 성공했습니다.", dummyResponseDto));
     }
 
+    // TODO: adminId는 토큰을 통해 가져오게 하기
+    @DeleteMapping()
+    public ResponseEntity<?> delete(@RequestHeader(value = "adminId") UUID adminId) {
+        List<DummyResponseDto> dummyResponseDtoList = dummyService.searchAll(adminId);
+        dummyService.deleteAllDummy(adminId);
+        return ResponseEntity.ok(ApiResponse.success("전체 더미데이터 삭제 성공했습니다.", dummyResponseDtoList));
+    }
 }

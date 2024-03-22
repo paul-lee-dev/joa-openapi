@@ -1,6 +1,10 @@
 package com.joa.openapi.dummy.service;
 
 import com.joa.openapi.account.dto.AccountCreateRequestDto;
+import com.joa.openapi.account.dto.AccountDeleteRequestDto;
+import com.joa.openapi.account.dto.AccountUpdateResponseDto;
+import com.joa.openapi.account.entity.Account;
+import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.account.service.AccountService;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.dummy.errorcode.DummyErrorCode;
@@ -18,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -32,6 +37,7 @@ public class DummyService {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final AccountService accountService;
+    private final AccountRepository accountRepository;
     private final NeyhuingName neyhuingName;
 
     @Transactional
@@ -72,8 +78,9 @@ public class DummyService {
             int randomUser = random.nextInt(userCount);
             AccountCreateRequestDto dto = AccountCreateRequestDto.builder()
                     .nickname(makeName(4))
-                    .password(null)
+                    .password("dummy")
                     .withdrawAccount(null)
+                    .dummyId(dummy.getId())
                     .build();
             accountService.create(req.getUsers().get(randomUser), dto);
         }
@@ -102,11 +109,17 @@ public class DummyService {
         if (dummy.getMemberCount() != null) {
             List<Member> memberList = memberRepository.findByDummyHolder(dummy);
             for (Member member: memberList) {
-                log.info("{}",member.getName());
+                memberService.delete(member.getId());
             }
-            memberService.delete(dummyId);
         } else if (dummy.getAccountCount() != null) {
-
+            List<Account> accountList = accountRepository.findByDummy(dummy);
+            for (Account account: accountList) {
+                AccountDeleteRequestDto dto = AccountDeleteRequestDto.builder()
+                        .accountId(account.getId())
+                        .password(account.getPassword())
+                        .build();
+                accountService.delete(account.getDummy().getAdminId(), dto);
+            }
         } else if (dummy.getTransactionCount() != null) {
 
         }
@@ -114,13 +127,25 @@ public class DummyService {
     }
 
     @Transactional
-    public void deleteAllDummy() {
-
+    public void deleteAllDummy(UUID adminId) {
+        List<Dummy> dummyList = dummyRepository.findAllByAdminId(adminId);
+        for (Dummy dummy: dummyList) {
+            deleteDummy(dummy.getId());
+        }
     }
 
     public DummyResponseDto search(UUID dummyId) {
         Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
         return DummyResponseDto.toDto(dummy);
+    }
+
+    public List<DummyResponseDto> searchAll(UUID adminId) {
+        List<Dummy> dummyList = dummyRepository.findAllByAdminId(adminId);
+        List<DummyResponseDto> dummyResponseDtoList = new ArrayList<>();
+        for (Dummy dummy: dummyList) {
+            dummyResponseDtoList.add(DummyResponseDto.toDto(dummy));
+        }
+        return dummyResponseDtoList;
     }
 
     public String makeName(int cnt) {

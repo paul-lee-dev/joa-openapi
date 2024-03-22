@@ -39,7 +39,7 @@ public class AccountCreateResponseDto {
                 .depositAccount(account.getDepositAccount())
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
-                .dummyId(account.getDummy().getDummyId())
+                .dummyId(account.getDummy().getId())
                 .build();
     }
 }
