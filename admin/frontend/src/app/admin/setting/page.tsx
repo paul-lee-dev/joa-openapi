@@ -1,9 +1,10 @@
 "use client";
 
+import Button from "@/components/button/button";
 import { useState } from "react";
 import tw from "tailwind-styled-components";
 
-export default function SignUpPage() {
+export default function Profile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
 
@@ -36,6 +37,8 @@ export default function SignUpPage() {
                   name="email"
                   type="email"
                   autoComplete="email"
+                  disabled
+                  placeholder="joa13@gmail.com"
                   required
                 />
                 <PhoneCallCheckBtn type="button" onClick={toggleModal}>
@@ -52,7 +55,8 @@ export default function SignUpPage() {
                   name="tel"
                   type="tel"
                   autoComplete="tel"
-                  required
+                  placeholder="010-1234-1234"
+                  disabled
                 />
               </InputContainer>
             </InputFormWrapper>
@@ -69,24 +73,28 @@ export default function SignUpPage() {
                 />
               </InputContainer>
             </InputFormWrapper>
-
             <InputFormWrapper>
-              <LoginLabel htmlFor="passwordCheck">비밀번호 확인</LoginLabel>
-              <InputContainer>
+              <LoginLabel htmlFor="email">API 키</LoginLabel>
+              <InputContainerWithButton>
                 <Input
-                  id="passwordCheck"
-                  name="passwordCheck"
-                  type="password"
+                  id="apikey"
+                  name="apikey"
+                  type="text"
+                  autoComplete="apikey"
+                  disabled
+                  placeholder="312gdkj138e1hd9s012u34hiu"
                   required
                 />
-              </InputContainer>
-            </InputFormWrapper>
-            <InputFormWrapper>
-              <Button type="submit">회원가입</Button>
+                <PhoneCallCheckBtn type="button">재발급</PhoneCallCheckBtn>
+              </InputContainerWithButton>
             </InputFormWrapper>
           </LoginFormContainer>
         </MainContainer>
       </Wrapper>
+      <div className="flex gap-2 justify-end mt-32">
+        <Button id={"edit"} name={"수정"}></Button>
+        <Button id={"delete"} name={"탈퇴"}></Button>
+      </div>
       {isModalOpen && (
         <Modal>
           <ModalContent>
@@ -113,18 +121,14 @@ export default function SignUpPage() {
 }
 
 const Wrapper = tw.div`
-flex 
+flex
+justify-start
 min-h-full 
-flex-1 
-flex-col 
-justify-center 
-px-6 py-12 
 lg:px-8
 `;
 
 const MainContainer = tw.div`
-mt-10 
-sm:mx-auto 
+mt-5
 sm:w-full 
 sm:max-w-sm
 `;
@@ -133,13 +137,13 @@ const InputFormWrapper = tw.div`
 `;
 
 const InputContainer = tw.div`
-mt-2
+mt-1
 `;
 
 const InputContainerWithButton = tw.div`
-  mt-2
+  mt-1
   flex
-  items-center
+  items-start
   space-x-4
 `;
 
@@ -171,29 +175,8 @@ sm:text-sm
 sm:leading-6
 `;
 
-const Button = tw.button`
-flex
-justify-center 
-rounded-md
-w-full
-bg-pink-400
-px-3 
-py-1.5
-text-sm 
-font-semibold
-leading-6
-text-white
-shadow-sm
-hover:bg-pink-500
-focus-visible:outline
-focus-visible:outline-2
-focus-visible:outline-offset-2 
-focus-visible:outline-pink-600
-`;
-
 const PhoneCallCheckBtn = tw.button`
   flex
-  justify-center
   w-fit
   rounded-md 
   bg-pink-400
