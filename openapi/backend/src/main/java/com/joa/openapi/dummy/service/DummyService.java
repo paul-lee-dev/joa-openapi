@@ -7,6 +7,7 @@ import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.account.service.AccountService;
 import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.dummy.dto.DummyUpdateRequestDto;
 import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.dto.DummyAccountRequestDto;
 import com.joa.openapi.dummy.dto.DummyMemberRequestDto;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -136,6 +138,13 @@ public class DummyService {
             dummyResponseDtoList.add(deleteDummy(dummy.getId()));
         }
         return dummyResponseDtoList;
+    }
+
+    @Transactional
+    public DummyResponseDto update(UUID dummyId, DummyUpdateRequestDto req) {
+        Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
+        if (req.getName() != null) dummy.updateName(req.getName());
+        return DummyResponseDto.toDto(dummy);
     }
 
     public DummyResponseDto search(UUID dummyId) {

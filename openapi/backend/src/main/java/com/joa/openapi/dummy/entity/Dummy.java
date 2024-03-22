@@ -30,4 +30,6 @@ public class Dummy extends BaseEntity {
 
     @OneToMany(mappedBy = "dummy")
     private List<Member> memberList = new ArrayList<>();
+
+    public void updateName(String name) { this.name = name; }
 }
