@@ -23,13 +23,16 @@ public class Bank extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "BINARY(16)")
     private UUID Id;
-    private UUID adminId;
     private String name;
     private String description;
     private String uri;
 
     @OneToMany(mappedBy = "bankHolder")
     private List<Member> memberList = new ArrayList<>();
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "admin_id")
+    private UUID adminId;
 
     public void update(BankRequestDto req) {
         if(req.getName() != null)

@@ -3,7 +3,7 @@ package com.joa.openapi.dummy.service;
 import com.joa.openapi.account.dto.AccountCreateRequestDto;
 import com.joa.openapi.account.service.AccountService;
 import com.joa.openapi.common.exception.RestApiException;
-import com.joa.openapi.dummy.ErrorCode.DummyErrorCode;
+import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.dto.DummyAccountRequestDto;
 import com.joa.openapi.dummy.dto.DummyMemberRequestDto;
 import com.joa.openapi.dummy.dto.DummyResponseDto;
@@ -12,6 +12,7 @@ import com.joa.openapi.dummy.repository.DummyRepository;
 import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.member.service.MemberService;
+import com.joa.openapi.member.dto.MemberJoinRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,10 +32,10 @@ public class DummyService {
     private final MemberService memberService;
     private final MemberRepository memberRepository;
     private final AccountService accountService;
-    private final MakeNeyhuingName makeNeyhuingName;
+    private final NeyhuingName neyhuingName;
 
     @Transactional
-    public DummyResponseDto createMember(DummyMemberRequestDto req, UUID bankId, UUID adminId) {
+    public DummyResponseDto createMember(DummyMemberRequestDto req, UUID adminId) {
         String dummyName = "멤버" + req.getCount() + "명 만들기";
         Dummy dummy = Dummy.builder()
                 .dummyName(dummyName)
@@ -44,11 +45,27 @@ public class DummyService {
 
         dummyRepository.save(dummy);
 
+        for (int i = 0; i < req.getCount(); i++) {
+            MemberJoinRequestDto dto = MemberJoinRequestDto.builder()
+                    .name(makeName(3))
+                    .bankId(req.getBankId())
+                    .build();
+            memberService.addMember(dto, dummy.getId());
+        }
+
         return DummyResponseDto.toDto(dummy);
     }
 
     @Transactional
-    public DummyResponseDto createAccount(DummyAccountRequestDto req, UUID bankId, UUID adminId, UUID productId) {
+    public DummyResponseDto createAccount(DummyAccountRequestDto req, UUID adminId) {
+        String dummyName = "계좌" + req.getCount() + "개 만들기";
+        Dummy dummy = Dummy.builder()
+                .dummyName(dummyName)
+                .accountCount(req.getCount())
+                .adminId(adminId)
+                .build();
+        dummyRepository.save(dummy);
+
         int userCount = req.getUsers().size();
         Random random = new Random();
         for (int i = 0; i < req.getCount(); i++) {
@@ -60,28 +77,21 @@ public class DummyService {
                     .build();
             accountService.create(req.getUsers().get(randomUser), dto);
         }
-        String dummyName = "계좌" + req.getCount() + "개 만들기";
-        Dummy dummy = Dummy.builder()
-                .dummyName(dummyName)
-                .accountCount(req.getCount())
-                .adminId(adminId)
-                .build();
-
-        dummyRepository.save(dummy);
 
         return DummyResponseDto.toDto(dummy);
     }
 
     @Transactional
-    public DummyResponseDto createTransaction(DummyMemberRequestDto req, UUID bankId, UUID adminId) {
+    public DummyResponseDto createTransaction(DummyMemberRequestDto req, UUID adminId) {
         String dummyName = "거래내역" + req.getCount() + "개 만들기";
         Dummy dummy = Dummy.builder()
                 .dummyName(dummyName)
                 .transactionCount(req.getCount())
                 .adminId(adminId)
                 .build();
-
         dummyRepository.save(dummy);
+
+
 
         return DummyResponseDto.toDto(dummy);
     }
@@ -114,6 +124,6 @@ public class DummyService {
     }
 
     public String makeName(int cnt) {
-        return makeNeyhuingName.makeNeyhuing(cnt);
+        return neyhuingName.makeNeyhuing(cnt);
     }
 }

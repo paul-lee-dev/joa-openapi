@@ -2,6 +2,7 @@ package com.joa.openapi.account.entity;
 
 import com.joa.openapi.account.dto.AccountUpdateRequestDto;
 import com.joa.openapi.common.entity.BaseEntity;
+import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class Account extends BaseEntity {
     private String id;
     private String nickname;
     private Long balance;
-    private Integer password;
+    private String password;
     private Boolean isDormant;
     private Long transferLimit;
     private Integer paymentNum;
@@ -35,6 +36,7 @@ public class Account extends BaseEntity {
     private String startDate;
     private String endDate;
     private Integer term;
+    private String depositAccount;
     private String withdrawAccount;
     private Long amount;
 
@@ -42,8 +44,16 @@ public class Account extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member holder;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dummy_id")
+    private Dummy dummy;
+
     public void updateNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void updateDepositAccount(String withdrawAccount) {
+        this.withdrawAccount = withdrawAccount;
     }
 
     public void updateWithdrawAccount(String withdrawAccount) {
@@ -54,7 +64,7 @@ public class Account extends BaseEntity {
         this.transferLimit = limit;
     }
 
-    public void updatePassword(Integer password) {
+    public void updatePassword(String password) {
         this.password = password;
     }
 }
