@@ -1,71 +1,80 @@
-import tw from "tailwind-styled-components";
 
 export default function Sidebar() {
   return (
     <>
-      <Wrapper id="sidebar">
-        <SidebarContainer>
-          <ListAnchor href="#">
-            <ListName>서비스 소개(Introduction)</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <ListName>시작하기(Getting Started)</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <ListName>관리자(Admin)</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <ListName>은행(Bank)</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <ListName>고객(Member)</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <ListName>예적금상품(Product)</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <ListName>계좌(Account)</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <ListName>거래내역(Transaction)</ListName>
-          </ListAnchor>
-          <ListAnchor href="#">
-            <ListName>더미데이터(Dummy)</ListName>
-          </ListAnchor>
-        </SidebarContainer>
-      </Wrapper>
+      <div className="w-64 mx-8 mt-12">
+
+        <p className="flex justify-between p-3">
+          <span className="font-bold">Test Beds</span>
+          <span>V 1.0</span>
+        </p>
+
+        <div className="relative p-2 rounded-md">
+          <input className="rounded-md border-0 py-2 px-4 ring-1 ring-gray-300 placeholder:text-gray-400" placeholder="Search" />
+        </div>
+
+        <p className="text-sm font-bold p-3">Overview</p>
+
+        {
+          overviews.map((item) => (
+            <a className="p-2 flex space-4 rounded-md hover:bg-pink-500 hover:text-white" href={item.anchor}>
+              {item.name}
+            </a>
+          ))
+        }
+
+        <p className="text-sm font-bold p-3">Components</p>
+
+        {
+          components.map((item) => (
+            <a className="p-2 flex space-4 rounded-md hover:bg-pink-500 hover:text-white" href={item.anchor}>
+              {item.name}
+            </a>
+          ))
+        }
+      </div>
     </>
   );
 }
 
-const Wrapper = tw.div`
-lg:block 
-hidden 
-bg-white 
-w-64 
-h-screen 
-fixed 
-rounded-none 
-border-slate-400
-`;
+const overviews = [
+  {
+    name: '서비스 소개(Introduction)',
+    anchor: '#',
+  },
+  {
+    name: '시작하기(Getting Started)',
+    anchor: '#',
+  },
+]
 
-const SidebarContainer = tw.div`
-p-4 
-space-y-4
-border-slate-600
-`;
-
-const ListAnchor = tw.a`
-px-3
-py-3 
-flex 
-items-center 
-space-x-4 
-rounded-md 
-text-gray-500 
-hover:bg-pink-500
-hover:text-white
-`;
-
-const ListName = tw.span`
-`;
+const components = [
+  {
+    name: '관리자(Admin)',
+    anchor: '#',
+  },
+  {
+    name: '은행(Bank)',
+    anchor: '#',
+  },
+  {
+    name: '고객(Member)',
+    anchor: '#',
+  },
+  {
+    name: '예적금상품(Product)',
+    anchor: '#',
+  },
+  {
+    name: '계좌(Account)',
+    anchor: '#',
+  },
+  {
+    name: '거래내역(Transaction)',
+    anchor: '#',
+  },
+  {
+    name: '더미데이터(Dummy)',
+    anchor: '#',
+  },
+]

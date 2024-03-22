@@ -21,9 +21,9 @@ export default function Header() {
 }
 
 const Wrapper = tw.header`
-bg-pink-200
 text-gray-800 
-py-4 
+mt-24
+py-8 
 px-6 
 flex 
 justify-between 

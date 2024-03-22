@@ -1,9 +1,11 @@
-const Home = () => {
+import Doc from "@/app/docs/components/docs";
+
+const Docs = () => {
   return (
     <>
-
+      <Doc />
     </>
   );
 };
 
-export default Home;
+export default Docs;

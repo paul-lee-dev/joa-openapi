@@ -5,9 +5,9 @@ export default function Header() {
   return (
     <>
       <Wrapper>
-        <Title>joa-openapi</Title>
+        <Title><Link href="/">joa-openapi</Link></Title>
         <MenuContainer>
-          <MenuItem><Link href="/home">Home</Link></MenuItem>
+          <MenuItem><Link href="/">Home</Link></MenuItem>
           <MenuItem><Link href="/demos">Demos</Link></MenuItem>
           <MenuItem><Link href="/testbeds">Test Beds</Link></MenuItem>
           <MenuItem><Link href="/docs">Docs</Link></MenuItem>

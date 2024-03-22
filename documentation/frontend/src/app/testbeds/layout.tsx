@@ -1,6 +1,6 @@
 "use client";
 
-import Sidebar from "@/app/docs/components/sidebar";
+import Sidebar from "@/app/testbeds/components/sidebar";
 import tw from "tailwind-styled-components";
 
 export default function Joa({ children }: { children: React.ReactNode }) {
@@ -8,8 +8,10 @@ export default function Joa({ children }: { children: React.ReactNode }) {
     <Wrapper>
       <DemoContainer>
         <MainContainer>
+          <SidebarContainer>
             <Sidebar />
-            <Children>{children}</Children>
+          </SidebarContainer>
+          <Children>{children}</Children>
         </MainContainer>
       </DemoContainer>
     </Wrapper>
@@ -26,14 +28,18 @@ h-full
 w-full`;
 
 const MainContainer = tw.div`
+flex
 mx-2.5  
-flex-none 
+my-4
 transition-all 
 md:pr-2
-xl:mx-[323px]`;
+xl:mx-[240px]`;
+
+const SidebarContainer = tw.div`
+`;
 
 const Children = tw.div`
-mx-auto
+xl:w-full
 min-h-screen
 p-2
 !pt-[10px] md:p-2`;

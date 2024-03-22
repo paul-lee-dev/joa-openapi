@@ -3,7 +3,7 @@ import Demo2 from "@/app/demos/components/demo2";
 import Demo3 from "@/app/demos/components/demo3";
 import Demo4 from "@/app/demos/components/demo4";
 
-const Home = () => {
+const Demo = () => {
   return (
     <>
       <Demo1></Demo1>
@@ -14,4 +14,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Demo;
