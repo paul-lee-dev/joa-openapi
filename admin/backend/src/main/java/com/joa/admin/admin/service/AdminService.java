@@ -177,7 +177,7 @@ public class AdminService implements UserDetailsService {
     // API key 발급
     @Transactional
     public String issuedApiKey(String adminId) {
-        int apiCount = apiRepository.countByAdminId(UUID.fromString(adminId));
+        Integer apiCount = apiRepository.countByAdminId(UUID.fromString(adminId));
 
         if(apiCount > 0) {
             throw new RestApiException(AdminErrorCode.ALREADY_API_KEY);
@@ -197,7 +197,7 @@ public class AdminService implements UserDetailsService {
     // API key 재발급
     @Transactional
     public String reissuedApiKey(String adminId) {
-        int apiCount = apiRepository.countByAdminId(UUID.fromString(adminId));
+        Integer apiCount = apiRepository.countByAdminId(UUID.fromString(adminId));
 
         if (apiCount < 1) {
             throw new RestApiException(AdminErrorCode.NO_API_KEY);
