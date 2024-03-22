@@ -1,4 +1,4 @@
-package com.joa.admin.admin.dto;
+package com.joa.admin.admin.dto.req;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
