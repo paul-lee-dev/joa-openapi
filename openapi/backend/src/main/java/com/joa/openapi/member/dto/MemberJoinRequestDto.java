@@ -3,10 +3,14 @@ package com.joa.openapi.member.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberJoinRequestDto {
@@ -20,4 +24,5 @@ public class MemberJoinRequestDto {
     private String password;
     @NotBlank(message = "휴대폰 번호를 입력해주세요.")
     private String phone;
+    private UUID bankId;
 }

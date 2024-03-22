@@ -1,7 +1,12 @@
 package com.joa.openapi.member.service;
 
-
+import com.joa.openapi.bank.entity.Bank;
+import com.joa.openapi.bank.errorcode.BankErrorCode;
+import com.joa.openapi.bank.repository.BankRepository;
 import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.dummy.entity.Dummy;
+import com.joa.openapi.dummy.errorcode.DummyErrorCode;
+import com.joa.openapi.dummy.repository.DummyRepository;
 import com.joa.openapi.member.dto.*;
 import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.errorcode.MemberErrorCode;
@@ -22,16 +27,38 @@ import java.util.UUID;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final BankRepository bankRepository;
+    private final DummyRepository dummyRepository;
     private final ModelMapper modelMapper;
 
     //회원가입
     @Transactional
     public MemberIdResponseDto addMember(MemberJoinRequestDto request) {
+        Bank bank = bankRepository.findById(request.getBankId()).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
         Member member = Member.builder()
                 .name(request.getName())
                 .password(request.getPassword())
                 .email(request.getEmail())
                 .phone(request.getPhone())
+                .bankHolder(bank)
+                .build();
+
+        memberRepository.save(member);
+        return MemberIdResponseDto.toDto(member);
+    }
+
+    @Transactional
+    public MemberIdResponseDto addMember(MemberJoinRequestDto request, UUID dummyId) {
+        log.info("dummyId:{}",dummyId);
+        Bank bank = bankRepository.findById(request.getBankId()).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
+        Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(()->new RestApiException(DummyErrorCode.NO_DUMMY));
+        Member member = Member.builder()
+                .name(request.getName())
+                .password(request.getPassword())
+                .email(request.getEmail())
+                .phone(request.getPhone())
+                .bankHolder(bank)
+                .dummyHolder(dummy)
                 .build();
 
         memberRepository.save(member);
