@@ -1,9 +1,9 @@
 import {Text, TouchableOpacity, View} from 'react-native';
-import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {RootStackParamList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useState} from 'react';
+import {RootStackParamList} from 'App';
+import Header from '@/components/Header';
 
 type TransferAmountScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -70,68 +70,68 @@ function TransferAmount({
         <View className="flex flex-row justify-around">
           <TouchableOpacity
             onPress={() => setAmount(prev => prev + '1')}
-            className="w-20 h-20 flex justify-center items-center ">
+            className="w-20 h-16 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">1</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setAmount(prev => prev + '2')}
-            className="w-20 h-20 flex justify-center items-center ">
+            className="w-20 h-16 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">2</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setAmount(prev => prev + '3')}
-            className="w-20 h-20 flex justify-center items-center ">
+            className="w-20 h-16 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">3</Text>
           </TouchableOpacity>
         </View>
         <View className="flex flex-row justify-around">
           <TouchableOpacity
             onPress={() => setAmount(prev => prev + '4')}
-            className="w-20 h-20 flex justify-center items-center ">
+            className="w-20 h-16 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">4</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setAmount(prev => prev + '5')}
-            className="w-20 h-20 flex justify-center items-center ">
+            className="w-20 h-16 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">5</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setAmount(prev => prev + '6')}
-            className="w-20 h-20 flex justify-center items-center ">
+            className="w-20 h-16 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">6</Text>
           </TouchableOpacity>
         </View>
         <View className="flex flex-row justify-around">
           <TouchableOpacity
             onPress={() => setAmount(prev => prev + '7')}
-            className="w-20 h-20 flex justify-center items-center ">
+            className="w-20 h-16 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">7</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setAmount(prev => prev + '8')}
-            className="w-20 h-20 flex justify-center items-center ">
+            className="w-20 h-16 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">8</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setAmount(prev => prev + '9')}
-            className="w-20 h-20 flex justify-center items-center ">
+            className="w-20 h-16 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">9</Text>
           </TouchableOpacity>
         </View>
         <View className="flex flex-row justify-around">
           <TouchableOpacity
             onPress={() => setAmount(prev => prev + '00')}
-            className="w-20 h-20 flex justify-center items-center ">
+            className="w-20 h-16 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">00</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setAmount(prev => prev + '0')}
-            className="w-20 h-20 flex justify-center items-center ">
+            className="w-20 h-16 flex justify-center items-center ">
             <Text className="text-4xl font-bold text-gray-400">0</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setAmount(prev => prev.slice(0, -1))}
-            className="w-20 h-20 flex justify-center items-center ">
+            className="w-20 h-16 flex justify-center items-center ">
             <Icon name={'arrow-left'} color={'#9ca3af'} size={36} />
           </TouchableOpacity>
         </View>

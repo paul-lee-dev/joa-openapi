@@ -1,5 +1,5 @@
+import Header from '@/components/Header';
 import {Text, TouchableOpacity, View} from 'react-native';
-import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 function ChangePasswordVerify(): React.JSX.Element {

@@ -7,17 +7,17 @@ import {
   View,
 } from 'react-native';
 import Header from '../components/Header';
-import Money from '../../assets/money.png';
-import Waage from '../../assets/waage.png';
-import Dollar from '../../assets/dollar.png';
-import Book from '../../assets/book.png';
+import Money from '@/assets/money.png';
+import Waage from '@/assets/waage.png';
+import Dollar from '@/assets/dollar.png';
+import Book from '@/assets/book.png';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Footer from '../components/Footer';
-import BottomPopup from '../components/BottomPopup';
 import {useState} from 'react';
-import CommonMenuItem from '../components/CommonMenuItem';
-import {RootStackParamList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from 'App';
+import Footer from '@/components/Footer';
+import BottomPopup from '@/components/BottomPopup';
+import CommonMenuItem from '@/components/CommonMenuItem';
 
 type MainScreenProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
 
@@ -147,7 +147,7 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
       </ScrollView>
       {createModalOpen && (
         <BottomPopup close={() => setCreateModalOpen(false)}>
-          <View className="w-full flex flex-grow space-y-8">
+          <View className="w-full flex flex-grow space-y-8 -mb-16">
             <CommonMenuItem
               title={'입출금통장'}
               subtitle={'손쉬운 계좌개설'}
