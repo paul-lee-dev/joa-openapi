@@ -1,6 +1,9 @@
+import { useRouter } from "next/router";
 import tw from "tailwind-styled-components";
 
 export default function accountTable() {
+  const router = useRouter();
+
   const Accounts = [
     {
       id: 1,
@@ -111,7 +114,9 @@ export default function accountTable() {
               </td>
               <td className="px-6 py-4">
                 <a
-                  href="#"
+                  onClick={() => {
+                    router.push(`detail`);
+                  }}
                   className="font-medium text-pink-400 hover:text-pink-500"
                 >
                   자세히
