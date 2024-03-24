@@ -6,7 +6,6 @@ import { HiBanknotes } from "react-icons/hi2";
 import { MdAccountBalanceWallet, MdFactory } from "react-icons/md";
 import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -21,47 +20,27 @@ export default function Sidebar() {
           <HiBanknotes></HiBanknotes>
           <ListName>은행</ListName>
         </ListAnchor>
-        <ListAnchor
-          onClick={() => {
-            router.push(`product`);
-          }}
-        >
+        <ListAnchor href="/admin/product">
           <HiCurrencyDollar></HiCurrencyDollar>
           <ListName>상품</ListName>
         </ListAnchor>
-        <ListAnchor href="/admin/product">
+        <ListAnchor href="/admin/account">
           <MdAccountBalanceWallet></MdAccountBalanceWallet>
           <ListName>계좌</ListName>
         </ListAnchor>
-        <ListAnchor
-          onClick={() => {
-            router.push(`customer`);
-          }}
-        >
+        <ListAnchor href="/admin/customer">
           <FaUserFriends></FaUserFriends>
           <ListName>고객</ListName>
         </ListAnchor>
-        <ListAnchor
-          onClick={() => {
-            router.push(`transaction`);
-          }}
-        >
+        <ListAnchor href="/admin/transaction">
           <FaMoneyBillTransfer></FaMoneyBillTransfer>
           <ListName>거래내역</ListName>
         </ListAnchor>
-        <ListAnchor
-          onClick={() => {
-            router.push(`dummy`);
-          }}
-        >
+        <ListAnchor href="/admin/dummy">
           <MdFactory></MdFactory>
           <ListName>자동생성</ListName>
         </ListAnchor>
-        <ListAnchor
-          onClick={() => {
-            router.push(`setting`);
-          }}
-        >
+        <ListAnchor href="/admin/setting">
           <MdFactory></MdFactory>
           <ListName>설정</ListName>
         </ListAnchor>
