@@ -1,26 +1,40 @@
 "use client";
 
 import Button from "@/components/button/button";
-import DropdownDefaultCheckbox from "@/components/dropdown/dropdown";
 import Pagination from "@/components/pagination";
+import AccountGroupSearch from "@/components/search/accountGroupSearch";
 import BankSelect from "@/components/select/bankNoLabel";
 import MultiSearchSelect from "@/components/select/multiSearchSelect";
+import ProductMultiSearchSelect from "@/components/select/productMultiSearchSelect";
+import ProductTypeMultiSearchSelect from "@/components/select/productTypeMultiSearchSelect";
 import AccountTable from "@/components/table/accountTable";
 import { useRouter } from "next/navigation";
 const AccountList = () => {
   const router = useRouter();
   return (
     <>
-      <div className="flex justify-end">
-        <div className="flex gap-8">
+      <form className="flex justify-end m-2">
+        <div className="flex gap-8 ">
           <BankSelect></BankSelect>
           <MultiSearchSelect
             placeholder={"고객 검색"}
             label={""}
             htmlFor={""}
           ></MultiSearchSelect>
+          <ProductMultiSearchSelect
+            placeholder={""}
+            label={""}
+            htmlFor={""}
+          ></ProductMultiSearchSelect>
+          <ProductTypeMultiSearchSelect
+            placeholder={""}
+            label={""}
+            htmlFor={""}
+          ></ProductTypeMultiSearchSelect>
+          <AccountGroupSearch></AccountGroupSearch>
+          <Button id={"submit"} name={"검색"} onClick={() => {}}></Button>
         </div>
-      </div>
+      </form>
       <AccountTable></AccountTable>
       <div className="flex mt-5 justify-between gap-5">
         <div className="flex">
