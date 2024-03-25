@@ -1,7 +1,6 @@
-import axios from 'axios';
 import {axiosInstance} from '.';
 
-export const createAccount = (params: any): Promise<any> => {
-  console.log(params);
-  return axiosInstance.post('/account', params);
+export const createAccount = async (params: any): Promise<any> => {
+  const response = await axiosInstance.post('/v1/account', params);
+  return response.data;
 };
