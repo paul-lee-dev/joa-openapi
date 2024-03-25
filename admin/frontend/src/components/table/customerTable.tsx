@@ -1,4 +1,9 @@
+import { useRouter, usePathname } from "next/navigation";
+import tw from "tailwind-styled-components";
+
 export default function CustomerTable() {
+  const router = useRouter();
+  const pathname = usePathname();
   const Customers = [
     {
       id: 1,
@@ -70,6 +75,15 @@ export default function CustomerTable() {
       <table className="w-full text-sm text-left text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
+            <th scope="col" className="relative px-6 py-3">
+              <input
+                id="bordered-checkbox-1"
+                type="checkbox"
+                value=""
+                name="bordered-checkbox"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
+              />
+            </th>
             <th scope="col" className="px-6 py-3">
               ClientName
             </th>
@@ -99,13 +113,22 @@ export default function CustomerTable() {
               key={customer.id}
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
+              <TableData>
+                <input
+                  id="bordered-checkbox-1"
+                  type="checkbox"
+                  value=""
+                  name="bordered-checkbox"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
+                />
+              </TableData>
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                 {customer.name}
               </td>
-              <td className="px-6 py-4">{customer.clientId}</td>
-              <td className="px-6 py-4">{customer.customerId}</td>
-              <td className="px-6 py-4">{customer.phoneNumber}</td>
-              <td className="px-6 py-4">{customer.joinDate}</td>
+              <TableData>{customer.clientId}</TableData>
+              <TableData>{customer.customerId}</TableData>
+              <TableData>{customer.phoneNumber}</TableData>
+              <TableData>{customer.joinDate}</TableData>
               <td
                 className={`px-6 py-4 ${
                   customer.recentTransactionAmount >= 0
@@ -116,14 +139,16 @@ export default function CustomerTable() {
                 {customer.recentTransactionAmount >= 0 ? "+" : "-"}
                 {Math.abs(customer.recentTransactionAmount).toLocaleString()}
               </td>
-              <td className="px-6 py-4">
-                <a
-                  href="#"
-                  className="font-medium text-pink-400 hover:text-pink-500"
-                >
+              <TableData
+                onClick={() => {
+                  router.push("customer/detail");
+                }}
+                className="cursor-pointer"
+              >
+                <a className="font-medium text-pink-400 hover:text-pink-500">
                   자세히
                 </a>
-              </td>
+              </TableData>
             </tr>
           ))}
         </tbody>
@@ -131,3 +156,8 @@ export default function CustomerTable() {
     </div>
   );
 }
+
+const TableData = tw.td`
+px-6
+py-4
+`;

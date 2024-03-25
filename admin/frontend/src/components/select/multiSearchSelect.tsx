@@ -28,7 +28,7 @@ const MyAsyncSelect = () => (
     cacheOptions
     defaultOptions
     loadOptions={promiseOptions}
-    placeholder="검색"
+    placeholder="  고객 검색  "
     theme={(theme) => ({
       ...theme,
       borderRadius: 8,

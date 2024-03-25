@@ -1,6 +1,8 @@
 import tw from "tailwind-styled-components";
+import { useRouter } from "next/navigation";
 
 export default function ProductTable() {
+  const router = useRouter();
   const Products = [
     {
       id: 1,
@@ -60,14 +62,16 @@ export default function ProductTable() {
               <TableData>{product.paymentType}</TableData>
               <TableData>{product.interestTaxType}</TableData>
               <TableData>{product.maxAmount}</TableData>
-              <td className="px-6 py-4">
+              <TableData className="cursor-pointer">
                 <a
-                  href="#"
+                  onClick={() => {
+                    router.push(`product/detail`);
+                  }}
                   className="font-medium text-pink-400 hover:text-pink-500"
                 >
                   자세히
                 </a>
-              </td>
+              </TableData>
             </tr>
           ))}
         </tbody>

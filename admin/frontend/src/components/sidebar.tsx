@@ -2,46 +2,79 @@ import { FaUserFriends } from "react-icons/fa";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { GrOverview } from "react-icons/gr";
 import { HiCurrencyDollar } from "react-icons/hi";
-import { HiBanknotes } from "react-icons/hi2";
+import { HiBanknotes, HiCog6Tooth } from "react-icons/hi2";
 import { MdAccountBalanceWallet, MdFactory } from "react-icons/md";
 import tw from "tailwind-styled-components";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Sidebar() {
   const router = useRouter();
+  const pathname = usePathname();
   return (
     <Wrapper id="sidebar">
       <SidebarContainer>
-        <ListAnchor href="/admin">
+        <ListAnchor
+          onClick={() => {
+            router.push("/admin");
+          }}
+        >
           <GrOverview></GrOverview>
           <ListName>Overview</ListName>
         </ListAnchor>
-        <ListAnchor href="/admin/bank">
+        <ListAnchor
+          onClick={() => {
+            router.push("/admin/bank");
+          }}
+        >
           <HiBanknotes></HiBanknotes>
           <ListName>은행</ListName>
         </ListAnchor>
-        <ListAnchor href="/admin/product">
+        <ListAnchor
+          onClick={() => {
+            router.push("/admin/product");
+          }}
+        >
           <HiCurrencyDollar></HiCurrencyDollar>
           <ListName>상품</ListName>
         </ListAnchor>
-        <ListAnchor href="/admin/account">
+        <ListAnchor
+          onClick={() => {
+            router.push("/admin/account");
+          }}
+        >
           <MdAccountBalanceWallet></MdAccountBalanceWallet>
           <ListName>계좌</ListName>
         </ListAnchor>
-        <ListAnchor href="/admin/customer">
+        <ListAnchor
+          onClick={() => {
+            router.push("/admin/customer");
+          }}
+        >
           <FaUserFriends></FaUserFriends>
           <ListName>고객</ListName>
         </ListAnchor>
-        <ListAnchor href="/admin/transaction">
+        <ListAnchor
+          onClick={() => {
+            router.push("/admin/transaction");
+          }}
+        >
           <FaMoneyBillTransfer></FaMoneyBillTransfer>
           <ListName>거래내역</ListName>
         </ListAnchor>
-        <ListAnchor href="/admin/dummy">
+        <ListAnchor
+          onClick={() => {
+            router.push("/admin/dummy");
+          }}
+        >
           <MdFactory></MdFactory>
           <ListName>자동생성</ListName>
         </ListAnchor>
-        <ListAnchor href="/admin/setting">
-          <MdFactory></MdFactory>
+        <ListAnchor
+          onClick={() => {
+            router.push("/admin/setting");
+          }}
+        >
+          <HiCog6Tooth></HiCog6Tooth>
           <ListName>설정</ListName>
         </ListAnchor>
       </SidebarContainer>
@@ -73,7 +106,7 @@ items-center
 space-x-4 
 rounded-md 
 text-gray-500 
-hover:bg-pink-500
+hover:bg-pink-300
 hover:text-white
 cursor-pointer
 `;

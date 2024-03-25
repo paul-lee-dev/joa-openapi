@@ -92,8 +92,8 @@ export default function Profile() {
         </MainContainer>
       </Wrapper>
       <div className="flex gap-2 justify-end mt-32">
-        <Button id={"edit"} name={"수정"}></Button>
-        <Button id={"delete"} name={"탈퇴"}></Button>
+        <Button onClick={() => {}} id={"edit"} name={"수정"}></Button>
+        <Button onClick={() => {}} id={"delete"} name={"탈퇴"}></Button>
       </div>
       {isModalOpen && (
         <Modal>

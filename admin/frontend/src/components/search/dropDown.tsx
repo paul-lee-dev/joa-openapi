@@ -16,7 +16,7 @@ export default function DropDown() {
         type="button"
         onClick={toggleDropdown}
       >
-        Dropdown toggle
+        옵션
         <svg
           className="w-2.5 h-2.5 ms-3"
           aria-hidden="true"

@@ -1,9 +1,9 @@
-import { useRouter } from "next/router";
 import tw from "tailwind-styled-components";
+import { usePathname, useRouter } from "next/navigation";
+import { HiArchive } from "react-icons/hi";
+import { FaSort } from "react-icons/fa";
 
-export default function accountTable() {
-  const router = useRouter();
-
+export default function AccountTable() {
   const Accounts = [
     {
       id: 1,
@@ -57,6 +57,9 @@ export default function accountTable() {
     },
   ];
 
+  const pathname = usePathname();
+  const router = useRouter();
+
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 ">
@@ -71,14 +74,23 @@ export default function accountTable() {
             <th scope="col" className="px-6 py-3">
               상품명
             </th>
-            <th scope="col" className="px-6 py-3">
-              신규일자
+            <th scope="col" className="px-6 py-3  gap-3">
+              <span className="flex gap-3">
+                신규일자
+                <FaSort></FaSort>
+              </span>
             </th>
             <th scope="col" className="px-6 py-3">
-              만기일자
+              <span className="flex gap-3">
+                만기일자
+                <FaSort></FaSort>
+              </span>
             </th>
-            <th scope="col" className="px-6 py-3">
-              잔액
+            <th scope="col" className="px-6 py-3 gap-3">
+              <span className="flex gap-3">
+                잔액
+                <FaSort></FaSort>
+              </span>
             </th>
             <th scope="col" className="px-6 py-3">
               최근거래금액
@@ -115,9 +127,9 @@ export default function accountTable() {
               <td className="px-6 py-4">
                 <a
                   onClick={() => {
-                    router.push(`detail`);
+                    router.push(`account/detail`);
                   }}
-                  className="font-medium text-pink-400 hover:text-pink-500"
+                  className="font-medium text-pink-400 hover:text-pink-500 cursor-pointer"
                 >
                   자세히
                 </a>
