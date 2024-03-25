@@ -2,7 +2,6 @@
 
 import Button from "@/components/button/button";
 import InputText from "@/components/input/inputText";
-import DormantSelect from "@/components/select/dormant";
 import tw from "tailwind-styled-components";
 
 export default function CustomerDetail() {

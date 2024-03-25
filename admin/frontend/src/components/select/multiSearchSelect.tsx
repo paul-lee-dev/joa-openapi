@@ -1,5 +1,5 @@
 import AsyncSelect from "react-select/async";
-import { ColourOption, customerOptions } from "@/asset/data/data";
+import { CustomerOption, customerOptions } from "@/asset/data/data";
 import tw from "tailwind-styled-components";
 
 interface MultiSearchProps {
@@ -15,7 +15,7 @@ const filterCustomers = (inputValue: string) => {
 };
 
 const promiseOptions = (inputValue: string) =>
-  new Promise<ColourOption[]>((resolve) => {
+  new Promise<CustomerOption[]>((resolve) => {
     setTimeout(() => {
       resolve(filterCustomers(inputValue));
     }, 1000);

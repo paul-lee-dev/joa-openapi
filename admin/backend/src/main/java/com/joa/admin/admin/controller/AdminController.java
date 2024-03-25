@@ -1,12 +1,19 @@
 package com.joa.admin.admin.controller;
 
-import com.joa.admin.admin.dto.*;
+import com.joa.admin.admin.dto.req.AdminEmailSendRequestDto;
+import com.joa.admin.admin.dto.req.AdminJoinRequestDto;
+import com.joa.admin.admin.dto.req.AdminLoginRequestDto;
+import com.joa.admin.admin.dto.req.AdminUpdateRequestDto;
+import com.joa.admin.admin.dto.res.AdminIdResponseDto;
+import com.joa.admin.admin.dto.res.AdminInfoResponseDto;
+import com.joa.admin.admin.dto.res.AdminTokenResponseDto;
 import com.joa.admin.admin.service.AdminService;
 import com.joa.admin.common.response.ApiResponse;
 import com.joa.admin.common.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,35 +34,35 @@ public class AdminController {
     //
 
     //이메일 중복 검사
-    @GetMapping("email/{keyword}")
+    @GetMapping("/email/{keyword}")
     public ResponseEntity<?> confirmEmail(@PathVariable String keyword) {
         adminService.confirmEmail(keyword);
         return ResponseEntity.ok(ApiResponse.success("사용 가능한 이메일입니다."));
     }
 
     //TODO: 휴대폰 중복 검사 API 적용
-    @GetMapping("phone/{keyword}")
+    @GetMapping("/phone/{keyword}")
     public ResponseEntity<?> confirmPhone(@PathVariable String keyword) {
         adminService.confirmPhone(keyword);
         return ResponseEntity.ok(ApiResponse.success("사용 가능한 번호입니다."));
     }
 
     //로그인
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody AdminLoginRequestDto request) {
         AdminTokenResponseDto response = adminService.login(request);
         return ResponseEntity.ok(ApiResponse.success("로그인에 성공했습니다.", response));
     }
 
     //access token 갱신
-    @GetMapping("reissue")
+    @GetMapping("/reissue")
     public ResponseEntity<?> refreshAccessToken(HttpServletRequest request, HttpServletResponse httpServletResponse) {
         AdminTokenResponseDto response = adminService.reissueAccessToken(request, httpServletResponse);
         return ResponseEntity.ok(ApiResponse.success("액세스 토큰 갱신에 성공했습니다.", response));
     }
 
     //로그아웃
-    @GetMapping("logout")
+    @GetMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
         adminService.logout(request);
         return ResponseEntity.ok(ApiResponse.success("로그아웃에 성공했습니다."));
@@ -84,4 +91,39 @@ public class AdminController {
         AdminIdResponseDto response = adminService.delete(adminId);
         return ResponseEntity.ok(ApiResponse.success("회원 탈퇴에 성공했습니다.", response));
     }
+
+    // API Key 발급
+    @PostMapping("/issuedApiKey")
+    public ResponseEntity<?> issuedApiKey() {
+        String adminId = SecurityUtil.getCurrentAdminId();
+        String response = adminService.issuedApiKey(adminId);
+        // API key 정보 반환
+        return ResponseEntity.ok(ApiResponse.success("API Key 발급에 성공했습니다.", UUID.fromString(response)));
+    }
+
+    // API Key 재발급
+    @PostMapping("/reissuedApiKey")
+    public ResponseEntity<?> reissuedApiKey() {
+        String adminId = SecurityUtil.getCurrentAdminId();
+        String response = adminService.reissuedApiKey(adminId);
+        // API key 정보 반환
+        return ResponseEntity.ok(ApiResponse.success("API Key 재발급에 성공했습니다.", UUID.fromString(response)));
+    }
+
+    // API Key 삭제
+    @DeleteMapping("/deleteApiKey")
+    public ResponseEntity<?> deleteApiKey() {
+        String adminId = SecurityUtil.getCurrentAdminId();
+        adminService.deleteApiKey(adminId);
+        return ResponseEntity.ok(ApiResponse.success("API Key 삭제에 성공했습니다."));
+    }
+
+    // TODO : 이메일 인증 전송 완성 -> 다른 브랜치
+    @PostMapping("/emailSend")
+    public ResponseEntity<?> sendEmail(@RequestBody AdminEmailSendRequestDto request) {
+        adminService.sendEmail(request);
+        return ResponseEntity.ok(ApiResponse.success("이메일 전송에 성공했습니다."));
+    }
+
+
 }

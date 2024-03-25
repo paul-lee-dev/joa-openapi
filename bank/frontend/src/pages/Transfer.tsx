@@ -5,13 +5,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import AccountItem from '../components/AccountItem';
-import {RootStackParamList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import BottomButton from '../components/BottomButton';
 import {useState} from 'react';
+import {RootStackParamList} from 'App';
+import Header from '@/components/Header';
+import AccountItem from '@/components/AccountItem';
+import BottomButton from '@/components/BottomButton';
 
 type TransferScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -57,6 +57,7 @@ function Transfer({navigation}: TransferScreenProps): React.JSX.Element {
             placeholderTextColor="#374151"
             className="flex-grow text-xl px-4 text-gray-700 placeholder:text-gray-700"
             onChangeText={setAccountId}
+            value={accountId}
           />
           <Icon
             name={'camera-outline'}

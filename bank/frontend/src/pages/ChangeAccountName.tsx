@@ -1,7 +1,7 @@
+import BottomButton from '@/components/BottomButton';
+import CommonInput from '@/components/CommonInput';
+import Header from '@/components/Header';
 import {View} from 'react-native';
-import Header from '../components/Header';
-import BottomButton from '../components/BottomButton';
-import CommonInput from '../components/CommonInput';
 
 function ChangeAccountName(): React.JSX.Element {
   return (

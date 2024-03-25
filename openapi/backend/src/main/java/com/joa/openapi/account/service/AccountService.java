@@ -9,6 +9,7 @@ import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.dummy.repository.DummyRepository;
 import com.joa.openapi.member.entity.Member;
+import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,7 @@ public class AccountService {
         // 계좌번호 임시 랜덤 생성
         String accountId = String.valueOf(Math.random());
 
-        Member member = memberRepository.findById(memberId);
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
 
         Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
                 .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT))); /* TODO: 더미 에러 코드로 변경 */

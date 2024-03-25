@@ -18,8 +18,8 @@ public class DummyResponseDto {
 
     private UUID dummyId;
     private UUID adminId;
-    private String dummyName;
-    private Integer userCount;
+    private String name;
+    private Integer memberCount;
     private Integer accountCount;
     private Integer transactionCount;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
@@ -31,8 +31,8 @@ public class DummyResponseDto {
         return DummyResponseDto.builder()
                 .dummyId(dummy.getId())
                 .adminId(dummy.getAdminId())
-                .dummyName(dummy.getName())
-                .userCount(dummy.getUserCount())
+                .name(dummy.getName())
+                .memberCount(dummy.getMemberCount())
                 .accountCount(dummy.getAccountCount())
                 .transactionCount(dummy.getTransactionCount())
                 .createdAt(dummy.getCreatedAt())

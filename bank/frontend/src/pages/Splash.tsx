@@ -1,5 +1,5 @@
 import {Image, Text, View} from 'react-native';
-import PiggyBank from '../../assets/piggy-bank.png';
+import PiggyBank from '@/assets/piggy-bank.png';
 
 function Splash(): React.JSX.Element {
   return (
