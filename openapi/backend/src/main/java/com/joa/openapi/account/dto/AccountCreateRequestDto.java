@@ -11,6 +11,7 @@ import java.util.UUID;
 public class AccountCreateRequestDto {
 
     private String nickname;
+    private final Long balance = 0L;
     private String password;
     private final Long transferLimit = 100L;
     private final Integer term = 12;

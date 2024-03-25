@@ -53,7 +53,7 @@ public class AccountService {
         Account account = Account.builder()
                 .id(accountId)
                 .name(req.getNickname()) /* TODO 예적금 상품 연결시키면 디폴트 닉네임 예적금 상품명 */
-                .balance(req.getAmount())
+                .balance(req.getBalance())
                 .password(req.getPassword())
                 .isDormant(false)
                 .transferLimit(req.getTransferLimit())

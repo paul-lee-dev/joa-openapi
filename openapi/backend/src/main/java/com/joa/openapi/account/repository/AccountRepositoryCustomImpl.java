@@ -33,9 +33,6 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
     @Override
     public Page<AccountSearchResponseDto> searchAccountCustom(AccountSearchRequestDto req, Pageable pageable) {
 
-        System.out.println("=================");
-        System.out.println(req);
-        System.out.println(req.getIsDormant());
         // 쿼리 설정
         JPAQuery<Account> query = jpaQueryFactory
                 .selectFrom(account)
@@ -62,13 +59,8 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
     }
 
     private BooleanExpression eqDormant(Boolean type) {
-        if (type == null) {
-            System.out.println("type이 널?");
+        if (type == null)
             return null;
-        }
-
-        System.out.println("-==========");
-        System.out.println(type);
 
         if(type)
             return account.isDormant.isTrue();
@@ -76,17 +68,14 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
             return account.isDormant.isFalse();
     }
 
-    private BooleanExpression eqDummy(AccountWhether type) {
-        if (type == null) {
-
+    private BooleanExpression eqDummy(Boolean type) {
+        if (type == null)
             return null;
-        }
 
-        return switch (type) {
-            case YES -> account.dummy.isNotNull();
-            case NO -> account.isDormant.isNull();
-            default -> null;
-        };
+        if(type)
+            return account.dummy.isNotNull();
+        else
+            return account.dummy.isNull();
     }
 
     private BooleanExpression eqSearchKeyword(AccountKeywordType keywordType, String searchKeyword) {
@@ -94,20 +83,20 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
             return null; // 검색어가 없을 경우 적용할 필터 없음
         }
 
+        if(keywordType == null){
+            return account.name.likeIgnoreCase("%" + searchKeyword + "%");
+        }
+
         // 검색 키워드를 통한 조건 반환
-        switch (keywordType) {
-            case ACCOUNT_ID:
-                return account.id.likeIgnoreCase("%" + searchKeyword + "%");
-            case HOLDER_NAME:
-                return account.holder.name.likeIgnoreCase("%" + searchKeyword + "%");
+        return switch (keywordType) {
+            case ACCOUNT_ID -> account.id.likeIgnoreCase("%" + searchKeyword + "%");
+            case HOLDER_NAME -> account.holder.name.likeIgnoreCase("%" + searchKeyword + "%");
+            case ACCOUNT_NAME -> account.name.likeIgnoreCase("%" + searchKeyword + "%");
 //            case PRODUCT_NAME:
 //                return account.product.name.likeIgnoreCase("%" + searchKeyword + "%");
-            case DUMMY_NAME:
-                return account.dummy.name.likeIgnoreCase("%" + searchKeyword + "%");
-            default:
-                return account.name.likeIgnoreCase("%" + searchKeyword + "%");
-
-        }
+            case DUMMY_NAME -> account.dummy.name.likeIgnoreCase("%" + searchKeyword + "%");
+            default -> null;
+        };
     }
 
     private BooleanExpression eqBankList(List<UUID> bankList){

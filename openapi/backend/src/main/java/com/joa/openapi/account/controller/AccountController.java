@@ -61,8 +61,8 @@ public class AccountController {
         return ResponseEntity.ok(ApiResponse.success("계좌 조회에 성공했습니다.", accountsPage));
     }
 
-    @PostMapping("/search")
-    public ResponseEntity<?> search(@RequestBody AccountSearchRequestDto req, @PageableDefault Pageable pageable){
+    @GetMapping("/search")
+    public ResponseEntity<?> search(@ModelAttribute AccountSearchRequestDto req, @PageableDefault Pageable pageable){
         Page<AccountSearchResponseDto> accountsPage = accountService.search(req, pageable);
         return ResponseEntity.ok(ApiResponse.success("계좌 검색에 성공했습니다.", accountsPage));
     }
