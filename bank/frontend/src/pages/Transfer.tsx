@@ -12,6 +12,7 @@ import {RootStackParamList} from 'App';
 import Header from '@/components/Header';
 import AccountSelectItem from '@/components/AccountSelectItem';
 import BottomButton from '@/components/BottomButton';
+import {formatAmount} from '@/utils';
 
 type TransferScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -47,7 +48,9 @@ function Transfer({navigation}: TransferScreenProps): React.JSX.Element {
           />
         </View>
         <View className="w-full flex items-end">
-          <Text className="text-gray-700">출금가능금액: 1,001,220원</Text>
+          <Text className="text-gray-700">{`출금가능금액: ${formatAmount(
+            1001220,
+          )}원`}</Text>
         </View>
       </View>
       <View className="h-24 w-full p-6">

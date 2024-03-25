@@ -9,6 +9,8 @@ import {useMutation} from '@tanstack/react-query';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createAccount} from '@/api/account';
 import {useState} from 'react';
+import {bankDataAtom} from '@/store/atoms';
+import {useRecoilValue} from 'recoil';
 
 type CreateAccountConfirmScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -23,6 +25,7 @@ interface CreateAccountForm {
 function CreateAccountConfirm({
   navigation,
 }: CreateAccountConfirmScreenProps): React.JSX.Element {
+  const bankData = useRecoilValue(bankDataAtom);
   const mutation = useMutation({
     mutationFn: createAccount,
     onSuccess: data => {
@@ -48,9 +51,8 @@ function CreateAccountConfirm({
     mutation.mutate({
       nickname: '기본 계좌',
       password: '1234',
-      balance: 3000,
       term: 30,
-      bankId: '35a80588-2ce4-4961-8c7c-45fe35a4d788',
+      bankId: bankData.bankId,
     });
   };
 

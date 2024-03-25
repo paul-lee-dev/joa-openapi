@@ -1,5 +1,6 @@
 import CommonMenuItem from '@/components/CommonMenuItem';
 import Header from '@/components/Header';
+import {formatAmount} from '@/utils';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from 'App';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
@@ -30,7 +31,7 @@ function AccountDetail({
             <Icon
               name={'pencil-outline'}
               color={'#888'}
-              onPress={() => {}}
+              onPress={() => navigation.navigate('ChangeAccountName')}
               size={20}
             />
           </View>
@@ -44,7 +45,9 @@ function AccountDetail({
             <View className="w-1/2 flex space-y-1">
               <Text className="text-sm font-semibold">입출금통장</Text>
               <Text className="text-sm font-semibold">2024.03.08</Text>
-              <Text className="text-sm font-semibold">1,000,000원</Text>
+              <Text className="text-sm font-semibold">{`${formatAmount(
+                10000000,
+              )}원`}</Text>
               <Text className="text-sm font-semibold">연 0.10%</Text>
             </View>
           </View>

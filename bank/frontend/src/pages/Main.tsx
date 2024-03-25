@@ -24,6 +24,7 @@ import {
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
+import {formatAmount} from '@/utils';
 
 type MainScreenProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
 
@@ -93,7 +94,7 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
             </View>
             <View className="w-full flex flex-row items-center justify-center space-x-2">
               <Text className="text-2xl font-bold text-gray-700">
-                999,999,999원
+                {`${formatAmount(999999999)}원`}
               </Text>
               <TouchableOpacity>
                 <Icon
