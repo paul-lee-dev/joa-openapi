@@ -16,8 +16,8 @@ function CreateAccountResult({
   return (
     <View className="w-full h-full bg-gray-100 flex">
       <Header
-        stack="계좌 비밀번호 재설성"
-        menu={[{title: 'close', onPress: () => {}}]}
+        stack="계좌 개설"
+        menu={[{title: 'close', onPress: () => navigation.popToTop()}]}
       />
       <View className="w-full flex-grow mb-16">
         <View className="flex flex-grow justify-center items-center space-y-2 pb-20">
