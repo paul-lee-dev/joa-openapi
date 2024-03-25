@@ -3,7 +3,9 @@ package com.joa.openapi.transaction.controller;
 import com.joa.openapi.account.dto.*;
 import com.joa.openapi.common.response.ApiResponse;
 import com.joa.openapi.transaction.dto.TransactionRequestDto;
+import com.joa.openapi.transaction.dto.TransactionUpdateRequestDto;
 import com.joa.openapi.transaction.dto.TransactionResponseDto;
+import com.joa.openapi.transaction.dto.TransactionUpdateResponseDto;
 import com.joa.openapi.transaction.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,7 +30,7 @@ public class TransactionController {
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity<?> update(@RequestHeader("memberId") UUID memberId, @RequestBody TransactionRequestDto req) {
+    public ResponseEntity<?> withdraw(@RequestHeader("memberId") UUID memberId, @RequestBody TransactionRequestDto req) {
         TransactionResponseDto response = transactionService.withdraw(memberId, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 출금에 성공했습니다.", response));
     }
@@ -39,11 +41,10 @@ public class TransactionController {
         return ResponseEntity.ok(ApiResponse.success("계좌 이체에 성공했습니다.", response));
     }
 
-
-    @PatchMapping("/limit")
-    public ResponseEntity<?> updateLimit(@RequestHeader("memberId") UUID memberId, @RequestBody AccountUpdateRequestDto req) {
-        Long limit = transactionService.updateLimit(memberId, req);
-        return ResponseEntity.ok(ApiResponse.success("이체한도 변경에 성공했습니다.", limit));
+    @PatchMapping
+    public ResponseEntity<?> update(@RequestHeader("memberId") UUID memberId, @RequestBody TransactionUpdateRequestDto req) {
+        TransactionUpdateResponseDto response = transactionService.update(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("거래내역 수정에 성공했습니다.", response));
     }
 
     @PatchMapping("/password")

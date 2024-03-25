@@ -11,12 +11,12 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransactionRequestDto {
+public class TransactionUpdateRequestDto {
 
-    private String password;
+    private UUID transactionId;
     private Long amount;
     private String depositorName;   //입금자명
-    private String fromAccount;            //입금계좌
-    private String toAccount;              //출금계좌
-    private UUID dummyId;
+    private String fromAccount;     //입금계좌
+    private String toAccount;       //출금계좌
+    private Boolean isDummy;
 }
