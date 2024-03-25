@@ -1,12 +1,25 @@
 import CommonMenuItem from '@/components/CommonMenuItem';
+import Header from '@/components/Header';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from 'App';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Header} from 'react-native/Libraries/NewAppScreen';
 
-function AccountDetail(): React.JSX.Element {
+type AccountDetailScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'AccountDetail'
+>;
+
+function AccountDetail({
+  navigation,
+}: AccountDetailScreenProps): React.JSX.Element {
   return (
     <View className="w-full h-full bg-gray-100 flex">
-      <Header stack="계좌관리" menu={[{title: 'close', onPress: () => {}}]} />
+      <Header
+        stack="계좌관리"
+        goBack={() => navigation.pop()}
+        menu={[{title: 'close', onPress: () => navigation.popToTop()}]}
+      />
       <View className="w-full h-56 p-6">
         <View className="flex space-y-2">
           <Text className="text-sm font-medium text-gray-400">

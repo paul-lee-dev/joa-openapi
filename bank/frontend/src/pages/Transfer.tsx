@@ -10,7 +10,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useState} from 'react';
 import {RootStackParamList} from 'App';
 import Header from '@/components/Header';
-import AccountItem from '@/components/AccountItem';
+import AccountSelectItem from '@/components/AccountSelectItem';
 import BottomButton from '@/components/BottomButton';
 
 type TransferScreenProps = NativeStackScreenProps<
@@ -81,8 +81,8 @@ function Transfer({navigation}: TransferScreenProps): React.JSX.Element {
                 size={30}
               />
             </View>
-            <AccountItem />
-            <AccountItem />
+            <AccountSelectItem />
+            <AccountSelectItem />
           </View>
           <View className="w-full">
             <View className="w-full flex flex-row justify-between items-center px-6 py-4">
@@ -96,8 +96,8 @@ function Transfer({navigation}: TransferScreenProps): React.JSX.Element {
                 size={30}
               />
             </View>
-            <AccountItem />
-            <AccountItem />
+            <AccountSelectItem />
+            <AccountSelectItem />
           </View>
         </View>
       </ScrollView>

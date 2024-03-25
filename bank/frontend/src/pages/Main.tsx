@@ -18,8 +18,21 @@ import {RootStackParamList} from 'App';
 import Footer from '@/components/Footer';
 import BottomPopup from '@/components/BottomPopup';
 import CommonMenuItem from '@/components/CommonMenuItem';
+import {
+  Menu,
+  MenuOption,
+  MenuOptions,
+  MenuTrigger,
+} from 'react-native-popup-menu';
 
 type MainScreenProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
+
+const popupStyle = {
+  width: 100,
+  borderRadius: 10,
+  padding: 4,
+  backgroundColor: 'rgb(252, 231, 243)',
+};
 
 function Main({navigation}: MainScreenProps): React.JSX.Element {
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
@@ -58,12 +71,21 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
           </View>
           <View className="w-full py-4 px-6 relative rounded-3xl bg-pink-200 flex space-y-2 shadow-sm shadow-black">
             <View className="absolute top-4 right-4">
-              <Icon
-                name={'dots-vertical'}
-                color={'#777'}
-                onPress={() => {}}
-                size={20}
-              />
+              <Menu>
+                <MenuTrigger>
+                  <Icon name={'dots-vertical'} color={'#777'} size={20} />
+                </MenuTrigger>
+                <MenuOptions optionsContainerStyle={popupStyle}>
+                  <MenuOption
+                    onSelect={() => navigation.navigate('AccountDetail')}>
+                    <Text className="w-full text-center">상세 보기</Text>
+                  </MenuOption>
+                  <View className="w-full h-[1px] bg-gray-600" />
+                  <MenuOption onSelect={() => console.log(`Not called`)}>
+                    <Text className="w-full text-center">계좌 해지</Text>
+                  </MenuOption>
+                </MenuOptions>
+              </Menu>
             </View>
             <View className="w-full">
               <Text className="text-md text-gray-700">저축예금[입출금]</Text>
