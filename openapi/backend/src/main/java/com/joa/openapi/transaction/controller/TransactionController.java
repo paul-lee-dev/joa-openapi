@@ -2,10 +2,7 @@ package com.joa.openapi.transaction.controller;
 
 import com.joa.openapi.account.dto.*;
 import com.joa.openapi.common.response.ApiResponse;
-import com.joa.openapi.transaction.dto.TransactionRequestDto;
-import com.joa.openapi.transaction.dto.TransactionUpdateRequestDto;
-import com.joa.openapi.transaction.dto.TransactionResponseDto;
-import com.joa.openapi.transaction.dto.TransactionUpdateResponseDto;
+import com.joa.openapi.transaction.dto.*;
 import com.joa.openapi.transaction.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -47,33 +44,9 @@ public class TransactionController {
         return ResponseEntity.ok(ApiResponse.success("거래내역 수정에 성공했습니다.", response));
     }
 
-    @PatchMapping("/password")
-    public ResponseEntity<?> updatePassword(@RequestHeader("memberId") UUID memberId, @RequestBody AccountUpdateRequestDto req) {
-        transactionService.updatePassword(memberId, req);
-        return ResponseEntity.ok(ApiResponse.success("비밀번호 변경에 성공했습니다."));
-    }
-
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId, @RequestBody AccountDeleteRequestDto req) {
-        String accountId = transactionService.delete(memberId, req);
-        return ResponseEntity.ok(ApiResponse.success("계좌 해지에 성공했습니다.", accountId));
-    }
-
-    @PostMapping("/balance")
-    public ResponseEntity<?> getBalance(@RequestHeader("memberId") UUID memberId, @RequestBody AccountGetBalanceRequestDto req) {
-        AccountGetBalanceResponseDto balance = transactionService.getBalance(memberId, req);
-        return ResponseEntity.ok(ApiResponse.success("계좌 잔액 조회에 성공했습니다.", balance));
-    }
-
-    @PostMapping("/member")
-    public ResponseEntity<?> getAccounts(@RequestHeader("memberId") UUID memberId, @PageableDefault Pageable pageable) {
-        Page<AccountGetAccountsResponseDto> accountsPage = transactionService.getAccounts(memberId, pageable);
-        return ResponseEntity.ok(ApiResponse.success("계좌 조회에 성공했습니다.", accountsPage));
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity<?> search(@ModelAttribute AccountSearchRequestDto req, @PageableDefault Pageable pageable){
-        Page<AccountSearchResponseDto> accountsPage = transactionService.search(req, pageable);
-        return ResponseEntity.ok(ApiResponse.success("계좌 검색에 성공했습니다.", accountsPage));
+    public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId, @RequestBody TransactionDeleteRequestDto req) {
+        transactionService.delete(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("거래내역 삭제에 성공했습니다."));
     }
 }

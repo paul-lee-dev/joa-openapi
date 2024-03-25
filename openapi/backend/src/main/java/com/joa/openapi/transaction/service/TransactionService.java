@@ -10,10 +10,7 @@ import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.repository.DummyRepository;
 import com.joa.openapi.member.errorcode.MemberErrorCode;
-import com.joa.openapi.transaction.dto.TransactionRequestDto;
-import com.joa.openapi.transaction.dto.TransactionResponseDto;
-import com.joa.openapi.transaction.dto.TransactionUpdateRequestDto;
-import com.joa.openapi.transaction.dto.TransactionUpdateResponseDto;
+import com.joa.openapi.transaction.dto.*;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.joa.openapi.transaction.errorcode.TransactionErrorCode;
 import com.joa.openapi.transaction.repository.TransactionRepository;
@@ -263,44 +260,15 @@ public class TransactionService {
     }
 
     @Transactional
-    public void updatePassword(UUID memberId, AccountUpdateRequestDto req) {
-        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+    public void delete(UUID memberId, TransactionDeleteRequestDto req) {
+        Transaction transaction = transactionRepository.findById(req.getTransactionId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
-        authorityValidation(memberId, account);
+//        if(transaction.getDummy() == null)
+//            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+//        if(!memberId.equals(transaction.getDummy().getAdminId()))
+//            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
 
-        if(req.getPassword() != null && !req.getPassword().trim().isBlank())
-            account.updatePassword(req.getPassword());
-
-        accountRepository.save(account);
-    }
-
-    @Transactional
-    public String delete(UUID memberId, AccountDeleteRequestDto req) {
-        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
-
-        authorityValidation(memberId, account);
-        checkPassword(account, req.getPassword());
-
-        account.deleteSoftly();
-
-        return account.getId();
-    }
-
-    public AccountGetBalanceResponseDto getBalance(UUID memberId, AccountGetBalanceRequestDto req) {
-        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
-
-        authorityValidation(memberId, account);
-
-        return AccountGetBalanceResponseDto.toDto(account);
-    }
-
-    public Page<AccountGetAccountsResponseDto> getAccounts(UUID memberId, Pageable pageable) {
-        Page<Account> accountsPage = accountRepository.findByHolderId(memberId, pageable);
-        return accountsPage.map(AccountGetAccountsResponseDto::toDto);
-    }
-
-    public Page<AccountSearchResponseDto> search(AccountSearchRequestDto req, Pageable pageable) {
-        return accountRepository.searchAccountCustom(req, pageable);
+        transaction.deleteSoftly();
     }
 
     public void authorityValidation(UUID memberId, Account account) {
@@ -317,15 +285,5 @@ public class TransactionService {
     public void checkPassword(Account account, String password){
         if (!account.getPassword().equals(password))
             throw new RestApiException(AccountErrorCode.PASSWORD_MISMATCH);
-    }
-
-
-    /**
-     *
-     * 계좌번호 생성
-     * 은행 @@@@ + 상품 @@@@ + 본인 @@@@ + 체크섬 @
-     */
-    public String createAccountId(){
-        return null;
     }
 }
