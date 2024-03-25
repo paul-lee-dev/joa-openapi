@@ -12,6 +12,11 @@ import TransferAmount from '@/pages/TransferAmount';
 import TransferConfirm from '@/pages/TransferConfirm';
 import TransferResult from '@/pages/TransferResult';
 import {RecoilRoot} from 'recoil';
+import React from 'react';
+import CreateAccountConfirm from '@/pages/CreateAccountConfirm';
+import CreateAccountResult from '@/pages/CreateAccountResult';
+import ChangeAccountName from '@/pages/ChangeAccountName';
+import ChangeAccountLimit from '@/pages/ChangeAccountLimit';
 
 export type RootStackParamList = {
   AccountDetail: undefined;
@@ -22,6 +27,8 @@ export type RootStackParamList = {
   ChangePasswordStart: undefined;
   ChangePasswordVerify: undefined;
   CreateAccount: undefined;
+  CreateAccountConfirm: undefined;
+  CreateAccountResult: undefined;
   History: undefined;
   Intro: undefined;
   Join: undefined;
@@ -75,21 +82,27 @@ function App(): React.JSX.Element {
             component={CreateAccount}
             {...globalOption}
           />
+          <Stack.Screen
+            name="CreateAccountConfirm"
+            component={CreateAccountConfirm}
+            {...globalOption}
+          />
+          <Stack.Screen
+            name="CreateAccountResult"
+            component={CreateAccountResult}
+            {...globalOption}
+          />
+          <Stack.Screen
+            name="ChangeAccountName"
+            component={ChangeAccountName}
+            {...globalOption}
+          />
+          <Stack.Screen
+            name="ChangeAccountLimit"
+            component={ChangeAccountLimit}
+            {...globalOption}
+          />
         </Stack.Navigator>
-        {/* <Stack.Screen name="Details">
-        {props => <DetailsScreen {...props} />}
-      </Stack.Screen> */}
-        {/* <Splash /> */}
-        {/* <Join /> */}
-        {/* <History /> */}
-
-        {/* <AccountDetail /> */}
-        {/* <ChangePasswordStart /> */}
-        {/* <ChangePasswordVerify /> */}
-        {/* <ChangePassword /> */}
-        {/* <ChangePasswordResult /> */}
-        {/* <ChangeAccountName /> */}
-        {/* <ChangeAccountLimit /> */}
       </NavigationContainer>
     </RecoilRoot>
   );
