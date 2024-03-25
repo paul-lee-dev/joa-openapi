@@ -1,76 +1,51 @@
 spring:
-#  mail:
-#    host: smtp.naver.com
-#    port: 465
-#    username: sulim0314@naver.com
-#    password: Nrd
-#    properties:
-#      mail:
-#        debug: true
-#        smtp:
-#          ssl:
-#            enable: true
-#            trust: smtp.gmail.com
-#            protocols: TLSv1.2
-#          auth: true
-#          timeout: 5000
-#          starttls:
-#            enable: true
-
   mail:
-    host: smtp.gmail.com
-    port: 587 # 587, 465, 25
-    username: joa13site@gmail.com
-    password: nryowoqhrnmbzrxr
+    host:
+    port:
+    username:
+    password:
     properties:
       mail:
-        debug: true
+        debug:
         smtp:
-          ssl:
-            enable: true
-            trust: smtp.gmail.com
-            protocols: TLSv1.2
-          auth: true
-          timeout: 5000
+          timeout:
           starttls:
-            enable: true
+            enable:
+          auth:
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3307/joa?serverTimezone=UTC # mysql 8.2, mysql workbench 8.0.21 / mac? 8.0.34
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  config:
-    import:
-      - optional:env/env.yml
+    url:
+    username:
+    password:
+    driver-class-name:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto:
     properties:
       hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql:
+        dialect:
 
   data:
     redis:
-      host: joa13.site #로컬이 아닌 경우 redis로 변경
-      port: 6379
-      password: redis
+      host:
+      port:
+      password:
 
 logging:
   level:
-    org.hibernate.SQL: debug
-    org.hibernate.type: trace
+    org.hibernate.SQL:
+    org.hibernate.type:
 
 error:
-  printStackTrace: true
+  printStackTrace:
 
 jwt:
-  secret: ${JWT_SECRET_KEY}
+  secret:
   access:
-    expiration: 10800000 # 3600000 : 60(분) * 60(초) * 1000 -> 1 시간
-    header: Authorization
+    expiration:
+    header:
   refresh:
-    expiration: 1209600000 # 2주
-    header: Authorization-refresh
+    expiration:
+    header:
