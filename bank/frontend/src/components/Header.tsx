@@ -16,7 +16,7 @@ function Header({stack, goBack, menu}: IProps): React.JSX.Element {
   return (
     <View className="w-full h-16 flex flex-row justify-between px-4">
       <View className=" w-40 flex flex-row items-center flex-grow ">
-        {stack ? (
+        {goBack ? (
           <Icon
             name={'chevron-left'}
             color={'#000'}

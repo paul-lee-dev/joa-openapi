@@ -72,7 +72,10 @@ function CreateAccount({
           </View>
         </View>
       </ScrollView>
-      <BottomButton title={'신청하기'} onPress={() => navigation.popToTop()} />
+      <BottomButton
+        title={'신청하기'}
+        onPress={() => navigation.navigate('CreateAccountConfirm')}
+      />
     </View>
   );
 }

@@ -1,0 +1,51 @@
+spring:
+  mail:
+    host:
+    port:
+    username:
+    password:
+    properties:
+      mail:
+        debug:
+        smtp:
+          timeout:
+          starttls:
+            enable:
+          auth:
+
+  datasource:
+    url:
+    username:
+    password:
+    driver-class-name:
+
+  jpa:
+    hibernate:
+      ddl-auto:
+    properties:
+      hibernate:
+        format_sql:
+        dialect:
+
+  data:
+    redis:
+      host:
+      port:
+      password:
+
+logging:
+  level:
+    org.hibernate.SQL:
+    org.hibernate.type:
+
+error:
+  printStackTrace:
+
+jwt:
+  secret:
+  access:
+    expiration:
+    header:
+  refresh:
+    expiration:
+    header:
