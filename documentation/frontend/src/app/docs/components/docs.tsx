@@ -1,106 +1,66 @@
+import { IoIosInformationCircleOutline } from "react-icons/io";
+import tw from "tailwind-styled-components";
+
 export default function docs() {
   return (
     <>
-      <div className="mt-8">
-        {testbeds.map((t) => (
-          <div key={t.title} className="space-y-3">
-            <p className="text-3xl font-bold">
-              {t.title}
-            </p>
-            <p className="">
-              {t.description}
-            </p>
-            <p className="text-2xl font-bold">
-              기본 정보
-            </p>
-            <p className="">
-              {t.info}
-            </p>
-            <p className="bg-pink-300 rounded p-4">
-              {t.warning}
-            </p>
+      {testbeds.map((t) => (
+        <Wrapper key={t.title}>
 
+          <Title>{t.title}</Title>
+          <TextItem>{t.description}</TextItem>
 
-            <p className="text-2xl font-bold">
-              요청(Request)
-            </p>
+          <Subtitle>기본 정보</Subtitle>
+          <TextItem>{t.info}</TextItem>
 
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-4 py-3">Product name</th>
-                  <th scope="col" className="px-4 py-3">Category</th>
-                  <th scope="col" className="px-4 py-3">Brand</th>
-                  <th scope="col" className="px-4 py-3">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b dark:border-gray-700">
-                  <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">Apple iMac 27&#34;</th>
-                  <td className="px-4 py-3">PC</td>
-                  <td className="px-4 py-3">Apple</td>
-                  <td className="px-4 py-3">300</td>
-                </tr>
-                <tr className="border-b dark:border-gray-700">
-                  <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">Monitor BenQ EX2710Q</th>
-                  <td className="px-4 py-3">TV/Monitor</td>
-                  <td className="px-4 py-3">BenQ</td>
-                  <td className="px-4 py-3">354</td>
-                </tr>
-              </tbody>
-            </table>
+          <WarningItem>
+            <IoIosInformationCircleOutline />{t.warning}
+          </WarningItem>
 
-            <p className="text-2xl font-bold">
-              요청 샘플(Request Sample)
-            </p>
-            <div className="bg-blue-300 rounded p-8">
-              <p className="">
-                {t.request_sample}
-              </p>
-              </div>
+          <Subtitle>요청(Request)</Subtitle>
+          <TableItem>
+            <TheadItem>
+              <TrItem>
+                <ThItem>123</ThItem>
+                <ThItem>123</ThItem>
+                <ThItem>123</ThItem>
+              </TrItem>
+            </TheadItem>
+            <TbodyItem>
+              <TrItem>
+                <TdItem>444</TdItem>
+                <TdItem>555</TdItem>
+                <TdItem>666</TdItem>
+              </TrItem>
+            </TbodyItem>
+          </TableItem>
 
+          <Subtitle>요청 샘플(Request Sample)</Subtitle>
+          <RequestItem>{t.request_sample}</RequestItem>
 
-            <p className="text-2xl font-bold">
-              응답(Response)
-            </p>
+          <Subtitle>응답(Response)</Subtitle>
+          <TableItem>
+            <TheadItem>
+              <TrItem>
+                <ThItem>123</ThItem>
+                <ThItem>123</ThItem>
+                <ThItem>123</ThItem>
+              </TrItem>
+            </TheadItem>
+            <TbodyItem>
+              <TrItem>
+                <TdItem>444</TdItem>
+                <TdItem>555</TdItem>
+                <TdItem>666</TdItem>
+              </TrItem>
+            </TbodyItem>
+          </TableItem>
 
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-4 py-3">Product name</th>
-                  <th scope="col" className="px-4 py-3">Category</th>
-                  <th scope="col" className="px-4 py-3">Brand</th>
-                  <th scope="col" className="px-4 py-3">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b dark:border-gray-700">
-                  <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">Apple iMac 27&#34;</th>
-                  <td className="px-4 py-3">PC</td>
-                  <td className="px-4 py-3">Apple</td>
-                  <td className="px-4 py-3">300</td>
-                </tr>
-                <tr className="border-b dark:border-gray-700">
-                  <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">Monitor BenQ EX2710Q</th>
-                  <td className="px-4 py-3">TV/Monitor</td>
-                  <td className="px-4 py-3">BenQ</td>
-                  <td className="px-4 py-3">354</td>
-                </tr>
-              </tbody>
-            </table>
+          <Subtitle>응답 샘플(Response Sample)</Subtitle>
+          <ResponseItem>{t.response_sample}</ResponseItem>
 
-            
-            <p className="text-2xl font-bold">
-              응답 샘플(Response Sample)
-            </p>
-            <div className="bg-purple-300 rounded p-8">
-              <p className="">
-                {t.response_sample}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
+        </Wrapper>
+      ))}
     </>
   );
 };
@@ -110,9 +70,76 @@ const testbeds = [
   {
     title: "계좌 개설 API",
     description: "계좌 개설 API에 대한 설명이 여기에 들어갑니다.",
-    info:"API에 대한 설명이 들어갑니다.",
-    warning:"주의해야 할 사항이 들어갑니다.",
-    request_sample:"request sample",
-    response_sample:"response sample"
+    info: "API에 대한 설명이 들어갑니다.",
+    warning: "주의해야 할 사항이 들어갑니다.",
+    request_sample: "request sample",
+    response_sample: "response sample"
   },
 ]
+
+const Wrapper = tw.div`
+mt-8
+space-y-6
+text-sm
+`;
+
+const Title = tw.h2`
+text-3xl
+font-bold
+`;
+
+const Subtitle = tw.h3`
+text-xl
+font-bold
+`;
+
+const TextItem = tw.div`
+`
+
+const WarningItem = tw.div`
+bg-pink-300 
+hover:bg-pink-400
+rounded-lg
+p-4
+flex
+`;
+
+const RequestItem = tw.div`
+bg-blue-200 
+hover:bg-blue-300
+rounded-lg
+p-8
+`;
+
+const ResponseItem = tw.div`
+bg-purple-200 
+hover:bg-purple-300
+rounded-lg
+p-8
+`
+
+const TableItem = tw.table`
+w-full 
+text-xs
+text-left 
+`;
+
+const TheadItem = tw.thead`
+uppercase 
+bg-gray-100
+`;
+
+const TbodyItem = tw.tbody`
+`;
+
+const TrItem = tw.tr`
+border-b
+`;
+
+const ThItem = tw.th`
+px-4 py-3
+`
+
+const TdItem = tw.td`
+px-4 py-3
+`;

@@ -1,41 +1,67 @@
+import tw from "tailwind-styled-components";
 
 export default function Sidebar() {
   return (
     <>
-      <div className="w-64 mx-8 mt-12">
+      <Wrapper>
 
-        <p className="flex justify-between p-3">
-          <span className="font-bold">Docs</span>
-          <span>V 1.0</span>
-        </p>
+        <BarTitleContainer>
+          <BarTitle>Docs</BarTitle>
+          <Ver>V 1.0</Ver>
+        </BarTitleContainer>
 
         <div className="relative p-2 rounded-md">
-          <input className="rounded-md border-0 py-2 px-4 ring-1 ring-gray-300 placeholder:text-gray-400" placeholder="Search" />
+          <SearchBox placeholder="search"></SearchBox>
         </div>
 
-        <p className="text-sm font-bold p-3">Overview</p>
-
+        <BarSubTitle>Overview</BarSubTitle>
         {
           overviews.map((item) => (
-            <a className="p-2 flex space-4 rounded-md hover:bg-pink-500 hover:text-white" href={item.anchor}>
-              {item.name}
-            </a>
+            <BarItem href={item.anchor}>{item.name}</BarItem>
           ))
         }
 
-        <p className="text-sm font-bold p-3">Components</p>
-
+        <BarSubTitle>Components</BarSubTitle>
         {
           components.map((item) => (
-            <a className="p-2 flex space-4 rounded-md hover:bg-pink-500 hover:text-white" href={item.anchor}>
-              {item.name}
-            </a>
+            <BarItem href={item.anchor}>{item.name}</BarItem>
           ))
         }
-      </div>
+
+      </Wrapper>
     </>
   );
 }
+
+const Wrapper = tw.div`
+w-64 mx-8 mt-12
+text-sm
+`;
+
+const BarTitleContainer = tw.div`
+flex items-end justify-between p-2
+`;
+
+const BarTitle = tw.h3`
+font-bold
+`;
+
+const Ver = tw.div`
+mr-14
+text-xs
+`;
+
+const SearchBox = tw.input`
+rounded-md border-0 py-2 px-4 ring-1 ring-gray-300 placeholder:text-gray-400
+`;
+
+const BarSubTitle = tw.div`
+text-xs font-bold p-3 mt-4
+`;
+
+const BarItem = tw.a`
+p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
+`;
 
 const overviews = [
   {

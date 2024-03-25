@@ -1,167 +1,86 @@
+import tw from "tailwind-styled-components";
+
 export default function testbed() {
   return (
     <>
-      <div className="mt-8">
-        {testbeds.map((t) => (
-          <div key={t.title} className="space-y-3">
-            <p className="text-3xl font-bold">
-              {t.title}
-            </p>
-            <p className="">
-              {t.description}
-            </p>
-            <p className="text-2xl font-bold">
-              요청 방식
-            </p>
-            <p className="">
-              {t.request_method}
-            </p>
-            <p className="text-2xl font-bold">
-              요청 URI
-            </p>
-            <p className="">
-              {t.request_uri}
-            </p>
+      {testbeds.map((t) => (
+        <Wrapper key={t.title}>
 
-            <hr />
+          <Title>{t.title}</Title>
+          <TextItem>{t.description}</TextItem>
 
-            <p className="text-2xl font-bold">
-              응답 클래스 (상태 200)
-            </p>
-            <p className="">
-              {t.response_code_expected}
-            </p>
-            <p className="text-2xl font-bold">
-              모델
-            </p>
-            <div className="bg-blue-300 rounded p-8">
-              <p className="">
-                {t.request_value}
-              </p>
-            </div>
-            <p className="text-2xl font-bold">
-              Example Value
-            </p>
-            <div className="bg-blue-300 rounded p-8">
-              <p className="">
-                {t.request_description}
-              </p>
-            </div>
-            <p className="text-2xl font-bold">
-              응답 Content type
-            </p>
-            <p className="">
-              {t.response_content_type}
-            </p>
+          <Subtitle>요청 방식</Subtitle>
+          <TextItem>{t.request_method}</TextItem>
+            
+          <Subtitle>요청 URI</Subtitle>
+          <TextItem>{t.request_uri}</TextItem>
 
-            <hr />
+          <hr />
 
-            <p className="text-2xl font-bold">
-              매개변수들
-            </p>
+          <Subtitle>응답 클래스 (상태 200)</Subtitle>
+          <TextItem>{t.response_code_expected}</TextItem>
+            
+          <Subtitle>모델</Subtitle>
+          <RequestItem>{t.request_value}</RequestItem>
 
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-4 py-3">Product name</th>
-                  <th scope="col" className="px-4 py-3">Category</th>
-                  <th scope="col" className="px-4 py-3">Brand</th>
-                  <th scope="col" className="px-4 py-3">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b dark:border-gray-700">
-                  <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">Apple iMac 27&#34;</th>
-                  <td className="px-4 py-3">PC</td>
-                  <td className="px-4 py-3">Apple</td>
-                  <td className="px-4 py-3">300</td>
-                </tr>
-                <tr className="border-b dark:border-gray-700">
-                  <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">Monitor BenQ EX2710Q</th>
-                  <td className="px-4 py-3">TV/Monitor</td>
-                  <td className="px-4 py-3">BenQ</td>
-                  <td className="px-4 py-3">354</td>
-                </tr>
-              </tbody>
-            </table>
+          <Subtitle>Example Value</Subtitle>
+          <RequestItem>{t.request_description}</RequestItem>
 
+          <Subtitle>응답 Content Type</Subtitle>
+          <TextItem>{t.response_content_type}</TextItem>
 
-            <p className="text-2xl font-bold">
-              응답 메시지
-            </p>
+          <hr />
 
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-4 py-3">Product name</th>
-                  <th scope="col" className="px-4 py-3">Category</th>
-                  <th scope="col" className="px-4 py-3">Brand</th>
-                  <th scope="col" className="px-4 py-3">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="border-b dark:border-gray-700">
-                  <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">Apple iMac 27&#34;</th>
-                  <td className="px-4 py-3">PC</td>
-                  <td className="px-4 py-3">Apple</td>
-                  <td className="px-4 py-3">300</td>
-                </tr>
-                <tr className="border-b dark:border-gray-700">
-                  <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">Monitor BenQ EX2710Q</th>
-                  <td className="px-4 py-3">TV/Monitor</td>
-                  <td className="px-4 py-3">BenQ</td>
-                  <td className="px-4 py-3">354</td>
-                </tr>
-              </tbody>
-            </table>
+          <Subtitle>매개변수들</Subtitle>
+          <TableItem>
+            <TheadItem>
+              <TrItem>
+                <ThItem>123</ThItem>
+                <ThItem>123</ThItem>
+                <ThItem>123</ThItem>
+              </TrItem>
+            </TheadItem>
+            <TbodyItem>
+              <TrItem>
+                <TdItem>444</TdItem>
+                <TdItem>555</TdItem>
+                <TdItem>666</TdItem>
+              </TrItem>
+            </TbodyItem>
+          </TableItem>
 
-            <div className="py-6">
-              <a href="#" className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                실행하기
-              </a>
-              <a href="#" className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                응답 숨기기
-              </a>
-            </div>
+          <Subtitle>응답 메시지</Subtitle>
+          <TableItem>
+            <TheadItem>
+              <TrItem>
+                <ThItem>123</ThItem>
+                <ThItem>123</ThItem>
+                <ThItem>123</ThItem>
+              </TrItem>
+            </TheadItem>
+            <TbodyItem>
+              <TrItem>
+                <TdItem>444</TdItem>
+                <TdItem>555</TdItem>
+                <TdItem>666</TdItem>
+              </TrItem>
+            </TbodyItem>
+          </TableItem>
 
+          <ButtonItem>실행하기</ButtonItem>
+          <ButtonItem>응답 숨기기</ButtonItem>
 
-            <hr />
+          <Subtitle>응답 본문</Subtitle>
+          <ResponseItem>{t.response_body}</ResponseItem>
+          <Subtitle>응답 코드</Subtitle>
+          <ResponseItem>{t.response_code}</ResponseItem>
+          <Subtitle>응답 헤더</Subtitle>
+          <ResponseItem>{t.response_header}</ResponseItem>
+          <Subtitle>샘플 소스 코드 생성</Subtitle>
+          <ResponseItem>{t.sample_code}</ResponseItem>
 
-            <p className="text-2xl font-bold">
-              응답 본문
-            </p>
-            <div className="bg-purple-300 rounded p-8">
-              <p className="">
-                {t.response_body}
-              </p>
-            </div>
-            <p className="text-2xl font-bold">
-              응답 코드
-            </p>
-            <div className="bg-purple-300 rounded p-8">
-              <p className="">
-                {t.response_code}
-              </p>
-            </div>
-            <p className="text-2xl font-bold">
-              응답 헤더
-            </p>
-            <div className="bg-purple-300 rounded p-8">
-              <p className="">
-                {t.response_header}
-              </p>
-            </div>
-            <p className="text-2xl font-bold">
-              샘플 소스 코드 생성
-            </p>
-            <div className="bg-purple-300 rounded p-8">
-              <p className="">
-                {t.sample_code}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
+        </Wrapper>
+      ))}
     </>
   );
 };
@@ -183,3 +102,72 @@ const testbeds = [
     sample_code: "샘플 코드"
   },
 ]
+
+const Wrapper = tw.div`
+mt-8
+space-y-6
+text-sm
+`;
+
+const Title = tw.h2`
+text-3xl
+font-bold
+`;
+
+const Subtitle = tw.h3`
+text-xl
+font-bold
+`;
+
+const TextItem = tw.div`
+`
+
+const RequestItem = tw.div`
+bg-blue-200 
+hover:bg-blue-300
+rounded-lg
+p-8
+`;
+
+const ResponseItem = tw.div`
+bg-purple-200 
+hover:bg-purple-300
+rounded-lg
+p-8
+`
+
+const TableItem = tw.table`
+w-full 
+text-xs
+text-left 
+`;
+
+const TheadItem = tw.thead`
+uppercase 
+bg-gray-100
+`;
+
+const TbodyItem = tw.tbody`
+`;
+
+const TrItem = tw.tr`
+border-b
+`;
+
+const ThItem = tw.th`
+px-4 py-3
+`
+
+const TdItem = tw.td`
+px-4 py-3
+`;
+
+const ButtonItem = tw.button`
+mr-2 px-3.5 py-2 
+bg-pink-300 rounded-md 
+border-2 border-pink-300 
+text-xs font-semibold text-white shadow-sm 
+hover:bg-gray-50 hover:text-pink-400 
+focus-visible:outline focus-visible:outline-2 
+focus-visible:outline-offset-2 focus-visible:outline-pink-600
+`;

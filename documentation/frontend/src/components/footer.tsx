@@ -1,5 +1,4 @@
 import { HiOutlineMail } from "react-icons/hi";
-import { RiDiscordLine } from "react-icons/ri";
 import tw from "tailwind-styled-components";
 
 
@@ -9,40 +8,44 @@ export default function Header() {
       <Wrapper>
         <Title>joa-openapi</Title>
         <ContactContainer>
-          <HiOutlineMail />
+        <HiOutlineMail />
           <ContactItem>ssafy@ssafy.com</ContactItem>
-          <RiDiscordLine />
-          <ContactItem>김싸피#1234</ContactItem>
-        </ContactContainer>
+          </ContactContainer>
         <Copyright>Copyright ⓒ SSAFY 10기 특화 A503</Copyright>
       </Wrapper>
     </>
   );
 }
 
-const Wrapper = tw.header`
+const Wrapper = tw.footer`
 text-gray-800 
-mt-24
+mt-32
+mb-4
 py-8 
-px-6 
+px-4
+lg:px-32
 flex 
-justify-between 
 items-center
+justify-between
 `;
 
 const Title = tw.h1`
 text-xl 
 font-semibold
+mr-16
+lg:mr-20
 `;
 
 const ContactContainer = tw.div`
-flex items-center
+flex 
+text-sm
+items-end
 `;
 
 const ContactItem = tw.span`
-mr-2
+ml-2
 `;
 
 const Copyright = tw.span`
-mr-2
+text-sm
 `

@@ -1,80 +1,162 @@
+import tw from "tailwind-styled-components";
+
 export default function home2() {
   return (
     <>
-      <div className="pt-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <Wrapper>
+        <SubWrapper>
 
-          <div className="text-center">
-            <div className="py-6">
-              <a href="#" className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                특징
-              </a>
-            </div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              개발 생산성 향상을 위한<br />강력하고 편리한 기능
-            </h2>
-          </div>
+          <ButtonContainer>
+            <PinkButtonItem>특징</PinkButtonItem>
+          </ButtonContainer>
 
-          <div className="mx-auto grid max-w-2xl grid-cols-3 gap-x-8 gap-y-16 pt-10 sm:pt-16 lg:mx-0 lg:max-w-none">
+          <SubTitleItem>
+            개발 생산성 향상을 위한<br />강력하고 편리한 기능
+          </SubTitleItem>
+
+          <FeatureContainer>
             {posts.map((post) => (
-              <article key={post.id} className="flex max-w-xl flex-col items-start justify-between">
-                <div className="group relative">
-                  <img src={post.author.imageUrl} />
-                  <h3 className="mt-3 text-lg font-semibold leading-6">
-                    {post.title}
-                  </h3>
-                  <p className="mt-5 text-sm leading-6">
-                    {post.description}
-                  </p>
-                </div>
-              </article>
+              <FeatureItem key={post.title}>
+                  <SubImageContainer>
+                    <SubImageItem src={post.image.url} />
+                  </SubImageContainer>
+                  <FeatureTitle>{post.title}</FeatureTitle>
+                  <FeatureDetail>{post.description}</FeatureDetail>
+              </FeatureItem>
             ))}
-          </div>
-        </div>
-      </div>
+          </FeatureContainer>
+
+        </SubWrapper>
+      </Wrapper>
+
+      <StatWrapper>
+        <StatContainer>
+          {stats.map((stat) => (
+            <StatItem key={stat.id} >
+              <div>
+                <StatNum>{stat.value}</StatNum>
+                <StatPlus>+</StatPlus>
+              </div>
+              <StatName>{stat.name}</StatName>
+            </StatItem>
+          ))}
+        </StatContainer>
+      </StatWrapper>
     </>
   );
 }
 
+
+const Wrapper = tw.div`
+pt-24
+`;
+
+const SubWrapper = tw.div`
+mx-auto max-w-7xl px-6 lg:px-8 text-center
+`;
+
+const ButtonContainer = tw.div`
+mt-2 py-6
+`;
+
+const PinkButtonItem = tw.a`
+py-3 px-7 text-xs bg-pink-300 hover:bg-pink-500 text-white w-full transition ease-in duration-200 
+text-center font-semibold shadow-md focus:ring-2 focus:ring-offset-2 rounded-full
+`;
+
+const SubTitleItem = tw.h3`
+mt-2 text-2xl font-bold tracking-tight
+`;
+
+const SubImageContainer = tw.div`
+w-full flex justify-center
+`;
+
+const SubImageItem = tw.img`
+w-[12rem] h-[10rem] rounded-lg
+`;
+
+const FeatureContainer = tw.div`
+mx-auto my-10 grid max-w-2xl grid-cols-3 gap-y-16 lg:mx-0 lg:max-w-none
+`;
+
+const FeatureItem = tw.div`
+flex max-w-xl flex-col justify-between p-2 lg:px-4 lg:py-8 hover:bg-gray-100 rounded-lg
+`;
+
+const FeatureTitle = tw.h3`
+mt-5 text-lg font-semibold
+`;
+
+const FeatureDetail = tw.div`
+mt-3 text-sm leading-6
+`;
+
+const StatWrapper = tw.div`
+mx-auto max-w-7xl px-6 py-10 lg:px-8 bg-gray-100 rounded-lg text-center
+`;
+
+const StatContainer = tw.div`
+grid grid-cols-2 gap-x-8 gap-y-16 lg:grid-cols-4
+`;
+
+const StatItem = tw.div`
+mx-auto flex max-w-xs flex-col gap-y-4
+`;
+
+const StatNum = tw.span`
+text-5xl font-semibold
+`;
+
+const StatPlus = tw.span`
+text-5xl text-purple-400
+`;
+
+const StatName = tw.span`
+font-semibold leading-7
+`;
+
+
 const posts = [
   {
-    id: 1,
     title: '금융 API 테스트베드',
-    href: '#',
     description:
       '별도의 클라이언트 프로그램 없이도, 은행 시스템을 구축하고 Restful 방식을 웹에서 테스트할 수 있습니다.',
-    author: {
-      name: 'Michael Foster',
-      href: '#',
-      imageUrl:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    image: {
+      url:
+        'https://images.unsplash.com/photo-1560472354-b33ff0c44a43',
     },
   },
   {
-    id: 2,
     title: '샘플 어플리케이션',
-    href: '#',
     description:
-      '클라이언트 개발 기간을 단축할 수 있도록 샘플 앱과 그에 대한 코드, 도커 이미지를 오픈 소스로 제공합니다.',
-    author: {
-      name: 'Michael Foster',
-      href: '#',
-      imageUrl:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+      '클라이언트 개발 기간을 단축할 수 있도록 샘플 앱과 코드, 도커 이미지를 오픈 소스로 제공합니다.',
+    image: {
+      url:
+        'https://images.unsplash.com/photo-1560472354-b33ff0c44a43',
     },
   },
   {
-    id: 3,
     title: '개발자 대시보드',
-    href: '#',
     description:
       '은행 시스템 이용 현황을 한눈에 파악하고 관리할 수 있는 실시간 대시보드를 지원합니다.',
-    author: {
-      name: 'Michael Foster',
-      href: '#',
-      imageUrl:
-        'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    image: {
+      url:
+        'https://images.unsplash.com/photo-1560472354-b33ff0c44a43',
     },
   },
   // More posts...
 ]
+
+interface Stat {
+  id: number;
+  name: string;
+  value: string;
+}
+
+const stats: Stat[] = [
+  { id: 1, name: '서비스 이용자 수', value: '120' },
+  { id: 2, name: '생성된 가상은행 수', value: '120' },
+  { id: 3, name: 'API 호출 건수', value: '120' },
+  { id: 4, name: '앱 다운로드 횟수', value: '120' }
+];

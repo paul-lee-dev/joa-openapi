@@ -7,11 +7,15 @@ export default function Header() {
       <Wrapper>
         <Title><Link href="/">joa-openapi</Link></Title>
         <MenuContainer>
-          <MenuItem><Link href="/">Home</Link></MenuItem>
-          <MenuItem><Link href="/demos">Demos</Link></MenuItem>
-          <MenuItem><Link href="/testbeds">Test Beds</Link></MenuItem>
-          <MenuItem><Link href="/docs">Docs</Link></MenuItem>
-          <MenuItem>Admin</MenuItem>
+        <NavContainer>
+          <NavItem><Link href="/">Home</Link></NavItem>
+          <NavItem><Link href="/demos">Demos</Link></NavItem>
+          <NavItem><Link href="/testbeds">Test Beds</Link></NavItem>
+          <NavItem><Link href="/docs">Docs</Link></NavItem>
+        </NavContainer>
+        <ButtonContainer>
+          <ButtonItem>Admin</ButtonItem>
+        </ButtonContainer>
         </MenuContainer>
       </Wrapper>
     </>
@@ -19,10 +23,8 @@ export default function Header() {
 }
 
 const Wrapper = tw.header`
-bg-pink-200
-text-gray-800 
-py-4 
-px-6 
+p-8
+lg:px-32
 flex 
 justify-between 
 items-center
@@ -34,9 +36,38 @@ font-semibold
 `;
 
 const MenuContainer = tw.div`
-flex items-center
+flex
+text-sm
 `;
 
-const MenuItem = tw.span`
-mr-2
+const NavContainer = tw.div`
+flex 
+items-center
+bg-gray-100
+rounded-full
+px-6
+py-2
+mx-2
+`;
+
+const NavItem = tw.span`
+m-2
+mx-6
+hover:font-bold
+`;
+
+const ButtonContainer = tw.div`
+flex 
+items-center
+bg-pink-300
+text-white
+rounded-full
+px-6
+py-2
+mx-2
+`;
+
+const ButtonItem = tw.span`
+m-2
+hover:font-bold
 `;
