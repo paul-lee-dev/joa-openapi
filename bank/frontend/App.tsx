@@ -17,6 +17,7 @@ import CreateAccountConfirm from '@/pages/CreateAccountConfirm';
 import CreateAccountResult from '@/pages/CreateAccountResult';
 import ChangeAccountName from '@/pages/ChangeAccountName';
 import ChangeAccountLimit from '@/pages/ChangeAccountLimit';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
 export type RootStackParamList = {
   AccountDetail: undefined;
@@ -43,67 +44,74 @@ export type RootStackParamList = {
   TransferResult: undefined;
 };
 
+const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const globalOption = {options: {headerShown: false}};
 
 function App(): React.JSX.Element {
   return (
     <RecoilRoot>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Intro">
-          <Stack.Screen name="Intro" component={Intro} {...globalOption} />
-          <Stack.Screen name="Main" component={Main} {...globalOption} />
-          <Stack.Screen name="Join" component={Join} {...globalOption} />
-          <Stack.Screen name="Search" component={Search} {...globalOption} />
-          <Stack.Screen name="Menu" component={Menu} {...globalOption} />
-          <Stack.Screen name="Setting" component={Setting} {...globalOption} />
-          <Stack.Screen
-            name="Transfer"
-            component={Transfer}
-            {...globalOption}
-          />
-          <Stack.Screen
-            name="TransferAmount"
-            component={TransferAmount}
-            {...globalOption}
-          />
-          <Stack.Screen
-            name="TransferConfirm"
-            component={TransferConfirm}
-            {...globalOption}
-          />
-          <Stack.Screen
-            name="TransferResult"
-            component={TransferResult}
-            {...globalOption}
-          />
-          <Stack.Screen
-            name="CreateAccount"
-            component={CreateAccount}
-            {...globalOption}
-          />
-          <Stack.Screen
-            name="CreateAccountConfirm"
-            component={CreateAccountConfirm}
-            {...globalOption}
-          />
-          <Stack.Screen
-            name="CreateAccountResult"
-            component={CreateAccountResult}
-            {...globalOption}
-          />
-          <Stack.Screen
-            name="ChangeAccountName"
-            component={ChangeAccountName}
-            {...globalOption}
-          />
-          <Stack.Screen
-            name="ChangeAccountLimit"
-            component={ChangeAccountLimit}
-            {...globalOption}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Intro">
+            <Stack.Screen name="Intro" component={Intro} {...globalOption} />
+            <Stack.Screen name="Main" component={Main} {...globalOption} />
+            <Stack.Screen name="Join" component={Join} {...globalOption} />
+            <Stack.Screen name="Search" component={Search} {...globalOption} />
+            <Stack.Screen name="Menu" component={Menu} {...globalOption} />
+            <Stack.Screen
+              name="Setting"
+              component={Setting}
+              {...globalOption}
+            />
+            <Stack.Screen
+              name="Transfer"
+              component={Transfer}
+              {...globalOption}
+            />
+            <Stack.Screen
+              name="TransferAmount"
+              component={TransferAmount}
+              {...globalOption}
+            />
+            <Stack.Screen
+              name="TransferConfirm"
+              component={TransferConfirm}
+              {...globalOption}
+            />
+            <Stack.Screen
+              name="TransferResult"
+              component={TransferResult}
+              {...globalOption}
+            />
+            <Stack.Screen
+              name="CreateAccount"
+              component={CreateAccount}
+              {...globalOption}
+            />
+            <Stack.Screen
+              name="CreateAccountConfirm"
+              component={CreateAccountConfirm}
+              {...globalOption}
+            />
+            <Stack.Screen
+              name="CreateAccountResult"
+              component={CreateAccountResult}
+              {...globalOption}
+            />
+            <Stack.Screen
+              name="ChangeAccountName"
+              component={ChangeAccountName}
+              {...globalOption}
+            />
+            <Stack.Screen
+              name="ChangeAccountLimit"
+              component={ChangeAccountLimit}
+              {...globalOption}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </QueryClientProvider>
     </RecoilRoot>
   );
 }
