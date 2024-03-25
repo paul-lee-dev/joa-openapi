@@ -66,4 +66,9 @@ public class Account extends BaseEntity {
     public void updatePassword(String password) {
         this.password = password;
     }
+
+    public void updateBalance(Long balance) {
+        this.balance = balance;
+    }
+
 }

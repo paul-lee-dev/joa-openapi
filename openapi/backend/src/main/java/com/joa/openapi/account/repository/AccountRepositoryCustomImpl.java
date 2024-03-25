@@ -5,7 +5,6 @@ import com.joa.openapi.account.dto.AccountSearchResponseDto;
 import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.account.enums.AccountKeywordType;
 import com.joa.openapi.account.enums.AccountSortBy;
-import com.joa.openapi.account.enums.AccountWhether;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -21,8 +20,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.joa.openapi.account.entity.QAccount.account;
-import static com.joa.openapi.account.enums.AccountWhether.NO;
-import static com.joa.openapi.account.enums.AccountWhether.YES;
 
 @Repository
 @RequiredArgsConstructor

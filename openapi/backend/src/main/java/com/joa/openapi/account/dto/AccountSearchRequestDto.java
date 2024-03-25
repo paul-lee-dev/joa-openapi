@@ -2,7 +2,6 @@ package com.joa.openapi.account.dto;
 
 import com.joa.openapi.account.enums.AccountKeywordType;
 import com.joa.openapi.account.enums.AccountSortBy;
-import com.joa.openapi.account.enums.AccountWhether;
 import lombok.*;
 
 import java.util.List;
