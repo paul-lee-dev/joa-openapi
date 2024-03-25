@@ -1,5 +1,6 @@
 package com.joa.admin.admin.controller;
 
+import com.joa.admin.admin.dto.req.AdminEmailConfirmRequestDto;
 import com.joa.admin.admin.dto.req.AdminEmailSendRequestDto;
 import com.joa.admin.admin.dto.req.AdminJoinRequestDto;
 import com.joa.admin.admin.dto.req.AdminLoginRequestDto;
@@ -8,6 +9,7 @@ import com.joa.admin.admin.dto.res.AdminIdResponseDto;
 import com.joa.admin.admin.dto.res.AdminInfoResponseDto;
 import com.joa.admin.admin.dto.res.AdminTokenResponseDto;
 import com.joa.admin.admin.service.AdminService;
+import com.joa.admin.admin.service.EmailService;
 import com.joa.admin.common.response.ApiResponse;
 import com.joa.admin.common.security.SecurityUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
 
     private final AdminService adminService;
+    private final EmailService emailService;
 
     //회원가입
     @PostMapping
@@ -31,7 +34,6 @@ public class AdminController {
         AdminIdResponseDto response = adminService.addAdmin(request);
         return ResponseEntity.ok(ApiResponse.success("회원 가입에 성공했습니다.",response));
     }
-    //
 
     //이메일 중복 검사
     @GetMapping("/email/{keyword}")
@@ -118,12 +120,18 @@ public class AdminController {
         return ResponseEntity.ok(ApiResponse.success("API Key 삭제에 성공했습니다."));
     }
 
-    // TODO : 이메일 인증 전송 완성 -> 다른 브랜치
+    // 이메일 전송
     @PostMapping("/emailSend")
     public ResponseEntity<?> sendEmail(@RequestBody AdminEmailSendRequestDto request) {
-        adminService.sendEmail(request);
-        return ResponseEntity.ok(ApiResponse.success("이메일 전송에 성공했습니다."));
+        emailService.sendEmailCode(request);
+        return ResponseEntity.ok(ApiResponse.success("이메일로 코드가 전송되었습니다. 이메일을 확인해주십시오."));
     }
 
+    // 이메일 인증 확인
+    @PostMapping("/emailConfirm")
+    public ResponseEntity<?> confirmEmail(@RequestBody AdminEmailConfirmRequestDto request) {
+        emailService.confirmEmailCode(request);
+        return ResponseEntity.ok(ApiResponse.success("이메일 인증에 성공했습니다."));
+    }
 
 }
