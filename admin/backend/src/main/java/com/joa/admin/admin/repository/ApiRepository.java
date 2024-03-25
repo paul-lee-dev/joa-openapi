@@ -17,7 +17,7 @@ public interface ApiRepository extends JpaRepository<Api, String> {
     void updateApiKey(@Param("adminId")String adminId, @Param("apiKey")String apiKey);
 
     @Query(value = "SELECT COUNT(*) FROM api WHERE admin_id = :adminId AND is_deleted = 0", nativeQuery = true)
-    int countByAdminId(UUID adminId);
+    Integer countByAdminId(UUID adminId);
 
     Api findByAdminId(UUID adminId);
 }

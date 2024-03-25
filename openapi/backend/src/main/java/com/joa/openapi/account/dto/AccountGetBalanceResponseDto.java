@@ -19,7 +19,7 @@ public class AccountGetBalanceResponseDto {
     public static AccountGetBalanceResponseDto toDto(Account account) {
         return AccountGetBalanceResponseDto.builder()
                 .accountId(account.getId())
-                .nickname(account.getNickname())
+                .nickname(account.getName())
                 .balance(account.getBalance())
                 .build();
     }

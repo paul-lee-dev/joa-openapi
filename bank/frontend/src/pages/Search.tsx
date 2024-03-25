@@ -1,10 +1,10 @@
 import {ScrollView, Text, TextInput, View} from 'react-native';
-import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ToggleSwitch from '../components/ToggleSwitch';
 import {useState} from 'react';
-import {RootStackParamList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from 'App';
+import Header from '@/components/Header';
+import ToggleSwitch from '@/components/ToggleSwitch';
 
 type SearchScreenProps = NativeStackScreenProps<RootStackParamList, 'Search'>;
 
@@ -30,6 +30,7 @@ function Search({navigation}: SearchScreenProps): React.JSX.Element {
             placeholderTextColor="#374151"
             className="text-xl font-medium text-gray-700"
             onChangeText={setKeyword}
+            value={keyword}
           />
           <Icon name={'magnify'} color={'#000'} size={30} />
         </View>

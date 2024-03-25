@@ -1,11 +1,11 @@
-export interface CustommerOption {
+export interface CustomerOption {
   readonly value: string;
   readonly label: string;
   readonly isFixed?: boolean;
   readonly isDisabled?: boolean;
 }
 
-export const customerOptions: readonly CustommerOption[] = [
+export const customerOptions: readonly CustomerOption[] = [
   { value: "전체", label: "전체", isFixed: true },
   { value: "고수림", label: "고수림", isFixed: true },
   { value: "구본승", label: "구본승" },
@@ -17,4 +17,16 @@ export const customerOptions: readonly CustommerOption[] = [
   { value: "오형택", label: "오형택" },
   { value: "송윤재", label: "송윤재" },
   { value: "최하슬", label: "최하슬" },
+];
+
+export interface GroupedOption {
+  readonly label: string;
+  readonly options: readonly CustomerOption[];
+}
+
+export const groupedOptions: readonly GroupedOption[] = [
+  {
+    label: "Customers",
+    options: customerOptions,
+  },
 ];

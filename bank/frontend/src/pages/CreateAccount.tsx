@@ -1,9 +1,9 @@
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
-import Header from '../components/Header';
-import BottomButton from '../components/BottomButton';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {RootStackParamList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import Header from '@/components/Header';
+import {RootStackParamList} from 'App';
+import BottomButton from '@/components/BottomButton';
 
 type CreateAccountScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -72,7 +72,10 @@ function CreateAccount({
           </View>
         </View>
       </ScrollView>
-      <BottomButton title={'신청하기'} onPress={() => navigation.popToTop()} />
+      <BottomButton
+        title={'신청하기'}
+        onPress={() => navigation.navigate('CreateAccountConfirm')}
+      />
     </View>
   );
 }

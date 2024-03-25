@@ -5,14 +5,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Header from '../components/Header';
-import BottomButton from '../components/BottomButton';
-import CommonInput from '../components/CommonInput';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {RootStackParamList} from '../../App';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Controller, useForm} from 'react-hook-form';
 import {useState} from 'react';
+import {RootStackParamList} from 'App';
+import Header from '@/components/Header';
+import CommonInput from '@/components/CommonInput';
+import BottomButton from '@/components/BottomButton';
 
 type JoinScreenProps = NativeStackScreenProps<RootStackParamList, 'Join'>;
 
@@ -117,6 +117,11 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                       인증번호 확인
                     </Text>
                   </TouchableOpacity>
+                  {emailCodeError && (
+                    <Text className="absolute bottom-10 left-2 text-red-400">
+                      인증번호가 올바르지 않습니다.
+                    </Text>
+                  )}
                 </View>
               )}
             </View>

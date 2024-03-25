@@ -6,12 +6,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../App';
 import clsx from 'clsx';
+import {RootStackParamList} from 'App';
+import Header from '@/components/Header';
 
 type MenuScreenProps = NativeStackScreenProps<RootStackParamList, 'Menu'>;
 type MenuType = '뱅킹관리' | '이체' | '조회';
@@ -101,6 +101,7 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
           placeholder="메뉴를 검색해보세요."
           placeholderTextColor="#374151"
           onChangeText={setKeyword}
+          value={keyword}
         />
       </View>
       <View className="w-full flex-grow flex flex-row">
@@ -141,7 +142,7 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
         <ScrollView className="flex-grow -z-10">
           <View className="w-full py-4">
             {detailMenu[menu].map(m => (
-              <View className="w-full h-16 flex justify-center">
+              <View key={m.title} className="w-full h-16 flex justify-center">
                 <TouchableOpacity
                   onPress={m.onPress}
                   className="px-2 pl-12 py-2">

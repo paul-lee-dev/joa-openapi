@@ -37,7 +37,7 @@ public class AccountGetAccountsResponseDto {
     public static AccountGetAccountsResponseDto toDto(Account account) {
         return AccountGetAccountsResponseDto.builder()
                 .accountId(account.getId())
-                .nickname(account.getNickname())
+                .nickname(account.getName())
                 .balance(account.getBalance())
                 .isDormant(account.getIsDormant())
                 .transferLimit(account.getTransferLimit())
@@ -47,7 +47,7 @@ public class AccountGetAccountsResponseDto {
                 .depositAccount(account.getDepositAccount())
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
-                .dummyId((account.getDummy() == null) ? null : account.getDummy().getDummyId())
+                .dummyId((account.getDummy() == null) ? null : account.getDummy().getId())
                 .createdAt(account.getCreatedAt())
                 .updatedAt(account.getUpdatedAt())
                 .build();
