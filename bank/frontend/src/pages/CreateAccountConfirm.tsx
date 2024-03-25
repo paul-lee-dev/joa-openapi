@@ -22,14 +22,14 @@ function CreateAccountConfirm({
       />
       <View className="w-full flex-grow mb-16">
         <View className="flex flex-grow justify-center items-center space-y-2">
-          <View className="w-14 h-14 m-6 bg-pink-300 rounded-full flex justify-center items-center">
+          {/* <View className="w-14 h-14 m-6 bg-pink-300 rounded-full flex justify-center items-center">
             <Icon
               name={'card-account-details-outline'}
               color={'#fff'}
               onPress={() => {}}
               size={35}
             />
-          </View>
+          </View> */}
           <View className="flex flex-row">
             <Text className="text-2xl font-bold">내 입출금통장</Text>
             <Text className="text-2xl font-medium">의</Text>
@@ -39,7 +39,12 @@ function CreateAccountConfirm({
         <View className="h-80 flex justify-evenly">
           <CommonInput label={'계좌 비밀번호'}>
             <View className="w-full relative">
-              <TextInput className="border-b border-gray-800/50" />
+              <TextInput
+                className="border-b border-gray-800/50"
+                maxLength={4}
+                returnKeyType="done"
+                keyboardType="number-pad"
+              />
               <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
                 <Icon
                   name={'eye-off-outline'}
@@ -52,7 +57,12 @@ function CreateAccountConfirm({
           </CommonInput>
           <CommonInput label={'계좌 비밀번호 확인'}>
             <View className="w-full relative">
-              <TextInput className="border-b border-gray-800/50" />
+              <TextInput
+                className="border-b border-gray-800/50"
+                maxLength={4}
+                returnKeyType="done"
+                keyboardType="number-pad"
+              />
               <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
                 <Icon
                   name={'eye-off-outline'}
