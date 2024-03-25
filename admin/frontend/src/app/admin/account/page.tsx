@@ -19,7 +19,6 @@ const AccountList = () => {
             label={""}
             htmlFor={""}
           ></MultiSearchSelect>
-          <DropdownDefaultCheckbox dropdownToggleId={"customerOption"} />
         </div>
       </div>
       <AccountTable></AccountTable>
