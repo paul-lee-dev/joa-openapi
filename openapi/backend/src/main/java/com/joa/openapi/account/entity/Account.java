@@ -1,6 +1,5 @@
 package com.joa.openapi.account.entity;
 
-import com.joa.openapi.account.dto.AccountUpdateRequestDto;
 import com.joa.openapi.common.entity.BaseEntity;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.member.entity.Member;
@@ -9,10 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.SQLRestriction;
 
-import java.time.LocalDate;
+import java.util.UUID;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -26,7 +24,7 @@ public class Account extends BaseEntity {
 
     @Id
     private String id;
-    private String nickname;
+    private String name;
     private Long balance;
     private String password;
     private Boolean isDormant;
@@ -39,6 +37,7 @@ public class Account extends BaseEntity {
     private String depositAccount;
     private String withdrawAccount;
     private Long amount;
+    private UUID bankId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -49,7 +48,7 @@ public class Account extends BaseEntity {
     private Dummy dummy;
 
     public void updateNickname(String nickname) {
-        this.nickname = nickname;
+        this.name = nickname;
     }
 
     public void updateDepositAccount(String withdrawAccount) {

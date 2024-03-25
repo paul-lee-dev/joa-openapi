@@ -22,7 +22,7 @@ public class Bank extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(columnDefinition = "BINARY(16)")
-    private UUID Id;
+    private UUID id;
     private String name;
     private String description;
     private String uri;

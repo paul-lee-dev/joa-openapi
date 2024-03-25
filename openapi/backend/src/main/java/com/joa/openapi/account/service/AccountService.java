@@ -53,8 +53,8 @@ public class AccountService {
 
         Account account = Account.builder()
                 .id(accountId)
-                .nickname(req.getNickname()) /* TODO 예적금 상품 연결시키면 디폴트 닉네임 예적금 상품명 */
-                .balance(req.getAmount())
+                .name(req.getNickname()) /* TODO 예적금 상품 연결시키면 디폴트 닉네임 예적금 상품명 */
+                .balance(req.getBalance())
                 .password(req.getPassword())
                 .isDormant(false)
                 .transferLimit(req.getTransferLimit())
@@ -66,6 +66,7 @@ public class AccountService {
                 .depositAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
                 .withdrawAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
                 .amount(req.getAmount())
+                .bankId(req.getBankId())
                 .holder(member)
                 .dummy(optionalDummy.orElse(null))
                 .build();
@@ -146,6 +147,10 @@ public class AccountService {
     public Page<AccountGetAccountsResponseDto> getAccounts(UUID memberId, Pageable pageable) {
         Page<Account> accountsPage = accountRepository.findByHolderId(memberId, pageable);
         return accountsPage.map(AccountGetAccountsResponseDto::toDto);
+    }
+
+    public Page<AccountSearchResponseDto> search(AccountSearchRequestDto req, Pageable pageable) {
+        return accountRepository.searchAccountCustom(req, pageable);
     }
 
     public void authorityValidation(UUID memberId, Account account) {
