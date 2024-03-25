@@ -34,7 +34,6 @@ public class AdminController {
         AdminIdResponseDto response = adminService.addAdmin(request);
         return ResponseEntity.ok(ApiResponse.success("회원 가입에 성공했습니다.",response));
     }
-    //
 
     //이메일 중복 검사
     @GetMapping("/email/{keyword}")
@@ -135,5 +134,4 @@ public class AdminController {
         return ResponseEntity.ok(ApiResponse.success("이메일 인증에 성공했습니다."));
     }
 
-    // TODO : 비밀번호 찾기 ?
 }

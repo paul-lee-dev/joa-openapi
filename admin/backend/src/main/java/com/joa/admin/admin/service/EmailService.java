@@ -2,9 +2,11 @@ package com.joa.admin.admin.service;
 
 import com.joa.admin.admin.dto.req.AdminEmailConfirmRequestDto;
 import com.joa.admin.admin.dto.req.AdminEmailSendRequestDto;
+import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -18,13 +20,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class EmailService {
 
     private final JavaMailSender mailSender;
+    private final RedisTemplate<String, String> redisTemplate;
 
     public void sendEmailCode(AdminEmailSendRequestDto request) {
 
-        char[] charSet = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
-            'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
+        char[] charSet = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C',
+            'D', 'E', 'F',
+            'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
+            'X', 'Y', 'Z'};
 
-        String code= "";
+        String code = "";
 
         int idx = 0;
         for (int i = 0; i < 10; i++) {
@@ -46,11 +51,28 @@ public class EmailService {
         } catch (Exception e) {
             log.error("이메일 전송 오류 : {}", e.getMessage());
         }
+
+        redisTemplate.opsForValue().set(request.getEmail(), code);
+        redisTemplate.expire(request.getEmail(), 5, TimeUnit.MINUTES);
+
         mailSender.send(message);
 
     }
 
     public void confirmEmailCode(AdminEmailConfirmRequestDto request) {
+
+        String code = redisTemplate.opsForValue().get(request.getEmail());
+
+        if (code == null) {
+            throw new IllegalArgumentException("인증번호가 만료되었습니다.");
+        }
+
+        if (!code.equals(request.getCode())) {
+            throw new IllegalArgumentException("인증번호가 일치하지 않습니다.");
+        }
+
+        redisTemplate.delete(request.getEmail());
+
     }
 
 }
