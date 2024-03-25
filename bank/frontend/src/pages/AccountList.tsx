@@ -2,7 +2,7 @@ import AccountListItem from '@/components/AccountListItem';
 import Header from '@/components/Header';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from 'App';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, View, Text} from 'react-native';
 import {useEffect} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {getAccountList} from '@/api/account';
@@ -25,6 +25,9 @@ function AccountList({navigation}: AccountListScreenProps): React.JSX.Element {
       />
       <ScrollView className="w-full">
         <View className="w-full flex py-12 px-6 space-y-4">
+          <View className="w-full h-10 bg-pink-200 rounded-xl flex justify-center px-6 shadow-sm shadow-black">
+            <Text className="text-base font-semibold">{`계좌 ${data?.page?.totalElements}개`}</Text>
+          </View>
           {data?.page?.content?.map((account: any) => (
             <View className="w-full h-36" key={account.accontId}>
               <AccountListItem
