@@ -1,6 +1,5 @@
 import tw from "tailwind-styled-components";
-import { usePathname, useRouter } from "next/navigation";
-import { HiArchive } from "react-icons/hi";
+import { useRouter } from "next/navigation";
 import { FaSort } from "react-icons/fa";
 
 export default function AccountTable() {
@@ -57,7 +56,6 @@ export default function AccountTable() {
     },
   ];
 
-  const pathname = usePathname();
   const router = useRouter();
 
   return (

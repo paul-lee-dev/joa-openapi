@@ -76,13 +76,12 @@ export default function CustomerTable() {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
             <th scope="col" className="relative px-6 py-3">
-              <input
-                id="bordered-checkbox-1"
-                type="checkbox"
-                value=""
-                name="bordered-checkbox"
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
-              />
+              <span
+                onClick={() => {}}
+                className="hover:text-pink-400 cursor-pointer"
+              >
+                전체
+              </span>
             </th>
             <th scope="col" className="px-6 py-3">
               ClientName
@@ -119,7 +118,7 @@ export default function CustomerTable() {
                   type="checkbox"
                   value=""
                   name="bordered-checkbox"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
+                  className="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 rounded focus:ring-pink-500 "
                 />
               </TableData>
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">

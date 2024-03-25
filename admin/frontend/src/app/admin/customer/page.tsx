@@ -1,6 +1,7 @@
 "use client";
 import Button from "@/components/button/button";
 import Pagination from "@/components/pagination";
+import GroupSearch from "@/components/search/customerGroupSearch";
 import BankSelect from "@/components/select/bankNoLabel";
 import CustomerTable from "@/components/table/customerTable";
 import { useRouter } from "next/navigation";
@@ -8,9 +9,13 @@ const CustomerList = () => {
   const router = useRouter();
   return (
     <>
-      <div className="flex gap-6 justify-end mt-3 mb-5">
-        <BankSelect></BankSelect>
-      </div>
+      <form>
+        <div className="flex gap-6 justify-end mt-3 mb-5">
+          <BankSelect></BankSelect>
+          <GroupSearch></GroupSearch>
+          <Button id={"search"} name={"검색"} onClick={() => {}}></Button>
+        </div>
+      </form>
       <CustomerTable></CustomerTable>
       <div className="flex mt-5 justify-between gap-5">
         <div className="flex">
