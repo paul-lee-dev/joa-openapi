@@ -2,6 +2,7 @@ package com.joa.openapi.account.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joa.openapi.account.entity.Account;
+import com.joa.openapi.account.entity.QAccount;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,10 +15,10 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountUpdateResponseDto {
+public class AccountSearchResponseDto {
 
     private String accountId;
-    private String nickname;
+    private String accountName;
     private Long balance;
     private Boolean isDormant;
     private Long transferLimit;
@@ -27,17 +28,20 @@ public class AccountUpdateResponseDto {
     private String depositAccount;
     private String withdrawAccount;
     private Long amount;
-    private UUID dummyId;
+    private String holderName;
+    private String productName;
+    private String dummyName;
+    private UUID bankId;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdAt;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime updatedAt;
 
-    public static AccountUpdateResponseDto toDto(Account account) {
-        return AccountUpdateResponseDto.builder()
+    public static AccountSearchResponseDto toDto(Account account) {
+        return AccountSearchResponseDto.builder()
                 .accountId(account.getId())
-                .nickname(account.getName())
+                .accountName(account.getName())
                 .balance(account.getBalance())
                 .isDormant(account.getIsDormant())
                 .transferLimit(account.getTransferLimit())
@@ -47,7 +51,10 @@ public class AccountUpdateResponseDto {
                 .depositAccount(account.getDepositAccount())
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
-                .dummyId(account.getDummy().getId())
+                .holderName(account.getHolder().getName())
+                /* TODO productName 추가 */
+                .dummyName(account.getDummy() == null ? null : account.getDummy().getName())
+                .bankId(account.getBankId())
                 .createdAt(account.getCreatedAt())
                 .updatedAt(account.getUpdatedAt())
                 .build();

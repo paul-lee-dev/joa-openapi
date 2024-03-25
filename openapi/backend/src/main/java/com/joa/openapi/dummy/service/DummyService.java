@@ -2,7 +2,6 @@ package com.joa.openapi.dummy.service;
 
 import com.joa.openapi.account.dto.AccountCreateRequestDto;
 import com.joa.openapi.account.dto.AccountDeleteRequestDto;
-import com.joa.openapi.account.dto.AccountUpdateResponseDto;
 import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.account.service.AccountService;
@@ -22,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,6 +2,7 @@ package com.joa.openapi.dummy.entity;
 
 import com.joa.openapi.common.entity.BaseEntity;
 import com.joa.openapi.member.entity.Member;
+import com.joa.openapi.transaction.entity.Transaction;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
@@ -30,6 +31,9 @@ public class Dummy extends BaseEntity {
 
     @OneToMany(mappedBy = "dummy")
     private List<Member> memberList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "dummy")
+    private List<Transaction> transactionList = new ArrayList<>();
 
     public void updateName(String name) { this.name = name; }
 }

@@ -1,4 +1,4 @@
-package com.joa.openapi.account.service;
+package com.joa.openapi.transaction.service;
 
 import com.joa.openapi.account.dto.*;
 import com.joa.openapi.account.entity.Account;
@@ -8,9 +8,11 @@ import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.dummy.repository.DummyRepository;
-import com.joa.openapi.member.entity.Member;
-import com.joa.openapi.member.errorcode.MemberErrorCode;
-import com.joa.openapi.member.repository.MemberRepository;
+import com.joa.openapi.transaction.dto.TransactionRequestDto;
+import com.joa.openapi.transaction.dto.TransactionResponseDto;
+import com.joa.openapi.transaction.entity.Transaction;
+import com.joa.openapi.transaction.errorcode.TransactionErrorCode;
+import com.joa.openapi.transaction.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,85 +20,115 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class AccountService {
+public class TransactionService {
 
+    private final TransactionRepository transactionRepository;
     private final AccountRepository accountRepository;
-    private final MemberRepository memberRepository;
     private final DummyRepository dummyRepository;
 
     @Transactional
-    public AccountCreateResponseDto create(UUID memberId, AccountCreateRequestDto req) {
-        // 계좌번호 임시 랜덤 생성
-        String accountId = String.valueOf(Math.random());
+    public TransactionResponseDto deposit(UUID memberId, TransactionRequestDto req) {
 
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
+        String to = req.getToAccount();
 
-        Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
-                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT))); /* TODO: 더미 에러 코드로 변경 */
-
-        String startDateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        LocalDate startDate = LocalDate.parse(startDateStr, formatter);
-        String endDateStr = startDate.plusMonths(req.getTerm()).minusDays(1).format(formatter);
-
-        if(req.getPassword() == null || req.getPassword().trim().isBlank())
-            throw new RestApiException(AccountErrorCode.PASSWORD_REQUIRED);
-
-        Account account = Account.builder()
-                .id(accountId)
-                .name(req.getNickname()) /* TODO 예적금 상품 연결시키면 디폴트 닉네임 예적금 상품명 */
-                .balance(req.getBalance())
-                .password(req.getPassword())
-                .isDormant(false)
-                .transferLimit(req.getTransferLimit())
-                .paymentNum(0)
-                .nonPaymentNum(0)
-                .startDate(startDateStr)
-                .endDate(endDateStr)
-                .term(req.getTerm())
-                .depositAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
-                .withdrawAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
-                .amount(req.getAmount())
-                .bankId(req.getBankId())
-                .holder(member)
-                .dummy(optionalDummy.orElse(null))
-                .build();
-
-        accountRepository.save(account);
-
-        return AccountCreateResponseDto.toDto(account);
-    }
-
-    @Transactional
-    public AccountUpdateResponseDto update(UUID memberId, AccountUpdateRequestDto req) {
-        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+        Account account = accountRepository.findById(to).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         authorityValidation(memberId, account);
+        checkPassword(account, req.getPassword());
 
-        if(req.getNickname() != null && !req.getPassword().trim().isBlank())
-            account.updateNickname(req.getNickname());
-        if (req.getDepositAccount() != null && !req.getPassword().trim().isBlank()){
-            accountRepository.findById(req.getDepositAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_WITHDRAW_ACCOUNT));
-            account.updateDepositAccount(req.getDepositAccount());
-        }
-        if (req.getWithdrawAccount() != null && !req.getPassword().trim().isBlank()){
-            accountRepository.findById(req.getWithdrawAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_WITHDRAW_ACCOUNT));
-            account.updateWithdrawAccount(req.getWithdrawAccount());
+        Long toPrevBalance = account.getBalance();
+
+        if (req.getAmount() != null){
+            account.updateBalance(account.getBalance() + req.getAmount());
         }
 
+        Transaction transaction = Transaction.builder()
+                .amount(req.getAmount())
+                .depositorName(req.getDepositorName())
+                .fromAccount(null)
+                .toAccount(req.getToAccount())
+                .build();
+
+        transactionRepository.save(transaction);
         accountRepository.save(account);
 
-        return AccountUpdateResponseDto.toDto(account);
+        return TransactionResponseDto.toDepositDto(transaction, toPrevBalance, account.getBalance());
     }
+
+
+    @Transactional
+    public TransactionResponseDto withdraw(UUID memberId, TransactionRequestDto req) {
+
+        String from = req.getFromAccount();
+
+        Account account = accountRepository.findById(from).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        authorityValidation(memberId, account);
+        checkPassword(account, req.getPassword());
+
+        if(account.getBalance() < req.getAmount())
+            throw new RestApiException(TransactionErrorCode.NO_BALANCE);
+
+        Long fromPrevBalance = account.getBalance();
+
+        account.updateBalance(account.getBalance() - req.getAmount());
+
+
+        Transaction transaction = Transaction.builder()
+                .amount(req.getAmount())
+                .depositorName(req.getDepositorName())
+                .fromAccount(req.getFromAccount())
+                .toAccount(null)
+                .build();
+
+        transactionRepository.save(transaction);
+        accountRepository.save(account);
+
+        return TransactionResponseDto.toWithdrawDto(transaction, fromPrevBalance, account.getBalance());
+    }
+
+
+    @Transactional
+    public TransactionResponseDto send(UUID memberId, TransactionRequestDto req) {
+
+        String from = req.getFromAccount();
+        String to = req.getToAccount();
+
+        Account fromAccount = accountRepository.findById(from).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+        Account toAccount = accountRepository.findById(to).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        authorityValidation(memberId, fromAccount);
+        checkPassword(fromAccount, req.getPassword());
+
+        if(fromAccount.getBalance() < req.getAmount())
+            throw new RestApiException(TransactionErrorCode.NO_BALANCE);
+
+        Long fromPrevBalance = fromAccount.getBalance();
+        Long toPrevBalance = toAccount.getBalance();
+
+        fromAccount.updateBalance(fromAccount.getBalance() - req.getAmount());
+        toAccount.updateBalance(toAccount.getBalance() + req.getAmount());
+
+        Transaction transaction = Transaction.builder()
+                .amount(req.getAmount())
+                .depositorName(req.getDepositorName())
+                .fromAccount(req.getFromAccount())
+                .toAccount(req.getToAccount())
+                .build();
+
+        transactionRepository.save(transaction);
+        accountRepository.save(fromAccount);
+        accountRepository.save(toAccount);
+
+        return TransactionResponseDto.toDto(transaction, fromPrevBalance, fromAccount.getBalance(), toPrevBalance, toAccount.getBalance());
+    }
+
 
     @Transactional
     public Long updateLimit(UUID memberId, AccountUpdateRequestDto req) {

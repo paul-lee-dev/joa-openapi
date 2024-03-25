@@ -1,6 +1,7 @@
 package com.joa.admin.admin.service;
 
 import com.joa.admin.admin.dto.AdminInfoDto;
+import com.joa.admin.admin.dto.req.AdminEmailConfirmRequestDto;
 import com.joa.admin.admin.dto.req.AdminEmailSendRequestDto;
 import com.joa.admin.admin.dto.req.AdminJoinRequestDto;
 import com.joa.admin.admin.dto.req.AdminLoginRequestDto;
@@ -22,6 +23,9 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,10 +33,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Slf4j
 @Service
 @Transactional
+@ComponentScan
 @RequiredArgsConstructor
 public class AdminService implements UserDetailsService {
 
@@ -41,6 +45,7 @@ public class AdminService implements UserDetailsService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder encoder;
     private final JwtUtil jwtUtil;
+    private JavaMailSender mailSender;
 
     //회원가입
     @Transactional
@@ -224,7 +229,4 @@ public class AdminService implements UserDetailsService {
 
     }
 
-    public void sendEmail(AdminEmailSendRequestDto request) {
-
-    }
 }

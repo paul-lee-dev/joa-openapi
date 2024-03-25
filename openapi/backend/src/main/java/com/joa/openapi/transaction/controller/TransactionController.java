@@ -1,8 +1,10 @@
-package com.joa.openapi.account.controller;
+package com.joa.openapi.transaction.controller;
 
 import com.joa.openapi.account.dto.*;
-import com.joa.openapi.account.service.AccountService;
 import com.joa.openapi.common.response.ApiResponse;
+import com.joa.openapi.transaction.dto.TransactionRequestDto;
+import com.joa.openapi.transaction.dto.TransactionResponseDto;
+import com.joa.openapi.transaction.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,57 +15,64 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/v1/account")
+@RequestMapping("/v1/transaction")
 @RequiredArgsConstructor
-public class AccountController {
+public class TransactionController {
 
-    private final AccountService accountService;
+    private final TransactionService transactionService;
 
-    @PostMapping
-    public ResponseEntity<?> create(@RequestHeader("memberId") UUID memberId, @RequestBody AccountCreateRequestDto req) {
-        AccountCreateResponseDto response = accountService.create(memberId, req);
-        return ResponseEntity.ok(ApiResponse.success("계좌 개설에 성공했습니다.", response));
+    @PostMapping("/deposit")
+    public ResponseEntity<?> create(@RequestHeader("memberId") UUID memberId, @RequestBody TransactionRequestDto req) {
+        TransactionResponseDto response = transactionService.deposit(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("계좌 입금에 성공했습니다.", response));
     }
 
-    @PatchMapping
-    public ResponseEntity<?> update(@RequestHeader("memberId") UUID memberId, @RequestBody AccountUpdateRequestDto req) {
-        AccountUpdateResponseDto response = accountService.update(memberId, req);
-        return ResponseEntity.ok(ApiResponse.success("계좌 수정에 성공했습니다.", response));
+    @PostMapping("/withdraw")
+    public ResponseEntity<?> update(@RequestHeader("memberId") UUID memberId, @RequestBody TransactionRequestDto req) {
+        TransactionResponseDto response = transactionService.withdraw(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("계좌 출금에 성공했습니다.", response));
     }
+
+    @PostMapping("/send")
+    public ResponseEntity<?> send(@RequestHeader("memberId") UUID memberId, @RequestBody TransactionRequestDto req) {
+        TransactionResponseDto response = transactionService.send(memberId, req);
+        return ResponseEntity.ok(ApiResponse.success("계좌 이체에 성공했습니다.", response));
+    }
+
 
     @PatchMapping("/limit")
     public ResponseEntity<?> updateLimit(@RequestHeader("memberId") UUID memberId, @RequestBody AccountUpdateRequestDto req) {
-        Long limit = accountService.updateLimit(memberId, req);
+        Long limit = transactionService.updateLimit(memberId, req);
         return ResponseEntity.ok(ApiResponse.success("이체한도 변경에 성공했습니다.", limit));
     }
 
     @PatchMapping("/password")
     public ResponseEntity<?> updatePassword(@RequestHeader("memberId") UUID memberId, @RequestBody AccountUpdateRequestDto req) {
-        accountService.updatePassword(memberId, req);
+        transactionService.updatePassword(memberId, req);
         return ResponseEntity.ok(ApiResponse.success("비밀번호 변경에 성공했습니다."));
     }
 
     @DeleteMapping
     public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId, @RequestBody AccountDeleteRequestDto req) {
-        String accountId = accountService.delete(memberId, req);
+        String accountId = transactionService.delete(memberId, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 해지에 성공했습니다.", accountId));
     }
 
     @PostMapping("/balance")
     public ResponseEntity<?> getBalance(@RequestHeader("memberId") UUID memberId, @RequestBody AccountGetBalanceRequestDto req) {
-        AccountGetBalanceResponseDto balance = accountService.getBalance(memberId, req);
+        AccountGetBalanceResponseDto balance = transactionService.getBalance(memberId, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 잔액 조회에 성공했습니다.", balance));
     }
 
     @PostMapping("/member")
     public ResponseEntity<?> getAccounts(@RequestHeader("memberId") UUID memberId, @PageableDefault Pageable pageable) {
-        Page<AccountGetAccountsResponseDto> accountsPage = accountService.getAccounts(memberId, pageable);
+        Page<AccountGetAccountsResponseDto> accountsPage = transactionService.getAccounts(memberId, pageable);
         return ResponseEntity.ok(ApiResponse.success("계좌 조회에 성공했습니다.", accountsPage));
     }
 
     @GetMapping("/search")
     public ResponseEntity<?> search(@ModelAttribute AccountSearchRequestDto req, @PageableDefault Pageable pageable){
-        Page<AccountSearchResponseDto> accountsPage = accountService.search(req, pageable);
+        Page<AccountSearchResponseDto> accountsPage = transactionService.search(req, pageable);
         return ResponseEntity.ok(ApiResponse.success("계좌 검색에 성공했습니다.", accountsPage));
     }
 }

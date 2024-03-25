@@ -1,4 +1,4 @@
-package com.joa.openapi.dummy.errorcode;
+package com.joa.openapi.transaction.errorcode;
 
 import com.joa.openapi.common.errorcode.ErrorCode;
 import lombok.Getter;
@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 @RequiredArgsConstructor
-public enum DummyErrorCode implements ErrorCode {
+public enum TransactionErrorCode implements ErrorCode {
 
-    NO_DUMMY(HttpStatus.BAD_REQUEST, "해당하는 더미가 없습니다.");
+    NO_BALANCE(HttpStatus.BAD_REQUEST, "출금하려는 계좌에 잔액이 부족합니다.");
 
     private final HttpStatus httpStatus;
     private final String message;

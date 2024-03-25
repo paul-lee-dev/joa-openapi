@@ -1,10 +1,8 @@
 package com.joa.openapi.account.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joa.openapi.account.entity.Account;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -25,11 +23,12 @@ public class AccountCreateResponseDto {
     private String withdrawAccount;
     private Long amount;
     private UUID dummyId;
+    private UUID bankId;
 
     public static AccountCreateResponseDto toDto(Account account) {
         return AccountCreateResponseDto.builder()
                 .accountId(account.getId())
-                .nickname(account.getNickname())
+                .nickname(account.getName())
                 .balance(account.getBalance())
                 .isDormant(account.getIsDormant())
                 .transferLimit(account.getTransferLimit())
@@ -39,7 +38,7 @@ public class AccountCreateResponseDto {
                 .depositAccount(account.getDepositAccount())
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
-                .dummyId(account.getDummy().getId())
+                .dummyId(account.getDummy() == null ? null : account.getDummy().getId())
                 .build();
     }
 }
