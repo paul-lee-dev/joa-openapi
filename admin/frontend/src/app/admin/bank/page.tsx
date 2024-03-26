@@ -1,13 +1,41 @@
 "use client";
 import tw from "tailwind-styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BankTable from "@/components/table/bankTable";
 import Pagination from "@/components/pagination";
 import Button from "@/components/button/button";
+import SearchBankResponse, {
+  SearchBankContent,
+  SearchBankParams,
+} from "@/models/Bank.interface";
+import { searchBank } from "@/api/Bank";
+import { useQuery } from "@tanstack/react-query";
 
 const BankList = () => {
-  const [isModalOpen, setModalState] = useState(false);
+  const [bankList, setBankList] = useState<SearchBankContent[]>();
+  const [searchBankParams, setSearchBankParams] = useState<SearchBankParams>({
+    name: "조",
+    page: 1,
+  });
+  useEffect(() => {
+    async () => {
+      console.log("Bank List 1");
 
+      setBankList(QDbankList?.data);
+      console.log("Bank List 2");
+
+      console.log(bankList);
+    };
+  });
+
+  const { data: QDbankList } = useQuery<SearchBankResponse, Error>({
+    queryKey: ["banks", JSON.stringify(searchBankParams)],
+    queryFn: () => {
+      return searchBank();
+    },
+  });
+
+  const [isModalOpen, setModalState] = useState(false);
   const toggleModal = () => {
     setModalState(!isModalOpen);
     console.log("Toggle modal");

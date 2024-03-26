@@ -2,6 +2,7 @@
 import Image from "next/image";
 import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
+import { HiEmojiSad } from "react-icons/hi";
 
 export default function BankTable() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function BankTable() {
       name: "조아은행",
       description: "좋은 은행이에요!",
       // customers: "100,000,121",
-      code: "6ba6d937-134d-4a88-8384-ac33fb8e5c05",
+      bankId: "6ba6d937-134d-4a88-8384-ac33fb8e5c05",
     },
     {
       id: 2,
@@ -20,7 +21,7 @@ export default function BankTable() {
       name: "다른은행",
       description: "다른 은행입니다.",
       // customers: "80,000,000",
-      code: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
+      bankId: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
     },
     {
       id: 3,
@@ -28,7 +29,7 @@ export default function BankTable() {
       name: "다른은행",
       description: "다른 은행입니다.",
       customers: "80,000,000",
-      code: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
+      bankId: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
     },
     {
       id: 4,
@@ -36,7 +37,7 @@ export default function BankTable() {
       name: "다른은행",
       description: "다른 은행입니다.",
       // customers: "80,000,000",
-      code: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
+      bankId: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
     },
     {
       id: 5,
@@ -44,7 +45,7 @@ export default function BankTable() {
       name: "다른은행",
       description: "다른 은행입니다.",
       // customers: "80,000,000",
-      code: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
+      bankId: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
     },
   ];
 
@@ -80,17 +81,18 @@ export default function BankTable() {
               className="border-b transition duration-300 ease-in-out hover:bg-pink-300"
             >
               <TableData>
-                <Image
+                {/* <Image
                   src={bank.uri}
                   alt="bank_uri"
                   width={50}
                   height={50}
-                ></Image>
+                ></Image> */}
+                <HiEmojiSad></HiEmojiSad>
               </TableData>
               <TableData>{bank.name}</TableData>
               <TableData>{bank.description}</TableData>
               {/* <TableData>{bank.customers}</TableData> */}
-              <TableData>{bank.code}</TableData>
+              <TableData>{bank.bankId}</TableData>
               <TableData>
                 <a
                   onClick={() => {

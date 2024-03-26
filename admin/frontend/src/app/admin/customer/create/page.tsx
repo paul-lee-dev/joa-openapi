@@ -22,7 +22,13 @@ export default function CustomerCreate() {
           ></InputText>
         </div>
         <div className="flex justify-end">
-          <Button id={"detailSubmit"} name={"생성"}></Button>
+          <Button
+            id={"detailSubmit"}
+            name={"생성"}
+            onClick={() => {
+              console.log("create customer");
+            }}
+          ></Button>
         </div>
       </Form>
     </>

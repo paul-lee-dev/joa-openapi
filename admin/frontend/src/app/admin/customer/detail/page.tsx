@@ -59,8 +59,12 @@ export default function CustomerDetail() {
           ></InputText>
         </div>
         <div className="flex gap-6 justify-end">
-          <Button id={"edit"} name={"수정"}></Button>
-          <Button id={"delete"} name={"삭제"}></Button>
+          <Button id={"edit"} name={"수정"} onClick={function (): void {
+            throw new Error("Function not implemented.");
+          } }></Button>
+          <Button id={"delete"} name={"삭제"} onClick={function (): void {
+            throw new Error("Function not implemented.");
+          } }></Button>
         </div>
       </Form>
     </>
