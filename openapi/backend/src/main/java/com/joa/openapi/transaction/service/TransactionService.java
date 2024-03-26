@@ -7,6 +7,7 @@ import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.dummy.entity.Dummy;
+import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.repository.DummyRepository;
 import com.joa.openapi.transaction.dto.TransactionRequestDto;
 import com.joa.openapi.transaction.dto.TransactionResponseDto;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -39,6 +41,9 @@ public class TransactionService {
 
         Account account = accountRepository.findById(to).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
+        Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
+                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
+
         authorityValidation(memberId, account);
         checkPassword(account, req.getPassword());
 
@@ -53,6 +58,7 @@ public class TransactionService {
                 .depositorName(req.getDepositorName())
                 .fromAccount(null)
                 .toAccount(req.getToAccount())
+                .dummy(optionalDummy.orElse(null))
                 .build();
 
         transactionRepository.save(transaction);
@@ -68,6 +74,9 @@ public class TransactionService {
         String from = req.getFromAccount();
 
         Account account = accountRepository.findById(from).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
+                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
 
         authorityValidation(memberId, account);
         checkPassword(account, req.getPassword());
@@ -85,6 +94,7 @@ public class TransactionService {
                 .depositorName(req.getDepositorName())
                 .fromAccount(req.getFromAccount())
                 .toAccount(null)
+                .dummy(optionalDummy.orElse(null))
                 .build();
 
         transactionRepository.save(transaction);
@@ -103,6 +113,9 @@ public class TransactionService {
         Account fromAccount = accountRepository.findById(from).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
         Account toAccount = accountRepository.findById(to).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
+        Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
+                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
+
         authorityValidation(memberId, fromAccount);
         checkPassword(fromAccount, req.getPassword());
 
@@ -120,6 +133,7 @@ public class TransactionService {
                 .depositorName(req.getDepositorName())
                 .fromAccount(req.getFromAccount())
                 .toAccount(req.getToAccount())
+                .dummy(optionalDummy.orElse(null))
                 .build();
 
         transactionRepository.save(transaction);
