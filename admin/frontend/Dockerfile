@@ -1,8 +1,22 @@
-FROM node:14-alpine
+FROM node:14
 
-WORKDIR /app
+# 앱 디렉터리 생성
+WORKDIR /usr/src/app/next
 
-COPY ./out .
+# 앱 종속성 설치
+COPY package.json ./
 
-# npx serve@latest out
-CMD ["npx", "serve@latest", "out"]
+RUN npm install
+
+# 앱 소스 추가
+COPY . .
+
+# 실행 파일에 대한 실행 권한을 부여합니다.
+# RUN chmod +x node_modules/.bin/react-scripts
+RUN chmod +x node_modules/.bin/*
+
+# 앱 빌드
+RUN npm run build
+
+# 앱 실행
+CMD ["npm", "start"]
