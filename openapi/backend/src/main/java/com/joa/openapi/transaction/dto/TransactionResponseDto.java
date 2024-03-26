@@ -26,6 +26,7 @@ public class TransactionResponseDto {
     private String toAccount;       //출금계좌
     private Long toPrevBalance;     //입금전
     private Long toBalance;         //입금후
+    private UUID dummyId;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdAt;
@@ -43,6 +44,7 @@ public class TransactionResponseDto {
                 .toAccount(transaction.getToAccount())
                 .toPrevBalance(toPrevBalance)
                 .toBalance(toBalance)
+                .dummyId(transaction.getDummy() == null ? null : transaction.getDummy().getId())
                 .createdAt(transaction.getCreatedAt())
                 .updatedAt(transaction.getUpdatedAt())
                 .build();
@@ -56,6 +58,7 @@ public class TransactionResponseDto {
                 .toAccount(transaction.getToAccount())
                 .toPrevBalance(toPrevBalance)
                 .toBalance(balance)
+                .dummyId(transaction.getDummy() == null ? null : transaction.getDummy().getId())
                 .createdAt(transaction.getCreatedAt())
                 .updatedAt(transaction.getUpdatedAt())
                 .build();
@@ -69,6 +72,7 @@ public class TransactionResponseDto {
                 .fromAccount(transaction.getFromAccount())
                 .fromPrevBalance(fromPrevBalance)
                 .fromBalance(balance)
+                .dummyId(transaction.getDummy() == null ? null : transaction.getDummy().getId())
                 .createdAt(transaction.getCreatedAt())
                 .updatedAt(transaction.getUpdatedAt())
                 .build();

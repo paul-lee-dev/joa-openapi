@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("/v1/member")
 public class MemberController {
 
     private final MemberService memberService;

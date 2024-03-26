@@ -33,4 +33,20 @@ public class Transaction extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dummy_id")
     private Dummy dummy;
+
+    public void updateAmount(Long amount) {
+        this.amount = amount;
+    }
+
+    public void updateDepositorName(String name) {
+        this.depositorName = name;
+    }
+
+    public void updateFromAccount(String fromAccount) {
+        this.fromAccount = fromAccount;
+    }
+
+    public void updateToAccount(String toAccount) {
+        this.toAccount = toAccount;
+    }
 }
