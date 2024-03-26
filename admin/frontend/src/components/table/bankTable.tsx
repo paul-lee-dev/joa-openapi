@@ -8,7 +8,7 @@ export default function BankTable() {
   const Banks = [
     {
       id: 1,
-      logo: "/asset/shc_symbol_ci.png",
+      uri: "/asset/shc_symbol_ci.png",
       name: "조아은행",
       description: "좋은 은행이에요!",
       // customers: "100,000,121",
@@ -16,7 +16,7 @@ export default function BankTable() {
     },
     {
       id: 2,
-      logo: "/asset/shc_symbol_ci.png",
+      uri: "/asset/shc_symbol_ci.png",
       name: "다른은행",
       description: "다른 은행입니다.",
       // customers: "80,000,000",
@@ -24,7 +24,7 @@ export default function BankTable() {
     },
     {
       id: 3,
-      logo: "/asset/shc_symbol_ci.png",
+      uri: "/asset/shc_symbol_ci.png",
       name: "다른은행",
       description: "다른 은행입니다.",
       customers: "80,000,000",
@@ -32,7 +32,7 @@ export default function BankTable() {
     },
     {
       id: 4,
-      logo: "/asset/shc_symbol_ci.png",
+      uri: "/asset/shc_symbol_ci.png",
       name: "다른은행",
       description: "다른 은행입니다.",
       // customers: "80,000,000",
@@ -40,7 +40,7 @@ export default function BankTable() {
     },
     {
       id: 5,
-      logo: "/asset/shc_symbol_ci.png",
+      uri: "/asset/shc_symbol_ci.png",
       name: "다른은행",
       description: "다른 은행입니다.",
       // customers: "80,000,000",
@@ -81,8 +81,8 @@ export default function BankTable() {
             >
               <TableData>
                 <Image
-                  src={bank.logo}
-                  alt="bank_logo"
+                  src={bank.uri}
+                  alt="bank_uri"
                   width={50}
                   height={50}
                 ></Image>

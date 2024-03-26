@@ -1,11 +1,6 @@
-// module.exports = {
-//   images: {
-//     remotePatterns: [
-//       {
-//         protocol: "https",
-//         hostname: "**.joa13.com",
-//         port: "",
-//       },
-//     ],
-//   },
-// };
+const nextConfig = {
+  distDir: 'build',
+  output: 'export',
+};
+
+module.exports = nextConfig;
