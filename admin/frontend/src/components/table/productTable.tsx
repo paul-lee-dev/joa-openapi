@@ -1,6 +1,9 @@
 import tw from "tailwind-styled-components";
+import { useRouter } from "next/navigation";
+import { FaSort } from "react-icons/fa6";
 
 export default function ProductTable() {
+  const router = useRouter();
   const Products = [
     {
       id: 1,
@@ -11,6 +14,7 @@ export default function ProductTable() {
       paymentType: "단리",
       interestTaxType: "과세",
       maxAmount: 10000000,
+      createdDate: "2023-04-15",
     },
   ];
 
@@ -40,6 +44,12 @@ export default function ProductTable() {
             <th scope="col" className="px-6 py-3">
               최대 금액
             </th>
+            <th scope="col" className="px-6 py-3">
+              <span className="flex gap-3">
+                등록일자
+                <FaSort></FaSort>
+              </span>
+            </th>
             <th scope="col" className="relative px-6 py-3">
               <span className="sr-only"> </span>
             </th>
@@ -60,14 +70,17 @@ export default function ProductTable() {
               <TableData>{product.paymentType}</TableData>
               <TableData>{product.interestTaxType}</TableData>
               <TableData>{product.maxAmount}</TableData>
-              <td className="px-6 py-4">
+              <TableData>{product.createdDate}</TableData>
+              <TableData className="cursor-pointer">
                 <a
-                  href="#"
+                  onClick={() => {
+                    router.push(`product/detail`);
+                  }}
                   className="font-medium text-pink-400 hover:text-pink-500"
                 >
                   자세히
                 </a>
-              </td>
+              </TableData>
             </tr>
           ))}
         </tbody>

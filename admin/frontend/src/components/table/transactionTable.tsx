@@ -98,7 +98,7 @@ export default function transactionTable() {
               <TableData>{transaction.amount}</TableData>
               <TableData>
                 <a
-                  href="#"
+                  href="/admin/transaction/detail"
                   className="font-medium text-pink-400 hover:text-pink-500"
                 >
                   자세히

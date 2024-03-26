@@ -61,7 +61,7 @@ export default function ProductDetail() {
           ></InputText>
         </div>
         <div className="flex gap-6 justify-end">
-          <Button id={"delete"} name={"삭제"}></Button>
+          <Button onClick={() => {}} id={"delete"} name={"삭제"}></Button>
         </div>
       </Form>
     </>

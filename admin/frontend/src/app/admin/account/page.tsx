@@ -1,33 +1,66 @@
 "use client";
 
+import Button from "@/components/button/button";
 import Pagination from "@/components/pagination";
-import DropDown from "@/components/search/dropDown";
+import AccountGroupSearch from "@/components/search/accountGroupSearch";
 import BankSelect from "@/components/select/bankNoLabel";
 import MultiSearchSelect from "@/components/select/multiSearchSelect";
+import ProductMultiSearchSelect from "@/components/select/productMultiSearchSelect";
+import ProductTypeMultiSearchSelect from "@/components/select/productTypeMultiSearchSelect";
 import AccountTable from "@/components/table/accountTable";
+import { useRouter } from "next/navigation";
 const AccountList = () => {
+  const router = useRouter();
   return (
     <>
-      <div className="flex gap-6 m-3">
-        <BankSelect></BankSelect>
-        <div>
+      <form className="flex justify-end m-2">
+        <div className="flex gap-8 ">
+          <BankSelect></BankSelect>
           <MultiSearchSelect
-            placeholder={"검색"}
+            placeholder={"고객 검색"}
             label={""}
             htmlFor={""}
           ></MultiSearchSelect>
+          <ProductMultiSearchSelect
+            placeholder={""}
+            label={""}
+            htmlFor={""}
+          ></ProductMultiSearchSelect>
+          <ProductTypeMultiSearchSelect
+            placeholder={""}
+            label={""}
+            htmlFor={""}
+          ></ProductTypeMultiSearchSelect>
+          <AccountGroupSearch></AccountGroupSearch>
+          <Button id={"submit"} name={"검색"} onClick={() => {}}></Button>
         </div>
-        <div>
-          <DropDown />
-        </div>
-      </div>
+      </form>
       <AccountTable></AccountTable>
-      <div className="flex justify-end m-3">
-        <Pagination
-          currentPage={0}
-          totalPages={5}
-          onPageChange={function (page: number): void {}}
-        ></Pagination>
+      <div className="flex mt-5 justify-between gap-5">
+        <div className="flex">
+          <Pagination
+            currentPage={0}
+            totalPages={5}
+            onPageChange={function (page: number): void {}}
+          ></Pagination>
+        </div>
+        <div className="flex gap-3 px-3">
+          <Button
+            onClick={() => {
+              console.log("account create");
+              router.push("account/create");
+            }}
+            id={"create"}
+            name={"생성"}
+          ></Button>
+          <Button
+            onClick={() => {
+              console.log("account delete ");
+            }}
+            id={"delete"}
+            name={"삭제"}
+          ></Button>
+        </div>
       </div>
     </>
   );
