@@ -55,7 +55,8 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
             </View>
             <View className="w-full">
               <View className="w-full flex flex-row items-center justify-center space-x-6">
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('AccountList')}>
                   <Text className="text-sm font-medium text-gray-700">
                     내 계좌 보기
                   </Text>

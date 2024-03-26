@@ -1,12 +1,26 @@
 import CommonMenuItem from '@/components/CommonMenuItem';
+import Header from '@/components/Header';
+import {formatAmount} from '@/utils';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from 'App';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Header} from 'react-native/Libraries/NewAppScreen';
 
-function AccountDetail(): React.JSX.Element {
+type AccountDetailScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'AccountDetail'
+>;
+
+function AccountDetail({
+  navigation,
+}: AccountDetailScreenProps): React.JSX.Element {
   return (
     <View className="w-full h-full bg-gray-100 flex">
-      <Header stack="계좌관리" menu={[{title: 'close', onPress: () => {}}]} />
+      <Header
+        stack="계좌관리"
+        goBack={() => navigation.pop()}
+        menu={[{title: 'close', onPress: () => navigation.popToTop()}]}
+      />
       <View className="w-full h-56 p-6">
         <View className="flex space-y-2">
           <Text className="text-sm font-medium text-gray-400">
@@ -17,7 +31,7 @@ function AccountDetail(): React.JSX.Element {
             <Icon
               name={'pencil-outline'}
               color={'#888'}
-              onPress={() => {}}
+              onPress={() => navigation.navigate('ChangeAccountName')}
               size={20}
             />
           </View>
@@ -31,7 +45,9 @@ function AccountDetail(): React.JSX.Element {
             <View className="w-1/2 flex space-y-1">
               <Text className="text-sm font-semibold">입출금통장</Text>
               <Text className="text-sm font-semibold">2024.03.08</Text>
-              <Text className="text-sm font-semibold">1,000,000원</Text>
+              <Text className="text-sm font-semibold">{`${formatAmount(
+                10000000,
+              )}원`}</Text>
               <Text className="text-sm font-semibold">연 0.10%</Text>
             </View>
           </View>

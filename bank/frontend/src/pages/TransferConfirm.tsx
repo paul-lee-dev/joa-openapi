@@ -4,6 +4,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from 'App';
 import Header from '@/components/Header';
 import BottomButton from '@/components/BottomButton';
+import {formatAmount} from '@/utils';
 
 type TransferConfirmScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -28,7 +29,9 @@ function TransferConfirm({
             </Text>
             <Text className="text-2xl font-medium text-gray-700">으로</Text>
           </View>
-          <Text className="text-2xl font-medium text-gray-700">10,000원을</Text>
+          <Text className="text-2xl font-medium text-gray-700">{`${formatAmount(
+            10000,
+          )}원을`}</Text>
           <Text className="text-2xl font-medium text-gray-700">보낼까요?</Text>
         </View>
         <View className="h-48 flex justify-evenly">

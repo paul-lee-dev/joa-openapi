@@ -17,7 +17,7 @@ const defaultMemberData: IMemberData = {
 };
 
 const defaultBankData: IBankData = {
-  bankId: 'JOABANKID',
+  bankId: '35a80588-2ce4-4961-8c7c-45fe35a4d788',
   bankName: 'JOA BANK',
 };
 
