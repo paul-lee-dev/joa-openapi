@@ -2,7 +2,7 @@ FROM node:20
 # 앱 디렉터리 생성
 WORKDIR /usr/src/app/next
 
-EXPOSE 35751
+EXPOSE 3000
 
 # 앱 종속성 설치
 COPY package.json ./
