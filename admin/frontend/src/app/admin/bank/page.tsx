@@ -3,6 +3,7 @@ import tw from "tailwind-styled-components";
 import { useState } from "react";
 import BankTable from "@/components/table/bankTable";
 import Pagination from "@/components/pagination";
+import Button from "@/components/button/button";
 
 const BankList = () => {
   const [isModalOpen, setModalState] = useState(false);
@@ -15,14 +16,24 @@ const BankList = () => {
   return (
     <>
       <BankTable />
-      <Pagination
-        currentPage={0}
-        totalPages={5}
-        onPageChange={function (page: number): void {}}
-      ></Pagination>
-      <SmallBtn type="button" onClick={toggleModal}>
-        추가
-      </SmallBtn>
+      <div className="flex mt-5 justify-between gap-5">
+        <div className="flex">
+          <Pagination
+            currentPage={0}
+            totalPages={5}
+            onPageChange={function (page: number): void {}}
+          ></Pagination>
+        </div>
+        <div className="flex gap-3 px-3">
+          <Button
+            onClick={() => {
+              toggleModal();
+            }}
+            id={"create"}
+            name={"생성"}
+          ></Button>
+        </div>
+      </div>
       {isModalOpen && (
         <Modal>
           <ModalContent>
@@ -30,7 +41,7 @@ const BankList = () => {
               <div className="col-span-full">
                 <label
                   htmlFor="photo"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block pb-1 text-sm font-medium leading-6 text-gray-900"
                 >
                   은행 이름
                 </label>
@@ -39,7 +50,7 @@ const BankList = () => {
               <div className="col-span-full">
                 <label
                   htmlFor="photo"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block pb-1 text-sm font-medium leading-6 text-gray-900"
                 >
                   은행 설명
                 </label>
@@ -48,7 +59,7 @@ const BankList = () => {
               <div className="col-span-full">
                 <label
                   htmlFor="photo"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block pb-1 text-sm font-medium leading-6 text-gray-900"
                 >
                   은행 로고 (추가)
                 </label>
@@ -60,7 +71,9 @@ const BankList = () => {
                   />
                 </form>
               </div>
-              <SmallBtn onClick={toggleModal}>확인</SmallBtn>
+              <div>
+                <SmallBtn onClick={toggleModal}>확인</SmallBtn>
+              </div>
             </InputContainerWithButton>
           </ModalContent>
         </Modal>
@@ -76,8 +89,8 @@ block
 w-full 
 rounded-md 
 border-0 
-px-1.5
-py-1.5
+px-2
+py-2
 text-gray-700
 ring-1
 ring-inset 
