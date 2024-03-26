@@ -11,7 +11,7 @@ export default function BankTable() {
       logo: "/asset/shc_symbol_ci.png",
       name: "조아은행",
       description: "좋은 은행이에요!",
-      customers: "100,000,121",
+      // customers: "100,000,121",
       code: "6ba6d937-134d-4a88-8384-ac33fb8e5c05",
     },
     {
@@ -19,7 +19,7 @@ export default function BankTable() {
       logo: "/asset/shc_symbol_ci.png",
       name: "다른은행",
       description: "다른 은행입니다.",
-      customers: "80,000,000",
+      // customers: "80,000,000",
       code: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
     },
     {
@@ -35,7 +35,7 @@ export default function BankTable() {
       logo: "/asset/shc_symbol_ci.png",
       name: "다른은행",
       description: "다른 은행입니다.",
-      customers: "80,000,000",
+      // customers: "80,000,000",
       code: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
     },
     {
@@ -43,7 +43,7 @@ export default function BankTable() {
       logo: "/asset/shc_symbol_ci.png",
       name: "다른은행",
       description: "다른 은행입니다.",
-      customers: "80,000,000",
+      // customers: "80,000,000",
       code: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
     },
   ];
@@ -62,9 +62,9 @@ export default function BankTable() {
             <th scope="col" className="px-6 py-4">
               은행설명
             </th>
-            <th scope="col" className="px-6 py-4">
+            {/* <th scope="col" className="px-6 py-4">
               고객 수
-            </th>
+            </th> */}
             <th scope="col" className="px-6 py-4">
               은행 코드
             </th>
@@ -89,7 +89,7 @@ export default function BankTable() {
               </TableData>
               <TableData>{bank.name}</TableData>
               <TableData>{bank.description}</TableData>
-              <TableData>{bank.customers}</TableData>
+              {/* <TableData>{bank.customers}</TableData> */}
               <TableData>{bank.code}</TableData>
               <TableData>
                 <a
