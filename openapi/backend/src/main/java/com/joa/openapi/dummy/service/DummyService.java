@@ -17,6 +17,7 @@ import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.member.service.MemberService;
 import com.joa.openapi.member.dto.MemberJoinRequestDto;
+import com.joa.openapi.transaction.dto.TransactionDeleteRequestDto;
 import com.joa.openapi.transaction.dto.TransactionRequestDto;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.joa.openapi.transaction.repository.TransactionRepository;
@@ -216,10 +217,10 @@ public class DummyService {
         } else if (dummy.getTransactionCount() != null) {
             List<Transaction> transactionsList = transactionRepository.findByDummyId(dummyId);
             for (Transaction transaction: transactionsList) {
-                TransactionRequestDto dto = TransactionRequestDto.builder()
-
+                TransactionDeleteRequestDto dto = TransactionDeleteRequestDto.builder()
+                        .transactionId(transaction.getId())
                         .build();
-//                transactionService.delete()
+                transactionService.delete(transaction.getDummy().getAdminId(), dto);
             }
         }
         dummy.deleteSoftly();
