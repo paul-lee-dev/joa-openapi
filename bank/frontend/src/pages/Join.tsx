@@ -9,7 +9,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Controller, useForm} from 'react-hook-form';
 import {useState} from 'react';
-import {RootStackParamList} from 'App';
 import Header from '@/components/Header';
 import CommonInput from '@/components/CommonInput';
 import BottomButton from '@/components/BottomButton';
@@ -18,6 +17,7 @@ import {useMutation} from '@tanstack/react-query';
 import {useRecoilValue} from 'recoil';
 import {bankDataAtom} from '@/store/atoms';
 import clsx from 'clsx';
+import {RootStackParamList} from '@/Router';
 
 type JoinScreenProps = NativeStackScreenProps<RootStackParamList, 'Join'>;
 

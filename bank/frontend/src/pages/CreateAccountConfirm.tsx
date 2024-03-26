@@ -2,7 +2,6 @@ import BottomButton from '@/components/BottomButton';
 import CommonInput from '@/components/CommonInput';
 import Header from '@/components/Header';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from 'App';
 import {Controller, useForm} from 'react-hook-form';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {useMutation} from '@tanstack/react-query';
@@ -11,6 +10,7 @@ import {createAccount} from '@/api/account';
 import {useState} from 'react';
 import {bankDataAtom} from '@/store/atoms';
 import {useRecoilValue} from 'recoil';
+import {RootStackParamList} from '@/Router';
 
 type CreateAccountConfirmScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -38,6 +38,7 @@ function CreateAccountConfirm({
   const {
     control,
     handleSubmit,
+    getValues,
     formState: {errors},
   } = useForm<CreateAccountForm>({
     defaultValues: {
@@ -50,7 +51,7 @@ function CreateAccountConfirm({
     console.log(data);
     mutation.mutate({
       nickname: '기본 계좌',
-      password: '1234',
+      password: data.password,
       term: 30,
       bankId: bankData.bankId,
     });
@@ -86,7 +87,7 @@ function CreateAccountConfirm({
           <CommonInput label={'계좌 비밀번호'}>
             <Controller
               control={control}
-              rules={{required: true}}
+              rules={{required: '계좌 비밀번호를 입력해주세요.'}}
               render={({field: {onChange, onBlur, value}}) => (
                 <View className="w-full relative">
                   <TextInput
@@ -111,17 +112,23 @@ function CreateAccountConfirm({
               )}
               name="password"
             />
-            {errors.password && (
-              <Text className="absolute bottom-2 left-8 text-red-400">
-                계좌 비밀번호를 입력해주세요.
-              </Text>
-            )}
+            <Text className="absolute bottom-2 left-8 text-red-400">
+              {errors.password?.message}
+            </Text>
           </CommonInput>
 
           <CommonInput label={'계좌 비밀번호 확인'}>
             <Controller
               control={control}
-              rules={{required: true}}
+              rules={{
+                required: '계좌 비밀번호를 한번 더 입력해주세요.',
+                validate: {
+                  correct: value =>
+                    value === getValues('password')
+                      ? true
+                      : '비밀번호가 일치하지 않습니다.',
+                },
+              }}
               render={({field: {onChange, onBlur, value}}) => (
                 <View className="w-full relative">
                   <TextInput
@@ -146,11 +153,9 @@ function CreateAccountConfirm({
               )}
               name="password2"
             />
-            {errors.password2 && (
-              <Text className="absolute bottom-2 left-8 text-red-400">
-                계좌 비밀번호를 한번 더 입력해주세요.
-              </Text>
-            )}
+            <Text className="absolute bottom-2 left-8 text-red-400">
+              {errors.password2?.message}
+            </Text>
           </CommonInput>
         </View>
       </View>

@@ -2,12 +2,12 @@ import BottomButton from '@/components/BottomButton';
 import CommonInput from '@/components/CommonInput';
 import Header from '@/components/Header';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from 'App';
 import {View} from 'react-native';
 import {useMutation} from '@tanstack/react-query';
 import {updateAccount} from '@/api/account';
 import {Controller, useForm} from 'react-hook-form';
 import {Text, TextInput} from 'react-native';
+import {RootStackParamList} from '@/Router';
 
 type ChangeAccountNameScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -19,13 +19,15 @@ interface ChangeAccountNameForm {
 }
 
 function ChangeAccountName({
+  route,
   navigation,
 }: ChangeAccountNameScreenProps): React.JSX.Element {
+  const {accountId, nickname} = route.params;
   const mutation = useMutation({
     mutationFn: updateAccount,
     onSuccess: data => {
       console.log(data);
-      navigation.replace('AccountDetail');
+      navigation.popToTop();
     },
     onError: err => console.log(err),
   });
@@ -35,12 +37,13 @@ function ChangeAccountName({
     formState: {errors},
   } = useForm<ChangeAccountNameForm>({
     defaultValues: {
-      nickname: '',
+      nickname,
     },
   });
 
   const onSubmit = (data: ChangeAccountNameForm) => {
     mutation.mutate({
+      accountId,
       nickname: data.nickname,
     });
   };
@@ -60,6 +63,10 @@ function ChangeAccountName({
             maxLength: {
               value: 20,
               message: '계좌이름을 최대 20자이내로 작성해주세요',
+            },
+            validate: {
+              correct: value =>
+                value === nickname ? '계좌 이름이 기존과 동일합니다.' : true,
             },
           }}
           render={({field: {onChange, onBlur, value}}) => (

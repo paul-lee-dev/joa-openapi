@@ -2,9 +2,9 @@ import {Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {useState} from 'react';
-import {RootStackParamList} from 'App';
 import Header from '@/components/Header';
 import {formatAmount} from '@/utils';
+import {RootStackParamList} from '@/Router';
 
 type TransferAmountScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -12,8 +12,10 @@ type TransferAmountScreenProps = NativeStackScreenProps<
 >;
 
 function TransferAmount({
+  route,
   navigation,
 }: TransferAmountScreenProps): React.JSX.Element {
+  const {account, toAccountId} = route.params;
   const [amount, setAmount] = useState<string>('');
 
   const changeAmount = (char: string) => {
@@ -39,12 +41,12 @@ function TransferAmount({
         <View className="flex space-y-2">
           <View className="flex flex-row">
             <Text className="text-xl font-bold text-gray-700">
-              저금예금[입출금]
+              {account?.nickname}
             </Text>
             <Text className="text-xl font-medium text-gray-700">에서</Text>
           </View>
           <Text className="text-sm font-medium text-gray-700">
-            {`잔액 ${formatAmount(1001220)}원`}
+            {`잔액 ${formatAmount(account?.balance)}원`}
           </Text>
         </View>
         <View className="flex space-y-2">
@@ -55,7 +57,7 @@ function TransferAmount({
             <Text className="text-xl font-medium text-gray-700">으로</Text>
           </View>
           <Text className="text-sm font-medium text-gray-700">
-            신한은행 1234-12-123-1234
+            {`조아은행 ${account.accountId}`}
           </Text>
         </View>
         <View className="flex space-y-2">
@@ -66,7 +68,7 @@ function TransferAmount({
             onPress={() => setAmount('1001220')}
             className="w-full flex">
             <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
-              {`잔액 ${formatAmount(1001220)}원 입력`}
+              {`잔액 ${formatAmount(account.balance)}원 입력`}
             </Text>
           </TouchableOpacity>
         </View>
@@ -74,7 +76,13 @@ function TransferAmount({
       <View className="w-full h-16">
         {amount !== '' && (
           <TouchableOpacity
-            onPress={() => navigation.navigate('TransferConfirm')}
+            onPress={() =>
+              navigation.navigate('TransferConfirm', {
+                account,
+                toAccountId,
+                amount: +amount,
+              })
+            }
             className="w-full h-full bg-pink-200 flex justify-center items-center shadow-sm shadow-black">
             <Text className="text-2xl font-semibold text-gray-700">확인</Text>
           </TouchableOpacity>

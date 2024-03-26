@@ -10,7 +10,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Controller, useForm} from 'react-hook-form';
-import {RootStackParamList} from 'App';
 import Header from '@/components/Header';
 import PiggyBank2 from '@/assets/piggy-bank2.png';
 import BottomPopup from '@/components/BottomPopup';
@@ -18,6 +17,9 @@ import CommonInput from '@/components/CommonInput';
 import BottomButton from '@/components/BottomButton';
 import {useFocusEffect} from '@react-navigation/native';
 import {useCallback} from 'react';
+import {useSetRecoilState} from 'recoil';
+import {memberDataAtom} from '@/store/atoms';
+import {RootStackParamList} from '@/Router';
 
 interface LoginForm {
   email: string;
@@ -27,6 +29,7 @@ interface LoginForm {
 type IntroScreenProps = NativeStackScreenProps<RootStackParamList, 'Intro'>;
 
 function Intro({navigation}: IntroScreenProps): React.JSX.Element {
+  const setMemberData = useSetRecoilState(memberDataAtom);
   const {
     control,
     handleSubmit,
@@ -42,7 +45,17 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const onSubmit = (data: LoginForm) => {
     console.log(data);
-    navigation.replace('Main');
+    setMemberData({
+      isLogin: true,
+      member: {
+        id: '90240424-7a53-460c-8d4e-f786eda65fbb',
+        name: '이유로',
+        email: 'eurohand@naver.com',
+        phone: '01099306272',
+        createdAt: '2024-03-27 00:18',
+        updatedAt: '2024-03-27 00:18',
+      },
+    });
   };
 
   useFocusEffect(

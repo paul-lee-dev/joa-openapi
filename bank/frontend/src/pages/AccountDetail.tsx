@@ -2,7 +2,7 @@ import CommonMenuItem from '@/components/CommonMenuItem';
 import Header from '@/components/Header';
 import {formatAmount} from '@/utils';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from 'App';
+import {RootStackParamList} from '@/Router';
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -12,8 +12,10 @@ type AccountDetailScreenProps = NativeStackScreenProps<
 >;
 
 function AccountDetail({
+  route,
   navigation,
 }: AccountDetailScreenProps): React.JSX.Element {
+  const {account} = route.params;
   return (
     <View className="w-full h-full bg-gray-100 flex">
       <Header
@@ -24,14 +26,19 @@ function AccountDetail({
       <View className="w-full h-56 p-6">
         <View className="flex space-y-2">
           <Text className="text-sm font-medium text-gray-400">
-            123-123456-12-123
+            {account.accountId}
           </Text>
           <View className="flex flex-row items-center space-x-4">
-            <Text className="text-2xl font-bold">조아은행 체크카드</Text>
+            <Text className="text-2xl font-bold">{account.nickname}</Text>
             <Icon
               name={'pencil-outline'}
               color={'#888'}
-              onPress={() => navigation.navigate('ChangeAccountName')}
+              onPress={() =>
+                navigation.navigate('ChangeAccountName', {
+                  accountId: account.accountId,
+                  nickname: account.nickname,
+                })
+              }
               size={20}
             />
           </View>
@@ -44,9 +51,9 @@ function AccountDetail({
             </View>
             <View className="w-1/2 flex space-y-1">
               <Text className="text-sm font-semibold">입출금통장</Text>
-              <Text className="text-sm font-semibold">2024.03.08</Text>
+              <Text className="text-sm font-semibold">{account.startDate}</Text>
               <Text className="text-sm font-semibold">{`${formatAmount(
-                10000000,
+                account.balance,
               )}원`}</Text>
               <Text className="text-sm font-semibold">연 0.10%</Text>
             </View>
@@ -56,6 +63,7 @@ function AccountDetail({
       <ScrollView className="w-full flex-grow">
         <View>
           <CommonMenuItem title={'계좌 비밀번호 재설정'} underline={true} />
+          <CommonMenuItem title={'계좌 거래한도 변경'} underline={true} />
           <CommonMenuItem title={'비밀번호 오류횟수 초기화'} underline={true} />
           <CommonMenuItem title={'거래내역 다운로드'} underline={true} />
         </View>
