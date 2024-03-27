@@ -1,6 +1,19 @@
 spring:
   profiles:
     include: secret
+  mail:
+    host:
+    port:
+    username:
+    password:
+    properties:
+      mail:
+        debug:
+        smtp:
+          timeout:
+          starttls:
+            enable:
+          auth:
 
   mail:
     host:

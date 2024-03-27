@@ -2,9 +2,9 @@ import {ScrollView, Text, TextInput, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from 'App';
 import Header from '@/components/Header';
 import ToggleSwitch from '@/components/ToggleSwitch';
+import {RootStackParamList} from '@/Router';
 
 type SearchScreenProps = NativeStackScreenProps<RootStackParamList, 'Search'>;
 

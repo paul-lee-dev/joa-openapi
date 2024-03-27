@@ -2,8 +2,8 @@ import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Header from '@/components/Header';
-import {RootStackParamList} from 'App';
 import BottomButton from '@/components/BottomButton';
+import {RootStackParamList} from '@/Router';
 
 type CreateAccountScreenProps = NativeStackScreenProps<
   RootStackParamList,

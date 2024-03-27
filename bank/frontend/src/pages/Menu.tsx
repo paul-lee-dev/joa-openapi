@@ -10,25 +10,60 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import clsx from 'clsx';
-import {RootStackParamList} from 'App';
 import Header from '@/components/Header';
+import {RootStackParamList} from '@/Router';
+import {memberDataAtom} from '@/store/atoms';
+import {useRecoilState} from 'recoil';
 
 type MenuScreenProps = NativeStackScreenProps<RootStackParamList, 'Menu'>;
-type MenuType = '뱅킹관리' | '이체' | '조회';
+type MenuType = '뱅킹' | '이체' | '조회';
 
 function Menu({navigation}: MenuScreenProps): React.JSX.Element {
-  const [isLogin, setIsLogin] = useState<boolean>(true);
+  const [memberData, setMemberData] = useRecoilState(memberDataAtom);
   const [keyword, setKeyword] = useState<string>('');
-  const [menu, setMenu] = useState<MenuType>('뱅킹관리');
+  const [menu, setMenu] = useState<MenuType>('뱅킹');
   const detailMenu = {
-    뱅킹관리: [
-      {title: '계좌 개설', onPress: () => {}},
-      {title: '계좌 해지', onPress: () => {}},
-      {title: '이체한도변경', onPress: () => {}},
-      {title: '계좌 비밀번호 변경', onPress: () => {}},
+    뱅킹: [
+      {
+        title: '입출금 계좌 개설',
+        onPress: () => navigation.navigate('CreateAccount'),
+      },
+      {title: '예적금 상품 조회', onPress: () => {}},
+      {title: '계좌 관리', onPress: () => navigation.navigate('AccountList')},
+      {
+        title: '이체한도변경',
+        onPress: () => navigation.navigate('AccountList'),
+      },
+      {
+        title: '계좌 비밀번호 변경',
+        onPress: () => navigation.navigate('AccountList'),
+      },
     ],
-    이체: [],
-    조회: [],
+    이체: [
+      {title: '이체', onPress: () => {}},
+      {title: '이체결과 조회', onPress: () => {}},
+      {title: '이체한도 조회/변경', onPress: () => {}},
+    ],
+    조회: [
+      {
+        title: '전체계좌 조회',
+        onPress: () => navigation.navigate('AccountList'),
+      },
+      {title: '통합거래내역 조회', onPress: () => {}},
+      {
+        title: '휴면계좌 조회',
+        onPress: () => navigation.navigate('AccountList'),
+      },
+      {
+        title: '해지계좌 조회',
+        onPress: () => navigation.navigate('AccountList'),
+      },
+    ],
+  };
+
+  const logout = () => {
+    setMemberData({isLogin: false, member: null});
+    navigation.popToTop();
   };
 
   return (
@@ -40,28 +75,32 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
         ]}
       />
       <View className="w-full h-32">
-        {isLogin ? (
+        {memberData.isLogin ? (
           <View className="w-full h-full flex justify-around">
             <View className="w-full px-8 flex flex-row justify-between items-center">
               <View className="flex flex-row items-end space-x-2">
-                <Text className="text-2xl font-bold text-gray-700">이유로</Text>
+                <Text className="text-2xl font-bold text-gray-700">
+                  {memberData.member?.name}
+                </Text>
                 <Text className="text-lg font-medium text-gray-700">
                   님, 안녕하세요!
                 </Text>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('EditProfile')}>
                 <Text className="text-gray-400 text-sm">회원정보수정</Text>
               </TouchableOpacity>
             </View>
             <View className="w-full">
               <View className="w-full flex flex-row items-center justify-center space-x-6">
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('AccountList')}>
                   <Text className="text-sm font-medium text-gray-700">
                     내 계좌 보기
                   </Text>
                 </TouchableOpacity>
                 <Text className="text-sm font-medium text-gray-700">|</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Intro')}>
+                <TouchableOpacity onPress={logout}>
                   <Text className="text-sm font-medium text-gray-700">
                     로그아웃
                   </Text>
@@ -78,7 +117,7 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
             </View>
             <View className="w-full">
               <View className="w-full flex flex-row items-center justify-center space-x-6">
-                <TouchableOpacity onPress={() => setIsLogin(true)}>
+                <TouchableOpacity onPress={() => navigation.popToTop()}>
                   <Text className="text-sm font-medium text-gray-700">
                     로그인
                   </Text>
@@ -105,17 +144,15 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
         />
       </View>
       <View className="w-full flex-grow flex flex-row">
-        <View className="w-36 h-full bg-gray-200 py-4">
+        <View className="w-28 h-full bg-gray-200 py-4">
           <View className="w-full h-16 flex justify-center">
             <Pressable
-              onPress={() => setMenu('뱅킹관리')}
+              onPress={() => setMenu('뱅킹')}
               className={clsx(
                 'w-[110%] z-10 ml-4 px-4 py-2 rounded-full',
-                menu === '뱅킹관리' && 'bg-pink-200 shadow-sm shadow-black',
+                menu === '뱅킹' && 'bg-pink-200 shadow-sm shadow-black',
               )}>
-              <Text className="text-xl font-medium text-gray-700">
-                뱅킹 관리
-              </Text>
+              <Text className="text-xl font-medium text-gray-700">뱅킹</Text>
             </Pressable>
           </View>
           <View className="w-full h-16 flex justify-center">

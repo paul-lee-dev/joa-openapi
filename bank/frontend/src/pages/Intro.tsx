@@ -10,12 +10,16 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Controller, useForm} from 'react-hook-form';
-import {RootStackParamList} from 'App';
 import Header from '@/components/Header';
 import PiggyBank2 from '@/assets/piggy-bank2.png';
 import BottomPopup from '@/components/BottomPopup';
 import CommonInput from '@/components/CommonInput';
 import BottomButton from '@/components/BottomButton';
+import {useFocusEffect} from '@react-navigation/native';
+import {useCallback} from 'react';
+import {useSetRecoilState} from 'recoil';
+import {memberDataAtom} from '@/store/atoms';
+import {RootStackParamList} from '@/Router';
 
 interface LoginForm {
   email: string;
@@ -25,6 +29,7 @@ interface LoginForm {
 type IntroScreenProps = NativeStackScreenProps<RootStackParamList, 'Intro'>;
 
 function Intro({navigation}: IntroScreenProps): React.JSX.Element {
+  const setMemberData = useSetRecoilState(memberDataAtom);
   const {
     control,
     handleSubmit,
@@ -40,8 +45,25 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const onSubmit = (data: LoginForm) => {
     console.log(data);
-    navigation.replace('Main');
+    setMemberData({
+      isLogin: true,
+      member: {
+        id: '90240424-7a53-460c-8d4e-f786eda65fbb',
+        name: '이유로',
+        email: 'eurohand@naver.com',
+        phone: '01099306272',
+        createdAt: '2024-03-27 00:18',
+        updatedAt: '2024-03-27 00:18',
+      },
+    });
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      setLoginModalOpen(false);
+    }, []),
+  );
+
   useEffect(() => {
     reset();
   }, [loginModalOpen, reset]);
@@ -106,7 +128,14 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
               <CommonInput label={'이메일'}>
                 <Controller
                   control={control}
-                  rules={{required: true}}
+                  rules={{
+                    required: '이메일을 입력해주세요.',
+                    pattern: {
+                      value:
+                        /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/,
+                      message: '올바른 이메일 형식이 아닙니다.',
+                    },
+                  }}
                   render={({field: {onChange, onBlur, value}}) => (
                     <TextInput
                       className="border-b border-gray-800/50 text-gray-700"
@@ -117,16 +146,14 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
                   )}
                   name="email"
                 />
-                {errors.email && (
-                  <Text className="absolute bottom-2 left-8 text-red-400">
-                    이메일을 입력해주세요.
-                  </Text>
-                )}
+                <Text className="absolute bottom-2 left-8 text-red-400">
+                  {errors.email?.message}
+                </Text>
               </CommonInput>
               <CommonInput label={'비밀번호'}>
                 <Controller
                   control={control}
-                  rules={{required: true}}
+                  rules={{required: '비밀번호를 입력해주세요.'}}
                   render={({field: {onChange, onBlur, value}}) => (
                     <View className="w-full relative">
                       <TextInput
@@ -150,11 +177,9 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
                   )}
                   name="password"
                 />
-                {errors.password && (
-                  <Text className="absolute bottom-2 left-8 text-red-400">
-                    비밀번호를 입력해주세요.
-                  </Text>
-                )}
+                <Text className="absolute bottom-2 left-8 text-red-400">
+                  {errors.password?.message}
+                </Text>
               </CommonInput>
               <View className="w-full flex flex-row justify-center space-x-8">
                 <TouchableOpacity onPress={() => navigation.navigate('Join')}>
