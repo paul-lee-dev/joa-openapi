@@ -30,6 +30,10 @@ export interface SearchDummyContent {
   updatedAt: string;
 }
 
+export interface CreateDummyMemberResponse{
+  
+}
+
 export default interface SearchDummyResponse {
   data: SearchDummyContent[];
   page?: number;

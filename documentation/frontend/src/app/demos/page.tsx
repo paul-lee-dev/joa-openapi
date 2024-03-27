@@ -20,7 +20,7 @@ const Demo = () => {
 
             <FeatureContainer>
               {features.map((feature) => (
-                <FeatureItem>
+                <FeatureItem key={feature.name}>
                   <FeatureIconContainer>
                     <feature.icon className="text-2xl text-white drop-shadow" />
                   </FeatureIconContainer>
