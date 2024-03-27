@@ -1,17 +1,19 @@
 package com.joa.openapi.dummy.service;
 
 import com.joa.openapi.account.dto.AccountCreateRequestDto;
-import com.joa.openapi.account.dto.AccountCreateResponseDto;
 import com.joa.openapi.account.dto.AccountDeleteRequestDto;
 import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.account.service.AccountService;
+import com.joa.openapi.common.entity.Api;
+import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.common.repository.ApiRepository;
+import com.joa.openapi.common.util.AuthCheckUtil;
 import com.joa.openapi.dummy.dto.*;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.repository.DummyRepository;
-import com.joa.openapi.member.dto.MemberIdResponseDto;
 import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
@@ -22,8 +24,10 @@ import com.joa.openapi.transaction.dto.TransactionRequestDto;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.joa.openapi.transaction.repository.TransactionRepository;
 import com.joa.openapi.transaction.service.TransactionService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,11 +49,14 @@ public class DummyService {
     private final AccountRepository accountRepository;
     private final TransactionService transactionService;
     private final TransactionRepository transactionRepository;
+    private final AuthCheckUtil authCheckUtil;
+    private final ApiRepository apiRepository;
     private final NeyhuingName neyhuingName;
     public String name;
 
     @Transactional
-    public DummyResponseDto createMember(DummyMemberRequestDto req, UUID adminId) {
+    public DummyResponseDto createMember(HttpServletRequest request, UUID apiKey, DummyMemberRequestDto req) throws ParseException {
+        UUID adminId = AuthoriaztionAPI(request, apiKey);
         name = "멤버" + req.getCount() + "명 만들기";
         Dummy dummy = Dummy.builder()
                 .name(name)
@@ -88,7 +95,8 @@ public class DummyService {
     }
 
     @Transactional
-    public DummyResponseDto createAccount(DummyAccountRequestDto req, UUID adminId) {
+    public DummyResponseDto createAccount(HttpServletRequest request, UUID apiKey, DummyAccountRequestDto req) throws ParseException {
+        UUID adminId = AuthoriaztionAPI(request, apiKey);
         name = "계좌" + req.getCount() + "개 만들기";
         Dummy dummy = Dummy.builder()
                 .name(name)
@@ -122,7 +130,8 @@ public class DummyService {
     }
 
     @Transactional
-    public DummyResponseDto createTransaction(DummyTransactionRequestDto req, UUID adminId) {
+    public DummyResponseDto createTransaction(HttpServletRequest request, UUID apiKey, DummyTransactionRequestDto req) throws ParseException {
+        UUID adminId = AuthoriaztionAPI(request, apiKey);
         name = "거래내역" + req.getCount() + "개 만들기";
         Dummy dummy = Dummy.builder()
                 .name(name)
@@ -198,7 +207,9 @@ public class DummyService {
     }
 
     @Transactional
-    public DummyResponseDto deleteDummy(UUID dummyId) {
+    public DummyResponseDto deleteDummy(HttpServletRequest request, UUID apiKey, UUID dummyId) throws ParseException {
+        UUID adminId = AuthoriaztionAPI(request, apiKey);
+        AuthoriaztionDummy(dummyId, adminId);
         Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
         if (dummy.getMemberCount() != null) {
             List<Member> memberList = memberRepository.findByDummyId(dummyId);
@@ -228,28 +239,34 @@ public class DummyService {
     }
 
     @Transactional
-    public List<DummyResponseDto> deleteAllDummy(UUID adminId) {
+    public List<DummyResponseDto> deleteAllDummy(HttpServletRequest request, UUID apiKey) throws ParseException {
+        UUID adminId = AuthoriaztionAPI(request, apiKey);
         List<Dummy> dummyList = dummyRepository.findAllByAdminId(adminId);
         List<DummyResponseDto> dummyResponseDtoList = new ArrayList<>();
         for (Dummy dummy: dummyList) {
-            dummyResponseDtoList.add(deleteDummy(dummy.getId()));
+            dummyResponseDtoList.add(deleteDummy(request, apiKey, dummy.getId()));
         }
         return dummyResponseDtoList;
     }
 
     @Transactional
-    public DummyResponseDto update(UUID dummyId, DummyUpdateRequestDto req) {
+    public DummyResponseDto update(HttpServletRequest request, UUID apiKey, UUID dummyId, DummyUpdateRequestDto req) throws ParseException {
+        UUID adminId = AuthoriaztionAPI(request, apiKey);
+        AuthoriaztionDummy(dummyId, adminId);
         Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
         if (req.getName() != null) dummy.updateName(req.getName());
         return DummyResponseDto.toDto(dummy);
     }
 
-    public DummyResponseDto search(UUID dummyId) {
+    public DummyResponseDto search(HttpServletRequest request, UUID apiKey, UUID dummyId) throws ParseException {
+        UUID adminId = AuthoriaztionAPI(request, apiKey);
+        AuthoriaztionDummy(dummyId, adminId);
         Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
         return DummyResponseDto.toDto(dummy);
     }
 
-    public List<DummyResponseDto> searchAll(UUID adminId) {
+    public List<DummyResponseDto> searchAll(HttpServletRequest request, UUID apiKey) throws ParseException {
+        UUID adminId = AuthoriaztionAPI(request, apiKey);
         List<Dummy> dummyList = dummyRepository.findAllByAdminId(adminId);
         List<DummyResponseDto> dummyResponseDtoList = new ArrayList<>();
         for (Dummy dummy: dummyList) {
@@ -260,5 +277,23 @@ public class DummyService {
 
     public String makeName(int cnt) {
         return neyhuingName.makeNeyhuing(cnt);
+    }
+
+    // 관리자가 가지고 있는 ApiKey가 유효한지
+    public UUID AuthoriaztionAPI(HttpServletRequest request, UUID apiKey) throws ParseException {
+        UUID adminId = UUID.fromString(authCheckUtil.authCheck(request));
+        Api api = apiRepository.findByAdminId(adminId);
+        if(!api.getApiKey().equals(apiKey)) {
+            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+        }
+
+        return adminId;
+    }
+
+    // 관리자 아이디가 만든 더미인지
+    public void AuthoriaztionDummy(UUID dummyId, UUID adminId) {
+        if (!dummyId.equals(adminId)) {
+            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+        }
     }
 }
