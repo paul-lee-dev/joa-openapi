@@ -6,8 +6,10 @@ import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.dummy.entity.Dummy;
+import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.repository.DummyRepository;
 import com.joa.openapi.transaction.dto.*;
+import com.joa.openapi.transaction.entity.Fourwords;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.joa.openapi.transaction.errorcode.TransactionErrorCode;
 import com.joa.openapi.transaction.repository.TransactionRepository;
@@ -16,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -60,7 +63,6 @@ public class TransactionService {
 
         return TransactionResponseDto.toDepositDto(transaction, toPrevBalance, account.getBalance());
     }
-
 
     @Transactional
     public TransactionResponseDto withdraw(UUID memberId, TransactionRequestDto req) {
@@ -225,6 +227,34 @@ public class TransactionService {
         accountRepository.save(toAccount);
 
         return new Long[] {fromAccount.getBalance(), toAccount.getBalance()};
+    }
+
+    @Transactional
+    public Transaction1wonResponseDto oneSend(Transaction1wonRequestDto req) {
+        Account toAccount = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        String depositorName = Fourwords.chooseWord();
+
+        Transaction transaction = Transaction.builder()
+                .amount(1L)
+                .depositorName(depositorName)
+                .toAccount(req.getAccountId())
+                .dummy(null)
+                .build();
+
+        toAccount.updateBalance(toAccount.getBalance() + 1);
+
+        transactionRepository.save(transaction);
+        accountRepository.save(toAccount);
+
+        return Transaction1wonResponseDto.toDto(depositorName, transaction.getId());
+    }
+
+    public void oneSendConfirm(Transaction1wonConfirmRequestDto req) {
+        Transaction transaction = transactionRepository.findById(req.getTransactionId()).orElseThrow(() -> new RestApiException(TransactionErrorCode.NO_TRANSACTION));
+
+        if(!transaction.getDepositorName().equals(req.getWord()))
+            throw new RestApiException(TransactionErrorCode.MiSMATCH);
     }
 
     @Transactional
