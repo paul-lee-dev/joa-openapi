@@ -63,7 +63,16 @@ function AccountDetail({
       <ScrollView className="w-full flex-grow">
         <View>
           <CommonMenuItem title={'계좌 비밀번호 재설정'} underline={true} />
-          <CommonMenuItem title={'계좌 거래한도 변경'} underline={true} />
+          <CommonMenuItem
+            title={'계좌 거래한도 변경'}
+            underline={true}
+            onPress={() =>
+              navigation.navigate('ChangeAccountLimit', {
+                accountId: account.accountId,
+                transferLimit: account.transferLimit,
+              })
+            }
+          />
           <CommonMenuItem title={'비밀번호 오류횟수 초기화'} underline={true} />
           <CommonMenuItem title={'거래내역 다운로드'} underline={true} />
         </View>

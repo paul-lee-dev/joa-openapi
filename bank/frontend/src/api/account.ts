@@ -15,6 +15,11 @@ export const updateAccount = async (params: any): Promise<any> => {
   return response.data;
 };
 
+export const changeLimit = async (params: any): Promise<any> => {
+  const response = await axiosInstance.patch('/account/limit', params);
+  return response.data;
+};
+
 export const deleteAccount = async (params: any): Promise<any> => {
   const response = await axiosInstance.delete('/account', params);
   return response.data;

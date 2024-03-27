@@ -31,7 +31,10 @@ export type RootStackParamList = {
     account: IAccount;
   };
   AccountList: undefined;
-  ChangeAccountLimit: undefined;
+  ChangeAccountLimit: {
+    accountId: string;
+    transferLimit: number;
+  };
   ChangeAccountName: {
     accountId: string;
     nickname: string;
