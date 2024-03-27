@@ -1,10 +1,7 @@
 package com.joa.openapi.dummy.controller;
 
 import com.joa.openapi.common.response.ApiResponse;
-import com.joa.openapi.dummy.dto.DummyAccountRequestDto;
-import com.joa.openapi.dummy.dto.DummyMemberRequestDto;
-import com.joa.openapi.dummy.dto.DummyResponseDto;
-import com.joa.openapi.dummy.dto.DummyUpdateRequestDto;
+import com.joa.openapi.dummy.dto.*;
 import com.joa.openapi.dummy.service.DummyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +32,7 @@ public class DummyController {
     }
 
     @PostMapping("/transaction")
-    public ResponseEntity<?> createTransaction(@RequestBody DummyMemberRequestDto req, @RequestHeader("adminId") UUID adminId) {
+    public ResponseEntity<?> createTransaction(@RequestBody DummyTransactionRequestDto req, @RequestHeader("adminId") UUID adminId) {
         DummyResponseDto dummyResponseDto = dummyService.createTransaction(req, adminId);
         return ResponseEntity.ok(ApiResponse.success("거래내역 더미데이터 생성 성공했습니다.", dummyResponseDto));
     }

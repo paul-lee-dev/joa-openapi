@@ -5,8 +5,10 @@ import InputText from "@/components/input/inputText";
 import BankSelect from "@/components/select/bank";
 import MyAsyncSelect from "@/components/select/multiSearchSelect";
 import tw from "tailwind-styled-components";
+import { useRouter } from "next/navigation";
 
 export default function AccountCreate() {
+  const router = useRouter();
   return (
     <>
       <Form>
@@ -27,7 +29,13 @@ export default function AccountCreate() {
           ></MyAsyncSelect>
         </div>
         <div className="flex justify-end">
-          <Button id={"detailSubmit"} name={"생성"}></Button>
+          <Button
+            onClick={() => {
+              console.log("customer created");
+            }}
+            id={"detailSubmit"}
+            name={"생성"}
+          ></Button>
         </div>
       </Form>
     </>

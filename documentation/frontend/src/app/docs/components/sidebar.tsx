@@ -17,14 +17,14 @@ export default function Sidebar() {
         <BarSubTitle>Overview</BarSubTitle>
         {
           overviews.map((item) => (
-            <BarItem href={item.anchor}>{item.name}</BarItem>
+            <BarItem key={item.name} href={item.anchor}>{item.name}</BarItem>
           ))
         }
 
         <BarSubTitle>Components</BarSubTitle>
         {
           components.map((item) => (
-            <BarItem href={item.anchor}>{item.name}</BarItem>
+            <BarItem key={item.name} href={item.anchor}>{item.name}</BarItem>
           ))
         }
 

@@ -41,7 +41,13 @@ export default function ProductDetail() {
           ></InputText>
         </div>
         <div className="flex gap-6 justify-end">
-          <Button id={"create"} name={"생성"}></Button>
+          <Button
+            onClick={() => {
+              console.log("create dummy transaction");
+            }}
+            id={"create"}
+            name={"생성"}
+          ></Button>
         </div>
       </Form>
     </>

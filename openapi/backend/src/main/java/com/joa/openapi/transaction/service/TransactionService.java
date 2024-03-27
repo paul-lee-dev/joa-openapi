@@ -30,12 +30,13 @@ public class TransactionService {
 
     @Transactional
     public TransactionResponseDto deposit(UUID memberId, TransactionRequestDto req) {
-//        Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
-//                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
 
         String to = req.getToAccount();
 
         Account account = accountRepository.findById(to).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
+                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
 
         authorityValidation(memberId, account);
         checkPassword(account, req.getPassword());
@@ -51,8 +52,7 @@ public class TransactionService {
                 .depositorName(req.getDepositorName())
                 .fromAccount(null)
                 .toAccount(req.getToAccount())
-                //.dummy(optionalDummy.orElse(null))
-                .dummy(null)
+                .dummy(optionalDummy.orElse(null))
                 .build();
 
         transactionRepository.save(transaction);
@@ -64,12 +64,13 @@ public class TransactionService {
 
     @Transactional
     public TransactionResponseDto withdraw(UUID memberId, TransactionRequestDto req) {
-//        Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
-//                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
 
         String from = req.getFromAccount();
 
         Account account = accountRepository.findById(from).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
+                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
 
         authorityValidation(memberId, account);
         checkPassword(account, req.getPassword());
@@ -81,13 +82,13 @@ public class TransactionService {
 
         account.updateBalance(account.getBalance() - req.getAmount());
 
+
         Transaction transaction = Transaction.builder()
                 .amount(req.getAmount())
                 .depositorName(req.getDepositorName())
                 .fromAccount(req.getFromAccount())
                 .toAccount(null)
-                //.dummy(optionalDummy.orElse(null))
-                .dummy(null)
+                .dummy(optionalDummy.orElse(null))
                 .build();
 
         transactionRepository.save(transaction);
@@ -99,11 +100,12 @@ public class TransactionService {
 
     @Transactional
     public TransactionResponseDto send(UUID memberId, TransactionRequestDto req) {
-//        Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
-//                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
 
         Account fromAccount = accountRepository.findById(req.getFromAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
         Account toAccount = accountRepository.findById(req.getToAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
+                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
 
         authorityValidation(memberId, fromAccount);
         checkPassword(fromAccount, req.getPassword());
@@ -122,8 +124,7 @@ public class TransactionService {
                 .depositorName(req.getDepositorName())
                 .fromAccount(req.getFromAccount())
                 .toAccount(req.getToAccount())
-                //.dummy(optionalDummy.orElse(null))
-                .dummy(null)
+                .dummy(optionalDummy.orElse(null))
                 .build();
 
         transactionRepository.save(transaction);

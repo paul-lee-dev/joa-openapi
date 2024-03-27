@@ -2,9 +2,15 @@ package com.joa.openapi.bank.controller;
 
 import com.joa.openapi.bank.dto.*;
 import com.joa.openapi.bank.service.BankService;
+import com.joa.openapi.common.entity.Api;
+import com.joa.openapi.common.errorcode.CommonErrorCode;
+import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.common.response.ApiResponse;
 import com.joa.openapi.common.util.AuthCheckUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,15 +22,22 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BankController {
 
-    private final AuthCheckUtil authCheckUtil;
+    private AuthCheckUtil authCheckUtil;
     private final BankService bankService;
+    private ApiRepository apiRepository;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody BankRequestDto req, @RequestHeader("Authorization") UUID adminId, @RequestHeader("apiKey") String apiKey) {
+    public ResponseEntity<?> create(HttpServletRequest request, @RequestBody BankRequestDto req, @RequestHeader("apiKey") UUID apiKey) throws ParseException {
 
-        //HttpServletRequest request를 parameter로 받아와서
-        //String adminId = authCheckUtil.authCheck(request); 를 추가하면 됨!
+        UUID adminId = UUID.fromString(authCheckUtil.authCheck(request)); //를 추가하면 됨!
         //if (adminId==null) 일 때의 처리도 필요할 듯
+
+        //이거 service로 옮기고 Authoriaztion함수 빼서 구현
+        Api api = apiRepository.findByAdminId(adminId);
+        if(!api.getApiKey().equals(apiKey)) {
+            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+        }
+        //adminId를 가지고 뭔가 해야겠지~~
 
         // apikey 검사하는 로직 필요
         BankResponseDto bankResponseDto = bankService.create(req, adminId);

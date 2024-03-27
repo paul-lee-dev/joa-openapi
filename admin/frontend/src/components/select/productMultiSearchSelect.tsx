@@ -1,5 +1,5 @@
 import AsyncSelect from "react-select/async";
-import { CustomerOption, customerOptions } from "@/asset/data/data";
+import { ProductOption, productOptions } from "@/asset/data/data";
 import tw from "tailwind-styled-components";
 
 // TODO: resolve react-select Async error
@@ -10,13 +10,13 @@ interface MultiSearchProps {
 }
 
 const filterCustomers = (inputValue: string) => {
-  return customerOptions.filter((i) =>
+  return productOptions.filter((i) =>
     i.label.toLowerCase().includes(inputValue.toLowerCase())
   );
 };
 
 const promiseOptions = (inputValue: string) =>
-  new Promise<CustomerOption[]>((resolve) => {
+  new Promise<ProductOption[]>((resolve) => {
     setTimeout(() => {
       resolve(filterCustomers(inputValue));
     }, 1000);
@@ -28,7 +28,7 @@ const MyAsyncSelect = () => (
     cacheOptions
     defaultOptions
     loadOptions={promiseOptions}
-    placeholder="  고객 검색  "
+    placeholder="  상품 검색  "
     theme={(theme) => ({
       ...theme,
       borderRadius: 8,
@@ -43,7 +43,7 @@ const MyAsyncSelect = () => (
   />
 );
 
-export default function MultiSearchSelect({
+export default function ProductMultiSearchSelect({
   label,
   htmlFor,
 }: MultiSearchProps) {

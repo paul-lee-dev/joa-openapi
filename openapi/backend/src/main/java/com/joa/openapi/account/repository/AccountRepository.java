@@ -14,4 +14,6 @@ public interface AccountRepository extends JpaRepository<Account, String>, Accou
 
     Page<Account> findByHolderId(UUID memberId, Pageable pageable);
     List<Account> findByDummyId(UUID dummyId);
+    // 페이징 안된 유저의 전체 계좌
+    List<Account> findByHolderId(UUID memberId);
 }
