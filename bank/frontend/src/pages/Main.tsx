@@ -226,7 +226,9 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
               underline={false}
               onPress={() => {
                 setCreateModalOpen(false);
-                navigation.navigate('ProductList', {type: 'ORDINARY_DEPOSIT'});
+                navigation.navigate('ProductList', {
+                  productType: 'ORDINARY_DEPOSIT',
+                });
               }}
             />
             <CommonMenuItem
@@ -235,7 +237,9 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
               underline={false}
               onPress={() => {
                 setCreateModalOpen(false);
-                navigation.navigate('ProductList', {type: 'TERM_DEPOSIT'});
+                navigation.navigate('ProductList', {
+                  productType: 'TERM_DEPOSIT',
+                });
               }}
             />
             <CommonMenuItem
@@ -244,7 +248,9 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
               underline={false}
               onPress={() => {
                 setCreateModalOpen(false);
-                navigation.navigate('ProductList', {type: 'FIXED_DEPOSIT'});
+                navigation.navigate('ProductList', {
+                  productType: 'FIXED_DEPOSIT',
+                });
               }}
             />
           </View>

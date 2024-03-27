@@ -62,7 +62,7 @@ export type RootStackParamList = {
   Main: undefined;
   Menu: undefined;
   ProductList: {
-    type: ProductType;
+    productType: ProductType;
   };
   Search: undefined;
   Setting: undefined;
