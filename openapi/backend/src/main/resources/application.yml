@@ -1,19 +1,6 @@
 spring:
   profiles:
     include: secret
-  mail:
-    host:
-    port:
-    username:
-    password:
-    properties:
-      mail:
-        debug:
-        smtp:
-          timeout:
-          starttls:
-            enable:
-          auth:
 
   datasource:
     url:
@@ -28,26 +15,51 @@ spring:
       hibernate:
         format_sql:
         dialect:
+        default_batch_fetch_size:
+  #    show-sql: true
+
+  jwt:
+    header:
+    secret:
+    access-token-validity-in-seconds :
+    refresh-token-validity-in-seconds :
 
   data:
     redis:
       host:
       port:
-      password:
+    mongodb:
+      uri:
 
-logging:
-  level:
-    org.hibernate.SQL:
-    org.hibernate.type:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id:
+            client-secret:
+          password-salt:
 
-error:
-  printStackTrace:
+  servlet:
+    multipart:
+      max-file-size:
+      max-request-size:
 
-jwt:
-  secret:
-  access:
-    expiration:
-    header:
-  refresh:
-    expiration:
-    header:
+logging.level:
+  org.hibernate.SQL:
+
+aes:
+  secret-key:
+
+cloud:
+  aws:
+    s3:
+      bucket:
+    credentials:
+      access-key:
+      secret-key:
+    region:
+      static:
+      auto:
+    stack:
+      auto:

@@ -20,5 +20,4 @@ public class AccountCreateRequestDto {
     private final Long amount = 0L;
     private UUID dummyId = null;
     private UUID bankId;
-    private UUID productId;
 }
