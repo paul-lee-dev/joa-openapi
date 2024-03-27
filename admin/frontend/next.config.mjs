@@ -5,7 +5,7 @@ const nextConfig = {
     return [
       {
         source: "/dashboard/:path*",
-        destination: `http://127.0.0.1:8083/:path*`,
+        destination: `http://127.0.0.1:3000/:path*`,
       },
     ];
   },
