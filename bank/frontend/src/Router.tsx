@@ -12,7 +12,7 @@ import TransferAmount from '@/pages/TransferAmount';
 import TransferConfirm from '@/pages/TransferConfirm';
 import TransferResult from '@/pages/TransferResult';
 import {useRecoilValue} from 'recoil';
-import React from 'react';
+import React, {useEffect} from 'react';
 import CreateAccountConfirm from '@/pages/CreateAccountConfirm';
 import CreateAccountResult from '@/pages/CreateAccountResult';
 import ChangeAccountName from '@/pages/ChangeAccountName';
@@ -25,6 +25,7 @@ import History from './pages/History';
 import ChangeBankId from './pages/ChangeBankId';
 import EditProfile from './pages/EditProfile';
 import DeleteAccount from './pages/DeleteAccount';
+import SplashScreen from 'react-native-splash-screen';
 
 export type RootStackParamList = {
   AccountDetail: {
@@ -82,6 +83,9 @@ const globalOption = {options: {headerShown: false}};
 
 function Router(): React.JSX.Element {
   const memberData = useRecoilValue(memberDataAtom);
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <NavigationContainer>
