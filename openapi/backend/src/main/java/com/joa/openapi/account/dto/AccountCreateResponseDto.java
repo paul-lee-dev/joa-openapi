@@ -12,6 +12,7 @@ import java.util.UUID;
 public class AccountCreateResponseDto {
 
     private String accountId;
+    private String productName;
     private String nickname;
     private Long balance;
     private Boolean isDormant;
@@ -24,10 +25,12 @@ public class AccountCreateResponseDto {
     private Long amount;
     private UUID dummyId;
     private UUID bankId;
+    private UUID productId;
 
     public static AccountCreateResponseDto toDto(Account account) {
         return AccountCreateResponseDto.builder()
                 .accountId(account.getId())
+                .productName(account.getProduct().getName())
                 .nickname(account.getName())
                 .balance(account.getBalance())
                 .isDormant(account.getIsDormant())
@@ -39,6 +42,7 @@ public class AccountCreateResponseDto {
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
                 .dummyId(account.getDummy() == null ? null : account.getDummy().getId())
+                .productId(account.getProduct().getId())
                 .build();
     }
 }
