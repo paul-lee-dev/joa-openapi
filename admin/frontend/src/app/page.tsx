@@ -1,8 +1,6 @@
-import { useRouter } from "next/router";
 import tw from "tailwind-styled-components";
 
 export default function LoginPage() {
-  const router = useRouter();
   return (
     <Wrapper>
       <TitleContainer>
@@ -48,13 +46,7 @@ export default function LoginPage() {
 
         <SignUpParagraph>
           계정이 없으십니까?{" "}
-          <SignUpAnchor
-            onClick={() => {
-              router.push("/signup");
-            }}
-          >
-            회원가입
-          </SignUpAnchor>
+          <SignUpAnchor href="/signup">회원가입</SignUpAnchor>
         </SignUpParagraph>
       </MainContainer>
     </Wrapper>

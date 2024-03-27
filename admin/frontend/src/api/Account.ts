@@ -7,19 +7,19 @@ import SearchBankResponse, {
   ModifyBankResponse,
   SearchBankParams,
 } from "@/models/Bank.interface";
-import { accountAxios } from "./http-common";
+import { localAxios } from "./http-common";
 
 export const createBank = async (
   params: CreateBankParams
 ): Promise<CreateBankResponse> => {
   const url = "bank";
-  const response = await accountAxios.post(url, params);
+  const response = await localAxios.post(url, params);
   return response.data;
 };
 
 export const searchBank = async (): Promise<SearchBankResponse> => {
   const url = "bank/search";
-  const response = await accountAxios.get(url);
+  const response = await localAxios.get(url);
   return response.data;
 };
 
@@ -27,7 +27,7 @@ export const searchBankbyName = async (
   params: SearchBankParams
 ): Promise<SearchBankResponse> => {
   const url = `bank/search?name=${params.name}`;
-  const response = await accountAxios.post(url, params);
+  const response = await localAxios.post(url, params);
   return response.data;
 };
 
@@ -36,7 +36,7 @@ export const modifyBank = async (
 ): Promise<ModifyBankResponse> => {
   const { bankId } = params;
   const url = `bank/${bankId}`;
-  const response = await accountAxios.patch(url, params);
+  const response = await localAxios.patch(url, params);
   return response.data;
 };
 
@@ -45,6 +45,6 @@ export const deleteBank = async (
   params: DeleteBankParams
 ): Promise<DeleteBankResponse> => {
   const url = `bank/${params.bankId}`;
-  const response = await accountAxios.delete(url);
+  const response = await localAxios.delete(url);
   return response.data;
 };
