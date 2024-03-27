@@ -34,6 +34,12 @@ public class TransactionController {
         return ResponseEntity.ok(ApiResponse.success("계좌 이체에 성공했습니다.", response));
     }
 
+    @PostMapping("/1wonSend")
+    public ResponseEntity<?> oneSend(@RequestBody Transaction1wonRequestDto req) {
+        String depositorName = transactionService.oneSend(req);
+        return ResponseEntity.ok(ApiResponse.success("1원 인증 성공했습니다.", depositorName));
+    }
+
     @PatchMapping
     public ResponseEntity<?> update(@RequestHeader("memberId") UUID memberId, @RequestBody TransactionUpdateRequestDto req) {
         TransactionUpdateResponseDto response = transactionService.update(memberId, req);

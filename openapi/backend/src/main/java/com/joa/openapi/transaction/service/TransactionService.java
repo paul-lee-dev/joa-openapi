@@ -6,6 +6,7 @@ import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.dummy.entity.Dummy;
+import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.repository.DummyRepository;
 import com.joa.openapi.transaction.dto.*;
 import com.joa.openapi.transaction.entity.Transaction;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -60,7 +62,6 @@ public class TransactionService {
 
         return TransactionResponseDto.toDepositDto(transaction, toPrevBalance, account.getBalance());
     }
-
 
     @Transactional
     public TransactionResponseDto withdraw(UUID memberId, TransactionRequestDto req) {
@@ -225,6 +226,27 @@ public class TransactionService {
         accountRepository.save(toAccount);
 
         return new Long[] {fromAccount.getBalance(), toAccount.getBalance()};
+    }
+
+    @Transactional
+    public String oneSend(Transaction1wonRequestDto req) {
+        Account toAccount = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        String depositorName = "abc";
+
+        Transaction transaction = Transaction.builder()
+                .amount(1L)
+                .depositorName(depositorName)
+                .toAccount(req.getAccountId())
+                .dummy(null)
+                .build();
+
+        toAccount.updateBalance(toAccount.getBalance() + 1);
+
+        transactionRepository.save(transaction);
+        accountRepository.save(toAccount);
+
+        return depositorName;
     }
 
     @Transactional
