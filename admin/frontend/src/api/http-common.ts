@@ -20,3 +20,12 @@ export const accountAxios: AxiosInstance = axios.create({
   },
   withCredentials: true,
 });
+
+export const dummyAxios: AxiosInstance = axios.create({
+  baseURL,
+  headers: {
+    adminId: testMember,
+    "Content-Type": "application/json",
+  },
+  withCredentials: true,
+});

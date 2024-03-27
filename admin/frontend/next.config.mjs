@@ -7,7 +7,7 @@ const nextConfig = {
     return [
       {
         source: "/:path*",
-        destination: `http://localhost/:path*`, //컨플루언스의 API주소
+        destination: `http://joa13.site:path*`, //컨플루언스의 API주소
       },
     ];
   },
