@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  distDir: "build",
-  output: "export",
-};
+// npx serve out
+// admin
+
+const nextConfig = {};
 
 export default nextConfig;
