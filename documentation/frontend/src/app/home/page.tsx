@@ -58,29 +58,19 @@ const Home = () => {
 
           <TeamContainer>
             <TeamImageContainer>
-              <TeamImageItem src="https://images.unsplash.com/photo-1557426272-fc759fdf7a8d" />
-              <TeamSubImageItem src="https://images.unsplash.com/photo-1557426272-fc759fdf7a8d" />
+              <TeamImageItem src={team.image} />
+              <TeamSubImageItem src={team.subimage} />
             </TeamImageContainer>
 
             <TeamTextContainer>
-              <TeamTitle>텍스트 제목</TeamTitle>
-              <TeamDetail>
-                팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.
-                팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.
-                팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.
-              </TeamDetail>
+              <TeamTitle>{team.title1}</TeamTitle>
+              <TeamDetail>{team.detail1}</TeamDetail>
             </TeamTextContainer>
-
             <TeamTextContainer>
-              <TeamTitle>텍스트 제목</TeamTitle>
-              <TeamDetail>
-                팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.
-                팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.
-                팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.
-              </TeamDetail>
+              <TeamTitle>{team.title2}</TeamTitle>
+              <TeamDetail>{team.detail2}</TeamDetail>
             </TeamTextContainer>
           </TeamContainer>
-
         </SubWrapper>
       </Wrapper>
     </>
@@ -235,14 +225,13 @@ const posts = [
 ]
 
 const team = {
-    image: '',
-    subimage: '',
-    title1: '',
-    detail1: '',
-    title2: '',
-    detail2: '',
+    image: 'https://images.unsplash.com/photo-1557426272-fc759fdf7a8d',
+    subimage: 'https://images.unsplash.com/photo-1557426272-fc759fdf7a8d',
+    title1: '텍스트 제목',
+    detail1: '팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다. 팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다. 팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.',
+    title2: '텍스트 제목',
+    detail2: '팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다. 팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다. 팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.',
   }
-
 
 interface Stat {
   id: number;
