@@ -6,11 +6,13 @@ import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.dummy.entity.Dummy;
+import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.repository.DummyRepository;
 import com.joa.openapi.transaction.dto.*;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.joa.openapi.transaction.errorcode.TransactionErrorCode;
 import com.joa.openapi.transaction.repository.TransactionRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -36,7 +38,8 @@ public class TransactionService {
         Account account = accountRepository.findById(to).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
-                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
+                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(
+                    DummyErrorCode.NO_DUMMY)));
 
         authorityValidation(memberId, account);
         checkPassword(account, req.getPassword());
