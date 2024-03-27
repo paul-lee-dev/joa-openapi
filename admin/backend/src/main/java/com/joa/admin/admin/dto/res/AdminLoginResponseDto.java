@@ -7,8 +7,9 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class AdminTokenResponseDto {
+public class AdminLoginResponseDto {
 
     private String accessToken;
     private String refreshToken;
+    private UUID apiKey;
 }

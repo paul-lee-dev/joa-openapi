@@ -8,6 +8,7 @@ import com.joa.admin.admin.dto.req.AdminLoginRequestDto;
 import com.joa.admin.admin.dto.req.AdminUpdateRequestDto;
 import com.joa.admin.admin.dto.res.AdminIdResponseDto;
 import com.joa.admin.admin.dto.res.AdminInfoResponseDto;
+import com.joa.admin.admin.dto.res.AdminLoginResponseDto;
 import com.joa.admin.admin.dto.res.AdminTokenResponseDto;
 import com.joa.admin.admin.entity.Admin;
 import com.joa.admin.admin.entity.Api;
@@ -50,6 +51,8 @@ public class AdminService implements UserDetailsService {
     //회원가입
     @Transactional
     public AdminIdResponseDto addAdmin(AdminJoinRequestDto request) {
+        confirmEmail(request.getEmail());
+        confirmPhone(request.getPhone());
         Admin admin = Admin.builder()
             .name(request.getName())
             .email(request.getEmail())
@@ -84,7 +87,7 @@ public class AdminService implements UserDetailsService {
 
     //로그인
     @Transactional
-    public AdminTokenResponseDto login(AdminLoginRequestDto request) {
+    public AdminLoginResponseDto login(AdminLoginRequestDto request) {
         String email = request.getEmail();
         String password = request.getPassword();
         Admin admin = adminRepository.findByEmail(email);
@@ -98,7 +101,8 @@ public class AdminService implements UserDetailsService {
         String adminId = admin.getAdminId().toString();
         String accessToken = jwtUtil.createAccessToken(adminId);
         String refreshToken = jwtUtil.createRefreshToken(adminId);
-        AdminTokenResponseDto response = new AdminTokenResponseDto(accessToken, refreshToken);
+        UUID apiKey = apiRepository.findByAdminId(UUID.fromString(adminId)).getApiKey();
+        AdminLoginResponseDto response = new AdminLoginResponseDto(accessToken, refreshToken, apiKey);
         return response;
     }
 

@@ -42,6 +42,7 @@ public class AccountCreateResponseDto {
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
                 .dummyId(account.getDummy() == null ? null : account.getDummy().getId())
+                .bankId(account.getBankId())
                 .productId(account.getProduct().getId())
                 .build();
     }
