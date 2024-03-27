@@ -11,8 +11,10 @@ type CreateAccountScreenProps = NativeStackScreenProps<
 >;
 
 function CreateAccount({
+  route,
   navigation,
 }: CreateAccountScreenProps): React.JSX.Element {
+  const {product} = route.params;
   return (
     <View className="w-full h-full bg-gray-100 flex">
       <Header
@@ -25,7 +27,7 @@ function CreateAccount({
           <View className="w-full h-96 bg-purple-400 items-center p-8 justify-between">
             <View className="w-full flex space-y-3">
               <Text className="text-xl font-medium text-gray-50">
-                조아은행 입출금통장
+                {product.name}
               </Text>
               <Text className="text-5xl text-gray-50">손쉬운 계좌개설</Text>
             </View>
@@ -74,7 +76,7 @@ function CreateAccount({
       </ScrollView>
       <BottomButton
         title={'신청하기'}
-        onPress={() => navigation.navigate('CreateAccountConfirm')}
+        onPress={() => navigation.navigate('CreateAccountConfirm', {product})}
       />
     </View>
   );

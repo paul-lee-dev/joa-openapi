@@ -29,6 +29,7 @@ import {useRecoilValue} from 'recoil';
 import {memberDataAtom} from '@/store/atoms';
 import {useQuery} from '@tanstack/react-query';
 import {getAccountList} from '@/api/account';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 type MainScreenProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
 
@@ -53,14 +54,22 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
         ]}
       />
       <ScrollView className="w-full h-full bg-gray-100">
-        <View className="w-full px-10 py-6">
-          <Text className="text-lg font-semibold text-gray-700">
-            {`${memberData.member?.name}님`},
-          </Text>
-          <Text className="text-lg font-semibold text-gray-700">
-            조아은행에 오신 것을 환영합니다.
-          </Text>
-        </View>
+        {memberData.member !== null ? (
+          <View className="w-full px-10 py-6">
+            <Text className="text-lg font-semibold text-gray-700">
+              {`${memberData.member?.name}님`},
+            </Text>
+            <Text className="text-lg font-semibold text-gray-700">
+              조아은행에 오신 것을 환영합니다.
+            </Text>
+          </View>
+        ) : (
+          <View className="w-full px-10 py-6">
+            <SkeletonPlaceholder backgroundColor={'#fce7f3'}>
+              <View style={{width: 270, height: 60, borderRadius: 10}} />
+            </SkeletonPlaceholder>
+          </View>
+        )}
         <View className="w-full p-6 pb-12 flex space-y-4">
           <View className="w-full relative py-4 px-6 rounded-3xl flex flex-row justify-between items-center shadow-sm shadow-black  bg-gray-50">
             <View className="flex flex-row absolute bottom-1 z-10 right-4 bg-black/50 rounded-full px-2 border space-x-1 border-gray-200">
@@ -78,7 +87,7 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
             </View>
             <Image source={Money} className="w-16 h-12" />
           </View>
-          {data?.page?.content.length > 0 && (
+          {data?.page?.content.length > 1 ? (
             <View className="w-full py-4 px-6 relative rounded-3xl bg-pink-200 flex space-y-2 shadow-sm shadow-black">
               <View className="absolute top-4 right-4">
                 <Menu>
@@ -158,6 +167,12 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
                 <View className="bg-slate-400 w-1 h-1" />
               </View>
             </View>
+          ) : (
+            <View className="w-full h-44 relative rounded-3xl bg-pink-200 flex overflow-hidden">
+              <SkeletonPlaceholder backgroundColor={'#fce7f3'}>
+                <View style={{width: '100%', height: '100%'}} />
+              </SkeletonPlaceholder>
+            </View>
           )}
           <TouchableOpacity
             onPress={() => setCreateModalOpen(true)}
@@ -204,35 +219,33 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
       </ScrollView>
       {createModalOpen && (
         <BottomPopup close={() => setCreateModalOpen(false)}>
-          <View className="w-full flex flex-grow space-y-8 -mb-16">
+          <View className="w-full flex flex-grow space-y-8 -mb-6">
             <CommonMenuItem
               title={'입출금통장'}
               subtitle={'손쉬운 계좌개설'}
               underline={false}
               onPress={() => {
                 setCreateModalOpen(false);
-                navigation.navigate('CreateAccount');
+                navigation.navigate('ProductList', {type: 'ORDINARY_DEPOSIT'});
               }}
             />
             <CommonMenuItem
               title={'정기예금'}
-              subtitle={'실시간 이자가 쌓여요'}
+              subtitle={'만기일에 쌓인 이자를 받을 수 있어요'}
               underline={false}
+              onPress={() => {
+                setCreateModalOpen(false);
+                navigation.navigate('ProductList', {type: 'TERM_DEPOSIT'});
+              }}
             />
             <CommonMenuItem
-              title={'자유적금'}
-              subtitle={'매일/매주/매월 자유롭게'}
+              title={'정기적금'}
+              subtitle={'매월 일정한 금액 저축해요'}
               underline={false}
-            />
-            <CommonMenuItem
-              title={'한달적금'}
-              subtitle={'한달동안 매일매일 적금'}
-              underline={false}
-            />
-            <CommonMenuItem
-              title={'26주 적금'}
-              subtitle={'즐거운 도전'}
-              underline={false}
+              onPress={() => {
+                setCreateModalOpen(false);
+                navigation.navigate('ProductList', {type: 'FIXED_DEPOSIT'});
+              }}
             />
           </View>
         </BottomPopup>

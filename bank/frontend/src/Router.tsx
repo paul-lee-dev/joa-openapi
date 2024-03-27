@@ -26,6 +26,8 @@ import ChangeBankId from './pages/ChangeBankId';
 import EditProfile from './pages/EditProfile';
 import DeleteAccount from './pages/DeleteAccount';
 import SplashScreen from 'react-native-splash-screen';
+import {IProduct, ProductType} from './models/product';
+import ProductList from './pages/ProductList';
 
 export type RootStackParamList = {
   AccountDetail: {
@@ -45,9 +47,11 @@ export type RootStackParamList = {
   ChangePasswordResult: undefined;
   ChangePasswordStart: undefined;
   ChangePasswordVerify: undefined;
-  CreateAccount: undefined;
-  CreateAccountConfirm: undefined;
-  CreateAccountResult: undefined;
+  CreateAccount: {
+    product: IProduct;
+  };
+  CreateAccountConfirm: {product: IProduct};
+  CreateAccountResult: {account: IAccount};
   DeleteAccount: {account: IAccount};
   EditProfile: undefined;
   History: {
@@ -57,6 +61,9 @@ export type RootStackParamList = {
   Join: undefined;
   Main: undefined;
   Menu: undefined;
+  ProductList: {
+    type: ProductType;
+  };
   Search: undefined;
   Setting: undefined;
   Splash: undefined;
@@ -166,6 +173,11 @@ function Router(): React.JSX.Element {
             <Stack.Screen
               name="DeleteAccount"
               component={DeleteAccount}
+              {...globalOption}
+            />
+            <Stack.Screen
+              name="ProductList"
+              component={ProductList}
               {...globalOption}
             />
           </>
