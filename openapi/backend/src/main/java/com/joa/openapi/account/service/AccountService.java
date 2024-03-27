@@ -12,6 +12,7 @@ import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.product.entity.Product;
+import com.joa.openapi.product.errorcode.ProductErrorCode;
 import com.joa.openapi.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,8 +42,10 @@ public class AccountService {
         // 계좌번호 임시 랜덤 생성
         String accountId = String.valueOf(Math.random());
 
+        System.out.println("멤버아이디 : " + memberId.toString());
+
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
-        Product product = productRepository.findById(req.getProductId()).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
+        Product product = productRepository.findById(req.getProductId()).orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT));
 
         Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
                 .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT))); /* TODO: 더미 에러 코드로 변경 */

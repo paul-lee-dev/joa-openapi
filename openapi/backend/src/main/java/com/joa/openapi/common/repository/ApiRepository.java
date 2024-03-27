@@ -1,12 +1,15 @@
 package com.joa.openapi.common.repository;
 
 import com.joa.openapi.common.entity.Api;
+import com.joa.openapi.common.errorcode.CommonErrorCode;
+import com.joa.openapi.common.exception.RestApiException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -20,4 +23,8 @@ public interface ApiRepository extends JpaRepository<Api, String> {
     Integer countByAdminId(UUID adminId);
 
     Api findByAdminId(UUID adminId);
+    Optional<Api> findByApiKey(UUID apiKey);
+    default Api getByApiKey(UUID apiKey) {
+        return findByApiKey(apiKey).orElseThrow(() -> new RestApiException(CommonErrorCode.WRONG_APIKEY));
+    }
 }

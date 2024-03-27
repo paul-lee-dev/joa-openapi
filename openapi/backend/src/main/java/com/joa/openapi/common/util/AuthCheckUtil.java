@@ -4,10 +4,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Component;
 
 import java.util.Base64;
 import java.util.Optional;
 
+@Component
 public class AuthCheckUtil {
 
     //Header에서 Access Token 추출
