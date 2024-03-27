@@ -101,8 +101,10 @@ public class AdminService implements UserDetailsService {
         String adminId = admin.getAdminId().toString();
         String accessToken = jwtUtil.createAccessToken(adminId);
         String refreshToken = jwtUtil.createRefreshToken(adminId);
-        UUID apiKey = apiRepository.findByAdminId(UUID.fromString(adminId)).getApiKey();
-        AdminLoginResponseDto response = new AdminLoginResponseDto(accessToken, refreshToken, apiKey);
+
+        Api found = apiRepository.findByAdminId(UUID.fromString(adminId));
+        if (found==null) throw new RestApiException(AdminErrorCode.NO_API_KEY);
+        AdminLoginResponseDto response = new AdminLoginResponseDto(accessToken, refreshToken, found.getApiKey());
         return response;
     }
 
