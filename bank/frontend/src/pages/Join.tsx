@@ -18,6 +18,7 @@ import {useRecoilValue} from 'recoil';
 import {bankDataAtom} from '@/store/atoms';
 import clsx from 'clsx';
 import {RootStackParamList} from '@/Router';
+import LoadingScreen from '@/components/LoadingScreen';
 
 type JoinScreenProps = NativeStackScreenProps<RootStackParamList, 'Join'>;
 
@@ -280,6 +281,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
         </View>
       </ScrollView>
       <BottomButton title={'회원가입'} onPress={handleSubmit(onSubmit)} />
+      <LoadingScreen isLoading={mutation.isPending} />
     </View>
   );
 }

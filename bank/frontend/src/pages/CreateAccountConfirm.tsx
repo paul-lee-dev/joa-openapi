@@ -11,6 +11,7 @@ import {useState} from 'react';
 import {bankDataAtom} from '@/store/atoms';
 import {useRecoilValue} from 'recoil';
 import {RootStackParamList} from '@/Router';
+import LoadingScreen from '@/components/LoadingScreen';
 
 type CreateAccountConfirmScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -30,7 +31,9 @@ function CreateAccountConfirm({
     mutationFn: createAccount,
     onSuccess: data => {
       console.log(data);
-      navigation.navigate('CreateAccountResult');
+      // navigation.navigate('CreateAccountResult', {
+      //   account:
+      // });
     },
     onError: err => console.log(err),
   });
@@ -48,12 +51,12 @@ function CreateAccountConfirm({
   });
 
   const onSubmit = async (data: CreateAccountForm) => {
-    console.log(data);
     mutation.mutate({
       nickname: '기본 계좌',
       password: data.password,
       term: 30,
       bankId: bankData.bankId,
+      productId: '00a97e09-9e28-4b2f-8a00-2aa69745fa0b',
     });
   };
 
@@ -69,14 +72,6 @@ function CreateAccountConfirm({
       />
       <View className="w-full flex-grow mb-16">
         <View className="flex flex-grow justify-center items-center space-y-2">
-          {/* <View className="w-14 h-14 m-6 bg-pink-300 rounded-full flex justify-center items-center">
-            <Icon
-              name={'card-account-details-outline'}
-              color={'#fff'}
-              onPress={() => {}}
-              size={35}
-            />
-          </View> */}
           <View className="flex flex-row">
             <Text className="text-2xl font-bold">내 입출금통장</Text>
             <Text className="text-2xl font-medium">의</Text>
@@ -160,6 +155,7 @@ function CreateAccountConfirm({
         </View>
       </View>
       <BottomButton title={'신청하기'} onPress={handleSubmit(onSubmit)} />
+      <LoadingScreen isLoading={mutation.isPending} />
     </View>
   );
 }
