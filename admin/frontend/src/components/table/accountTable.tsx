@@ -1,8 +1,31 @@
 import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
 import { FaSort } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { localAxios } from "@/api/http-common";
 
 export default function AccountTable() {
+  interface Account {
+    accountId: string;
+    accountName: string;
+    balance: number;
+    isDormant: boolean;
+    transferLimit: number;
+    startDate: string;
+    endDate: string;
+    term: number;
+    depositAccount: string;
+    withdrawAccount: string;
+    amount: number;
+    holderName: string;
+    productName: string | null;
+    dummyName: string | null;
+    bankId: string;
+    createdAt: string;
+    updatedAt: string;
+  }
+
   const Accounts = [
     {
       id: 1,
@@ -55,6 +78,35 @@ export default function AccountTable() {
       recentTransactionAmount: -100000,
     },
   ];
+
+  const [accountList, setAccountList] = useState<Account[]>([]);
+
+  const api: AxiosInstance = axios.create({
+    baseURL: "https://joa13.site/v1", // JSON 데이터를 가져올 엔드포인트의 URL
+    headers: {
+      apiKey: "9b5c450f-abd4-419f-b092-bcd96e66392f",
+      "Content-Type": "application/json",
+    },
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response: AxiosResponse<{
+          status: string;
+          message: string;
+          data: Account[];
+          page: null;
+        }> = await localAxios.get("/account/search");
+        setAccountList(response.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [api]);
+
 
   const router = useRouter();
 
