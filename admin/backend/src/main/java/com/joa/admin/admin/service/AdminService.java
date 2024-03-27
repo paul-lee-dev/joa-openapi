@@ -105,7 +105,7 @@ public class AdminService implements UserDetailsService {
         Api found = apiRepository.findByAdminId(UUID.fromString(adminId));
         UUID apiKey = null;
         if (found!=null) apiKey = found.getApiKey();
-        AdminLoginResponseDto response = new AdminLoginResponseDto(accessToken, refreshToken, found.getApiKey());
+        AdminLoginResponseDto response = new AdminLoginResponseDto(accessToken, refreshToken, apiKey);
         return response;
     }
 
