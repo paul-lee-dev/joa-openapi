@@ -32,8 +32,8 @@ public class BankService {
     private final BankRepository bankRepository;
 
     @Transactional
-    public BankResponseDto create(HttpServletRequest request, BankRequestDto req, UUID apiKey) throws ParseException {
-        UUID adminId = AuthoriaztionAPI(request, apiKey);
+    public BankResponseDto create(BankRequestDto req, UUID apiKey) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
         Bank bank = Bank.builder()
                 .adminId(adminId)
                 .description(req.getDescription())
@@ -46,8 +46,8 @@ public class BankService {
     }
 
     @Transactional
-    public BankResponseDto update(HttpServletRequest request, BankRequestDto req, UUID apiKey, UUID bankId) throws ParseException {
-        UUID adminId = AuthoriaztionAPI(request, apiKey);
+    public BankResponseDto update(BankRequestDto req, UUID apiKey, UUID bankId) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
         Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         AuthoriaztionBank(bank.getAdminId(), adminId);
         bank.update(req);
@@ -56,8 +56,8 @@ public class BankService {
     }
 
     @Transactional
-    public BankResponseDto delete(HttpServletRequest request, UUID apiKey, UUID bankId) throws ParseException {
-        UUID adminId = AuthoriaztionAPI(request, apiKey);
+    public BankResponseDto delete(UUID apiKey, UUID bankId) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
         Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         AuthoriaztionBank(bank.getAdminId(), adminId);
         bank.deleteSoftly();
@@ -65,8 +65,9 @@ public class BankService {
         return BankResponseDto.toDto(bank);
     }
 
-    public List<BankResponseDto> searchAll(HttpServletRequest request, UUID apiKey, String name) throws ParseException {
-        UUID adminId = AuthoriaztionAPI(request, apiKey);
+    public List<BankResponseDto> searchAll(UUID apiKey, String name) {
+        if (name == null) name = "";
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
         List<Bank> bankList = bankRepository.findByAdminIdAndNameContaining(adminId, name);
         List<BankResponseDto> bankResponseDtoList = new ArrayList<>();
         for (Bank bank:bankList) {
@@ -76,23 +77,12 @@ public class BankService {
         return bankResponseDtoList;
     }
 
-    public BankResponseDto serachBank(HttpServletRequest request, UUID apiKey, UUID bankId) throws ParseException {
-        UUID adminId = AuthoriaztionAPI(request, apiKey);
+    public BankResponseDto serachBank(UUID apiKey, UUID bankId) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
         Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         AuthoriaztionBank(bank.getAdminId(), adminId);
 
         return BankResponseDto.toDto(bank);
-    }
-
-    // 관리자가 가지고 있는 ApiKey가 유효한지
-    public UUID AuthoriaztionAPI(HttpServletRequest request, UUID apiKey) throws ParseException {
-        UUID adminId = UUID.fromString(authCheckUtil.authCheck(request));
-        Api api = apiRepository.findByAdminId(adminId);
-        if(!api.getApiKey().equals(apiKey)) {
-            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
-        }
-
-        return adminId;
     }
 
     // 관리자 아이디가 만든 은행인지
