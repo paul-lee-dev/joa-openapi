@@ -2,6 +2,8 @@
 // npx serve out
 // admin
 
-const nextConfig = {};
+const nextConfig = {
+  basePath: "/dashboard",
+};
 
 export default nextConfig;
