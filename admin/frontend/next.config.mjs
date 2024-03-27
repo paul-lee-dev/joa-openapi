@@ -1,14 +1,7 @@
 /** @type {import('next').NextConfig} */
+// npx serve out
+// admin
 
-const nextConfig = {
-  async rewrites() {
-    return [
-      {
-        source: "/dashboard/:path*",
-        destination: `http://127.0.0.1:3000/:path*`,
-      },
-    ];
-  },
-};
+const nextConfig = {};
 
-module.exports = nextConfig;
+export default nextConfig;
