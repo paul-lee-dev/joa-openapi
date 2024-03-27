@@ -24,11 +24,20 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
   const [menu, setMenu] = useState<MenuType>('뱅킹');
   const detailMenu = {
     뱅킹: [
-      {title: '입출금 계좌 개설', onPress: () => {}},
+      {
+        title: '입출금 계좌 개설',
+        onPress: () => navigation.navigate('CreateAccount'),
+      },
       {title: '예적금 상품 조회', onPress: () => {}},
-      {title: '계좌 관리', onPress: () => {}},
-      {title: '이체한도변경', onPress: () => {}},
-      {title: '계좌 비밀번호 변경', onPress: () => {}},
+      {title: '계좌 관리', onPress: () => navigation.navigate('AccountList')},
+      {
+        title: '이체한도변경',
+        onPress: () => navigation.navigate('AccountList'),
+      },
+      {
+        title: '계좌 비밀번호 변경',
+        onPress: () => navigation.navigate('AccountList'),
+      },
     ],
     이체: [
       {title: '이체', onPress: () => {}},
@@ -36,10 +45,19 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
       {title: '이체한도 조회/변경', onPress: () => {}},
     ],
     조회: [
-      {title: '전체계좌 조회', onPress: () => {}},
+      {
+        title: '전체계좌 조회',
+        onPress: () => navigation.navigate('AccountList'),
+      },
       {title: '통합거래내역 조회', onPress: () => {}},
-      {title: '휴면계좌 조회', onPress: () => {}},
-      {title: '해지계좌 조회', onPress: () => {}},
+      {
+        title: '휴면계좌 조회',
+        onPress: () => navigation.navigate('AccountList'),
+      },
+      {
+        title: '해지계좌 조회',
+        onPress: () => navigation.navigate('AccountList'),
+      },
     ],
   };
 

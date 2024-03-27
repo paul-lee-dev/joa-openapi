@@ -30,6 +30,7 @@ function EditProfile({navigation}: EditProfileScreenProps): React.JSX.Element {
 
   const onSubmit = (data: EditProfileForm) => {
     console.log(data);
+    setMemberData(prev => prev);
   };
 
   return (

@@ -104,7 +104,12 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
                       <Text className="w-full text-center">상세 보기</Text>
                     </MenuOption>
                     <View className="w-full h-[1px] bg-gray-600" />
-                    <MenuOption onSelect={() => console.log('계좌 해지')}>
+                    <MenuOption
+                      onSelect={() =>
+                        navigation.navigate('DeleteAccount', {
+                          account: data.page.content[0],
+                        })
+                      }>
                       <Text className="w-full text-center">계좌 해지</Text>
                     </MenuOption>
                   </MenuOptions>

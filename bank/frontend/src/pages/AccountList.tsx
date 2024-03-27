@@ -5,6 +5,7 @@ import {ScrollView, View, Text} from 'react-native';
 import {useQuery} from '@tanstack/react-query';
 import {getAccountList} from '@/api/account';
 import {RootStackParamList} from '@/Router';
+import {IAccount} from '@/models';
 
 type AccountListScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -27,8 +28,8 @@ function AccountList({navigation}: AccountListScreenProps): React.JSX.Element {
             <View className="w-full h-10 bg-pink-200 rounded-xl flex justify-center px-6 shadow-sm shadow-black">
               <Text className="text-base font-semibold">{`계좌 ${data?.page?.totalElements}개`}</Text>
             </View>
-            {data.page?.content?.map((account: any) => (
-              <View className="w-full h-36" key={account.accontId}>
+            {data.page?.content?.map((account: IAccount) => (
+              <View className="w-full h-36" key={account.accountId}>
                 <AccountListItem
                   account={account}
                   link={() => navigation.navigate('History', {account})}

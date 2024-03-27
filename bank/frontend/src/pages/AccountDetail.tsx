@@ -70,7 +70,8 @@ function AccountDetail({
         <View className="w-full flex justify-center py-4 px-8">
           <Text className="text-sm text-gray-400">
             계좌를 해지하시려면{' '}
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('DeleteAccount', {account})}>
               <Text className="underline">여기</Text>
             </TouchableOpacity>
             를 눌러주세요.

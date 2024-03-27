@@ -14,3 +14,8 @@ export const updateAccount = async (params: any): Promise<any> => {
   const response = await axiosInstance.patch('/account', params);
   return response.data;
 };
+
+export const deleteAccount = async (params: any): Promise<any> => {
+  const response = await axiosInstance.delete('/account', params);
+  return response.data;
+};
