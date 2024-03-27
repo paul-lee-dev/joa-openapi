@@ -1,27 +1,21 @@
 package com.joa.openapi.transaction.service;
 
-import com.joa.openapi.account.dto.*;
 import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.account.errorcode.AccountErrorCode;
 import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.dummy.entity.Dummy;
-import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.repository.DummyRepository;
-import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.transaction.dto.*;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.joa.openapi.transaction.errorcode.TransactionErrorCode;
 import com.joa.openapi.transaction.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
