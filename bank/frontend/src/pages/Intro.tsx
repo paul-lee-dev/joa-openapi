@@ -20,6 +20,7 @@ import {useCallback} from 'react';
 import {useSetRecoilState} from 'recoil';
 import {memberDataAtom} from '@/store/atoms';
 import {RootStackParamList} from '@/Router';
+import LoadingScreen from '@/components/LoadingScreen';
 
 interface LoginForm {
   email: string;
@@ -195,6 +196,7 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
           <BottomButton title={'로그인'} onPress={handleSubmit(onSubmit)} />
         </BottomPopup>
       )}
+      <LoadingScreen isLoading={false} />
     </View>
   );
 }
