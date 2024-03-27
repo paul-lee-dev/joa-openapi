@@ -68,7 +68,8 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
                   님, 안녕하세요!
                 </Text>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('EditProfile')}>
                 <Text className="text-gray-400 text-sm">회원정보수정</Text>
               </TouchableOpacity>
             </View>

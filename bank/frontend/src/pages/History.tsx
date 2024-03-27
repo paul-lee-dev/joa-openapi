@@ -139,7 +139,7 @@ function History({route, navigation}: HistoryScreenProps): React.JSX.Element {
         </View>
       </ScrollView>
       {filterModalOpen && (
-        <BottomPopup>
+        <BottomPopup close={() => setFilterModalOpen(false)}>
           <View className="w-full flex flex-grow space-y-8">
             <FilterOption
               label={'조회기간'}

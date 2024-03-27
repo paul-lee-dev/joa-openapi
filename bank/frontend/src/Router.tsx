@@ -23,6 +23,7 @@ import {IAccount} from '@/models';
 import {memberDataAtom} from '@/store/atoms';
 import History from './pages/History';
 import ChangeBankId from './pages/ChangeBankId';
+import EditProfile from './pages/EditProfile';
 
 export type RootStackParamList = {
   AccountDetail: {
@@ -42,6 +43,7 @@ export type RootStackParamList = {
   CreateAccount: undefined;
   CreateAccountConfirm: undefined;
   CreateAccountResult: undefined;
+  EditProfile: undefined;
   History: {
     account: IAccount;
   };
@@ -145,6 +147,11 @@ function Router(): React.JSX.Element {
             <Stack.Screen
               name="ChangeBankId"
               component={ChangeBankId}
+              {...globalOption}
+            />
+            <Stack.Screen
+              name="EditProfile"
+              component={EditProfile}
               {...globalOption}
             />
           </>
