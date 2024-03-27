@@ -20,5 +20,5 @@ RUN chmod +x node_modules/.bin/*
 RUN npm run build
 
 # 앱 실행
-CMD ["npx", "serve", "out"]
+CMD ["npm", "start"]
 
