@@ -4,21 +4,42 @@ import { useState, useEffect } from "react";
 import BankTable from "@/components/table/bankTable";
 import Pagination from "@/components/pagination";
 import Button from "@/components/button/button";
-import { searchBank } from "@/api/Bank";
-
+import { createBank } from "@/api/Bank";
+import { CreateBankParams } from "@/models/Bank.interface";
 
 const BankList = () => {
   const [isModalOpen, setModalState] = useState(false);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  const [bankInfo, setBankInfo] = useState<CreateBankParams>({
+    name: "",
+    description: "",
+    uri: "",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setBankInfo({ ...bankInfo, [name]: value });
+  };
+
+  const handleAddBank = async () => {
+    try {
+      const response = await createBank(bankInfo);
+      console.log("Bank added:", response);
+    } catch (error) {
+      console.error("Error adding bank:", error);
+    }
+  };
+
   const toggleModal = () => {
     setModalState(!isModalOpen);
     console.log("Toggle modal");
   };
 
-  searchBank();
-
   return (
     <>
-      <BankTable apiKey=""/>
+      <BankTable apiKey="" />
       <div className="flex mt-5 justify-between gap-5">
         <div className="flex">
           <Pagination
@@ -40,44 +61,61 @@ const BankList = () => {
       {isModalOpen && (
         <Modal>
           <ModalContent>
-            <InputContainerWithButton>
+            <InputFormWithButton>
               <div className="col-span-full">
                 <label
-                  htmlFor="photo"
+                  htmlFor="name"
                   className="block pb-1 text-sm font-medium leading-6 text-gray-900"
                 >
                   은행 이름
                 </label>
-                <Input placeholder="은행명" required />
+                <Input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={bankInfo.name}
+                  onChange={handleInputChange}
+                  placeholder="은행명"
+                  required
+                />
               </div>
               <div className="col-span-full">
                 <label
-                  htmlFor="photo"
+                  htmlFor="description"
                   className="block pb-1 text-sm font-medium leading-6 text-gray-900"
                 >
                   은행 설명
                 </label>
-                <Input placeholder="은행 설명" required />
+                <Input
+                  type="text"
+                  id="description"
+                  name="description"
+                  value={bankInfo.description}
+                  onChange={handleInputChange}
+                  placeholder="은행 설명"
+                  required
+                />
               </div>
               <div className="col-span-full">
                 <label
-                  htmlFor="photo"
+                  htmlFor="uri"
                   className="block pb-1 text-sm font-medium leading-6 text-gray-900"
                 >
-                  은행 로고 (추가)
+                  은행 로고 (선택)
                 </label>
-                <form className="max-w-lg mx-auto">
-                  <input
-                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
-                    id="bank_logo"
-                    type="file"
-                  />
-                </form>
+                <Input
+                  type="text"
+                  id="uri"
+                  name="uri"
+                  value={bankInfo.uri}
+                  onChange={handleInputChange}
+                  placeholder="은행 이미지 URL"
+                />
               </div>
               <div>
-                <SmallBtn onClick={toggleModal}>확인</SmallBtn>
+                <SmallBtn onClick={handleAddBank}>추가</SmallBtn>
               </div>
-            </InputContainerWithButton>
+            </InputFormWithButton>
           </ModalContent>
         </Modal>
       )}
@@ -129,7 +167,7 @@ const SmallBtn = tw.button`
   float-right
 `;
 
-const InputContainerWithButton = tw.div`
+const InputFormWithButton = tw.form`
   mt-2
   items-center
   grid 
