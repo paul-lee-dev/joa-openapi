@@ -12,6 +12,9 @@ import HistoryItem from '@/components/HistoryItem';
 import BottomPopup from '@/components/BottomPopup';
 import FilterOption from '@/components/FilterOption';
 import BottomButton from '@/components/BottomButton';
+import {RootStackParamList} from '@/Router';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {formatAmount} from '@/utils';
 
 interface IHistory {
   date: string;
@@ -53,18 +56,25 @@ const sampleHistory: IHistory[] = [
   },
 ];
 
-function History(): React.JSX.Element {
+type HistoryScreenProps = NativeStackScreenProps<RootStackParamList, 'History'>;
+
+function History({route, navigation}: HistoryScreenProps): React.JSX.Element {
+  const {account} = route.params;
   const [filterModalOpen, setFilterModalOpen] = useState<boolean>(false);
 
   return (
     <View className="w-full h-full bg-gray-100">
-      <Header stack="상세조회" menu={[{title: 'menu', onPress: () => {}}]} />
+      <Header
+        stack="계좌 거래내역"
+        goBack={() => navigation.pop()}
+        menu={[{title: 'menu', onPress: () => navigation.navigate('Menu')}]}
+      />
       <View className="bg-pink-100 w-full h-48">
         <View className="w-full flex flex-row justify-between p-6">
           <View className="flex space-y-2">
             <Text className="font-semibold text-lg">저축예금[입출금]</Text>
             <Text className="font-medium text-base underline text-gray-500">
-              123-123456-12-123
+              {account.accountId}
             </Text>
           </View>
           <View className="flex flex-row space-x-2">
@@ -77,13 +87,15 @@ function History(): React.JSX.Element {
             <Icon
               name={'cog-outline'}
               color={'#777'}
-              onPress={() => {}}
+              onPress={() => navigation.navigate('AccountDetail', {account})}
               size={20}
             />
           </View>
         </View>
         <View className="w-full flex flex-row justify-center items-center space-x-2">
-          <Text className="text-2xl font-bold">1,001,220</Text>
+          <Text className="text-2xl font-bold">
+            {formatAmount(account.balance)}
+          </Text>
           <Text className="text-sm font-semibold">원</Text>
         </View>
       </View>
@@ -127,7 +139,7 @@ function History(): React.JSX.Element {
         </View>
       </ScrollView>
       {filterModalOpen && (
-        <BottomPopup>
+        <BottomPopup close={() => setFilterModalOpen(false)}>
           <View className="w-full flex flex-grow space-y-8">
             <FilterOption
               label={'조회기간'}
