@@ -12,6 +12,7 @@ import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.product.entity.Product;
+import com.joa.openapi.product.enums.ProductType;
 import com.joa.openapi.product.errorcode.ProductErrorCode;
 import com.joa.openapi.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ public class AccountService {
     private final MemberRepository memberRepository;
     private final DummyRepository dummyRepository;
     private final ProductRepository productRepository;
+    private final DepositAccountService depositAccountService;
 
     @Transactional
     public AccountCreateResponseDto create(UUID memberId, AccountCreateRequestDto req) {
@@ -58,9 +60,11 @@ public class AccountService {
         if(req.getPassword() == null || req.getPassword().trim().isBlank())
             throw new RestApiException(AccountErrorCode.PASSWORD_REQUIRED);
 
+        Double calculatedInterest = depositAccountService.calculateRate(req, product);
+
         Account account = Account.builder()
                 .id(accountId)
-                .name(req.getNickname()) /* TODO 예적금 상품 연결시키면 디폴트 닉네임 예적금 상품명 */
+                .name(product.getName())
                 .balance(req.getBalance())
                 .password(req.getPassword())
                 .isDormant(false)
@@ -81,7 +85,7 @@ public class AccountService {
 
         accountRepository.save(account);
 
-        return AccountCreateResponseDto.toDto(account);
+        return AccountCreateResponseDto.toDto(account, calculatedInterest);
     }
 
     @Transactional

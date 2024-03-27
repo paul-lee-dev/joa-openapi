@@ -26,8 +26,9 @@ public class AccountCreateResponseDto {
     private UUID dummyId;
     private UUID bankId;
     private UUID productId;
+    private Double calculatedInterest;
 
-    public static AccountCreateResponseDto toDto(Account account) {
+    public static AccountCreateResponseDto toDto(Account account, Double calculatedInterest) {
         return AccountCreateResponseDto.builder()
                 .accountId(account.getId())
                 .productName(account.getProduct().getName())
@@ -44,6 +45,7 @@ public class AccountCreateResponseDto {
                 .dummyId(account.getDummy() == null ? null : account.getDummy().getId())
                 .bankId(account.getBankId())
                 .productId(account.getProduct().getId())
+                .calculatedInterest(calculatedInterest)
                 .build();
     }
 }
