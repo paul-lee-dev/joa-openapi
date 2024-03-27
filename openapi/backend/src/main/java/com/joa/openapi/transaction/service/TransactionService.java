@@ -13,6 +13,7 @@ import com.joa.openapi.transaction.entity.Fourwords;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.joa.openapi.transaction.errorcode.TransactionErrorCode;
 import com.joa.openapi.transaction.repository.TransactionRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,8 @@ public class TransactionService {
         Account account = accountRepository.findById(to).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
-                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
+                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(
+                    DummyErrorCode.NO_DUMMY)));
 
         authorityValidation(memberId, account);
         checkPassword(account, req.getPassword());
