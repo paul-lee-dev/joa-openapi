@@ -2,6 +2,7 @@ import AsyncSelect from "react-select/async";
 import { CustomerOption, customerOptions } from "@/asset/data/data";
 import tw from "tailwind-styled-components";
 
+// TODO: resolve react-select Async error
 interface MultiSearchProps {
   placeholder: string;
   label: string;
@@ -27,7 +28,7 @@ const MyAsyncSelect = () => (
     cacheOptions
     defaultOptions
     loadOptions={promiseOptions}
-    placeholder="검색"
+    placeholder="  고객 검색  "
     theme={(theme) => ({
       ...theme,
       borderRadius: 8,

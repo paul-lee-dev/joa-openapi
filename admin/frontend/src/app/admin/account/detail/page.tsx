@@ -3,9 +3,11 @@
 import Button from "@/components/button/button";
 import InputText from "@/components/input/inputText";
 import DormantSelect from "@/components/select/dormant";
+import { useRouter } from "next/navigation";
 import tw from "tailwind-styled-components";
 
 export default function AccountDetail() {
+  const router = useRouter();
   return (
     <>
       <Form>
@@ -117,8 +119,20 @@ export default function AccountDetail() {
           ></InputText>
         </div>
         <div className="flex gap-6 justify-end">
-          <Button id={"edit"} name={"수정"}></Button>
-          <Button id={"delete"} name={"삭제"}></Button>
+          <Button
+            onClick={() => {
+              router.back;
+            }}
+            id={"edit"}
+            name={"수정"}
+          ></Button>
+          <Button
+            onClick={() => {
+              router.back;
+            }}
+            id={"delete"}
+            name={"삭제"}
+          ></Button>
         </div>
       </Form>
     </>

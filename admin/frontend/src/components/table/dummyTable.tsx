@@ -1,3 +1,5 @@
+import { useRouter } from "next/navigation";
+
 export default function DummyTable() {
   const Dummies = [
     {
@@ -57,6 +59,7 @@ export default function DummyTable() {
     },
   ];
 
+  const router = useRouter();
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 ">
@@ -68,7 +71,7 @@ export default function DummyTable() {
                 type="checkbox"
                 value=""
                 name="bordered-checkbox"
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2"
               />
             </th>
             <th scope="col" className="px-6 py-3">
@@ -118,7 +121,9 @@ export default function DummyTable() {
               <td className="px-6 py-4">{dummy.createDate}</td>
               <td className="px-6 py-4">
                 <a
-                  href="#"
+                  onClick={() => {
+                    router.push("dummy/detail");
+                  }}
                   className="font-medium text-pink-400 hover:text-pink-500"
                 >
                   자세히

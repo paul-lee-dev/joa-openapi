@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -16,4 +18,5 @@ public class TransactionRequestDto {
     private String depositorName;   //입금자명
     private String fromAccount;            //입금계좌
     private String toAccount;              //출금계좌
+    private UUID dummyId = null;
 }

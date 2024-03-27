@@ -47,8 +47,8 @@ public class Account extends BaseEntity {
     @JoinColumn(name = "dummy_id")
     private Dummy dummy;
 
-    public void updateNickname(String nickname) {
-        this.name = nickname;
+    public void updateNickname(String name) {
+        this.name = name;
     }
 
     public void updateDepositAccount(String withdrawAccount) {
@@ -70,5 +70,4 @@ public class Account extends BaseEntity {
     public void updateBalance(Long balance) {
         this.balance = balance;
     }
-
 }
