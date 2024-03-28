@@ -12,9 +12,16 @@ import com.joa.openapi.product.enums.PaymentType;
 import com.joa.openapi.product.enums.ProductType;
 import com.joa.openapi.product.errorcode.ProductErrorCode;
 import com.joa.openapi.product.repository.ProductRepository;
+import com.joa.openapi.transaction.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +29,47 @@ import org.springframework.transaction.annotation.Transactional;
 public class DepositAccountService {
     private final ProductRepository productRepository;
     private final AccountRepository accountRepository;
+    private final TransactionService transactionService;
+
+    //@Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행되는 크론 표현식
+    //@Scheduled(cron = "0 */1 * * * ?") // 매 분마다 실행되도록 변경
+    @Scheduled(cron = "*/10 * * * * ?")
+    @Transactional
+    public void payInterest() {
+        //정기예금, 정기적금 만기시 금액 지급
+        String today = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+        List<Account> accounts = accountRepository.findAllByEndDate(today);
+
+//        for (Account account : accounts) {
+//            if (account.getProduct().getProductType().equals(ProductType.TERM_DEPOSIT) ||
+//                    account.getProduct().getProductType().equals(ProductType.FIXED_DEPOSIT)) {
+//                Long[] calculatedInterest = calculateFixedDeposit(account.getAmount(),
+//                        account.getProduct().getRate(),
+//                        account.getTerm(),
+//                        account.getProduct().getPaymentType());
+//                transactionService.depositInterest(account, calculatedInterest[0]);
+//            }
+//        }
+
+        for (Account account : accounts) {
+            if (account.getProduct().getProductType().equals(ProductType.ORDINARY_DEPOSIT)) {
+                Long interest = calculateMinuteInterest(account.getBalance(), account.getProduct().getRate());
+                transactionService.depositInterest(account, interest);
+            }
+            if (account.getProduct().getProductType().equals(ProductType.FIXED_DEPOSIT)) {
+                transactionService.withdrawAmount(account);
+            }
+        }
+
+
+    }
+
+    private Long calculateMinuteInterest(double principal, double rate) {
+        double annualInterestRate = rate / 100;
+        double minuteInterestRate = annualInterestRate / 365; //(365 * 24 * 60); // 연 이자율을 분 이자율로 변환
+
+        return (long) (principal * minuteInterestRate); // 매 분마다의 이자 계산
+    }
 
     public ProductRateResponseDto calculateRate(ProductRateRequestDto req) {
         Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));

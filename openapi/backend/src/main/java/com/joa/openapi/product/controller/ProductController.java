@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -51,8 +53,8 @@ public class ProductController {
         return ResponseEntity.ok(ApiResponse.success("예적금 상품 조회에 성공했습니다.", productsPage));
     }
 
-    @GetMapping("/rate")
-    public ResponseEntity<?> calculateRate(@RequestBody ProductRateRequestDto req){
+    @GetMapping("/interest")
+    public ResponseEntity<?> calculateInterest(@RequestBody ProductRateRequestDto req){
         ProductRateResponseDto rate = depositAccountService.calculateRate(req);
         return ResponseEntity.ok(ApiResponse.success("만기 이자율 조회에 성공했습니다.", rate));
     }

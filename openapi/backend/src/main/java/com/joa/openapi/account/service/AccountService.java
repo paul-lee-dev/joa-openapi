@@ -37,7 +37,6 @@ public class AccountService {
     private final MemberRepository memberRepository;
     private final DummyRepository dummyRepository;
     private final ProductRepository productRepository;
-    private final DepositAccountService depositAccountService;
 
     @Transactional
     public AccountCreateResponseDto create(UUID memberId, AccountCreateRequestDto req) {
@@ -61,18 +60,20 @@ public class AccountService {
             throw new RestApiException(AccountErrorCode.PASSWORD_REQUIRED);
 
         System.out.println("==============");
+        System.out.println("계좌 금액 : " + req.getBalance());
+        System.out.println("계좌 양 : " + req.getAmount());
 
         Account account = Account.builder()
                 .id(accountId)
                 .name((req.getNickname() == null) ? product.getName() : req.getNickname())
-                .balance(req.getBalance())
+                .balance((req.getAmount() == 0) ? req.getBalance() : req.getAmount())
                 .password(req.getPassword())
                 .isDormant(false)
                 .transferLimit(req.getTransferLimit())
                 .paymentNum(0)
                 .nonPaymentNum(0)
                 .startDate(startDateStr)
-                .endDate(endDateStr)
+                .endDate(startDateStr) /* TODO 변경해야함*/
                 .term(req.getTerm())
                 .depositAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
                 .withdrawAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
