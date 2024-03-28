@@ -1,4 +1,5 @@
 import tw from "tailwind-styled-components";
+import { overviews, components } from "./item";
 
 export default function Sidebar() {
   return (
@@ -63,44 +64,3 @@ const BarItem = tw.a`
 p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
 `;
 
-const overviews = [
-  {
-    name: '서비스 소개(Introduction)',
-    anchor: '#',
-  },
-  {
-    name: '시작하기(Getting Started)',
-    anchor: '#',
-  },
-]
-
-const components = [
-  {
-    name: '관리자(Admin)',
-    anchor: '#',
-  },
-  {
-    name: '은행(Bank)',
-    anchor: '#',
-  },
-  {
-    name: '고객(Member)',
-    anchor: '#',
-  },
-  {
-    name: '예적금상품(Product)',
-    anchor: '#',
-  },
-  {
-    name: '계좌(Account)',
-    anchor: '#',
-  },
-  {
-    name: '거래내역(Transaction)',
-    anchor: '#',
-  },
-  {
-    name: '더미데이터(Dummy)',
-    anchor: '#',
-  },
-]
