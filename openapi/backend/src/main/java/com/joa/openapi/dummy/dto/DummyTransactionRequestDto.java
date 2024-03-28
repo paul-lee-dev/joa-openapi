@@ -14,6 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class DummyTransactionRequestDto {
 
+    private String name;
     private Integer count;
     private UUID bankId;
     private List<UUID> users;

@@ -1,6 +1,7 @@
 package com.joa.openapi.product.entity;
 
 import com.joa.openapi.account.entity.Account;
+import com.joa.openapi.bank.entity.Bank;
 import com.joa.openapi.common.entity.BaseEntity;
 import com.joa.openapi.product.enums.PaymentType;
 import com.joa.openapi.product.enums.ProductType;
@@ -40,6 +41,10 @@ public class Product extends BaseEntity {
 
     @OneToMany(mappedBy = "product")
     private List<Account> accountList = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bank_id")
+    private Bank productsBank;
 
     public void updateIsDone(Boolean isDone) {
         this.isDone = isDone;

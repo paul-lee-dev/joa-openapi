@@ -3,10 +3,11 @@ package com.joa.openapi.dummy.controller;
 import com.joa.openapi.common.response.ApiResponse;
 import com.joa.openapi.dummy.dto.*;
 import com.joa.openapi.dummy.service.DummyService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.parser.ParseException;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,8 +54,8 @@ public class DummyController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchAll(@RequestHeader("apiKey") UUID apiKey) {
-        List<DummyResponseDto> dummyResponseDtoList = dummyService.searchAll(apiKey);
+    public ResponseEntity<?> searchAll(@ModelAttribute DummySearchRequestDto req, @RequestHeader("apiKey") UUID apiKey, @PageableDefault Pageable pageable) {
+        Page<DummyResponseDto> dummyResponseDtoList = dummyService.searchAll(req, apiKey, pageable);
         return ResponseEntity.ok(ApiResponse.success("전체 더미데이터 검색 성공했습니다.", dummyResponseDtoList));
     }
 
