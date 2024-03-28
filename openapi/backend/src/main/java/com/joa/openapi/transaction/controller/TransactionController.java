@@ -90,8 +90,7 @@ public class TransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> search(@RequestHeader("apiKey") UUID apiKey,
-        @RequestBody TransactionSearchRequesBodytDto reqBody,
+    public ResponseEntity<?> search(@RequestBody TransactionSearchRequesBodytDto reqBody,
         @RequestParam Map<String, String> allParams,
         @PageableDefault Pageable pageable) {
 
@@ -123,13 +122,11 @@ public class TransactionController {
             .orderBy(orderBy)
             .build();
 
-        if(apiKey == null || !transactionService.checkApiKey(apiKey)) {
-            throw new RestApiException(TransactionErrorCode.NO_APIKEY);
-        }
-        if(!transactionService.checkAccountId(req.getAccountId())) {
+        if (!transactionService.checkAccountId(req.getAccountId())) {
             throw new RestApiException(TransactionErrorCode.NO_ACCOUNTID);
         }
-        Page<TransactionSearchResponseDto> transactionsPage = transactionService.search(req, pageable);
+        Page<TransactionSearchResponseDto> transactionsPage = transactionService.search(req,
+            pageable);
         return ResponseEntity.ok(ApiResponse.success("거래내역 조회에 성공했습니다.", transactionsPage));
     }
 }
