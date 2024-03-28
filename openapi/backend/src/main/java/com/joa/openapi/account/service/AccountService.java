@@ -12,9 +12,9 @@ import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.product.entity.Product;
-import com.joa.openapi.product.enums.ProductType;
 import com.joa.openapi.product.errorcode.ProductErrorCode;
 import com.joa.openapi.product.repository.ProductRepository;
+import com.joa.openapi.product.service.DepositAccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -37,7 +37,6 @@ public class AccountService {
     private final MemberRepository memberRepository;
     private final DummyRepository dummyRepository;
     private final ProductRepository productRepository;
-    private final DepositAccountService depositAccountService;
 
     @Transactional
     public AccountCreateResponseDto create(UUID memberId, AccountCreateRequestDto req) {
@@ -60,19 +59,21 @@ public class AccountService {
         if(req.getPassword() == null || req.getPassword().trim().isBlank())
             throw new RestApiException(AccountErrorCode.PASSWORD_REQUIRED);
 
-        Double calculatedInterest = depositAccountService.calculateRate(req, product);
+        System.out.println("==============");
+        System.out.println("계좌 금액 : " + req.getBalance());
+        System.out.println("계좌 양 : " + req.getAmount());
 
         Account account = Account.builder()
                 .id(accountId)
-                .name(product.getName())
-                .balance(req.getBalance())
+                .name((req.getNickname() == null) ? product.getName() : req.getNickname())
+                .balance((req.getAmount() == 0) ? req.getBalance() : req.getAmount())
                 .password(req.getPassword())
                 .isDormant(false)
                 .transferLimit(req.getTransferLimit())
                 .paymentNum(0)
                 .nonPaymentNum(0)
                 .startDate(startDateStr)
-                .endDate(endDateStr)
+                .endDate(startDateStr) /* TODO 변경해야함*/
                 .term(req.getTerm())
                 .depositAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
                 .withdrawAccount((req.getWithdrawAccount() == null) ? accountId : req.getWithdrawAccount())
@@ -85,7 +86,7 @@ public class AccountService {
 
         accountRepository.save(account);
 
-        return AccountCreateResponseDto.toDto(account, calculatedInterest);
+        return AccountCreateResponseDto.toDto(account);
     }
 
     @Transactional

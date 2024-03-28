@@ -13,14 +13,10 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductCreateRequestDto {
+public class ProductRateRequestDto {
 
-    private String name;
-    private String description;
-    private Long minAmount;
-    private Long maxAmount;
-    private Double rate;
-    private ProductType productType;
-    private PaymentType paymentType;
-    private UUID bankId;
+    private Long amount; //예금은 예치금액, 적금은 지급금액
+    private Integer term;
+    private String accountId;
+    private UUID productId;
 }

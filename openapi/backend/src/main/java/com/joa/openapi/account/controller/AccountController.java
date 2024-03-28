@@ -66,6 +66,4 @@ public class AccountController {
         Page<AccountSearchResponseDto> accountsPage = accountService.search(req, pageable);
         return ResponseEntity.ok(ApiResponse.success("계좌 검색에 성공했습니다.", accountsPage));
     }
-
-
 }
