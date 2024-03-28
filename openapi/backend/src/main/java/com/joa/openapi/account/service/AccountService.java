@@ -94,13 +94,13 @@ public class AccountService {
 
         authorityValidation(memberId, account);
 
-        if(req.getNickname() != null && !req.getPassword().trim().isBlank())
+        if(req.getNickname() != null)
             account.updateNickname(req.getNickname());
-        if (req.getDepositAccount() != null && !req.getPassword().trim().isBlank()){
+        if (req.getDepositAccount() != null){
             accountRepository.findById(req.getDepositAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_WITHDRAW_ACCOUNT));
             account.updateDepositAccount(req.getDepositAccount());
         }
-        if (req.getWithdrawAccount() != null && !req.getPassword().trim().isBlank()){
+        if (req.getWithdrawAccount() != null){
             accountRepository.findById(req.getWithdrawAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_WITHDRAW_ACCOUNT));
             account.updateWithdrawAccount(req.getWithdrawAccount());
         }
