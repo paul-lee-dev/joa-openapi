@@ -145,6 +145,8 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
                       value={value}
                       keyboardType="email-address"
                       autoCapitalize="none"
+                      autoCorrect={false}
+                      autoComplete="email"
                     />
                   )}
                   name="email"

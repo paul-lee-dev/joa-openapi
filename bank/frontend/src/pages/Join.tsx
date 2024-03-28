@@ -206,6 +206,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
+                  keyboardType="number-pad"
                 />
               )}
               name="phone"

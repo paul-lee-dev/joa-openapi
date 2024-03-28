@@ -65,7 +65,7 @@ function TransferAmount({
             {amount === '' ? '금액 입력' : `${formatAmount(+amount)}원`}
           </Text>
           <TouchableOpacity
-            onPress={() => setAmount('1001220')}
+            onPress={() => setAmount(account.balance.toString())}
             className="w-full flex">
             <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
               {`잔액 ${formatAmount(account.balance)}원 입력`}

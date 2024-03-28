@@ -10,7 +10,7 @@ import {useState} from 'react';
 import Header from '@/components/Header';
 import HistoryItem from '@/components/HistoryItem';
 import BottomPopup from '@/components/BottomPopup';
-import FilterOption from '@/components/FilterOption';
+import FilterOption from '@/components/OptionInput';
 import BottomButton from '@/components/BottomButton';
 import {RootStackParamList} from '@/Router';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -143,15 +143,33 @@ function History({route, navigation}: HistoryScreenProps): React.JSX.Element {
           <View className="w-full flex flex-grow space-y-8">
             <FilterOption
               label={'조회기간'}
-              options={['1개월', '3개월', '지난달', '직접설정']}
+              options={[
+                {label: '1개월', value: 1},
+                {label: '3개월', value: 2},
+                {label: '지난달', value: 3},
+                {label: '직접설정', value: 4},
+              ]}
+              value={1}
+              setValue={() => {}}
             />
             <FilterOption
               label={'거래유형'}
-              options={['전체', '입금만', '출금만']}
+              options={[
+                {label: '전체', value: 1},
+                {label: '입금만', value: 2},
+                {label: '출금만', value: 3},
+              ]}
+              value={1}
+              setValue={() => {}}
             />
             <FilterOption
               label={'거래내역정렬'}
-              options={['최신순', '과거순']}
+              options={[
+                {label: '최신순', value: true},
+                {label: '과거순', value: false},
+              ]}
+              value={true}
+              setValue={() => {}}
             />
           </View>
           <BottomButton title={'확인'} />

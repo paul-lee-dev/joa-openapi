@@ -26,9 +26,14 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
     뱅킹: [
       {
         title: '입출금 계좌 개설',
-        onPress: () => navigation.navigate('CreateAccount'),
+        onPress: () =>
+          navigation.navigate('ProductList', {productType: 'ORDINARY_DEPOSIT'}),
       },
-      {title: '예적금 상품 조회', onPress: () => {}},
+      {
+        title: '예적금 상품 조회',
+        onPress: () =>
+          navigation.navigate('ProductList', {productType: 'TERM_DEPOSIT'}),
+      },
       {title: '계좌 관리', onPress: () => navigation.navigate('AccountList')},
       {
         title: '이체한도변경',

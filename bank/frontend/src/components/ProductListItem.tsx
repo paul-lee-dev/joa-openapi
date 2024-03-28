@@ -1,4 +1,5 @@
-import {IProduct, productTypeName} from '@/models/product';
+import {IProduct} from '@/models/product';
+import {getProductTypeName} from '@/utils';
 import {Text, TouchableOpacity, View} from 'react-native';
 
 interface IProps {
@@ -13,7 +14,7 @@ function ProductListItem({product, link}: IProps): React.JSX.Element {
         <View className="w-full flex flex-row">
           <View className="border border-pink-300 px-2 py-1 rounded-lg">
             <Text className="text-sm text-pink-400 font-semibold">
-              {productTypeName[product.productType]}
+              {getProductTypeName(product.productType)!.title}
             </Text>
           </View>
         </View>
@@ -29,7 +30,7 @@ function ProductListItem({product, link}: IProps): React.JSX.Element {
       <View className="w-20 flex justify-between ">
         <View className="w-20 h-20 border rounded-full flex justify-center items-center border-pink-500">
           <Text className="text-xs text-gray-600">최고 연</Text>
-          <Text className="text-xl font-bold text-pink-800">2.30%</Text>
+          <Text className="text-xl font-bold text-pink-800">{`${product.rate}%`}</Text>
         </View>
         <View className="w-full flex flex-row justify-end">
           <TouchableOpacity

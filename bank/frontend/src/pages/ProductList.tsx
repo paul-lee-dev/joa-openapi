@@ -15,93 +15,6 @@ type ProductListScreenProps = NativeStackScreenProps<
   'ProductList'
 >;
 
-const sampleProductList: IProduct[] = [
-  {
-    productId: '00a97e09-9e28-4b2f-8a00-2aa69745fa0b',
-    name: '보통예금',
-    description:
-      '누구나 쉽고 스마트하게 통장의 많은 정보와 기능들을 쉽고 편리하게 이용할 수 있도록 디자인했습니다.',
-    minAmount: 0,
-    maxAmount: 1000000,
-    rate: null,
-    productType: 'ORDINARY_DEPOSIT',
-    paymentType: 'SIMPLE',
-    isDone: false,
-    createdAt: '2024-03-27 14:22',
-    updatedAt: '2024-03-27 14:22',
-  },
-  {
-    productId: '00a97e09-9e28-4b2f-8a00-2aa69745fa0b',
-    name: '보통예금',
-    description:
-      '누구나 쉽고 스마트하게 통장의 많은 정보와 기능들을 쉽고 편리하게 이용할 수 있도록 디자인했습니다.',
-    minAmount: 0,
-    maxAmount: 1000000,
-    rate: null,
-    productType: 'ORDINARY_DEPOSIT',
-    paymentType: 'SIMPLE',
-    isDone: false,
-    createdAt: '2024-03-27 14:22',
-    updatedAt: '2024-03-27 14:22',
-  },
-  {
-    productId: '00a97e09-9e28-4b2f-8a00-2aa69745fa0b',
-    name: '보통예금',
-    description:
-      '누구나 쉽고 스마트하게 통장의 많은 정보와 기능들을 쉽고 편리하게 이용할 수 있도록 디자인했습니다.',
-    minAmount: 0,
-    maxAmount: 1000000,
-    rate: null,
-    productType: 'ORDINARY_DEPOSIT',
-    paymentType: 'SIMPLE',
-    isDone: false,
-    createdAt: '2024-03-27 14:22',
-    updatedAt: '2024-03-27 14:22',
-  },
-  {
-    productId: '00a97e09-9e28-4b2f-8a00-2aa69745fa0b',
-    name: '보통예금',
-    description:
-      '누구나 쉽고 스마트하게 통장의 많은 정보와 기능들을 쉽고 편리하게 이용할 수 있도록 디자인했습니다.',
-    minAmount: 0,
-    maxAmount: 1000000,
-    rate: null,
-    productType: 'ORDINARY_DEPOSIT',
-    paymentType: 'SIMPLE',
-    isDone: false,
-    createdAt: '2024-03-27 14:22',
-    updatedAt: '2024-03-27 14:22',
-  },
-  {
-    productId: '00a97e09-9e28-4b2f-8a00-2aa69745fa0b',
-    name: '보통예금',
-    description:
-      '누구나 쉽고 스마트하게 통장의 많은 정보와 기능들을 쉽고 편리하게 이용할 수 있도록 디자인했습니다.',
-    minAmount: 0,
-    maxAmount: 1000000,
-    rate: null,
-    productType: 'ORDINARY_DEPOSIT',
-    paymentType: 'SIMPLE',
-    isDone: false,
-    createdAt: '2024-03-27 14:22',
-    updatedAt: '2024-03-27 14:22',
-  },
-  {
-    productId: '00a97e09-9e28-4b2f-8a00-2aa69745fa0b',
-    name: '보통예금',
-    description:
-      '누구나 쉽고 스마트하게 통장의 많은 정보와 기능들을 쉽고 편리하게 이용할 수 있도록 디자인했습니다.',
-    minAmount: 0,
-    maxAmount: 1000000,
-    rate: null,
-    productType: 'ORDINARY_DEPOSIT',
-    paymentType: 'SIMPLE',
-    isDone: false,
-    createdAt: '2024-03-27 14:22',
-    updatedAt: '2024-03-27 14:22',
-  },
-];
-
 function ProductList({
   route,
   navigation,
@@ -153,10 +66,10 @@ function ProductList({
         </Pressable>
       </View>
       <ScrollView className="w-full flex-grow flex bg-gray-200">
-        {sampleProductList && (
+        {data && (
           <View className="w-full flex flex-grow pb-4 px-1 space-y-4 bg-gray-200">
-            {sampleProductList.map((product: IProduct, i) => (
-              <View className="w-full h-40" key={i}>
+            {data.page?.content?.map((product: IProduct) => (
+              <View className="w-full h-40" key={product.productId}>
                 <ProductListItem
                   product={product}
                   link={() => navigation.navigate('CreateAccount', {product})}
