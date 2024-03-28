@@ -1,6 +1,5 @@
 package com.joa.openapi.product.repository;
 
-import com.joa.openapi.product.dto.ProductSearchResponseDto;
 import com.joa.openapi.product.entity.Product;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;

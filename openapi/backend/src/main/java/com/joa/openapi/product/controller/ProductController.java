@@ -1,11 +1,11 @@
 package com.joa.openapi.product.controller;
 
 import com.joa.openapi.common.response.ApiResponse;
-import com.joa.openapi.product.dto.ProductCreateRequestDto;
-import com.joa.openapi.product.dto.ProductCreateResponseDto;
-import com.joa.openapi.product.dto.ProductUpdateIsDoneResponseDto;
+import com.joa.openapi.product.dto.req.ProductCreateRequestDto;
+import com.joa.openapi.product.dto.res.ProductCreateResponseDto;
+import com.joa.openapi.product.dto.res.ProductUpdateIsDoneResponseDto;
 import com.joa.openapi.product.service.ProductService;
-import com.joa.openapi.product.dto.ProductSearchResponseDto;
+import com.joa.openapi.product.dto.res.ProductSearchResponseDto;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

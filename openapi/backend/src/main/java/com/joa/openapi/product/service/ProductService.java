@@ -2,10 +2,10 @@ package com.joa.openapi.product.service;
 
 import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.common.exception.RestApiException;
-import com.joa.openapi.product.dto.ProductCreateRequestDto;
-import com.joa.openapi.product.dto.ProductCreateResponseDto;
-import com.joa.openapi.product.dto.ProductSearchResponseDto;
-import com.joa.openapi.product.dto.ProductUpdateIsDoneResponseDto;
+import com.joa.openapi.product.dto.req.ProductCreateRequestDto;
+import com.joa.openapi.product.dto.res.ProductCreateResponseDto;
+import com.joa.openapi.product.dto.res.ProductSearchResponseDto;
+import com.joa.openapi.product.dto.res.ProductUpdateIsDoneResponseDto;
 import com.joa.openapi.product.entity.Product;
 import com.joa.openapi.product.errorcode.ProductErrorCode;
 import com.joa.openapi.product.repository.ProductRepository;
