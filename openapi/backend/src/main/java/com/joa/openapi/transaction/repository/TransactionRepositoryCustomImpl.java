@@ -1,18 +1,28 @@
 package com.joa.openapi.transaction.repository;
 
+import static com.joa.openapi.account.entity.QAccount.account;
+import static com.joa.openapi.bank.entity.QBank.bank;
+import static com.joa.openapi.member.entity.QMember.member;
 import static com.joa.openapi.transaction.entity.QTransaction.transaction;
 
+import com.joa.openapi.bank.dto.DashboardResponseDto;
+import com.joa.openapi.bank.entity.Bank;
+import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto;
 import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto.TransactionOrderBy;
 import com.joa.openapi.transaction.dto.res.TransactionSearchResponseDto;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.SubQueryExpression;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -68,6 +78,24 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             .collect(Collectors.toList());
 
         return new PageImpl<>(res, pageable, transactions.size());
+    }
+
+    @Override
+    public Long searchBanksTotalTransactionCustom(UUID bankId) {
+        List<UUID> bankIds = jpaQueryFactory
+                .select(account.bankId)
+                .from(account)
+                .where(account.bankId.eq(bankId))
+                .fetch();
+        return jpaQueryFactory
+                .selectFrom(transaction)
+                .leftJoin(account)
+                .on(transaction.fromAccount.in(String.valueOf(bankIds)))
+                .fetchCount();
+    }
+
+    private BooleanExpression eqSearchBanksAccount(UUID bankId) {
+        return account.bankId.eq(bankId);
     }
 
     private BooleanExpression eqSearchType(TransactionSearchRequestDto req) {

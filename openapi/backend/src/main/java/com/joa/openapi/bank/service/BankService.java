@@ -110,7 +110,7 @@ public class BankService {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
         Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         AuthoriaztionBank(bank.getAdminId(), adminId);
-        Long totalTransactionCnt = 1L;
+        Long totalTransactionCnt = transactionRepository.searchBanksTotalTransactionCustom(bankId);
         Long totalMemberCnt = 1L;
         Long totalWithdrawAmount = 1L;
         Long totalDepositAmout = 1L;
