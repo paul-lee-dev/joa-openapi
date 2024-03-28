@@ -12,9 +12,9 @@ import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.product.entity.Product;
-import com.joa.openapi.product.enums.ProductType;
 import com.joa.openapi.product.errorcode.ProductErrorCode;
 import com.joa.openapi.product.repository.ProductRepository;
+import com.joa.openapi.product.service.DepositAccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -60,11 +60,11 @@ public class AccountService {
         if(req.getPassword() == null || req.getPassword().trim().isBlank())
             throw new RestApiException(AccountErrorCode.PASSWORD_REQUIRED);
 
-        Double calculatedInterest = depositAccountService.calculateRate(req, product);
+        System.out.println("==============");
 
         Account account = Account.builder()
                 .id(accountId)
-                .name(product.getName())
+                .name((req.getNickname() == null) ? product.getName() : req.getNickname())
                 .balance(req.getBalance())
                 .password(req.getPassword())
                 .isDormant(false)
@@ -85,7 +85,7 @@ public class AccountService {
 
         accountRepository.save(account);
 
-        return AccountCreateResponseDto.toDto(account, calculatedInterest);
+        return AccountCreateResponseDto.toDto(account);
     }
 
     @Transactional
