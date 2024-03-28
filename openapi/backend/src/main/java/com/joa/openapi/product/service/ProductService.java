@@ -1,6 +1,9 @@
 package com.joa.openapi.product.service;
 
 import com.joa.openapi.account.entity.Account;
+import com.joa.openapi.bank.entity.Bank;
+import com.joa.openapi.bank.errorcode.BankErrorCode;
+import com.joa.openapi.bank.repository.BankRepository;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.product.dto.ProductCreateRequestDto;
 import com.joa.openapi.product.dto.ProductCreateResponseDto;
@@ -22,11 +25,13 @@ import java.util.UUID;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final BankRepository bankRepository;
 
     @Transactional
     public ProductCreateResponseDto create(ProductCreateRequestDto req) {
 
         //authorityValidation(memberId); /* TODO 관리자 권한 설정 */
+        Bank bank = bankRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
 
         Product product = Product.builder()
                 .name(req.getName())
@@ -37,6 +42,7 @@ public class ProductService {
                 .productType(req.getProductType())
                 .paymentType(req.getPaymentType())
                 .isDone(false)
+                .productsBank(bank)
                 .build();
 
         productRepository.save(product);

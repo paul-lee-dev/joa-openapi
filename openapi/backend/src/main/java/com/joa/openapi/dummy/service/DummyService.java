@@ -5,6 +5,9 @@ import com.joa.openapi.account.dto.AccountDeleteRequestDto;
 import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.account.service.AccountService;
+import com.joa.openapi.bank.entity.Bank;
+import com.joa.openapi.bank.errorcode.BankErrorCode;
+import com.joa.openapi.bank.repository.BankRepository;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.common.repository.ApiRepository;
@@ -17,6 +20,8 @@ import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.member.service.MemberService;
 import com.joa.openapi.member.dto.MemberJoinRequestDto;
+import com.joa.openapi.product.errorcode.ProductErrorCode;
+import com.joa.openapi.product.repository.ProductRepository;
 import com.joa.openapi.transaction.dto.TransactionDeleteRequestDto;
 import com.joa.openapi.transaction.dto.TransactionRequestDto;
 import com.joa.openapi.transaction.entity.Transaction;
@@ -41,10 +46,12 @@ public class DummyService {
     private final DummyRepository dummyRepository;
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+    private final BankRepository bankRepository;
     private final AccountService accountService;
     private final AccountRepository accountRepository;
     private final TransactionService transactionService;
     private final TransactionRepository transactionRepository;
+    private final ProductRepository productRepository;
     private final ApiRepository apiRepository;
     private final NeyhuingName neyhuingName;
     public String name;
@@ -69,11 +76,14 @@ public class DummyService {
                     .build();
             UUID memberId = UUID.fromString(memberService.addMember(MJRdto, dummy.getId()).getId());
             // 더미 멤버 별 기본 입출금 계좌 생성
+            Bank bank = bankRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+            UUID productId = productRepository.getByBankId(bank).getId();
             AccountCreateRequestDto ACRdto = AccountCreateRequestDto.builder()
                     .nickname(makeName(4))
                     .password("dummy")
                     .withdrawAccount(null)
                     .dummyId(dummy.getId())
+                    .productId(productId)
                     .build();
             String accountId = accountService.create(memberId, ACRdto).getAccountId();
             // 계좌 별 기본금 10만원 입금
@@ -100,6 +110,7 @@ public class DummyService {
                 .build();
         dummyRepository.save(dummy);
 
+        UUID productId = productRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT)).getId();
         int userCount = req.getUsers().size();
         Random random = new Random();
         for (int i = 0; i < req.getCount(); i++) {
@@ -109,6 +120,7 @@ public class DummyService {
                     .password("dummy")
                     .withdrawAccount(null)
                     .dummyId(dummy.getId())
+                    .productId(productId)
                     .build();
             String accountId = accountService.create(req.getUsers().get(randomMember), dto).getAccountId();
             // 계좌 별 기본금 10만원 입금

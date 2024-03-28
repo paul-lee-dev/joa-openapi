@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -20,4 +22,5 @@ public class ProductCreateRequestDto {
     private Double rate;
     private ProductType productType;
     private PaymentType paymentType;
+    private UUID bankId;
 }
