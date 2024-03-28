@@ -28,10 +28,6 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
             .selectFrom(product)
             .orderBy(product.createdAt.desc());
 
-
-        // 전체 상품 수
-        long total = query.fetchCount();
-
         // 페이징된 상품 조회
         List<Product> products = query
                 .offset(pageable.getOffset()) //반환되는 행의 시작점
@@ -43,7 +39,6 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
                 .collect(java.util.stream.Collectors.toList());
 
         //페이지 객체 반환
-        return new PageImpl<>(res, pageable, total);
-
+        return new PageImpl<>(res, pageable, products.size());
     }
 }
