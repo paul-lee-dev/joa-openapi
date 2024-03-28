@@ -1,8 +1,9 @@
-package com.joa.openapi.product.dto;
+package com.joa.openapi.product.dto.res;
 
 import com.joa.openapi.product.entity.Product;
 import com.joa.openapi.product.enums.PaymentType;
 import com.joa.openapi.product.enums.ProductType;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductSearchResponseDto {
 
+    private UUID id;
     private String name;
     private String description;
     private Long minAmount;
@@ -27,6 +29,7 @@ public class ProductSearchResponseDto {
 
     public static ProductSearchResponseDto toDto(Product product) {
         return ProductSearchResponseDto.builder()
+            .id(product.getId())
             .name(product.getName())
             .description(product.getDescription())
             .minAmount(product.getMinAmount())

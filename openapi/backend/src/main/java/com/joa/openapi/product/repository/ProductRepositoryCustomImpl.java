@@ -2,7 +2,7 @@ package com.joa.openapi.product.repository;
 
 import static com.joa.openapi.product.entity.QProduct.product;
 
-import com.joa.openapi.product.dto.ProductSearchResponseDto;
+import com.joa.openapi.product.dto.res.ProductSearchResponseDto;
 import com.joa.openapi.product.entity.Product;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;

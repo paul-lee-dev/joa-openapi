@@ -1,8 +1,6 @@
-package com.joa.openapi.product.dto;
+package com.joa.openapi.product.dto.res;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.joa.openapi.account.dto.AccountCreateResponseDto;
-import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.product.entity.Product;
 import com.joa.openapi.product.enums.PaymentType;
 import com.joa.openapi.product.enums.ProductType;
