@@ -9,11 +9,11 @@ import java.util.UUID;
 
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class DummyMemberRequestDto {
+@AllArgsConstructor
+public class DummySearchResponseDto {
 
-    private String name;
-    private Integer count;
-    private UUID bankId;
+    private UUID dummyId;
+    private String dummyName;
+    private UUID adminId;
 }

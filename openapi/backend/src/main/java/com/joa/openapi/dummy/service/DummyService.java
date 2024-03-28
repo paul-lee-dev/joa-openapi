@@ -29,6 +29,8 @@ import com.joa.openapi.transaction.repository.TransactionRepository;
 import com.joa.openapi.transaction.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,7 +61,7 @@ public class DummyService {
     @Transactional
     public DummyResponseDto createMember(UUID apiKey, DummyMemberRequestDto req) {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
-        name = "멤버" + req.getCount() + "명 만들기";
+        name = req.getName() == null ? "멤버" + req.getCount() + "명 만들기" : req.getName();
         Dummy dummy = Dummy.builder()
                 .name(name)
                 .memberCount(req.getCount())
@@ -102,7 +104,7 @@ public class DummyService {
     @Transactional
     public DummyResponseDto createAccount(UUID apiKey, DummyAccountRequestDto req) {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
-        name = "계좌" + req.getCount() + "개 만들기";
+        name = req.getName() == null ? "계좌" + req.getCount() + "개 만들기" : req.getName();
         Dummy dummy = Dummy.builder()
                 .name(name)
                 .accountCount(req.getCount())
@@ -110,7 +112,8 @@ public class DummyService {
                 .build();
         dummyRepository.save(dummy);
 
-        UUID productId = productRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT)).getId();
+        Bank bank = bankRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+        UUID productId = productRepository.getByBankId(bank).getId();
         int userCount = req.getUsers().size();
         Random random = new Random();
         for (int i = 0; i < req.getCount(); i++) {
@@ -139,7 +142,7 @@ public class DummyService {
     @Transactional
     public DummyResponseDto createTransaction(UUID apiKey, DummyTransactionRequestDto req) {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
-        name = "거래내역" + req.getCount() + "개 만들기";
+        name = req.getName() == null ? "거래내역" + req.getCount() + "개 만들기" : req.getName();
         Dummy dummy = Dummy.builder()
                 .name(name)
                 .transactionCount(req.getCount())
@@ -272,14 +275,15 @@ public class DummyService {
         return DummyResponseDto.toDto(dummy);
     }
 
-    public List<DummyResponseDto> searchAll(UUID apiKey) {
+    public Page<DummyResponseDto> searchAll(DummySearchRequestDto req, UUID apiKey, Pageable pageable) {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
-        List<Dummy> dummyList = dummyRepository.findAllByAdminId(adminId);
-        List<DummyResponseDto> dummyResponseDtoList = new ArrayList<>();
-        for (Dummy dummy: dummyList) {
-            dummyResponseDtoList.add(DummyResponseDto.toDto(dummy));
-        }
-        return dummyResponseDtoList;
+        log.info("검색어: {}", req.getSearchKeyWord());
+//        List<Dummy> dummyList = dummyRepository.findAllByAdminId(adminId);
+//        List<DummyResponseDto> dummyResponseDtoList = new ArrayList<>();
+//        for (Dummy dummy: dummyList) {
+//            dummyResponseDtoList.add(DummyResponseDto.toDto(dummy));
+//        }
+        return dummyRepository.searchDummyCustom(req, adminId, pageable);
     }
 
     public String makeName(int cnt) {

@@ -10,7 +10,7 @@ import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.common.util.AuthCheckUtil;
-import com.joa.openapi.product.dto.ProductCreateRequestDto;
+import com.joa.openapi.product.dto.req.ProductCreateRequestDto;
 import com.joa.openapi.product.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
