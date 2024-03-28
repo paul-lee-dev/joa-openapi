@@ -13,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class DummyMemberRequestDto {
 
+    private String name;
     private Integer count;
     private UUID bankId;
 }
