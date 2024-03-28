@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductSearchResponseDto {
 
-    private UUID id;
+    private UUID productId;
     private String name;
     private String description;
     private Long minAmount;
@@ -29,7 +29,7 @@ public class ProductSearchResponseDto {
 
     public static ProductSearchResponseDto toDto(Product product) {
         return ProductSearchResponseDto.builder()
-            .id(product.getId())
+            .productId(product.getId())
             .name(product.getName())
             .description(product.getDescription())
             .minAmount(product.getMinAmount())

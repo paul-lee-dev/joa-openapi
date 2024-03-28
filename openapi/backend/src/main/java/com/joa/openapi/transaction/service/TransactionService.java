@@ -304,6 +304,43 @@ public class TransactionService {
         transaction.deleteSoftly();
     }
 
+    @Transactional
+    public void depositInterest(Account account, Long interest) {
+        System.out.println("이자 넣기 전 : " + account.getBalance());
+        account.updateBalance(account.getBalance() + interest);
+
+
+        Transaction transaction = Transaction.builder()
+                .amount(interest)
+                .depositorName("이자 지급")
+                .fromAccount(null)
+                .toAccount(account.getId())
+                .build();
+
+        transactionRepository.save(transaction);
+        accountRepository.save(account);
+
+        System.out.println("이자 넣은 후 : " + account.getBalance());
+    }
+
+    @Transactional
+    public void withdrawAmount(Account account) {
+        if(account.getBalance() < account.getAmount())
+            return;
+
+        account.updateBalance(account.getBalance() - account.getAmount());
+
+        Transaction transaction = Transaction.builder()
+                .amount(account.getAmount())
+                .depositorName("이자 지급")
+                .fromAccount(null)
+                .toAccount(account.getId())
+                .build();
+
+        transactionRepository.save(transaction);
+        accountRepository.save(account);
+    }
+
     public void authorityValidation(UUID memberId, Account account) {
         if (account.getDummy() != null) {
             Dummy dummy = dummyRepository.findById(account.getDummy().getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT)); /* TODO: 더미 에러 코드로 변경 */
