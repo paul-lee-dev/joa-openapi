@@ -1,4 +1,4 @@
-package com.joa.openapi.transaction.dto;
+package com.joa.openapi.transaction.dto.res;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joa.openapi.transaction.entity.Transaction;

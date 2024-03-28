@@ -1,14 +1,11 @@
-package com.joa.openapi.transaction.dto;
+package com.joa.openapi.transaction.dto.res;
 
-import com.joa.openapi.transaction.entity.Transaction;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
-
-import static com.joa.openapi.transaction.entity.QTransaction.transaction;
 
 @Getter
 @Builder

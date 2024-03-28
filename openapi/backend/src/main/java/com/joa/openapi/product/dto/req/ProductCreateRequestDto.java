@@ -1,4 +1,4 @@
-package com.joa.openapi.product.dto;
+package com.joa.openapi.product.dto.req;
 
 import com.joa.openapi.product.enums.PaymentType;
 import com.joa.openapi.product.enums.ProductType;
