@@ -1,4 +1,4 @@
-package com.joa.openapi.product.dto;
+package com.joa.openapi.product.dto.res;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joa.openapi.product.entity.Product;

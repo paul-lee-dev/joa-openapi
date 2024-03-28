@@ -1,4 +1,4 @@
-package com.joa.openapi.transaction.dto;
+package com.joa.openapi.transaction.dto.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,7 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transaction1wonConfirmRequestDto {
+public class TransactionDeleteRequestDto {
 
-    private String word;
     private UUID transactionId;
 }
