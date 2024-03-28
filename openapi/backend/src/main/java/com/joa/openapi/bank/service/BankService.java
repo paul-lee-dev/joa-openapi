@@ -2,6 +2,7 @@ package com.joa.openapi.bank.service;
 
 import com.joa.openapi.bank.dto.BankRequestDto;
 import com.joa.openapi.bank.dto.BankResponseDto;
+import com.joa.openapi.bank.dto.DashboardResponseDto;
 import com.joa.openapi.bank.entity.Bank;
 import com.joa.openapi.bank.errorcode.BankErrorCode;
 import com.joa.openapi.bank.repository.BankRepository;
@@ -12,10 +13,12 @@ import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.common.util.AuthCheckUtil;
 import com.joa.openapi.product.dto.req.ProductCreateRequestDto;
 import com.joa.openapi.product.service.ProductService;
+import com.joa.openapi.transaction.repository.TransactionRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +39,7 @@ public class BankService {
     private final ApiRepository apiRepository;
     private final BankRepository bankRepository;
     private final ProductService productService;
+    private final TransactionRepository transactionRepository;
 
     @Transactional
     public BankResponseDto create(BankRequestDto req, UUID apiKey) {
@@ -100,6 +104,28 @@ public class BankService {
         AuthoriaztionBank(bank.getAdminId(), adminId);
 
         return BankResponseDto.toDto(bank);
+    }
+
+    public DashboardResponseDto getDashboardData(UUID apiKey, UUID bankId) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+        AuthoriaztionBank(bank.getAdminId(), adminId);
+        Long totalTransactionCnt = 1L;
+        Long totalMemberCnt = 1L;
+        Long totalWithdrawAmount = 1L;
+        Long totalDepositAmout = 1L;
+        Pair<Long, Long> dailyTotalTransaction = Pair.of(1L, 1L);
+        List<Pair<Long, Long>> totalTransactionList = new ArrayList<>();
+        for (int i = 0; i < 7; i++) {
+            totalTransactionList.add(dailyTotalTransaction);
+        }
+        return DashboardResponseDto.builder()
+                .totalTransactionCnt(totalTransactionCnt)
+                .totalMemberCnt(totalMemberCnt)
+                .totalWithdrawAmount(totalWithdrawAmount)
+                .totalDepositAmount(totalDepositAmout)
+                .totalTransactionList(totalTransactionList)
+                .build();
     }
 
     // 관리자 아이디가 만든 은행인지

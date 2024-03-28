@@ -1,5 +1,6 @@
 package com.joa.openapi.dummy.dto;
 
+import com.joa.openapi.dummy.enums.RepeatTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +17,7 @@ public class DummyTransactionRequestDto {
 
     private String name;
     private Integer count;
+    private RepeatTime term;
     private UUID bankId;
     private List<UUID> users;
 }

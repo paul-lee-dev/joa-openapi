@@ -1,5 +1,6 @@
 package com.joa.openapi.transaction.repository;
 
+import com.joa.openapi.bank.entity.Bank;
 import com.joa.openapi.transaction.entity.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
