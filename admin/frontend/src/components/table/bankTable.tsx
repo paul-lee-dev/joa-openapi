@@ -1,7 +1,6 @@
 "use client";
-import Image from "next/image";
 import tw from "tailwind-styled-components";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { HiEmojiSad } from "react-icons/hi";
 import { localAxios } from "@/api/http-common";
 import { SearchBankParams } from "@/models/Bank.interface";
@@ -56,6 +55,15 @@ export default function BankTable({ apiKey }: BankTableProps) {
 
   const router = useRouter();
 
+  // "자세히" 버튼 클릭 시 해당 은행 정보를 넘겨주고 bank/detail 페이지로 이동하는 함수
+  const handleBankDetail = (bankId: string) => {
+    // 은행 상세 정보 페이지인 bank/detail 로 이동하면서 해당 은행의 ID를 쿼리 파라미터로 전달합니다.
+    router.push({
+      pathname: "/bank/detail",
+      query: { bankId },
+    });
+  };
+
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500">
@@ -102,9 +110,7 @@ export default function BankTable({ apiKey }: BankTableProps) {
               <TableData>{bank.bankId}</TableData>
               <TableData>
                 <a
-                  onClick={() => {
-                    router.push("bank/detail");
-                  }}
+                  onClick={() => handleBankDetail(bank.bankId)}
                   className="font-medium text-pink-400 hover:text-pink-500"
                 >
                   자세히

@@ -4,6 +4,8 @@ import { FaSort } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { localAxios } from "@/api/http-common";
+import { useQuery } from "@tanstack/react-query";
+import { getAccountList } from "@/api/Account";
 
 export default function AccountTable() {
   interface Account {
@@ -89,23 +91,8 @@ export default function AccountTable() {
     },
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response: AxiosResponse<{
-          status: string;
-          message: string;
-          data: Account[];
-          page: null;
-        }> = await localAxios.get("/account/search");
-        setAccountList(response.data.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  const {data} = useQuery({queryKey: ['accountList'], queryFn: getAccountList});
 
-    fetchData();
-  }, [api]);
 
 
   const router = useRouter();

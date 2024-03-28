@@ -1,9 +1,22 @@
+export interface CreateAccountParams {
+  nickname: string;
+  password: string;
+  balance: number;
+  term: number;
+  bankId?: string;
+}
 export interface CreateAccountResponse {
   accountId: string;
-  adminId: string;
-  name: string;
-  description: string;
-  uri?: string;
+  nickname: string;
+  balance: number;
+  isDormant: boolean;
+  transferLimit: number;
+  startDate: string;
+  endDate: string;
+  term: number;
+  depositAccount: string;
+  withdrawAccount: string;
+  amount: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -54,7 +67,7 @@ export interface DeleteAccountResponse {
 export interface ModifyAccountParams {
   accountId: string;
   name: string;
-  description: string; 
+  description: string;
   uri?: string;
 }
 
@@ -65,5 +78,3 @@ export interface ModifyAccountResponse {
   createdAt: string;
   updatedAt: string;
 }
-
-
