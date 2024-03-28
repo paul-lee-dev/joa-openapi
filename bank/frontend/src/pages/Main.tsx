@@ -42,7 +42,11 @@ const popupStyle = {
 
 function Main({navigation}: MainScreenProps): React.JSX.Element {
   const memberData = useRecoilValue(memberDataAtom);
-  const {data} = useQuery({queryKey: ['accountList'], queryFn: getAccountList});
+  const {data} = useQuery({
+    queryKey: ['accountList'],
+    queryFn: getAccountList,
+    retry: true,
+  });
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
 
   return (

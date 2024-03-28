@@ -143,6 +143,8 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
                     />
                   )}
                   name="email"

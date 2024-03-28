@@ -122,6 +122,8 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
                     />
                     <TouchableOpacity
                       onPress={sendEmailCode}
