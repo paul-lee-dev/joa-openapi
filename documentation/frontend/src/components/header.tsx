@@ -14,7 +14,7 @@ export default function Header() {
           <NavItem><Link href="/docs">Docs</Link></NavItem>
         </NavContainer>
         <ButtonContainer>
-          <ButtonItem>Admin</ButtonItem>
+          <ButtonItem><a href="https://joa13.site/dashboard">Admin</a></ButtonItem>
         </ButtonContainer>
         </MenuContainer>
       </Wrapper>

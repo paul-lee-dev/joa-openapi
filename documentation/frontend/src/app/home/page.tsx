@@ -9,7 +9,7 @@ const Home = () => {
             <MainTitleItem>Joa Open API</MainTitleItem>
             <MainTextItem>은행 업무와 관련된 다양한 금융 API를 제공하여 핀테크 프로젝트를 간편하고 효율적으로 개발할 수 있도록 실시간으로 지원합니다. </MainTextItem>
             <ButtonContainer>
-              <PurpleButtonItem href="#">시작하기</PurpleButtonItem>
+              <PurpleButtonItem href="/docs">시작하기</PurpleButtonItem>
             </ButtonContainer>
           </SubContainer>
           <ImageItem src="/sample.png" alt="Product screenshot" />
@@ -25,13 +25,13 @@ const Home = () => {
 
           <FeatureContainer>
             {posts.map((post) => (
-              <FeatureItem key={post.title}>
+              <FeatureItem key={post.title}><a href={post.url}>
                 <SubImageContainer>
                   <SubImageItem src={post.image.url} />
                 </SubImageContainer>
                 <FeatureTitle>{post.title}</FeatureTitle>
                 <FeatureDetail>{post.description}</FeatureDetail>
-              </FeatureItem>
+                </a></FeatureItem>
             ))}
           </FeatureContainer>
         </SubWrapper>
@@ -202,6 +202,7 @@ const posts = [
     title: '금융 API 테스트베드',
     description:
       '별도의 클라이언트 프로그램 없이도, 은행 시스템을 구축하고 Restful 방식을 테스트할 수 있습니다.',
+      url:'/testbeds',
     image: {
       url: '/sample.png',
     },
@@ -210,6 +211,7 @@ const posts = [
     title: '샘플 어플리케이션',
     description:
       '클라이언트 개발 기간을 단축할 수 있도록 샘플 앱과 코드, 도커 이미지를 오픈 소스로 제공합니다.',
+      url:'/demos',
     image: {
       url: '/sample.png',
     },
@@ -218,6 +220,7 @@ const posts = [
     title: '개발자 대시보드',
     description:
       '은행 시스템 이용 현황을 한눈에 파악하고 관리할 수 있는 실시간 대시보드를 지원합니다.',
+      url:'https://joa13.site/dashboard',
     image: {
       url: '/sample.png',
     },

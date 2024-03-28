@@ -10,6 +10,8 @@ import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.common.util.AuthCheckUtil;
+import com.joa.openapi.product.dto.req.ProductCreateRequestDto;
+import com.joa.openapi.product.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.joa.openapi.product.enums.PaymentType.SIMPLE;
+import static com.joa.openapi.product.enums.ProductType.ORDINARY_DEPOSIT;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -30,6 +35,7 @@ public class BankService {
     private final AuthCheckUtil authCheckUtil;
     private final ApiRepository apiRepository;
     private final BankRepository bankRepository;
+    private final ProductService productService;
 
     @Transactional
     public BankResponseDto create(BankRequestDto req, UUID apiKey) {
@@ -41,6 +47,17 @@ public class BankService {
                 .uri(req.getUri())
                 .build();
         bankRepository.save(bank);
+        ProductCreateRequestDto dto = ProductCreateRequestDto.builder()
+                .name("보통 예금")
+                .description("은행 생성 시 자동 생성 되는 보통 예금")
+                .minAmount(0L)
+                .maxAmount(100000000L)
+                .rate(1D)
+                .productType(ORDINARY_DEPOSIT)
+                .paymentType(SIMPLE)
+                .bankId(bank.getId())
+                .build();
+        productService.create(dto);
 
         return BankResponseDto.toDto(bank);
     }
