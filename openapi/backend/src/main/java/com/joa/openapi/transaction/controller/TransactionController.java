@@ -90,10 +90,13 @@ public class TransactionController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> search(@RequestParam Map<String, String> allParams,
+    public ResponseEntity<?> search(@RequestHeader("apiKey") UUID apiKey,
+        @RequestParam Map<String, String> allParams,
         @PageableDefault Pageable pageable) {
 
-        // TODO : API Key 확인
+        if(apiKey == null) {
+            throw new RestApiException(TransactionErrorCode.INVALID_API_KEY);
+        }
 
         // 은행별
         UUID bankId = Optional.ofNullable(allParams.get("bankId"))
@@ -149,6 +152,7 @@ public class TransactionController {
 
         // DTO 구성
         TransactionSearchRequestDto req = TransactionSearchRequestDto.builder()
+            .apiKey(apiKey)
             .bankId(bankId)
             .isDummy(Boolean.TRUE.equals(isDummy))
             .depositorNameKeyword(depositorNameKeyword)
@@ -162,9 +166,6 @@ public class TransactionController {
             .orderBy(orderBy)
             .build();
 
-        if (!transactionService.checkAccountId(req.getAccountId())) {
-            throw new RestApiException(TransactionErrorCode.NO_ACCOUNTID);
-        }
         Page<TransactionSearchResponseDto> transactionsPage = transactionService.search(req,
             pageable);
         return ResponseEntity.ok(ApiResponse.success("거래내역 조회에 성공했습니다.", transactionsPage));

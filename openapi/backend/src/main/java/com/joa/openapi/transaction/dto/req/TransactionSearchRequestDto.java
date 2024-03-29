@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TransactionSearchRequestDto {
 
+    private UUID apiKey;
     private UUID bankId;
     private boolean isDummy; // (dummyId가 존재하면)
     private String depositorNameKeyword;   //입금자명

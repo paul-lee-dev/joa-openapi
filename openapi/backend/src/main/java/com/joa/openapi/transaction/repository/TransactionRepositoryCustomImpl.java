@@ -1,10 +1,10 @@
 package com.joa.openapi.transaction.repository;
 
 import static com.joa.openapi.account.entity.QAccount.account;
-import static com.joa.openapi.product.entity.QProduct.product;
+import static com.joa.openapi.bank.entity.QBank.bank;
 import static com.joa.openapi.transaction.entity.QTransaction.transaction;
 
-import com.joa.openapi.account.entity.QAccount;
+import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto;
 import com.joa.openapi.transaction.dto.res.TransactionSearchResponseDto;
 import com.joa.openapi.transaction.entity.Transaction;
@@ -30,28 +30,44 @@ import org.springframework.stereotype.Repository;
 public class TransactionRepositoryCustomImpl implements TransactionRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory; // JPA 쿼리를 생성하고 실행하는데 사용
+    private final ApiRepository apiRepository;
 
     @Override
     public Page<TransactionSearchResponseDto> searchTransactionCustom(
         TransactionSearchRequestDto req, Pageable pageable) {
 
+        // API Key 확인 & bankId 조건 처리
         BooleanBuilder condition = new BooleanBuilder();
 
-        // TODO : bankId 조건 처리 -> 관리자가 등록한 bankId와 거래한 적이 있으면 거래내역 가져오기
+        UUID apiKey = req.getApiKey();
+        List<UUID> adminBankIds = getBankIdsByApiKey(apiKey);
         UUID bankId = req.getBankId();
-        if (bankId != null) {
 
-            List<String> accountIds = jpaQueryFactory.select(account.id)
-                .from(account)
-                .where(account.bankId.eq(bankId))
-                .fetch();
+        if (bankId == null) {
+            if (!adminBankIds.isEmpty()) {
+                List<String> accountIds = jpaQueryFactory.select(account.id)
+                    .from(account)
+                    .where(account.bankId.in(adminBankIds))
+                    .fetch();
 
-            if(!accountIds.isEmpty()) {
-                condition.and(transaction.fromAccount.in(accountIds)
-                    .or(transaction.toAccount.in(accountIds)));
+                if (!accountIds.isEmpty()) {
+                    condition.and(transaction.fromAccount.in(accountIds)
+                        .or(transaction.toAccount.in(accountIds)));
+                }
+            }
+        } else {
+            if (adminBankIds.contains(bankId)) {
+                List<String> accountIds = jpaQueryFactory.select(account.id)
+                    .from(account)
+                    .where(account.bankId.eq(bankId))
+                    .fetch();
+
+                if (!accountIds.isEmpty()) {
+                    condition.and(transaction.fromAccount.in(accountIds)
+                        .or(transaction.toAccount.in(accountIds)));
+                }
             }
         }
-
 
         // isDummy 조건 처리
         Boolean isDummy = req.isDummy();
@@ -60,7 +76,8 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         }
 
         // depositorName 조건 처리
-        BooleanExpression depositorNameKeywordCondition = eqSearchDepositorNameKeyword(req.getDepositorNameKeyword());
+        BooleanExpression depositorNameKeywordCondition = eqSearchDepositorNameKeyword(
+            req.getDepositorNameKeyword());
         if (depositorNameKeywordCondition != null) {
             condition.and(depositorNameKeywordCondition);
         }
@@ -106,7 +123,6 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             .selectFrom(transaction)
             .where(condition);
 
-
         // 정렬 조건 적용 orderBy
         OrderSpecifier<?> orderSpecifier = eqOrderBy(req.getOrderBy());
         if (orderSpecifier != null) {
@@ -140,6 +156,9 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         if (req.getSearchType() == null) {
             return null;
         }
+        if (req.getAccountId() == null || req.getAccountId().isBlank()) {
+            return null;
+        }
         return switch (req.getSearchType()) {
             case DEPOSIT_ONLY -> transaction.toAccount.eq(req.getAccountId());
             case WITHDRAWAL_ONLY -> transaction.fromAccount.eq(req.getAccountId());
@@ -158,6 +177,18 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             case AMOUNT_DESC -> transaction.amount.desc();
             default -> transaction.createdAt.desc();
         };
+    }
+
+    private List<UUID> getBankIdsByApiKey(UUID apiKey) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+
+        // 관리자 ID를 통해 해당 관리자가 만든 bankId 목록 가져오기
+        List<UUID> bankIds = jpaQueryFactory.select(bank.id)
+            .from(bank)
+            .where(bank.adminId.eq(adminId))
+            .fetch();
+
+        return bankIds;
     }
 
 }
