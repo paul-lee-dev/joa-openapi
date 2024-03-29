@@ -152,6 +152,12 @@ public class AccountService {
         return AccountGetBalanceResponseDto.toDto(account);
     }
 
+    public AccountGetDetailResponseDto getDetail(AccountGetDetailRequestDto req) {
+        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        return AccountGetDetailResponseDto.toDto(account);
+    }
+
     public Page<AccountGetAccountsResponseDto> getAccounts(UUID memberId, Pageable pageable) {
         Page<Account> accountsPage = accountRepository.findByHolderId(memberId, pageable);
         return accountsPage.map(AccountGetAccountsResponseDto::toDto);
