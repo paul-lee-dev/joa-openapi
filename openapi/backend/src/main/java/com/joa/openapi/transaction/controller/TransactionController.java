@@ -90,34 +90,44 @@ public class TransactionController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> search(@RequestParam Map<String, String> allParams,
+    public ResponseEntity<?> search(@RequestHeader("apiKey") UUID apiKey,
+        @RequestParam Map<String, String> allParams,
         @PageableDefault Pageable pageable) {
 
-        // TODO : API Key 확인
+        if(apiKey == null) {
+            throw new RestApiException(TransactionErrorCode.INVALID_API_KEY);
+        }
 
-        // TODO : 은행별
+        // 은행별
+        UUID bankId = Optional.ofNullable(allParams.get("bankId"))
+            .map(UUID::fromString)
+            .orElse(null);
 
-        // TODO : 더미여부
+        // 더비여부
+        Boolean isDummy = Optional.ofNullable(allParams.get("isDummy"))
+            .map(Boolean::parseBoolean)
+            .orElse(null);
 
-        // TODO : 고객이름별
+        // 입금주명 키워드
+        String depositorNameKeyword = Optional.ofNullable(allParams.get("depositorNameKeyword"))
+            .orElse(null);
 
         // 계좌번호
         String accountId = Optional.ofNullable(allParams.get("accountId"))
-            .orElseThrow(() -> new RestApiException(TransactionErrorCode.NO_ACCOUNTID));
+            .orElse(null);
 
-        // TODO : 더미이름별
+        // 더미이름별
+        String dummyName = Optional.ofNullable(allParams.get("dummyName"))
+            .orElse(null);
 
-        // 검색 타입 (입금, 출금, 전체)
-        TransactionSearchType searchType = Optional.ofNullable(allParams.get("searchType"))
-            .map(String::toUpperCase)
-            .map(TransactionSearchType::valueOf)
-            .orElse(TransactionSearchType.ALL);
+        // 금액 범위
+        Long fromAmount = Optional.ofNullable(allParams.get("fromAmount"))
+            .map(Long::parseLong)
+            .orElse(0L);
 
-        // 최신순 | 과거순
-        TransactionOrderBy orderBy = Optional.ofNullable(allParams.get("orderBy"))
-            .map(String::toUpperCase)
-            .map(TransactionOrderBy::valueOf)
-            .orElse(TransactionOrderBy.NEWEST); // orderBy 기본값 지정
+        Long toAmount = Optional.ofNullable(allParams.get("toAmount"))
+            .map(Long::parseLong)
+            .orElse(Long.MAX_VALUE);
 
         // 조회 날짜 범위
         LocalDate fromDate = Optional.ofNullable(allParams.get("fromDate"))
@@ -128,23 +138,34 @@ public class TransactionController {
             .map(LocalDate::parse)
             .orElse(LocalDate.of(3000, 12, 31));
 
-        // TODO : 금액순
+        // 검색 타입 (입금, 출금, 전체)
+        TransactionSearchType searchType = Optional.ofNullable(allParams.get("searchType"))
+            .map(String::toUpperCase)
+            .map(TransactionSearchType::valueOf)
+            .orElse(TransactionSearchType.ALL);
 
-
-
+        // 최신순 | 과거순 | 금액 적은순 | 금액 높은 순
+        TransactionOrderBy orderBy = Optional.ofNullable(allParams.get("orderBy"))
+            .map(String::toUpperCase)
+            .map(TransactionOrderBy::valueOf)
+            .orElse(TransactionOrderBy.LATEST);
 
         // DTO 구성
         TransactionSearchRequestDto req = TransactionSearchRequestDto.builder()
+            .apiKey(apiKey)
+            .bankId(bankId)
+            .isDummy(Boolean.TRUE.equals(isDummy))
+            .depositorNameKeyword(depositorNameKeyword)
             .accountId(accountId)
+            .dummyName(dummyName)
+            .fromAmount(fromAmount)
+            .toAmount(toAmount)
             .fromDate(fromDate)
             .toDate(toDate)
             .searchType(searchType)
             .orderBy(orderBy)
             .build();
 
-        if (!transactionService.checkAccountId(req.getAccountId())) {
-            throw new RestApiException(TransactionErrorCode.NO_ACCOUNTID);
-        }
         Page<TransactionSearchResponseDto> transactionsPage = transactionService.search(req,
             pageable);
         return ResponseEntity.ok(ApiResponse.success("거래내역 조회에 성공했습니다.", transactionsPage));

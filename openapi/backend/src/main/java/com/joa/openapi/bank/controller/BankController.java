@@ -43,7 +43,7 @@ public class BankController {
 
     @GetMapping("/{bankId}")
     public ResponseEntity<?> search(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "bankId") UUID bankId) {
-        BankResponseDto bankResponseDto = bankService.serachBank(apiKey, bankId);
+        BankResponseDto bankResponseDto = bankService.searchBank(apiKey, bankId);
         return ResponseEntity.ok(ApiResponse.success("특정은행검색에 성공했습니다.", bankResponseDto));
     }
 }

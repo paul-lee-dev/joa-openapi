@@ -15,7 +15,8 @@ public enum TransactionErrorCode implements ErrorCode {
     MiSMATCH(HttpStatus.BAD_REQUEST, "1원 인증 4글자가 불일치 합니다."),
     NO_TRANSACTION(HttpStatus.BAD_REQUEST, "해당 거래내역은 존재하지 않습니다."),
     NO_APIKEY(HttpStatus.BAD_REQUEST, "API Key가 존재하지 않습니다."),
-    NO_ACCOUNTID(HttpStatus.BAD_REQUEST, "계좌번호가 존재하지 않습니다.");
+    NO_ACCOUNTID(HttpStatus.BAD_REQUEST, "계좌번호가 존재하지 않습니다."),
+    INVALID_API_KEY(HttpStatus.BAD_REQUEST, "API Key가 유효하지 않습니다.");
 
     private final HttpStatus httpStatus;
     private final String message;
