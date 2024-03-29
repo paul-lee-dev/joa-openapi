@@ -32,9 +32,9 @@ public class DepositAccountService {
     private final AccountRepository accountRepository;
     private final TransactionService transactionService;
 
-    //@Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행되는 크론 표현식
+    @Scheduled(cron = "0 0 0 * * ?") // 매일 자정에 실행되는 크론 표현식
     //@Scheduled(cron = "0 */1 * * * ?") // 매 분마다 실행되도록 변경
-    @Scheduled(cron = "*/10 * * * * ?")
+    //@Scheduled(cron = "*/10 * * * * ?")
     @Transactional
     public void payInterest() {
         //정기예금, 정기적금 만기시 금액 지급

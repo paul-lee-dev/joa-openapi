@@ -58,7 +58,7 @@ public class AccountController {
     @PostMapping("/detail")
     public ResponseEntity<?> getDetail(@RequestBody AccountGetDetailRequestDto req) {
         AccountGetDetailResponseDto account = accountService.getDetail(req);
-        return ResponseEntity.ok(ApiResponse.success("계좌 잔액 조회에 성공했습니다.", account));
+        return ResponseEntity.ok(ApiResponse.success("계좌 상세 조회에 성공했습니다.", account));
     }
 
     @PostMapping("/member")
