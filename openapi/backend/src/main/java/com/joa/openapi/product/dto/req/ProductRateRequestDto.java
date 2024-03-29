@@ -15,8 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ProductRateRequestDto {
 
-    private Long amount; //예금은 예치금액, 적금은 지급금액
-    private Integer term;
     private String accountId;
     private UUID productId;
 }

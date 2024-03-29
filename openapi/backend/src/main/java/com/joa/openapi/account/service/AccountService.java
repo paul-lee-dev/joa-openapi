@@ -82,6 +82,7 @@ public class AccountService {
                 .holder(member)
                 .dummy(optionalDummy.orElse(null))
                 .product(product)
+                .taxType(req.getTaxType())
                 .build();
 
         accountRepository.save(account);
@@ -155,6 +156,12 @@ public class AccountService {
         authorityValidation(memberId, account);
 
         return AccountGetBalanceResponseDto.toDto(account);
+    }
+
+    public AccountGetDetailResponseDto getDetail(AccountGetDetailRequestDto req) {
+        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        return AccountGetDetailResponseDto.toDto(account);
     }
 
     public Page<AccountGetAccountsResponseDto> getAccounts(UUID memberId, Pageable pageable) {

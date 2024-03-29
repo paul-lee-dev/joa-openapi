@@ -102,7 +102,7 @@ public class BankService {
         return bankResponseDtoList;
     }
 
-    public BankResponseDto serachBank(UUID apiKey, UUID bankId) {
+    public BankResponseDto searchBank(UUID apiKey, UUID bankId) {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
         Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         AuthoriaztionBank(bank.getAdminId(), adminId);
