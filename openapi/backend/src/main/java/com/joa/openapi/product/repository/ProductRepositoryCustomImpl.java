@@ -1,5 +1,6 @@
 package com.joa.openapi.product.repository;
 
+import static com.joa.openapi.account.entity.QAccount.account;
 import static com.joa.openapi.product.entity.QProduct.product;
 import static com.joa.openapi.transaction.entity.QTransaction.transaction;
 
@@ -32,18 +33,6 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
     @Override
     public Page<ProductSearchResponseDto> searchProductCustom(ProductSearchRequestDto req,
         Pageable pageable) {
-        /*
-        private UUID bankId; // 은행
-        private Boolean isDone; // 종료 여부
-        // 상품명 키워드 검색
-        private ProductType productType; // 상품 분류
-        private ProductOrderBy orderBy; // 최신순, 과거순
-        */
-
-        System.out.println(req.getIsDone());
-        System.out.println(req.getBankId());
-        System.out.println(req.getProductType());
-        System.out.println(req.getOrderBy());
 
         BooleanBuilder condition = new BooleanBuilder();
 
@@ -57,6 +46,12 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
         Boolean isDone = req.getIsDone();
         if (isDone != null) {
             condition.and(product.isDone.eq(isDone));
+        }
+
+        // 상품명 키워드 조건 처리
+        BooleanExpression productKeywordCondition = eqSearchProductKeyword(req.getProductKeyword());
+        if (productKeywordCondition != null) {
+            condition.and(productKeywordCondition);
         }
 
         // 상품 타입 조건 처리
@@ -78,8 +73,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
 
         // 페이징된 상품 조회
         List<Product> products = query
-            .offset(pageable.getOffset())       // 반환되는 행의 시작점
-            .limit(pageable.getPageSize())      // 반환되는 행의 수
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
             .fetch();
 
         // Dto 변환
@@ -88,6 +83,15 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
 
         // 페이지 객체 반환
         return new PageImpl<>(res, pageable, products.size());
+    }
+
+    private BooleanExpression eqSearchProductKeyword(String productKeyword) {
+        if (productKeyword == null || productKeyword.isBlank()) {
+            return null; // 검색어가 없을 경우 적용할 필터 없음
+        }
+
+        return product.name.likeIgnoreCase("%" + productKeyword + "%");
+
     }
 
     private BooleanExpression eqProductType(ProductSearchRequestDto req) {

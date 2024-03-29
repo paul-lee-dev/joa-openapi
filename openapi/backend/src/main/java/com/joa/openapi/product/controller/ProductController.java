@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,16 +61,19 @@ public class ProductController {
     public ResponseEntity<?> search(@RequestParam Map<String, String> allParams,
         @PageableDefault Pageable pageable) {
 
-        // 파라미터에서 값 추출 및 기본값 설정
+        // TODO : AuthoriaztionBank로 Apikey & BankId 체크
+
         ProductSearchRequestDto req = ProductSearchRequestDto.builder()
             .bankId(
                 allParams.get("bankId") == null ? null : UUID.fromString(allParams.get("bankId")))
             .isDone(allParams.get("isDone") == null ? null
                 : Boolean.parseBoolean(allParams.get("isDone")))
-            .productType(allParams.get("productType") == null ? null : ProductType.valueOf(
-                allParams.get("productType")))
-            .orderBy(allParams.get("orderBy") == null ? null : ProductOrderBy.valueOf(
-                allParams.get("orderBy")))
+            .productKeyword(allParams.get("productKeyword") == null ? null
+                : allParams.get("productKeyword"))
+            .productType(allParams.get("productType") == null ? null
+                : ProductType.valueOf(allParams.get("productType")))
+            .orderBy(allParams.get("orderBy") == null ? null
+                : ProductOrderBy.valueOf(allParams.get("orderBy")))
             .build();
 
         Page<ProductSearchResponseDto> productsPage = productService.search(req, pageable);
@@ -78,7 +82,7 @@ public class ProductController {
 
 
     @GetMapping("/{productId}")
-    public ResponseEntity<?> searchOne(@PathVariable(value = "productId") UUID productId) {
+    public ResponseEntity<?> searchOne(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "productId") UUID productId) {
         ProductDetailResponseDto productDetail = productService.searchOne(productId);
         return ResponseEntity.ok(ApiResponse.success("예적금 상품 상세 조회에 성공했습니다.", productDetail));
     }

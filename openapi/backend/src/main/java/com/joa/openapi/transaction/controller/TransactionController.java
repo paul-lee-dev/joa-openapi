@@ -27,6 +27,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -89,12 +90,37 @@ public class TransactionController {
         return ResponseEntity.ok(ApiResponse.success("거래내역 삭제에 성공했습니다."));
     }
 
-    @PostMapping
-    public ResponseEntity<?> search(@RequestBody TransactionSearchRequesBodytDto reqBody,
-        @RequestParam Map<String, String> allParams,
+    @GetMapping("/search")
+    public ResponseEntity<?> search(@RequestParam Map<String, String> allParams,
         @PageableDefault Pageable pageable) {
 
-        // 파라미터에서 값 추출 및 기본값 설정
+        // TODO : API Key 확인
+
+        // TODO : 은행별
+
+        // TODO : 더미여부
+
+        // TODO : 고객이름별
+
+        // 계좌번호
+        String accountId = Optional.ofNullable(allParams.get("accountId"))
+            .orElseThrow(() -> new RestApiException(TransactionErrorCode.NO_ACCOUNTID));
+
+        // TODO : 더미이름별
+
+        // 검색 타입 (입금, 출금, 전체)
+        TransactionSearchType searchType = Optional.ofNullable(allParams.get("searchType"))
+            .map(String::toUpperCase)
+            .map(TransactionSearchType::valueOf)
+            .orElse(TransactionSearchType.ALL);
+
+        // 최신순 | 과거순
+        TransactionOrderBy orderBy = Optional.ofNullable(allParams.get("orderBy"))
+            .map(String::toUpperCase)
+            .map(TransactionOrderBy::valueOf)
+            .orElse(TransactionOrderBy.NEWEST); // orderBy 기본값 지정
+
+        // 조회 날짜 범위
         LocalDate fromDate = Optional.ofNullable(allParams.get("fromDate"))
             .map(LocalDate::parse)
             .orElse(LocalDate.of(1900, 1, 1));
@@ -103,19 +129,14 @@ public class TransactionController {
             .map(LocalDate::parse)
             .orElse(LocalDate.of(3000, 12, 31));
 
-        TransactionSearchType searchType = Optional.ofNullable(allParams.get("searchType"))
-            .map(String::toUpperCase)
-            .map(TransactionSearchType::valueOf)
-            .orElse(TransactionSearchType.ALL);
+        // TODO : 금액순
 
-        TransactionOrderBy orderBy = Optional.ofNullable(allParams.get("orderBy"))
-            .map(String::toUpperCase)
-            .map(TransactionOrderBy::valueOf)
-            .orElse(TransactionOrderBy.NEWEST); // orderBy 기본값 지정
+
+
 
         // DTO 구성
         TransactionSearchRequestDto req = TransactionSearchRequestDto.builder()
-            .accountId(reqBody.getAccountId())
+            .accountId(accountId)
             .fromDate(fromDate)
             .toDate(toDate)
             .searchType(searchType)

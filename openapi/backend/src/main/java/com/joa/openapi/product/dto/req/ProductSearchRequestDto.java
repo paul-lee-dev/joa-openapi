@@ -20,7 +20,7 @@ public class ProductSearchRequestDto {
 
     private UUID bankId; // 은행
     private Boolean isDone; // 종료 여부
-    // 상품명 키워드 검색
+    private String productKeyword; // 상품명 키워드
     private ProductType productType; // 상품 분류
     private ProductOrderBy orderBy; // 최신순, 과거순
 
