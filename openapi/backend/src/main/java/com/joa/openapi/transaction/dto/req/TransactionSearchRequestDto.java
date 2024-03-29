@@ -1,6 +1,9 @@
 package com.joa.openapi.transaction.dto.req;
 
 import java.time.LocalDate;
+
+import com.joa.openapi.transaction.enums.TransactionOrderBy;
+import com.joa.openapi.transaction.enums.TransactionSearchType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,11 +21,4 @@ public class TransactionSearchRequestDto {
     private TransactionSearchType searchType;
     private TransactionOrderBy orderBy;
 
-    public enum TransactionSearchType {
-        ALL, DEPOSIT_ONLY, WITHDRAWAL_ONLY
-    }
-
-    public enum TransactionOrderBy {
-        NEWEST, OLDEST
-    }
 }

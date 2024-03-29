@@ -6,7 +6,6 @@ import com.joa.openapi.transaction.dto.req.Transaction1wonConfirmRequestDto;
 import com.joa.openapi.transaction.dto.req.Transaction1wonRequestDto;
 import com.joa.openapi.transaction.dto.req.TransactionDeleteRequestDto;
 import com.joa.openapi.transaction.dto.req.TransactionRequestDto;
-import com.joa.openapi.transaction.dto.req.TransactionSearchRequesBodytDto;
 import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto;
 import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto.TransactionOrderBy;
 import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto.TransactionSearchType;
