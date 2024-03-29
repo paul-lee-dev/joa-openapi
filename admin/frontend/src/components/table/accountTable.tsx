@@ -84,7 +84,7 @@ export default function AccountTable() {
   const [accountList, setAccountList] = useState<Account[]>([]);
 
   const api: AxiosInstance = axios.create({
-    baseURL: "https://joa13.site/v1", // JSON 데이터를 가져올 엔드포인트의 URL
+    baseURL: "https://joa13.site/v1",
     headers: {
       apiKey: "9b5c450f-abd4-419f-b092-bcd96e66392f",
       "Content-Type": "application/json",
@@ -92,8 +92,6 @@ export default function AccountTable() {
   });
 
   const {data} = useQuery({queryKey: ['accountList'], queryFn: getAccountList});
-
-
 
   const router = useRouter();
 
@@ -129,9 +127,9 @@ export default function AccountTable() {
                 <FaSort></FaSort>
               </span>
             </th>
-            <th scope="col" className="px-6 py-3">
+            {/* <th scope="col" className="px-6 py-3">
               최근거래금액
-            </th>
+            </th> */}
             <th scope="col" className="relative px-6 py-3">
               <span className="sr-only"> </span>
             </th>
@@ -151,7 +149,7 @@ export default function AccountTable() {
               <TableData>{account.startDate}</TableData>
               <TableData>{account.endDate}</TableData>
               <TableData>{account.balance}</TableData>
-              <td
+              {/* <td
                 className={`px-6 py-4 ${
                   account.recentTransactionAmount >= 0
                     ? "text-green-600"
@@ -160,7 +158,7 @@ export default function AccountTable() {
               >
                 {account.recentTransactionAmount >= 0 ? "+" : "-"}
                 {Math.abs(account.recentTransactionAmount).toLocaleString()}
-              </td>
+              </td> */}
               <td className="px-6 py-4">
                 <a
                   onClick={() => {

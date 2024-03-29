@@ -9,8 +9,6 @@ import { CreateBankParams } from "@/models/Bank.interface";
 
 const BankList = () => {
   const [isModalOpen, setModalState] = useState(false);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
 
   const [bankInfo, setBankInfo] = useState<CreateBankParams>({
     name: "",

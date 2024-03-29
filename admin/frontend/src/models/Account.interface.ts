@@ -17,13 +17,19 @@ export interface CreateAccountResponse {
   depositAccount: string;
   withdrawAccount: string;
   amount: number;
+  dummyId: string | null;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface SearchAccountParams {
+  bankList: string;
+  isDummy: boolean;
+  isDormant: boolean;
+  keywordType: string;
   name: string;
-  page?: number;
+  sortBy: string
+  page: number | null;
 }
 
 export interface SearchAccountContent {
