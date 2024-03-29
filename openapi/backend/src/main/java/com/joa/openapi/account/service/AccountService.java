@@ -82,6 +82,7 @@ public class AccountService {
                 .holder(member)
                 .dummy(optionalDummy.orElse(null))
                 .product(product)
+                .taxType(req.getTaxType())
                 .build();
 
         accountRepository.save(account);

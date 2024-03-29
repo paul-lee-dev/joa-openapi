@@ -1,6 +1,7 @@
 package com.joa.openapi.account.dto;
 
 import com.joa.openapi.account.entity.Account;
+import com.joa.openapi.account.enums.TaxType;
 import lombok.*;
 
 import java.util.UUID;
@@ -26,6 +27,7 @@ public class AccountCreateResponseDto {
     private UUID dummyId;
     private UUID bankId;
     private UUID productId;
+    private TaxType taxType;
 
     public static AccountCreateResponseDto toDto(Account account) {
         return AccountCreateResponseDto.builder()
@@ -44,6 +46,7 @@ public class AccountCreateResponseDto {
                 .dummyId(account.getDummy() == null ? null : account.getDummy().getId())
                 .bankId(account.getBankId())
                 .productId(account.getProduct().getId())
+                .taxType(account.getTaxType())
                 .build();
     }
 }
