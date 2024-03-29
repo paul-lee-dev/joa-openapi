@@ -16,4 +16,5 @@ public interface MemberRepository extends JpaRepository<Member, UUID> {
     Member findByPhone(String phone);
     List<Member> findByDummy(Dummy dummy);
     List<Member> findByDummyId(UUID dummyId);
+    List<Member> findByBankId(UUID bankId);
 }
