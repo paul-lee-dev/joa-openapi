@@ -9,6 +9,8 @@ import ProductListItem from '@/components/ProductListItem';
 import {useState} from 'react';
 import clsx from 'clsx';
 import {IProduct, ProductType} from '@/models';
+import {useRecoilValue} from 'recoil';
+import {bankDataAtom} from '@/store/atoms';
 
 type ProductListScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -20,11 +22,19 @@ function ProductList({
   navigation,
 }: ProductListScreenProps): React.JSX.Element {
   const {productType} = route.params;
+  const bankData = useRecoilValue(bankDataAtom);
   const [type, setType] = useState<ProductType>(productType);
   const {data} = useQuery({
-    queryKey: ['ProductList', type],
-    queryFn: getProductList,
+    queryKey: ['ProductList', bankData.bankId, type],
+    queryFn: () => {
+      return getProductList({
+        bankId: bankData.bankId,
+        productType: type,
+        isDone: false,
+      });
+    },
   });
+  console.log(data);
 
   return (
     <View className="w-full h-full bg-gray-100 flex">
