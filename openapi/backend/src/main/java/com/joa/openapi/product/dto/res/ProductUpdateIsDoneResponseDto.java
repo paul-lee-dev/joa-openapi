@@ -1,4 +1,4 @@
-package com.joa.openapi.product.dto;
+package com.joa.openapi.product.dto.res;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joa.openapi.product.entity.Product;
@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ProductUpdateIsDoneResponseDto {
 
+    private UUID productId;
     private String name;
     private Boolean isDone;
 
@@ -25,6 +27,7 @@ public class ProductUpdateIsDoneResponseDto {
 
     public static ProductUpdateIsDoneResponseDto toDto(Product product) {
         return ProductUpdateIsDoneResponseDto.builder()
+                .productId(product.getId())
                 .name(product.getName())
                 .isDone(product.getIsDone())
                 .createdAt(product.getCreatedAt())

@@ -1,14 +1,16 @@
 spring:
+  profiles:
+    include: secret
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/joa?serverTimezone=UTC # mysql 8.2, mysql workbench 8.0.21 / mac? 8.0.34
-    username: root
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:
+    username:
+    password:
+    driver-class-name:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto:
     properties:
       hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql:
+        dialect:

@@ -1,18 +1,15 @@
-package com.joa.openapi.transaction.dto;
+package com.joa.openapi.transaction.dto.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transaction1wonConfirmRequestDto {
+public class Transaction1wonRequestDto {
 
-    private String word;
-    private UUID transactionId;
+    private String accountId;
 }

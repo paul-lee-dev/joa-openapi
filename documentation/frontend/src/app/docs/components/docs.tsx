@@ -65,18 +65,6 @@ export default function docs() {
   );
 };
 
-
-const testbeds = [
-  {
-    title: "계좌 개설 API",
-    description: "계좌 개설 API에 대한 설명이 여기에 들어갑니다.",
-    info: "API에 대한 설명이 들어갑니다.",
-    warning: "주의해야 할 사항이 들어갑니다.",
-    request_sample: "request sample",
-    response_sample: "response sample"
-  },
-]
-
 const Wrapper = tw.div`
 mt-8
 space-y-6
@@ -143,3 +131,14 @@ px-4 py-3
 const TdItem = tw.td`
 px-4 py-3
 `;
+
+const testbeds = [
+  {
+    title: "계좌 개설 API",
+    description: "계좌 개설 API에 대한 설명이 여기에 들어갑니다.",
+    info: "API에 대한 설명이 들어갑니다.",
+    warning: "주의해야 할 사항이 들어갑니다.",
+    request_sample: "request sample",
+    response_sample: "response sample"
+  },
+]

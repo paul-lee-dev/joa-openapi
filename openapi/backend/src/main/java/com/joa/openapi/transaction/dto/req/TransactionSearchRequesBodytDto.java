@@ -1,4 +1,4 @@
-package com.joa.openapi.transaction.dto;
+package com.joa.openapi.transaction.dto.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transaction1wonRequestDto {
+public class TransactionSearchRequesBodytDto {
 
     private String accountId;
+
 }

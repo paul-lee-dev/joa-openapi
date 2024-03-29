@@ -1,8 +1,6 @@
-package com.joa.openapi.product.dto;
+package com.joa.openapi.product.dto.res;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.joa.openapi.account.dto.AccountCreateResponseDto;
-import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.product.entity.Product;
 import com.joa.openapi.product.enums.PaymentType;
 import com.joa.openapi.product.enums.ProductType;
@@ -12,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -19,6 +18,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ProductCreateResponseDto {
 
+    private UUID productId;
     private String name;
     private String description;
     private Long minAmount;
@@ -35,6 +35,7 @@ public class ProductCreateResponseDto {
 
     public static ProductCreateResponseDto toDto(Product product) {
         return ProductCreateResponseDto.builder()
+                .productId(product.getId())
                 .name(product.getName()) /* TODO 예적금 상품 연결시키면 디폴트 닉네임 예적금 상품명 */
                 .description(product.getDescription())
                 .minAmount(product.getMinAmount())
