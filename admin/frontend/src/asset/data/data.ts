@@ -24,6 +24,20 @@ export interface ProductTypeOption {
   readonly isDisabled?: boolean;
 }
 
+export interface IsDummyOption {
+  readonly value: string;
+  readonly label: string;
+  readonly isFixed?: boolean;
+  readonly isDisabled?: boolean;
+}
+
+export interface AccountOption {
+  readonly value: string;
+  readonly label: string;
+  readonly isFixed?: boolean;
+  readonly isDisabled?: boolean;
+}
+
 export const bankOptions: readonly BankOption[] = [
   { value: "01", label: "하나은행" },
   { value: "02", label: "신한은행" },
@@ -44,7 +58,7 @@ export const productTypeOptions: readonly ProductTypeOption[] = [
 ];
 
 export const customerOptions: readonly CustomerOption[] = [
-  { value: "전체", label: "전체", isFixed: true },
+  { value: "", label: "전체", isFixed: true },
   { value: "고수림", label: "고수림", isFixed: true },
   { value: "구본승", label: "구본승" },
   { value: "이유로", label: "이유로" },
@@ -55,6 +69,20 @@ export const customerOptions: readonly CustomerOption[] = [
   { value: "오형택", label: "오형택" },
   { value: "송윤재", label: "송윤재" },
   { value: "최하슬", label: "최하슬" },
+];
+
+export const isDummyOptions: readonly IsDummyOption[] = [
+  { value: "", label: "전체", isFixed: true },
+  { value: "true", label: "더미", isFixed: true },
+  { value: "false", label: "더미X", isFixed: true },
+];
+
+export const accountOptions: readonly AccountOption[] = [
+  { value: "", label: "전체", isFixed: true },
+  { value: "acccounId", label: "내 통장1" },
+  { value: "", label: "나의 통장" },
+  { value: "", label: "너의 통장" },
+  { value: "", label: "우리 계좌" },
 ];
 
 export interface GroupedOption {

@@ -38,7 +38,7 @@ export interface DeleteBankParams {
 }
 
 export interface DeleteBankResponse {
-  bankId: string;
+  bankId?: string;
   adminId: string;
   name: string;
   description: string;
@@ -48,9 +48,9 @@ export interface DeleteBankResponse {
 }
 
 export interface ModifyBankParams {
-  bankId: string;
+  bankId?: string;
   name: string;
-  description: string; 
+  description: string;
   uri?: string;
 }
 

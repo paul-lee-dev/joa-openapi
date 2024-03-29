@@ -4,7 +4,7 @@ import { createDummyMembers } from "@/api/Dummy";
 import Button from "@/components/button/button";
 import InputText from "@/components/input/inputText";
 import BankSelect from "@/components/select/bank";
-import MyAsyncSelect from "@/components/select/multiSearchSelect";
+import MyAsyncSelect from "@/components/select/customerMultiSearchSelect";
 import { CreateDummyMemberParams } from "@/models/Dummy.interface";
 import { useState } from "react";
 import tw from "tailwind-styled-components";

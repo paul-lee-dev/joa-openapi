@@ -55,10 +55,8 @@ export default function BankTable({ apiKey }: BankTableProps) {
 
   const router = useRouter();
 
-  // "자세히" 버튼 클릭 시 해당 은행 정보를 넘겨주고 bank/detail 페이지로 이동하는 함수
   const handleBankDetail = (bankId: string) => {
-    // 은행 상세 정보 페이지인 bank/detail 로 이동하면서 해당 은행의 ID를 쿼리 파라미터로 전달합니다.
-    router.push("bank/detail");
+    router.push(`bank/${bankId}`);
   };
 
   return (
@@ -108,7 +106,7 @@ export default function BankTable({ apiKey }: BankTableProps) {
               <TableData>
                 <a
                   onClick={() => handleBankDetail(bank.bankId)}
-                  className="font-medium text-pink-400 hover:text-pink-500"
+                  className="font-medium text-pink-400 hover:text-pink-500 cursor-pointer"
                 >
                   자세히
                 </a>

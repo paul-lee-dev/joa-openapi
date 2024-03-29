@@ -6,6 +6,7 @@ import Pagination from "@/components/pagination";
 import Button from "@/components/button/button";
 import { createBank } from "@/api/Bank";
 import { CreateBankParams } from "@/models/Bank.interface";
+import BankGroupSearch from "@/components/search/bankGroupSearch";
 
 const BankList = () => {
   const [isModalOpen, setModalState] = useState(false);
@@ -37,6 +38,11 @@ const BankList = () => {
 
   return (
     <>
+      <form className="flex justify-end m-2">
+        <BankGroupSearch></BankGroupSearch>
+        <Button id={"submit"} name={"검색"} onClick={() => {}}></Button>
+      </form>
+
       <BankTable apiKey="" />
       <div className="flex mt-5 justify-between gap-5">
         <div className="flex">

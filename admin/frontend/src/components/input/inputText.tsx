@@ -24,7 +24,13 @@ export default function InputText({
     <InputFormWrapper>
       <Label htmlFor={htmlFor}>{label}</Label>
       <InputContainer>
-        <Input id={id} name={name} type={type} value={value} placeholder={placeholder} />
+        <Input
+          id={id}
+          name={name}
+          type={type}
+          value={value}
+          placeholder={placeholder}
+        />
       </InputContainer>
     </InputFormWrapper>
   );

@@ -2,7 +2,7 @@
 
 import Button from "@/components/button/button";
 import InputText from "@/components/input/inputText";
-import MultiSearchSelect from "@/components/select/multiSearchSelect";
+import MultiSearchSelect from "@/components/select/customerMultiSearchSelect";
 import tw from "tailwind-styled-components";
 
 export default function ProductDetail() {

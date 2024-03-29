@@ -41,7 +41,6 @@ export const searchBankbyName = async (
   return response.data;
 };
 
-
 export const modifyBank = async (
   params: ModifyBankParams
 ): Promise<ModifyBankResponse> => {
@@ -54,7 +53,8 @@ export const modifyBank = async (
 export const deleteBank = async (
   params: DeleteBankParams
 ): Promise<DeleteBankResponse> => {
-  const url = `bank/${params.bankId}`;
+  const { bankId } = params;
+  const url = `bank/${bankId}`;
   const response = await localAxios.delete(url);
   return response.data;
 };
