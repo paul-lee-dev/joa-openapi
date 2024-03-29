@@ -1,5 +1,6 @@
 package com.joa.openapi.transaction.repository;
 
+import com.joa.openapi.bank.entity.Bank;
 import com.joa.openapi.transaction.entity.Transaction;
 import java.util.List;
 import java.util.UUID;
