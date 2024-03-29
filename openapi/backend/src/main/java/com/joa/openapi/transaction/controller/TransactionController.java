@@ -6,15 +6,14 @@ import com.joa.openapi.transaction.dto.req.Transaction1wonConfirmRequestDto;
 import com.joa.openapi.transaction.dto.req.Transaction1wonRequestDto;
 import com.joa.openapi.transaction.dto.req.TransactionDeleteRequestDto;
 import com.joa.openapi.transaction.dto.req.TransactionRequestDto;
-import com.joa.openapi.transaction.dto.req.TransactionSearchRequesBodytDto;
 import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto;
-import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto.TransactionOrderBy;
-import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto.TransactionSearchType;
 import com.joa.openapi.transaction.dto.req.TransactionUpdateRequestDto;
 import com.joa.openapi.transaction.dto.res.Transaction1wonResponseDto;
 import com.joa.openapi.transaction.dto.res.TransactionResponseDto;
 import com.joa.openapi.transaction.dto.res.TransactionSearchResponseDto;
 import com.joa.openapi.transaction.dto.res.TransactionUpdateResponseDto;
+import com.joa.openapi.transaction.enums.TransactionOrderBy;
+import com.joa.openapi.transaction.enums.TransactionSearchType;
 import com.joa.openapi.transaction.errorcode.TransactionErrorCode;
 import com.joa.openapi.transaction.service.TransactionService;
 import java.time.LocalDate;
@@ -96,29 +95,36 @@ public class TransactionController {
 
         // TODO : API Key 확인
 
-        // TODO : 은행별
+        // 은행별
+        UUID bankId = Optional.ofNullable(allParams.get("bankId"))
+            .map(UUID::fromString)
+            .orElse(null);
 
-        // TODO : 더미여부
+        // 더비여부
+        Boolean isDummy = Optional.ofNullable(allParams.get("isDummy"))
+            .map(Boolean::parseBoolean)
+            .orElse(null);
 
-        // TODO : 고객이름별
+        // 입금주명 키워드
+        String depositorNameKeyword = Optional.ofNullable(allParams.get("depositorNameKeyword"))
+            .orElse(null);
 
         // 계좌번호
         String accountId = Optional.ofNullable(allParams.get("accountId"))
-            .orElseThrow(() -> new RestApiException(TransactionErrorCode.NO_ACCOUNTID));
+            .orElse(null);
 
-        // TODO : 더미이름별
+        // 더미이름별
+        String dummyName = Optional.ofNullable(allParams.get("dummyName"))
+            .orElse(null);
 
-        // 검색 타입 (입금, 출금, 전체)
-        TransactionSearchType searchType = Optional.ofNullable(allParams.get("searchType"))
-            .map(String::toUpperCase)
-            .map(TransactionSearchType::valueOf)
-            .orElse(TransactionSearchType.ALL);
+        // 금액 범위
+        Long fromAmount = Optional.ofNullable(allParams.get("fromAmount"))
+            .map(Long::parseLong)
+            .orElse(0L);
 
-        // 최신순 | 과거순
-        TransactionOrderBy orderBy = Optional.ofNullable(allParams.get("orderBy"))
-            .map(String::toUpperCase)
-            .map(TransactionOrderBy::valueOf)
-            .orElse(TransactionOrderBy.NEWEST); // orderBy 기본값 지정
+        Long toAmount = Optional.ofNullable(allParams.get("toAmount"))
+            .map(Long::parseLong)
+            .orElse(Long.MAX_VALUE);
 
         // 조회 날짜 범위
         LocalDate fromDate = Optional.ofNullable(allParams.get("fromDate"))
@@ -129,14 +135,27 @@ public class TransactionController {
             .map(LocalDate::parse)
             .orElse(LocalDate.of(3000, 12, 31));
 
-        // TODO : 금액순
+        // 검색 타입 (입금, 출금, 전체)
+        TransactionSearchType searchType = Optional.ofNullable(allParams.get("searchType"))
+            .map(String::toUpperCase)
+            .map(TransactionSearchType::valueOf)
+            .orElse(TransactionSearchType.ALL);
 
-
-
+        // 최신순 | 과거순 | 금액 적은순 | 금액 높은 순
+        TransactionOrderBy orderBy = Optional.ofNullable(allParams.get("orderBy"))
+            .map(String::toUpperCase)
+            .map(TransactionOrderBy::valueOf)
+            .orElse(TransactionOrderBy.LATEST);
 
         // DTO 구성
         TransactionSearchRequestDto req = TransactionSearchRequestDto.builder()
+            .bankId(bankId)
+            .isDummy(Boolean.TRUE.equals(isDummy))
+            .depositorNameKeyword(depositorNameKeyword)
             .accountId(accountId)
+            .dummyName(dummyName)
+            .fromAmount(fromAmount)
+            .toAmount(toAmount)
             .fromDate(fromDate)
             .toDate(toDate)
             .searchType(searchType)

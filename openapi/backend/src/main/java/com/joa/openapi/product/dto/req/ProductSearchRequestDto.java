@@ -1,11 +1,6 @@
 package com.joa.openapi.product.dto.req;
 
-import com.joa.openapi.product.enums.PaymentType;
 import com.joa.openapi.product.enums.ProductType;
-import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto;
-import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto.TransactionOrderBy;
-import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto.TransactionSearchType;
-import java.time.LocalDate;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
