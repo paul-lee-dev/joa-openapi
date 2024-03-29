@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductSearchResponseDto {
+public class ProductDetailResponseDto {
 
     private UUID productId;
     private String name;
@@ -26,15 +26,8 @@ public class ProductSearchResponseDto {
     private Boolean isDone;
     private UUID bankId;
 
-
-    public static ProductSearchResponseDto toDto(Product product) {
-
-        UUID bankId = null;
-        if (product.getProductsBank() != null) {
-            bankId = product.getProductsBank().getId();
-        }
-
-        return ProductSearchResponseDto.builder()
+    public static ProductDetailResponseDto toDto(Product product) {
+        return ProductDetailResponseDto.builder()
             .productId(product.getId())
             .name(product.getName())
             .description(product.getDescription())
@@ -44,7 +37,7 @@ public class ProductSearchResponseDto {
             .productType(product.getProductType())
             .paymentType(product.getPaymentType())
             .isDone(product.getIsDone())
-            .bankId(bankId)
+            .bankId(product.getProductsBank().getId())
             .build();
     }
 }

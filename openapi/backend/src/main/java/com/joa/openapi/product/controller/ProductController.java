@@ -1,24 +1,35 @@
 package com.joa.openapi.product.controller;
 
-import com.joa.openapi.account.dto.AccountSearchRequestDto;
-import com.joa.openapi.product.dto.req.ProductRateRequestDto;
-import com.joa.openapi.product.dto.res.ProductRateResponseDto;
-import com.joa.openapi.product.service.DepositAccountService;
 import com.joa.openapi.common.response.ApiResponse;
 import com.joa.openapi.product.dto.req.ProductCreateRequestDto;
+import com.joa.openapi.product.dto.req.ProductRateRequestDto;
+import com.joa.openapi.product.dto.req.ProductSearchRequestDto;
+import com.joa.openapi.product.dto.req.ProductSearchRequestDto.ProductOrderBy;
 import com.joa.openapi.product.dto.res.ProductCreateResponseDto;
-import com.joa.openapi.product.dto.res.ProductUpdateIsDoneResponseDto;
-import com.joa.openapi.product.service.ProductService;
+import com.joa.openapi.product.dto.res.ProductDetailResponseDto;
+import com.joa.openapi.product.dto.res.ProductRateResponseDto;
 import com.joa.openapi.product.dto.res.ProductSearchResponseDto;
+import com.joa.openapi.product.dto.res.ProductUpdateIsDoneResponseDto;
+import com.joa.openapi.product.enums.ProductType;
+import com.joa.openapi.product.service.DepositAccountService;
+import com.joa.openapi.product.service.ProductService;
+import java.util.Map;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/product")
@@ -46,15 +57,38 @@ public class ProductController {
         return ResponseEntity.ok(ApiResponse.success("계좌 해지에 성공했습니다."));
     }
 
-    // queryDsl로 예적금 상품 조회
     @GetMapping("/search")
-    public ResponseEntity<?> search(@PageableDefault Pageable pageable) {
-        Page<ProductSearchResponseDto> productsPage = productService.search(pageable);
+    public ResponseEntity<?> search(@RequestParam Map<String, String> allParams,
+        @PageableDefault Pageable pageable) {
+
+        // TODO : AuthoriaztionBank로 Apikey & BankId 체크
+
+        ProductSearchRequestDto req = ProductSearchRequestDto.builder()
+            .bankId(
+                allParams.get("bankId") == null ? null : UUID.fromString(allParams.get("bankId")))
+            .isDone(allParams.get("isDone") == null ? null
+                : Boolean.parseBoolean(allParams.get("isDone")))
+            .productKeyword(allParams.get("productKeyword") == null ? null
+                : allParams.get("productKeyword"))
+            .productType(allParams.get("productType") == null ? null
+                : ProductType.valueOf(allParams.get("productType")))
+            .orderBy(allParams.get("orderBy") == null ? null
+                : ProductOrderBy.valueOf(allParams.get("orderBy")))
+            .build();
+
+        Page<ProductSearchResponseDto> productsPage = productService.search(req, pageable);
         return ResponseEntity.ok(ApiResponse.success("예적금 상품 조회에 성공했습니다.", productsPage));
     }
 
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<?> searchOne(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "productId") UUID productId) {
+        ProductDetailResponseDto productDetail = productService.searchOne(productId);
+        return ResponseEntity.ok(ApiResponse.success("예적금 상품 상세 조회에 성공했습니다.", productDetail));
+    }
+
     @GetMapping("/interest")
-    public ResponseEntity<?> calculateInterest(@RequestBody ProductRateRequestDto req){
+    public ResponseEntity<?> calculateInterest(@RequestBody ProductRateRequestDto req) {
         ProductRateResponseDto rate = depositAccountService.calculateRate(req);
         return ResponseEntity.ok(ApiResponse.success("만기 이자율 조회에 성공했습니다.", rate));
     }
