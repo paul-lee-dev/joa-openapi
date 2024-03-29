@@ -1,6 +1,7 @@
 package com.joa.openapi.product.service;
 
 import com.joa.openapi.account.entity.Account;
+import com.joa.openapi.account.enums.TaxType;
 import com.joa.openapi.account.errorcode.AccountErrorCode;
 import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.account.service.AccountService;
@@ -40,16 +41,32 @@ public class DepositAccountService {
         String today = LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         List<Account> accounts = accountRepository.findAllByEndDate(today);
 
-//        for (Account account : accounts) {
-//            if (account.getProduct().getProductType().equals(ProductType.TERM_DEPOSIT) ||
-//                    account.getProduct().getProductType().equals(ProductType.FIXED_DEPOSIT)) {
-//                Long[] calculatedInterest = calculateFixedDeposit(account.getAmount(),
-//                        account.getProduct().getRate(),
-//                        account.getTerm(),
-//                        account.getProduct().getPaymentType());
-//                transactionService.depositInterest(account, calculatedInterest[0]);
-//            }
-//        }
+        Long calculatedInterest = 0L; // 계산된 이자액
+
+
+        for (Account account : accounts) {
+            Long totalPrincipal = account.getAmount(); // 원금
+
+            if(account.getProduct().getProductType().equals(ProductType.TERM_DEPOSIT)) {
+                // 예금 이자 계산
+                calculatedInterest = calculateTermDeposit(account.getAmount(), account.getProduct().getRate(), account.getTerm(), account.getProduct().getPaymentType());
+
+            } else if (account.getProduct().getProductType().equals(ProductType.FIXED_DEPOSIT)) {
+                // 적금 이자 계산
+                calculatedInterest = calculateFixedDeposit(account.getAmount(), account.getProduct().getRate(), account.getTerm(), account.getProduct().getPaymentType());
+                totalPrincipal *= account.getTerm();
+            }
+
+            long taxInterest = 0;
+
+            if(account.getTaxType() != null && account.getTaxType().equals(TaxType.TAX)){
+                taxInterest = calculatedInterest * 154 / 1000;
+            }
+
+            Long totalAmount = totalPrincipal + calculatedInterest - taxInterest;
+
+                transactionService.depositInterest(account, totalAmount);
+            }
 
         for (Account account : accounts) {
             if (account.getProduct().getProductType().equals(ProductType.ORDINARY_DEPOSIT)) {
@@ -60,8 +77,6 @@ public class DepositAccountService {
                 transactionService.withdrawAmount(account);
             }
         }
-
-
     }
 
     private Long calculateMinuteInterest(double principal, double rate) {
@@ -75,23 +90,34 @@ public class DepositAccountService {
         Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
         Product product = productRepository.findById(req.getProductId()).orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT));
 
-        Long[] calculatedInterest = new Long[2]; // 계산된 이자액
+        Long calculatedInterest = 0L; // 계산된 이자액
+        Long totalPrincipal = account.getAmount(); // 원금
 
         System.out.println("지급 타입 : " + product.getPaymentType());
         System.out.println("상품 타입 : " + product.getProductType());
 
         if(product.getProductType().equals(ProductType.TERM_DEPOSIT)) {
             // 예금 이자 계산
-            calculatedInterest = calculateTermDeposit(req.getAmount(), product.getRate(), req.getTerm(), product.getPaymentType());
+            calculatedInterest = calculateTermDeposit(account.getAmount(), product.getRate(), account.getTerm(), product.getPaymentType());
+
         } else if (product.getProductType().equals(ProductType.FIXED_DEPOSIT)) {
             // 적금 이자 계산
-            calculatedInterest = calculateFixedDeposit(req.getAmount(), product.getRate(), req.getTerm(), product.getPaymentType());
+            calculatedInterest = calculateFixedDeposit(account.getAmount(), product.getRate(), account.getTerm(), product.getPaymentType());
+            totalPrincipal *= account.getTerm();
         }
-        return ProductRateResponseDto.toDto(product, account, calculatedInterest[0], calculatedInterest[1]);
+
+        long taxInterest = 0L;
+        if(account.getTaxType().equals(TaxType.TAX)){
+            taxInterest = calculatedInterest * 154 / 1000;
+        }
+
+        Long totalAmount = totalPrincipal + calculatedInterest - taxInterest;
+
+        return ProductRateResponseDto.toDto(product, account, calculatedInterest, taxInterest, totalAmount); //계산된 이자액, 세금액, 최종 지금액
     }
 
     //예금
-    public Long[] calculateTermDeposit(double principal, double rate, int term, PaymentType paymentType) {
+    public Long calculateTermDeposit(double principal, double rate, int term, PaymentType paymentType) {
         double monthlyInterestRate = rate / 12 / 100;
         long interest;
         long totalAmount;
@@ -99,20 +125,17 @@ public class DepositAccountService {
         if(paymentType.equals(PaymentType.SIMPLE)) {
             //단리 계산 공식: 원금 * (1 + 이자율 * 예치 개월수 / 12)
             interest = (long) (principal * monthlyInterestRate * term);
-            totalAmount = (long) (principal + interest);
         } else {
             //복리 계산
             totalAmount = (long) (principal * Math.pow((1 + monthlyInterestRate), term));
             interest = totalAmount - (long) principal;
         }
 
-        return new Long[] {interest, totalAmount};
+        return interest;
     }
 
     //적금
-    public Long[] calculateFixedDeposit(double monthlyDeposit, double rate, int term, PaymentType paymentType) {
-
-        long totalPrincipal = (long) (monthlyDeposit * term); // 적립 원금
+    public Long calculateFixedDeposit(double monthlyDeposit, double rate, int term, PaymentType paymentType) {
         long interest;
 
         if(paymentType.equals(PaymentType.SIMPLE)) {
@@ -126,7 +149,6 @@ public class DepositAccountService {
                 interest += (long) (monthlyDeposit * (Math.pow(1 + monthlyInterestRate, term - i) - 1));
             }
         }
-        long totalAmount = totalPrincipal + interest;
-        return new Long[] {interest, totalAmount};
+        return interest;
     }
 }

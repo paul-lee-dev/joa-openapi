@@ -25,9 +25,10 @@ public class ProductRateResponseDto {
     private String accountName;
     private Long amount;
     private Long interest; //이자액
-    private Long calculatedInterest;  //원금 + 이자액
+    private Long taxInterest; //세금
+    private Long calculatedInterest;  //원금 + 이자액(과세 처리)
 
-    public static ProductRateResponseDto toDto(Product product, Account account, Long interest, Long calculatedInterest) {
+    public static ProductRateResponseDto toDto(Product product, Account account, Long interest, Long taxInterest, Long calculatedInterest) {
         return ProductRateResponseDto.builder()
                 .productId(product.getId())
                 .productName(product.getName())
@@ -37,6 +38,7 @@ public class ProductRateResponseDto {
                 .accountName(account.getName())
                 .amount(account.getAmount())
                 .interest(interest)
+                .taxInterest(taxInterest)
                 .calculatedInterest(calculatedInterest)
                 .build();
     }

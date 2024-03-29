@@ -3,9 +3,9 @@ package com.joa.openapi.transaction.repository;
 import static com.joa.openapi.transaction.entity.QTransaction.transaction;
 
 import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto;
-import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto.TransactionOrderBy;
 import com.joa.openapi.transaction.dto.res.TransactionSearchResponseDto;
 import com.joa.openapi.transaction.entity.Transaction;
+import com.joa.openapi.transaction.enums.TransactionOrderBy;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;

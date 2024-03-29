@@ -55,6 +55,12 @@ public class AccountController {
         return ResponseEntity.ok(ApiResponse.success("계좌 잔액 조회에 성공했습니다.", balance));
     }
 
+    @PostMapping("/detail")
+    public ResponseEntity<?> getDetail(@RequestBody AccountGetDetailRequestDto req) {
+        AccountGetDetailResponseDto account = accountService.getDetail(req);
+        return ResponseEntity.ok(ApiResponse.success("계좌 잔액 조회에 성공했습니다.", account));
+    }
+
     @PostMapping("/member")
     public ResponseEntity<?> getAccounts(@RequestHeader("memberId") UUID memberId, @PageableDefault Pageable pageable) {
         Page<AccountGetAccountsResponseDto> accountsPage = accountService.getAccounts(memberId, pageable);
