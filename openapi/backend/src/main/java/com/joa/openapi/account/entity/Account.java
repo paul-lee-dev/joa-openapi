@@ -4,6 +4,7 @@ import com.joa.openapi.common.entity.BaseEntity;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.product.entity.Product;
+import com.joa.openapi.account.enums.TaxType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +40,7 @@ public class Account extends BaseEntity {
     private String withdrawAccount;
     private Long amount;
     private UUID bankId;
+    private TaxType taxType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

@@ -1,19 +1,22 @@
 package com.joa.openapi.account.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joa.openapi.account.entity.Account;
-import com.joa.openapi.account.enums.TaxType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AccountCreateResponseDto {
+public class AccountGetDetailResponseDto {
 
     private String accountId;
-    private String productName;
     private String nickname;
     private Long balance;
     private Boolean isDormant;
@@ -25,14 +28,15 @@ public class AccountCreateResponseDto {
     private String withdrawAccount;
     private Long amount;
     private UUID dummyId;
-    private UUID bankId;
-    private UUID productId;
-    private TaxType taxType;
 
-    public static AccountCreateResponseDto toDto(Account account) {
-        return AccountCreateResponseDto.builder()
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime updatedAt;
+
+    public static AccountGetDetailResponseDto toDto(Account account) {
+        return AccountGetDetailResponseDto.builder()
                 .accountId(account.getId())
-                .productName(account.getProduct().getName())
                 .nickname(account.getName())
                 .balance(account.getBalance())
                 .isDormant(account.getIsDormant())
@@ -44,9 +48,8 @@ public class AccountCreateResponseDto {
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
                 .dummyId(account.getDummy() == null ? null : account.getDummy().getId())
-                .bankId(account.getBankId())
-                .productId(account.getProduct().getId())
-                .taxType(account.getTaxType())
+                .createdAt(account.getCreatedAt())
+                .updatedAt(account.getUpdatedAt())
                 .build();
     }
 }
