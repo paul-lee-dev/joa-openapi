@@ -1,20 +1,17 @@
 package com.joa.openapi.product.repository;
 
-import static com.joa.openapi.account.entity.QAccount.account;
 import static com.joa.openapi.product.entity.QProduct.product;
-import static com.joa.openapi.transaction.entity.QTransaction.transaction;
 
 import com.joa.openapi.product.dto.req.ProductSearchRequestDto;
-import com.joa.openapi.product.dto.req.ProductSearchRequestDto.ProductOrderBy;
 import com.joa.openapi.product.dto.res.ProductSearchResponseDto;
 import com.joa.openapi.product.entity.Product;
+import com.joa.openapi.product.enums.ProductOrderBy;
 import com.joa.openapi.product.enums.ProductType;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
