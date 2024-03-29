@@ -8,13 +8,16 @@ import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.repository.DummyRepository;
+import com.joa.openapi.product.dto.res.ProductSearchResponseDto;
 import com.joa.openapi.transaction.dto.req.Transaction1wonConfirmRequestDto;
 import com.joa.openapi.transaction.dto.req.Transaction1wonRequestDto;
 import com.joa.openapi.transaction.dto.req.TransactionDeleteRequestDto;
 import com.joa.openapi.transaction.dto.req.TransactionRequestDto;
+import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto;
 import com.joa.openapi.transaction.dto.req.TransactionUpdateRequestDto;
 import com.joa.openapi.transaction.dto.res.Transaction1wonResponseDto;
 import com.joa.openapi.transaction.dto.res.TransactionResponseDto;
+import com.joa.openapi.transaction.dto.res.TransactionSearchResponseDto;
 import com.joa.openapi.transaction.dto.res.TransactionUpdateResponseDto;
 import com.joa.openapi.transaction.entity.Fourwords;
 import com.joa.openapi.transaction.entity.Transaction;
@@ -23,6 +26,8 @@ import com.joa.openapi.transaction.repository.TransactionRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -355,5 +360,17 @@ public class TransactionService {
     public void checkPassword(Account account, String password){
         if (!account.getPassword().equals(password))
             throw new RestApiException(AccountErrorCode.PASSWORD_MISMATCH);
+    }
+
+    public Page<TransactionSearchResponseDto> search(TransactionSearchRequestDto req, Pageable pageable) {
+        return transactionRepository.searchTransactionCustom(req, pageable);
+    }
+
+    public boolean checkApiKey(UUID apiKey) {
+        return transactionRepository.existsByApiKey(apiKey) > 0;
+    }
+
+    public boolean checkAccountId(String accountId) {
+        return accountRepository.existsById(accountId);
     }
 }
