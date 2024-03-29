@@ -32,7 +32,7 @@ public class ProductService {
     private final BankRepository bankRepository;
 
     @Transactional
-    public ProductCreateResponseDto create(ProductCreateRequestDto req) {
+    public ProductCreateResponseDto create(UUID apiKey, ProductCreateRequestDto req) {
 
         //authorityValidation(memberId); /* TODO 관리자 권한 설정 */
         Bank bank = bankRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
@@ -55,7 +55,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductUpdateIsDoneResponseDto end(UUID productId) {
+    public ProductUpdateIsDoneResponseDto end(UUID apiKey, UUID productId) {
 
         //authorityValidation(memberId);
 
@@ -73,7 +73,7 @@ public class ProductService {
     }
 
     @Transactional
-    public void delete(UUID productId) {
+    public void delete(UUID apiKey, UUID productId) {
 
         //authorityValidation(memberId);
 
@@ -90,15 +90,15 @@ public class ProductService {
         }
     }
 
-    public void authorityValidation(UUID memberId) {
+    public void authorityValidation(UUID apiKey, UUID memberId) {
 
     }
 
-    public Page<ProductSearchResponseDto> search(ProductSearchRequestDto req, Pageable pageable) {
+    public Page<ProductSearchResponseDto> search(UUID apiKey, ProductSearchRequestDto req, Pageable pageable) {
         return productRepository.searchProductCustom(req, pageable);
     }
 
-    public ProductDetailResponseDto searchOne(UUID productId) {
+    public ProductDetailResponseDto searchOne(UUID apiKey, UUID productId) {
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT));
 

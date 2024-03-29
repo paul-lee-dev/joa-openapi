@@ -57,7 +57,7 @@ public class BankService {
                 .paymentType(SIMPLE)
                 .bankId(bank.getId())
                 .build();
-        productService.create(dto);
+        productService.create(apiKey, dto);
 
         return BankResponseDto.toDto(bank);
     }
