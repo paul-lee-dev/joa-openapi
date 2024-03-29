@@ -83,9 +83,9 @@ public class TransactionController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
+    public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId,
         @RequestBody TransactionDeleteRequestDto req) {
-        transactionService.delete(apiKey, memberId, req);
+        transactionService.delete(req);
         return ResponseEntity.ok(ApiResponse.success("거래내역 삭제에 성공했습니다."));
     }
 
