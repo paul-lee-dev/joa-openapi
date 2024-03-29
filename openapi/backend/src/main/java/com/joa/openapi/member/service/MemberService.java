@@ -34,6 +34,10 @@ public class MemberService {
     //회원가입
     @Transactional
     public MemberIdResponseDto addMember(MemberJoinRequestDto request) {
+
+        if(memberRepository.findByEmail(request.getEmail())!=null) throw new RestApiException(MemberErrorCode.EMAIL_CONFLICT);
+        if(memberRepository.findByPhone(request.getPhone())!=null) throw new RestApiException(MemberErrorCode.PHONE_CONFLICT);
+
         Bank bank = bankRepository.findById(request.getBankId()).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
         Member member = Member.builder()
                 .name(request.getName())
