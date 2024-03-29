@@ -14,15 +14,16 @@ import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.product.entity.Product;
 import com.joa.openapi.product.errorcode.ProductErrorCode;
 import com.joa.openapi.product.repository.ProductRepository;
-import com.joa.openapi.product.service.DepositAccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.internal.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,12 +39,23 @@ public class AccountService {
     private final DummyRepository dummyRepository;
     private final ProductRepository productRepository;
 
+    //계좌번호 14자리 생성 알고리즘
+    public String createAccountId(UUID memberId, AccountCreateRequestDto req) {
+        String accountId = "";
+        int bankNo = req.getBankId().toString().charAt(0)-10; //은행 아이디 앞 1자리 아스키 코드
+        int memberNo = memberId.toString().charAt(0)-10; //고객 아이디 앞 1자리 아스키 코드
+        accountId = accountId + Integer.toString(bankNo) + Integer.toString(memberNo);
+        System.out.println(accountId);
+        LocalTime now = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss"); //시 분 초
+        accountId += now.format(formatter);
+        accountId += String.valueOf(Math.random()*10000).substring(0,4); //랜덤 숫자 4자리
+        return accountId;
+    }
+
     @Transactional
     public AccountCreateResponseDto create(UUID memberId, AccountCreateRequestDto req) {
-        // 계좌번호 임시 랜덤 생성
-        String accountId = String.valueOf(Math.random());
-
-        System.out.println("멤버아이디 : " + memberId.toString());
+        String accountId = createAccountId(memberId, req);
 
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
         Product product = productRepository.findById(req.getProductId()).orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT));
