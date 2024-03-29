@@ -98,11 +98,11 @@ public class DepositAccountService {
 
         if(product.getProductType().equals(ProductType.TERM_DEPOSIT)) {
             // 예금 이자 계산
-            calculatedInterest = calculateTermDeposit(account.getAmount(), product.getRate(), req.getTerm(), product.getPaymentType());
+            calculatedInterest = calculateTermDeposit(account.getAmount(), product.getRate(), account.getTerm(), product.getPaymentType());
 
         } else if (product.getProductType().equals(ProductType.FIXED_DEPOSIT)) {
             // 적금 이자 계산
-            calculatedInterest = calculateFixedDeposit(account.getAmount(), product.getRate(), req.getTerm(), product.getPaymentType());
+            calculatedInterest = calculateFixedDeposit(account.getAmount(), product.getRate(), account.getTerm(), product.getPaymentType());
             totalPrincipal *= account.getTerm();
         }
 

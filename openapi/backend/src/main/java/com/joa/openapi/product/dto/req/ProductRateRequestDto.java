@@ -15,7 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ProductRateRequestDto {
 
-    private Integer term;
     private String accountId;
     private UUID productId;
 }
