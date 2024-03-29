@@ -5,9 +5,9 @@ import Header from '@/components/Header';
 import BottomButton from '@/components/BottomButton';
 import {RootStackParamList} from '@/Router';
 import {formatAmount, getProductTypeName} from '@/utils';
-import {ProductPaymentTypeName} from '@/models/product';
 import BottomPopup from '@/components/BottomPopup';
 import {useState} from 'react';
+import {ProductPaymentTypeName} from '@/models';
 
 type CreateAccountScreenProps = NativeStackScreenProps<
   RootStackParamList,

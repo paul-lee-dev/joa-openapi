@@ -6,9 +6,9 @@ import {useQuery} from '@tanstack/react-query';
 import {RootStackParamList} from '@/Router';
 import {getProductList} from '@/api/product';
 import ProductListItem from '@/components/ProductListItem';
-import {IProduct, ProductType} from '@/models/product';
 import {useState} from 'react';
 import clsx from 'clsx';
+import {IProduct, ProductType} from '@/models';
 
 type ProductListScreenProps = NativeStackScreenProps<
   RootStackParamList,

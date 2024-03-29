@@ -18,7 +18,7 @@ import {getAccountList} from '@/api/account';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {useFocusEffect} from '@react-navigation/native';
 import AccountCarousel from '@/components/AccountCarousel';
-import {IAccount} from '@/models';
+import {IAccount, productTypeName} from '@/models';
 import AccountCarouselIndicator from '@/components/AccountCarouselIndicator';
 import {
   Menu,
@@ -26,7 +26,6 @@ import {
   MenuOptions,
   MenuTrigger,
 } from 'react-native-popup-menu';
-import {productTypeName} from '@/models/product';
 
 type MainScreenProps = NativeStackScreenProps<RootStackParamList, 'Main'>;
 
@@ -155,6 +154,7 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
                 pageHeight={carouselLayout.height || 176}
                 navigation={navigation}
                 setPage={setCarouselPage}
+                refetch={refetch}
               />
               <AccountCarouselIndicator
                 total={data?.page?.content.length}

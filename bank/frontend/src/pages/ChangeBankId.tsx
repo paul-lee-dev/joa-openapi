@@ -6,7 +6,7 @@ import {bankDataAtom, memberDataAtom} from '@/store/atoms';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Controller, useForm} from 'react-hook-form';
 import {Text, TextInput, View} from 'react-native';
-import {useRecoilState, useSetRecoilState} from 'recoil';
+import {useSetRecoilState} from 'recoil';
 
 type ChangeBankIdScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -21,7 +21,7 @@ interface ChangeBankIdForm {
 function ChangeBankId({
   navigation,
 }: ChangeBankIdScreenProps): React.JSX.Element {
-  const [bankData, setBankData] = useRecoilState(bankDataAtom);
+  const setBankData = useSetRecoilState(bankDataAtom);
   const setMemberData = useSetRecoilState(memberDataAtom);
   const {
     control,
@@ -29,8 +29,8 @@ function ChangeBankId({
     formState: {errors},
   } = useForm<ChangeBankIdForm>({
     defaultValues: {
-      bankId: bankData.bankId,
-      apiKey: bankData.apiKey,
+      bankId: '',
+      apiKey: '',
     },
   });
 
@@ -49,6 +49,7 @@ function ChangeBankId({
       member: null,
     });
     navigation.popToTop();
+    navigation.replace('Intro');
   };
 
   return (

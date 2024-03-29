@@ -3,6 +3,7 @@ import {FlatList} from 'react-native';
 import AccountCarouselItem from './AccountCarouselItem';
 import {RootStackParamList} from '@/Router';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {QueryObserverResult, RefetchOptions} from '@tanstack/react-query';
 
 interface IProps {
   accountList: IAccount[];
@@ -10,6 +11,9 @@ interface IProps {
   pageHeight: number;
   navigation: NativeStackNavigationProp<RootStackParamList, 'Main', undefined>;
   setPage: React.Dispatch<React.SetStateAction<number>>;
+  refetch: (
+    options?: RefetchOptions | undefined,
+  ) => Promise<QueryObserverResult<any, Error>>;
 }
 
 function AccountCarousel({
@@ -18,6 +22,7 @@ function AccountCarousel({
   pageHeight,
   navigation,
   setPage,
+  refetch,
 }: IProps): React.JSX.Element {
   const renderAccount = ({item}: any) => {
     return (
@@ -26,6 +31,7 @@ function AccountCarousel({
         navigation={navigation}
         pageWidth={pageWidth}
         pageHeight={pageHeight}
+        refetch={refetch}
       />
     );
   };

@@ -57,7 +57,7 @@ function TransferAmount({
             <Text className="text-xl font-medium text-gray-700">으로</Text>
           </View>
           <Text className="text-sm font-medium text-gray-700">
-            {`조아은행 ${account.accountId}`}
+            {account.accountId}
           </Text>
         </View>
         <View className="flex space-y-2">

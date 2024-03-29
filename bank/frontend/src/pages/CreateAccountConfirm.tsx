@@ -73,16 +73,16 @@ function CreateAccountConfirm({
       term: 6,
       password: '',
       password2: '',
-      tax: '과세',
+      tax: 'TAX',
     },
   });
 
   const onSubmit = async (formData: CreateAccountForm) => {
     mutation.mutate({
-      amount: formData.amount,
-      // tax: formData.tax,
+      amount: formData.amount || undefined,
+      tax: formData.tax,
       term: formData.term,
-      withdrawAccount: formData.withdrawAccount,
+      withdrawAccount: formData.withdrawAccount || undefined,
       nickname: product.name,
       password: formData.password,
       bankId: bankData.bankId,
@@ -109,122 +109,126 @@ function CreateAccountConfirm({
           <Text className="text-2xl font-medium">필수 정보를 입력해주세요</Text>
         </View>
         <View className="flex justify-evenly">
-          <CommonInput label={'출금 계좌'}>
-            <Controller
-              control={control}
-              rules={{
-                required: '출금 계좌를 선택해주세요.',
-              }}
-              render={() => (
-                <DropdownInput
-                  data={data.page.content}
-                  labelField="nickname"
-                  valueField="accountId"
-                  search
-                  placeholder="출금 계좌를 선택해주세요."
-                  value={watch('withdrawAccount')}
-                  setValue={value => setValue('withdrawAccount', value)}
+          {product.productType !== 'ORDINARY_DEPOSIT' && (
+            <>
+              <CommonInput label={'출금 계좌'}>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: '출금 계좌를 선택해주세요.',
+                  }}
+                  render={() => (
+                    <DropdownInput
+                      data={data.page.content}
+                      labelField="nickname"
+                      valueField="accountId"
+                      search
+                      placeholder="출금 계좌를 선택해주세요."
+                      value={watch('withdrawAccount')}
+                      setValue={value => setValue('withdrawAccount', value)}
+                    />
+                  )}
+                  name="withdrawAccount"
                 />
-              )}
-              name="withdrawAccount"
-            />
-            <Text className="absolute bottom-4 left-8 text-red-400">
-              {errors.withdrawAccount?.message}
-            </Text>
-          </CommonInput>
-          <CommonInput label={'시작 금액 (원)'}>
-            <Controller
-              control={control}
-              rules={{
-                required: '시작 금액을 입력해주세요.',
-              }}
-              render={({field: {onChange, onBlur, value}}) => (
-                <View className="w-full relative">
-                  <View className="py-3 flex flex-row space-x-3">
-                    <Pressable
-                      onPress={() => {
-                        setValue('amount', '10000');
-                      }}
-                      className="flex">
-                      <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
-                        만원
-                      </Text>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        setValue('amount', '50000');
-                      }}
-                      className="flex">
-                      <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
-                        5만원
-                      </Text>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        setValue('amount', '1000000');
-                      }}
-                      className="flex">
-                      <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
-                        100만원
-                      </Text>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        setValue('amount', '5000000');
-                      }}
-                      className="flex">
-                      <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
-                        500만원
-                      </Text>
-                    </Pressable>
-                    <Pressable
-                      onPress={() => {
-                        setValue('amount', '10000000');
-                      }}
-                      className="flex">
-                      <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
-                        1,000만원
-                      </Text>
-                    </Pressable>
-                  </View>
-                  <TextInput
-                    className="border-b border-gray-800/50 text-gray-700"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    returnKeyType="done"
-                    keyboardType="number-pad"
-                    placeholder="직접 입력"
-                  />
-                </View>
-              )}
-              name="amount"
-            />
-            <Text className="absolute bottom-2 left-8 text-red-400">
-              {errors.amount?.message}
-            </Text>
-          </CommonInput>
-          <OptionInput
-            label={'기간'}
-            options={[
-              {label: '6개월', value: 6},
-              {label: '1년', value: 12},
-              {label: '2년', value: 24},
-              {label: '3년', value: 36},
-            ]}
-            value={watch('term')}
-            setValue={value => setValue('term', value)}
-          />
+                <Text className="absolute bottom-4 left-8 text-red-400">
+                  {errors.withdrawAccount?.message}
+                </Text>
+              </CommonInput>
+              <CommonInput label={'시작 금액 (원)'}>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: '시작 금액을 입력해주세요.',
+                  }}
+                  render={({field: {onChange, onBlur, value}}) => (
+                    <View className="w-full relative">
+                      <View className="py-3 flex flex-row space-x-3">
+                        <Pressable
+                          onPress={() => {
+                            setValue('amount', '10000');
+                          }}
+                          className="flex">
+                          <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
+                            만원
+                          </Text>
+                        </Pressable>
+                        <Pressable
+                          onPress={() => {
+                            setValue('amount', '50000');
+                          }}
+                          className="flex">
+                          <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
+                            5만원
+                          </Text>
+                        </Pressable>
+                        <Pressable
+                          onPress={() => {
+                            setValue('amount', '1000000');
+                          }}
+                          className="flex">
+                          <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
+                            100만원
+                          </Text>
+                        </Pressable>
+                        <Pressable
+                          onPress={() => {
+                            setValue('amount', '5000000');
+                          }}
+                          className="flex">
+                          <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
+                            500만원
+                          </Text>
+                        </Pressable>
+                        <Pressable
+                          onPress={() => {
+                            setValue('amount', '10000000');
+                          }}
+                          className="flex">
+                          <Text className="text-sm font-medium inline self-start py-1 px-2 -mx-1 rounded-full bg-pink-100 text-gray-700">
+                            1,000만원
+                          </Text>
+                        </Pressable>
+                      </View>
+                      <TextInput
+                        className="border-b border-gray-800/50 text-gray-700"
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                        returnKeyType="done"
+                        keyboardType="number-pad"
+                        placeholder="직접 입력"
+                      />
+                    </View>
+                  )}
+                  name="amount"
+                />
+                <Text className="absolute bottom-2 left-8 text-red-400">
+                  {errors.amount?.message}
+                </Text>
+              </CommonInput>
+              <OptionInput
+                label={'기간'}
+                options={[
+                  {label: '6개월', value: 6},
+                  {label: '1년', value: 12},
+                  {label: '2년', value: 24},
+                  {label: '3년', value: 36},
+                ]}
+                value={watch('term')}
+                setValue={value => setValue('term', value)}
+              />
 
-          <OptionInput
-            label={'과세 유형'}
-            options={[
-              {label: '과세', value: '과세'},
-              {label: '비과세', value: '비과세'},
-            ]}
-            value={watch('tax')}
-            setValue={value => setValue('tax', value)}
-          />
+              <OptionInput
+                label={'과세 유형'}
+                options={[
+                  {label: '과세', value: 'TAX'},
+                  {label: '비과세', value: 'NO_TAX'},
+                ]}
+                value={watch('tax')}
+                setValue={value => setValue('tax', value)}
+              />
+            </>
+          )}
           <CommonInput label={'계좌 비밀번호'}>
             <Controller
               control={control}

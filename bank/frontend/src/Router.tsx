@@ -66,7 +66,6 @@ export type RootStackParamList = {
   };
   Search: undefined;
   Setting: undefined;
-  Splash: undefined;
   Transfer: {account: IAccount};
   TransferAmount: {
     account: IAccount;
@@ -161,11 +160,6 @@ function Router(): React.JSX.Element {
               {...globalOption}
             />
             <Stack.Screen
-              name="ChangeBankId"
-              component={ChangeBankId}
-              {...globalOption}
-            />
-            <Stack.Screen
               name="EditProfile"
               component={EditProfile}
               {...globalOption}
@@ -191,6 +185,11 @@ function Router(): React.JSX.Element {
         <Stack.Screen name="Search" component={Search} {...globalOption} />
         <Stack.Screen name="Menu" component={Menu} {...globalOption} />
         <Stack.Screen name="Setting" component={Setting} {...globalOption} />
+        <Stack.Screen
+          name="ChangeBankId"
+          component={ChangeBankId}
+          {...globalOption}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

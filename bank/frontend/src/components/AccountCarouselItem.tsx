@@ -4,12 +4,16 @@ import {Pressable, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '@/Router';
+import {QueryObserverResult, RefetchOptions} from '@tanstack/react-query';
 
 interface IProps {
   account: IAccount;
   navigation: NativeStackNavigationProp<RootStackParamList, 'Main', undefined>;
   pageWidth: number;
   pageHeight: number;
+  refetch: (
+    options?: RefetchOptions | undefined,
+  ) => Promise<QueryObserverResult<any, Error>>;
 }
 
 function AccountCarouselItem({
@@ -17,6 +21,7 @@ function AccountCarouselItem({
   navigation,
   pageWidth,
   pageHeight,
+  refetch,
 }: IProps): React.JSX.Element {
   return (
     <View
@@ -42,7 +47,14 @@ function AccountCarouselItem({
           {`${formatAmount(account?.balance)}원`}
         </Text>
         <TouchableOpacity>
-          <Icon name={'refresh'} color={'#aaa'} onPress={() => {}} size={20} />
+          <Icon
+            name={'refresh'}
+            color={'#aaa'}
+            onPress={() => {
+              refetch();
+            }}
+            size={20}
+          />
         </TouchableOpacity>
       </View>
       <View className="w-full flex flex-row items-center justify-center space-x-2">
@@ -57,11 +69,11 @@ function AccountCarouselItem({
             이체
           </Text>
         </Pressable>
-        <View className="flex items-center justify-center w-12 h-6 bg-pink-300 rounded-full">
+        {/* <View className="flex items-center justify-center w-12 h-6 bg-pink-300 rounded-full">
           <Text className="text-sm font-semibold shadow-md text-gray-700">
             결제
           </Text>
-        </View>
+        </View> */}
       </View>
     </View>
   );

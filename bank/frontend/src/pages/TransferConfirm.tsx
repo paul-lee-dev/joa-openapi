@@ -91,7 +91,7 @@ function TransferConfirm({
           <View className="flex flex-row justify-between px-6">
             <Text className="font-bold text-sm text-gray-700">입금 계좌</Text>
             <Text className="font-semibold text-sm text-gray-700">
-              {`조아은행 ${toAccountId}`}
+              {toAccountId}
             </Text>
           </View>
         </View>
