@@ -6,6 +6,7 @@ export const transferSend = async (params: any): Promise<any> => {
 };
 
 export const getTransactionList = async (params: any): Promise<any> => {
+  console.log(params);
   const response = await axiosInstance.get('/transaction/search', {params});
   return response.data;
 };
