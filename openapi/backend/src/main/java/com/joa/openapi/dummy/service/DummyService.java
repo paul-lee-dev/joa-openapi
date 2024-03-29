@@ -210,7 +210,7 @@ public class DummyService {
                             .password("dummy")
                             .dummyId(dummy.getId())
                             .build();
-                    transactionService.withdraw(adminId, dto);
+                    transactionService.withdraw(apiKey, adminId, dto);
                     break;
                 // 송금
                 case 2 :
@@ -230,7 +230,7 @@ public class DummyService {
                             .password("dummy")
                             .dummyId(dummy.getId())
                             .build();
-                    transactionService.send(adminId, dto);
+                    transactionService.send(apiKey, adminId, dto);
                     break;
             }
         }
@@ -284,7 +284,7 @@ public class DummyService {
                 TransactionDeleteRequestDto dto = TransactionDeleteRequestDto.builder()
                         .transactionId(transaction.getId())
                         .build();
-                transactionService.delete(transaction.getDummy().getAdminId(), dto);
+                transactionService.delete(dto);
             }
         }
         dummy.deleteSoftly();
