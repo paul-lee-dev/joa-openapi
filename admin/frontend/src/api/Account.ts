@@ -1,50 +1,54 @@
-import SearchBankResponse, {
-  CreateBankParams,
-  CreateBankResponse,
-  DeleteBankParams,
-  DeleteBankResponse,
-  ModifyBankParams,
-  ModifyBankResponse,
-  SearchBankParams,
-} from "@/models/Bank.interface";
-import { accountAxios } from "./http-common";
+import SearchAccountResponse, {
+  CreateAccountParams,
+  CreateAccountResponse,
+  DeleteAccountParams,
+  DeleteAccountResponse,
+  ModifyAccountParams,
+  ModifyAccountResponse,
+  SearchAccountParams,
+} from "@/models/Account.interface";
+import { localAxios } from "./http-common";
 
-export const createBank = async (
-  params: CreateBankParams
-): Promise<CreateBankResponse> => {
-  const url = "bank";
-  const response = await accountAxios.post(url, params);
+export const createAccount = async (
+  params: CreateAccountParams
+): Promise<CreateAccountResponse> => {
+  const url = "account";
+  const response = await localAxios.post(url, params);
   return response.data;
 };
 
-export const searchBank = async (): Promise<SearchBankResponse> => {
-  const url = "bank/search";
-  const response = await accountAxios.get(url);
+export const searchAccount = async (): Promise<SearchAccountResponse> => {
+  const url = "account/search";
+  const response = await localAxios.get(url);
   return response.data;
 };
 
-export const searchBankbyName = async (
-  params: SearchBankParams
-): Promise<SearchBankResponse> => {
-  const url = `bank/search?name=${params.name}`;
-  const response = await accountAxios.post(url, params);
+export const searchAccountbyName = async (
+  params: SearchAccountParams
+): Promise<SearchAccountResponse> => {
+  const url = `account/search?name=${params.name}`;
+  const response = await localAxios.post(url, params);
   return response.data;
 };
 
-export const modifyBank = async (
-  params: ModifyBankParams
-): Promise<ModifyBankResponse> => {
-  const { bankId } = params;
-  const url = `bank/${bankId}`;
-  const response = await accountAxios.patch(url, params);
+export const modifyAccount = async (
+  params: ModifyAccountParams
+): Promise<ModifyAccountResponse> => {
+  const { accountId } = params;
+  const url = `account/${accountId}`;
+  const response = await localAxios.patch(url, params);
   return response.data;
 };
 
+export const deleteAccount = async (
+  params: DeleteAccountParams
+): Promise<DeleteAccountResponse> => {
+  const url = `account/${params.accountId}`;
+  const response = await localAxios.delete(url);
+  return response.data;
+};
 
-export const deleteBank = async (
-  params: DeleteBankParams
-): Promise<DeleteBankResponse> => {
-  const url = `bank/${params.bankId}`;
-  const response = await accountAxios.delete(url);
+export const getAccountList = async (): Promise<any> => {
+  const response = await localAxios.post("/account/member");
   return response.data;
 };

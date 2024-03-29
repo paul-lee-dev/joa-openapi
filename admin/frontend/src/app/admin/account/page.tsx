@@ -4,7 +4,7 @@ import Button from "@/components/button/button";
 import Pagination from "@/components/pagination";
 import AccountGroupSearch from "@/components/search/accountGroupSearch";
 import BankSelect from "@/components/select/bankNoLabel";
-import MultiSearchSelect from "@/components/select/multiSearchSelect";
+import MultiSearchSelect from "@/components/select/customerMultiSearchSelect";
 import ProductMultiSearchSelect from "@/components/select/productMultiSearchSelect";
 import ProductTypeMultiSearchSelect from "@/components/select/productTypeMultiSearchSelect";
 import AccountTable from "@/components/table/accountTable";
@@ -32,7 +32,6 @@ const AccountList = () => {
             htmlFor={""}
           ></ProductTypeMultiSearchSelect>
           <AccountGroupSearch></AccountGroupSearch>
-          <Button id={"submit"} name={"검색"} onClick={() => {}}></Button>
         </div>
       </form>
       <AccountTable></AccountTable>

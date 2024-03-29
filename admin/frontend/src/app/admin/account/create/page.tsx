@@ -3,7 +3,7 @@
 import Button from "@/components/button/button";
 import InputText from "@/components/input/inputText";
 import BankSelect from "@/components/select/bank";
-import MyAsyncSelect from "@/components/select/multiSearchSelect";
+import MyAsyncSelect from "@/components/select/customerMultiSearchSelect";
 import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
 
