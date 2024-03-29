@@ -46,4 +46,10 @@ public class BankController {
         BankResponseDto bankResponseDto = bankService.searchBank(apiKey, bankId);
         return ResponseEntity.ok(ApiResponse.success("특정은행검색에 성공했습니다.", bankResponseDto));
     }
+
+    @GetMapping("/dashboard/{bankId}")
+    public ResponseEntity<?> getDashboardData(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "bankId") UUID bankId) {
+        DashboardResponseDto DashboardResponseDto = bankService.getDashboardData(apiKey, bankId);
+        return ResponseEntity.ok(ApiResponse.success("대시보드 데이터 불러오기 성공했습니다.", DashboardResponseDto));
+    }
 }

@@ -20,7 +20,6 @@ import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.member.service.MemberService;
 import com.joa.openapi.member.dto.MemberJoinRequestDto;
-import com.joa.openapi.product.errorcode.ProductErrorCode;
 import com.joa.openapi.product.repository.ProductRepository;
 import com.joa.openapi.transaction.dto.req.TransactionDeleteRequestDto;
 import com.joa.openapi.transaction.dto.req.TransactionRequestDto;
@@ -31,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,7 +56,10 @@ public class DummyService {
     private final ProductRepository productRepository;
     private final ApiRepository apiRepository;
     private final NeyhuingName neyhuingName;
+
     public String name;
+    public DummyTransactionRequestDto req;
+    public UUID apiKey;
 
     @Transactional
     public DummyResponseDto createMember(UUID apiKey, DummyMemberRequestDto req) {
@@ -86,6 +89,7 @@ public class DummyService {
                     .withdrawAccount(null)
                     .dummyId(dummy.getId())
                     .productId(productId)
+                    .bankId(req.getBankId())
                     .build();
             String accountId = accountService.create(memberId, ACRdto).getAccountId();
             // 계좌 별 기본금 10만원 입금
@@ -124,6 +128,7 @@ public class DummyService {
                     .withdrawAccount(null)
                     .dummyId(dummy.getId())
                     .productId(productId)
+                    .bankId(req.getBankId())
                     .build();
             String accountId = accountService.create(req.getUsers().get(randomMember), dto).getAccountId();
             // 계좌 별 기본금 10만원 입금
@@ -141,18 +146,35 @@ public class DummyService {
 
     @Transactional
     public DummyResponseDto createTransaction(UUID apiKey, DummyTransactionRequestDto req) {
+        this.apiKey = apiKey;
+        if (req.getTerm() == null) {
+            return immediateCreate(apiKey, req);
+        } else {
+            this.req = req;
+            return switch (req.getTerm()) {
+                case MINUTE -> makroCreateMinute();
+                case HOUR -> makroCreateHour();
+                case DAY -> makroCreateDay();
+            };
+        }
+    }
+
+    @Transactional
+    public DummyResponseDto immediateCreate(UUID apiKey, DummyTransactionRequestDto req) {
+        int cnt = req.getCount();
+        if (req.getTerm() != null) cnt = 1;
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
-        name = req.getName() == null ? "거래내역" + req.getCount() + "개 만들기" : req.getName();
+        name = req.getName() == null ? "거래내역" + cnt + "개 만들기" : req.getName();
         Dummy dummy = Dummy.builder()
                 .name(name)
-                .transactionCount(req.getCount())
+                .transactionCount(cnt)
                 .adminId(adminId)
                 .build();
         dummyRepository.save(dummy);
 
         int userCount = req.getUsers().size();
         Random random = new Random();
-        for (int i = 0; i < req.getCount(); i++) {
+        for (int i = 0; i < cnt; i++) {
             // 입금 할지, 출금 할지, 송금 할지
             int type = random.nextInt(3);
             // 대상 멤버 번호
@@ -214,6 +236,27 @@ public class DummyService {
         }
 
         return DummyResponseDto.toDto(dummy);
+    }
+
+    @Transactional
+    @Scheduled(cron = "0 * * * * *")
+    public DummyResponseDto makroCreateMinute() {
+        if (req == null) return null;
+        return immediateCreate(apiKey, req);
+    }
+
+    @Transactional
+    @Scheduled(cron = "0 0 * * * *")
+    public DummyResponseDto makroCreateHour() {
+        if (req == null) return null;
+        return immediateCreate(apiKey, req);
+    }
+
+    @Transactional
+    @Scheduled(cron = "0 0 0 * * *")
+    public DummyResponseDto makroCreateDay() {
+        if (req == null) return null;
+        return immediateCreate(apiKey, req);
     }
 
     @Transactional

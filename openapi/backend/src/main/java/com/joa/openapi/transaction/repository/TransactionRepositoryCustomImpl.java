@@ -6,20 +6,29 @@ import static com.joa.openapi.transaction.entity.QTransaction.transaction;
 
 import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto;
+import com.joa.openapi.transaction.dto.res.DayMoneyFlow;
 import com.joa.openapi.transaction.dto.res.TransactionSearchResponseDto;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.joa.openapi.transaction.enums.TransactionOrderBy;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +36,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
+@Slf4j
 public class TransactionRepositoryCustomImpl implements TransactionRepositoryCustom {
 
+    @PersistenceContext
+    private EntityManager entityManager;
     private final JPAQueryFactory jpaQueryFactory; // JPA 쿼리를 생성하고 실행하는데 사용
     private final ApiRepository apiRepository;
 
@@ -141,6 +153,76 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             .collect(Collectors.toList());
 
         return new PageImpl<>(res, pageable, transactions.size());
+    }
+
+    @Override
+    public Long searchBanksTotalTransactionCustom(UUID bankId) {
+        return jpaQueryFactory
+                .selectFrom(transaction)
+                .distinct()
+                .innerJoin(account).on(transaction.toAccount.eq(account.id).or(transaction.fromAccount.eq(account.id)))
+                .where(account.bankId.eq(bankId))
+                .fetchCount();
+    }
+
+    @Override
+    public Long searchBanksTotalWithdrawCustom(UUID bankId) {
+        return jpaQueryFactory
+                .select(transaction.amount.sum())
+                .from(transaction)
+                .distinct()
+                .innerJoin(account).on(transaction.fromAccount.eq(account.id))
+                .where(account.bankId.eq(bankId))
+                .fetchOne();
+    }
+
+    @Override
+    public Long searchBanksTotalDepositCustom(UUID bankId) {
+        return jpaQueryFactory
+                .select(transaction.amount.sum())
+                .from(transaction)
+                .distinct()
+                .innerJoin(account).on(transaction.toAccount.eq(account.id))
+                .where(account.bankId.eq(bankId))
+                .fetchOne();
+    }
+
+    @Override
+    public List<DayMoneyFlow> searchBanksWeekTransactionCustom(UUID bankId) {
+        List<String> accountIdList = jpaQueryFactory
+                .select(account.id)
+                .from(account)
+                .where(account.bankId.eq(bankId))
+                .fetch();
+
+        return jpaQueryFactory
+                .select(
+                        Expressions.dateTemplate(LocalDate.class, "DATE_FORMAT({0}, '%Y-%m-%d')", transaction.createdAt),
+                        new CaseBuilder()
+                                .when(transaction.toAccount.isNotNull())
+                                .then(transaction.amount)
+                                .otherwise(0L).sum()
+                                .as("deposit"),
+                        new CaseBuilder()
+                                .when(transaction.fromAccount.isNotNull())
+                                .then(transaction.amount)
+                                .otherwise(0L).sum()
+                                .as("withdraw")
+                )
+                .from(transaction)
+                .where(transaction.createdAt.between(LocalDateTime.now().minusWeeks(1), LocalDateTime.now())
+                        .and(transaction.toAccount.in(accountIdList)
+                                .or(transaction.fromAccount.in(accountIdList))))
+                .groupBy(Expressions.dateTemplate(LocalDate.class, "DATE_FORMAT({0}, {1})", transaction.createdAt, "%Y-%m-%d"))
+                .orderBy(Expressions.dateTemplate(LocalDate.class, "DATE_FORMAT({0}, {1})", transaction.createdAt, "%Y-%m-%d").asc())
+                .fetch()
+                .stream()
+                .map(tuple -> new DayMoneyFlow(
+                        tuple.get(0, String.class),
+                        tuple.get(1, Long.class),
+                        tuple.get(2, Long.class)
+                ))
+                .collect(Collectors.toList());
     }
 
     private BooleanExpression eqSearchDepositorNameKeyword(String depositorNameKeyword) {
