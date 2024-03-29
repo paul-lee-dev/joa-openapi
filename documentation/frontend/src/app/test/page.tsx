@@ -1,39 +1,26 @@
 "use client";
 import tw from "tailwind-styled-components";
 import { useState } from "react";
-import { JoinMemberParams } from "./components/params";
-import { joinMember } from "./components/api";
+import { JoinMemberParams, JoinMemberResponse } from "./components/api";
+import { postAxios } from "./components/http-common";
 
 const Home = () => {
 
   const [formData, setFormData] = useState<JoinMemberParams>({
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-    bankId: ""
+    name: "김김",
+    email: "asd@asdas.com",
+    phone: "00013131313",
+    password: "1234",
+    bankId: "bdbbfe2c-dc15-4c85-8706-dac0299e7ff6"
   });
 
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      await joinMember(formData);
-      // 회원가입 성공 시 필요한 동작을 수행합니다.
-      console.log("회원가입이 완료되었습니다.");
-    } catch (error) {
-      // 오류 처리
-      console.error("회원가입 중 오류가 발생했습니다:", error);
-    }
+  const joinMember = async (data: JoinMemberParams): Promise<JoinMemberResponse> => {
+    console.log("여기 들어오나");
+    const url = "member";
+    console.log(formData.name);
+    const response = await postAxios(url, data);
+    return response.data;
   };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
-
 
   return (
     <>
@@ -43,46 +30,14 @@ const Home = () => {
             <MainTitleItem>Joa Open API</MainTitleItem>
             <MainTextItem>
 
-              <form onSubmit={handleFormSubmit}>
-              <input
-                type="text"
-                name="name"
-                placeholder="이름"
-                value={formData.name}
-                onChange={handleInputChange}
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="이메일"
-                value={formData.email}
-                onChange={handleInputChange}
-              />
-              <input
-                type="text"
-                name="phone"
-                placeholder="전화번호"
-                value={formData.phone}
-                onChange={handleInputChange}
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="비밀번호"
-                value={formData.password}
-                onChange={handleInputChange}
-              />
-              <input
-                type="text"
-                name="bankId"
-                placeholder="은행 ID"
-                value={formData.bankId}
-                onChange={handleInputChange}
-              />
+              <form onSubmit={() => joinMember}>
+
             <ButtonContainer>
               <button type="submit">시작하기</button>
             </ButtonContainer>
             </form>
+            </MainTextItem>
+            <MainTextItem>
 
             </MainTextItem>
           </SubContainer>
