@@ -7,6 +7,7 @@ import java.util.UUID;
 @Getter
 public class MemberLoginRequestDto {
 
+    private UUID bankId;
     private String email;
     private String password;
     private Boolean isDeleted;
