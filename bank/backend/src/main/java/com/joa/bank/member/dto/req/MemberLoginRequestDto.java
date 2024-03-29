@@ -1,4 +1,4 @@
-package com.joa.bank.member.dto;
+package com.joa.bank.member.dto.req;
 
 import lombok.Getter;
 

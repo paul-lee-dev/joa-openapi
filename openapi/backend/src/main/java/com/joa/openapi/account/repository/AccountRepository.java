@@ -4,6 +4,7 @@ import com.joa.openapi.account.entity.Account;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -18,4 +19,7 @@ public interface AccountRepository extends JpaRepository<Account, String>, Accou
     // 페이징 안된 유저의 전체 계좌
     List<Account> findByHolderId(UUID memberId);
     List<Account> findAllByEndDate(String endDate);
+
+//    @Query("SELECT a FROM Account a JOIN Bank b ON a.bankId = b.id WHERE a.holderId = :memberId AND b.adminId = :adminId")
+//    Page<Account> findByHolderIdAndBankAdminId(UUID memberId, UUID adminId, Pageable pageable);
 }

@@ -1,4 +1,4 @@
-package com.joa.bank.member.dto;
+package com.joa.bank.member.dto.res;
 
 import jakarta.persistence.Id;
 import lombok.Data;
