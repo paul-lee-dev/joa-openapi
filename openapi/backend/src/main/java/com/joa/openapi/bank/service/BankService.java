@@ -11,9 +11,12 @@ import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.common.util.AuthCheckUtil;
+import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.product.dto.req.ProductCreateRequestDto;
 import com.joa.openapi.product.service.ProductService;
+import com.joa.openapi.transaction.dto.res.DayMoneyFlow;
 import com.joa.openapi.transaction.repository.TransactionRepository;
+import com.querydsl.core.Tuple;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +43,7 @@ public class BankService {
     private final BankRepository bankRepository;
     private final ProductService productService;
     private final TransactionRepository transactionRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public BankResponseDto create(BankRequestDto req, UUID apiKey) {
@@ -111,20 +115,16 @@ public class BankService {
         Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         AuthoriaztionBank(bank.getAdminId(), adminId);
         Long totalTransactionCnt = transactionRepository.searchBanksTotalTransactionCustom(bankId);
-        Long totalMemberCnt = 1L;
-        Long totalWithdrawAmount = 1L;
-        Long totalDepositAmout = 1L;
-        Pair<Long, Long> dailyTotalTransaction = Pair.of(1L, 1L);
-        List<Pair<Long, Long>> totalTransactionList = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            totalTransactionList.add(dailyTotalTransaction);
-        }
+        Long totalMemberCnt = (long) memberRepository.findByBankId(bankId).size();
+        Long totalWithdrawAmount = transactionRepository.searchBanksTotalWithdrawCustom(bankId);
+        Long totalDepositAmout = transactionRepository.searchBanksTotalDepositCustom(bankId);
+        List<DayMoneyFlow> weekTransactionList = transactionRepository.searchBanksWeekTransactionCustom(bankId);
         return DashboardResponseDto.builder()
                 .totalTransactionCnt(totalTransactionCnt)
                 .totalMemberCnt(totalMemberCnt)
                 .totalWithdrawAmount(totalWithdrawAmount)
                 .totalDepositAmount(totalDepositAmout)
-                .totalTransactionList(totalTransactionList)
+                .totalTransactionList(weekTransactionList)
                 .build();
     }
 

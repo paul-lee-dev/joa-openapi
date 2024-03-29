@@ -89,6 +89,7 @@ public class DummyService {
                     .withdrawAccount(null)
                     .dummyId(dummy.getId())
                     .productId(productId)
+                    .bankId(req.getBankId())
                     .build();
             String accountId = accountService.create(memberId, ACRdto).getAccountId();
             // 계좌 별 기본금 10만원 입금
@@ -127,6 +128,7 @@ public class DummyService {
                     .withdrawAccount(null)
                     .dummyId(dummy.getId())
                     .productId(productId)
+                    .bankId(req.getBankId())
                     .build();
             String accountId = accountService.create(req.getUsers().get(randomMember), dto).getAccountId();
             // 계좌 별 기본금 10만원 입금
@@ -239,18 +241,21 @@ public class DummyService {
     @Transactional
     @Scheduled(cron = "0 * * * * *")
     public DummyResponseDto makroCreateMinute() {
+        if (req == null) return null;
         return immediateCreate(apiKey, req);
     }
 
     @Transactional
     @Scheduled(cron = "0 0 * * * *")
     public DummyResponseDto makroCreateHour() {
+        if (req == null) return null;
         return immediateCreate(apiKey, req);
     }
 
     @Transactional
     @Scheduled(cron = "0 0 0 * * *")
     public DummyResponseDto makroCreateDay() {
+        if (req == null) return null;
         return immediateCreate(apiKey, req);
     }
 

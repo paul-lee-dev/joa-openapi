@@ -1,5 +1,7 @@
 package com.joa.openapi.bank.dto;
 
+import com.joa.openapi.transaction.dto.res.DayMoneyFlow;
+import com.querydsl.core.Tuple;
 import lombok.*;
 import org.springframework.data.util.Pair;
 
@@ -15,5 +17,5 @@ public class DashboardResponseDto {
     private Long totalMemberCnt;
     private Long totalWithdrawAmount;
     private Long totalDepositAmount;
-    private List<Pair<Long, Long>> totalTransactionList;
+    private List<DayMoneyFlow> totalTransactionList;
 }
