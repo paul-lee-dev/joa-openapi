@@ -74,14 +74,14 @@ export default function BankDetail({ params }: { params: { bankId: string } }) {
     };
     console.log("fetch data====================================");
     fetchData();
-  });
+  }, [params.bankId]);
 
   const handleModify = async () => {
     try {
       const params: ModifyBankParams = {
         bankId: bankDetail?.bankId,
-        name: "modifiedName", // 수정된 은행 이름
-        description: "modifiedDescription", // 수정된 은행 설명
+        name: bankInfo.name, // 수정된 은행 이름
+        description: bankInfo.description, // 수정된 은행 설명
       };
       const response = await modifyBank(params); // 은행 수정 API 호출
       console.log("Bank modified:", response);
