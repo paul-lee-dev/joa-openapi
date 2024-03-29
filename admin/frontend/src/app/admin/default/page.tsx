@@ -1,3 +1,4 @@
+"use client";
 import { localAxios } from "@/api/http-common";
 import WeekTransactionGraph from "@/components/graph/Graph";
 import axios, { AxiosInstance, AxiosResponse } from "axios";

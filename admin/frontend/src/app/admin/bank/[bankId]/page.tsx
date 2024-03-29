@@ -92,7 +92,7 @@ export default function BankDetail({ params }: { params: { bankId: string } }) {
 
   const handleDelete = async () => {
     try {
-      const params: DeleteBankParams = {
+      const params: any = {
         bankId: bankDetail?.bankId, // 삭제할 은행의 ID 값
       };
       const response = await deleteBank(params); // 은행 삭제 API 호출
