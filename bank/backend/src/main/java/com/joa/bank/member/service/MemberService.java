@@ -1,8 +1,8 @@
 package com.joa.bank.member.service;
 
 import com.joa.bank.common.exception.RestApiException;
-import com.joa.bank.member.dto.MemberLoginRequestDto;
-import com.joa.bank.member.dto.MemberLoginResponseDto;
+import com.joa.bank.member.dto.req.MemberLoginRequestDto;
+import com.joa.bank.member.dto.res.MemberLoginResponseDto;
 import com.joa.bank.member.entity.Member;
 import com.joa.bank.member.errorcode.MemberErrorCode;
 import com.joa.bank.member.repository.MemberRepository;
