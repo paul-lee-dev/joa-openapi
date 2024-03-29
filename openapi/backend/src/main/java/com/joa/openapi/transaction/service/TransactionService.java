@@ -1,6 +1,5 @@
 package com.joa.openapi.transaction.service;
 
-import com.joa.openapi.account.dto.*;
 import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.account.errorcode.AccountErrorCode;
 import com.joa.openapi.account.repository.AccountRepository;
@@ -9,11 +8,22 @@ import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.repository.DummyRepository;
-import com.joa.openapi.member.errorcode.MemberErrorCode;
-import com.joa.openapi.transaction.dto.*;
+import com.joa.openapi.product.dto.res.ProductSearchResponseDto;
+import com.joa.openapi.transaction.dto.req.Transaction1wonConfirmRequestDto;
+import com.joa.openapi.transaction.dto.req.Transaction1wonRequestDto;
+import com.joa.openapi.transaction.dto.req.TransactionDeleteRequestDto;
+import com.joa.openapi.transaction.dto.req.TransactionRequestDto;
+import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto;
+import com.joa.openapi.transaction.dto.req.TransactionUpdateRequestDto;
+import com.joa.openapi.transaction.dto.res.Transaction1wonResponseDto;
+import com.joa.openapi.transaction.dto.res.TransactionResponseDto;
+import com.joa.openapi.transaction.dto.res.TransactionSearchResponseDto;
+import com.joa.openapi.transaction.dto.res.TransactionUpdateResponseDto;
+import com.joa.openapi.transaction.entity.Fourwords;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.joa.openapi.transaction.errorcode.TransactionErrorCode;
 import com.joa.openapi.transaction.repository.TransactionRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,7 +31,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -42,7 +51,8 @@ public class TransactionService {
         Account account = accountRepository.findById(to).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
-                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
+                .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(
+                    DummyErrorCode.NO_DUMMY)));
 
         authorityValidation(memberId, account);
         checkPassword(account, req.getPassword());
@@ -66,7 +76,6 @@ public class TransactionService {
 
         return TransactionResponseDto.toDepositDto(transaction, toPrevBalance, account.getBalance());
     }
-
 
     @Transactional
     public TransactionResponseDto withdraw(UUID memberId, TransactionRequestDto req) {
@@ -234,6 +243,34 @@ public class TransactionService {
     }
 
     @Transactional
+    public Transaction1wonResponseDto oneSend(Transaction1wonRequestDto req) {
+        Account toAccount = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        String depositorName = Fourwords.chooseWord();
+
+        Transaction transaction = Transaction.builder()
+                .amount(1L)
+                .depositorName(depositorName)
+                .toAccount(req.getAccountId())
+                .dummy(null)
+                .build();
+
+        toAccount.updateBalance(toAccount.getBalance() + 1);
+
+        transactionRepository.save(transaction);
+        accountRepository.save(toAccount);
+
+        return Transaction1wonResponseDto.toDto(depositorName, transaction.getId());
+    }
+
+    public void oneSendConfirm(Transaction1wonConfirmRequestDto req) {
+        Transaction transaction = transactionRepository.findById(req.getTransactionId()).orElseThrow(() -> new RestApiException(TransactionErrorCode.NO_TRANSACTION));
+
+        if(!transaction.getDepositorName().equals(req.getWord()))
+            throw new RestApiException(TransactionErrorCode.MiSMATCH);
+    }
+
+    @Transactional
     public void refund(TransactionUpdateRequestDto req) {
         Transaction transaction = transactionRepository.findById(req.getTransactionId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
         Account fromAccount = accountRepository.findById(req.getFromAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
@@ -272,6 +309,43 @@ public class TransactionService {
         transaction.deleteSoftly();
     }
 
+    @Transactional
+    public void depositInterest(Account account, Long interest) {
+        System.out.println("이자 넣기 전 : " + account.getBalance());
+        account.updateBalance(account.getBalance() + interest);
+
+
+        Transaction transaction = Transaction.builder()
+                .amount(interest)
+                .depositorName("이자 지급")
+                .fromAccount(null)
+                .toAccount(account.getId())
+                .build();
+
+        transactionRepository.save(transaction);
+        accountRepository.save(account);
+
+        System.out.println("이자 넣은 후 : " + account.getBalance());
+    }
+
+    @Transactional
+    public void withdrawAmount(Account account) {
+        if(account.getBalance() < account.getAmount())
+            return;
+
+        account.updateBalance(account.getBalance() - account.getAmount());
+
+        Transaction transaction = Transaction.builder()
+                .amount(account.getAmount())
+                .depositorName("이자 지급")
+                .fromAccount(null)
+                .toAccount(account.getId())
+                .build();
+
+        transactionRepository.save(transaction);
+        accountRepository.save(account);
+    }
+
     public void authorityValidation(UUID memberId, Account account) {
         if (account.getDummy() != null) {
             Dummy dummy = dummyRepository.findById(account.getDummy().getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT)); /* TODO: 더미 에러 코드로 변경 */
@@ -286,5 +360,17 @@ public class TransactionService {
     public void checkPassword(Account account, String password){
         if (!account.getPassword().equals(password))
             throw new RestApiException(AccountErrorCode.PASSWORD_MISMATCH);
+    }
+
+    public Page<TransactionSearchResponseDto> search(TransactionSearchRequestDto req, Pageable pageable) {
+        return transactionRepository.searchTransactionCustom(req, pageable);
+    }
+
+    public boolean checkApiKey(UUID apiKey) {
+        return transactionRepository.existsByApiKey(apiKey) > 0;
+    }
+
+    public boolean checkAccountId(String accountId) {
+        return accountRepository.existsById(accountId);
     }
 }

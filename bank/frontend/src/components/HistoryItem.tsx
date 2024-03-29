@@ -1,3 +1,4 @@
+import {formatAmount} from '@/utils';
 import {Text, View} from 'react-native';
 
 interface IProps {
@@ -13,11 +14,6 @@ function HistoryItem({
   amount,
   balance,
 }: IProps): React.JSX.Element {
-  const formatAmount = (n: number) => {
-    const formatter = new Intl.NumberFormat('en-US');
-    return formatter.format(n);
-  };
-
   return (
     <View className="w-full h-28 border-b border-gray-300 p-4 flex flex-row items-center justify-between">
       <View className="flex flex-row space-x-6 items-center">

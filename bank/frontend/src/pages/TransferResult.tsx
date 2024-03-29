@@ -1,9 +1,10 @@
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from 'App';
 import Header from '@/components/Header';
 import BottomButton from '@/components/BottomButton';
+import {formatAmount} from '@/utils';
+import {RootStackParamList} from '@/Router';
 
 type TransferResultScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -11,8 +12,10 @@ type TransferResultScreenProps = NativeStackScreenProps<
 >;
 
 function TransferResult({
+  route,
   navigation,
 }: TransferResultScreenProps): React.JSX.Element {
+  const {amount, depositorName, accountNickname, toAccountId} = route.params;
   return (
     <View className="w-full h-full bg-gray-100 flex">
       <Header
@@ -31,7 +34,9 @@ function TransferResult({
             </Text>
             <Text className="text-2xl font-medium text-gray-700">으로</Text>
           </View>
-          <Text className="text-2xl font-medium text-gray-700">10,000원을</Text>
+          <Text className="text-2xl font-medium text-gray-700">{`${formatAmount(
+            amount,
+          )}원을`}</Text>
           <Text className="text-2xl font-medium text-gray-700">보냈어요</Text>
         </View>
         <View className="h-48 flex justify-evenly">
@@ -39,18 +44,20 @@ function TransferResult({
             <Text className="font-bold text-sm text-gray-700">
               받는 분에게 표시
             </Text>
-            <Text className="font-semibold text-sm text-gray-700">이유로</Text>
+            <Text className="font-semibold text-sm text-gray-700">
+              {depositorName}
+            </Text>
           </View>
           <View className="flex flex-row justify-between px-6">
             <Text className="font-bold text-sm text-gray-700">출금 계좌</Text>
             <Text className="font-semibold text-sm text-gray-700">
-              내 저금예금[입출금] 계좌
+              {accountNickname}
             </Text>
           </View>
           <View className="flex flex-row justify-between px-6">
             <Text className="font-bold text-sm text-gray-700">입금 계좌</Text>
             <Text className="font-semibold text-sm text-gray-700">
-              신한은행 1234121231234
+              {`조아은행 ${toAccountId}`}
             </Text>
           </View>
         </View>

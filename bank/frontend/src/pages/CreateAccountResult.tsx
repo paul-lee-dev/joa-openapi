@@ -1,7 +1,7 @@
 import BottomButton from '@/components/BottomButton';
 import Header from '@/components/Header';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from 'App';
+import {RootStackParamList} from '@/Router';
 import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -25,7 +25,6 @@ function CreateAccountResult({
             <Icon
               name={'card-account-details-outline'}
               color={'#fff'}
-              onPress={() => {}}
               size={35}
             />
           </View>

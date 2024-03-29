@@ -1,5 +1,6 @@
 package com.joa.openapi.account.dto;
 
+import com.joa.openapi.account.enums.TaxType;
 import lombok.*;
 
 import java.util.UUID;
@@ -20,4 +21,6 @@ public class AccountCreateRequestDto {
     private final Long amount = 0L;
     private UUID dummyId = null;
     private UUID bankId;
+    private UUID productId;
+    private TaxType taxType;
 }

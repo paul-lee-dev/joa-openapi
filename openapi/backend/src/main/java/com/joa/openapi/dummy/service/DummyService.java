@@ -1,29 +1,36 @@
 package com.joa.openapi.dummy.service;
 
 import com.joa.openapi.account.dto.AccountCreateRequestDto;
-import com.joa.openapi.account.dto.AccountCreateResponseDto;
 import com.joa.openapi.account.dto.AccountDeleteRequestDto;
 import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.account.service.AccountService;
+import com.joa.openapi.bank.entity.Bank;
+import com.joa.openapi.bank.errorcode.BankErrorCode;
+import com.joa.openapi.bank.repository.BankRepository;
+import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.dummy.dto.*;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.repository.DummyRepository;
-import com.joa.openapi.member.dto.MemberIdResponseDto;
 import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.member.service.MemberService;
 import com.joa.openapi.member.dto.MemberJoinRequestDto;
-import com.joa.openapi.transaction.dto.TransactionDeleteRequestDto;
-import com.joa.openapi.transaction.dto.TransactionRequestDto;
+import com.joa.openapi.product.errorcode.ProductErrorCode;
+import com.joa.openapi.product.repository.ProductRepository;
+import com.joa.openapi.transaction.dto.req.TransactionDeleteRequestDto;
+import com.joa.openapi.transaction.dto.req.TransactionRequestDto;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.joa.openapi.transaction.repository.TransactionRepository;
 import com.joa.openapi.transaction.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,16 +48,20 @@ public class DummyService {
     private final DummyRepository dummyRepository;
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+    private final BankRepository bankRepository;
     private final AccountService accountService;
     private final AccountRepository accountRepository;
     private final TransactionService transactionService;
     private final TransactionRepository transactionRepository;
+    private final ProductRepository productRepository;
+    private final ApiRepository apiRepository;
     private final NeyhuingName neyhuingName;
     public String name;
 
     @Transactional
-    public DummyResponseDto createMember(DummyMemberRequestDto req, UUID adminId) {
-        name = "멤버" + req.getCount() + "명 만들기";
+    public DummyResponseDto createMember(UUID apiKey, DummyMemberRequestDto req) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        name = req.getName() == null ? "멤버" + req.getCount() + "명 만들기" : req.getName();
         Dummy dummy = Dummy.builder()
                 .name(name)
                 .memberCount(req.getCount())
@@ -67,11 +78,14 @@ public class DummyService {
                     .build();
             UUID memberId = UUID.fromString(memberService.addMember(MJRdto, dummy.getId()).getId());
             // 더미 멤버 별 기본 입출금 계좌 생성
+            Bank bank = bankRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+            UUID productId = productRepository.getByBankId(bank).getId();
             AccountCreateRequestDto ACRdto = AccountCreateRequestDto.builder()
                     .nickname(makeName(4))
                     .password("dummy")
                     .withdrawAccount(null)
                     .dummyId(dummy.getId())
+                    .productId(productId)
                     .build();
             String accountId = accountService.create(memberId, ACRdto).getAccountId();
             // 계좌 별 기본금 10만원 입금
@@ -88,8 +102,9 @@ public class DummyService {
     }
 
     @Transactional
-    public DummyResponseDto createAccount(DummyAccountRequestDto req, UUID adminId) {
-        name = "계좌" + req.getCount() + "개 만들기";
+    public DummyResponseDto createAccount(UUID apiKey, DummyAccountRequestDto req) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        name = req.getName() == null ? "계좌" + req.getCount() + "개 만들기" : req.getName();
         Dummy dummy = Dummy.builder()
                 .name(name)
                 .accountCount(req.getCount())
@@ -97,6 +112,8 @@ public class DummyService {
                 .build();
         dummyRepository.save(dummy);
 
+        Bank bank = bankRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+        UUID productId = productRepository.getByBankId(bank).getId();
         int userCount = req.getUsers().size();
         Random random = new Random();
         for (int i = 0; i < req.getCount(); i++) {
@@ -106,6 +123,7 @@ public class DummyService {
                     .password("dummy")
                     .withdrawAccount(null)
                     .dummyId(dummy.getId())
+                    .productId(productId)
                     .build();
             String accountId = accountService.create(req.getUsers().get(randomMember), dto).getAccountId();
             // 계좌 별 기본금 10만원 입금
@@ -122,8 +140,9 @@ public class DummyService {
     }
 
     @Transactional
-    public DummyResponseDto createTransaction(DummyTransactionRequestDto req, UUID adminId) {
-        name = "거래내역" + req.getCount() + "개 만들기";
+    public DummyResponseDto createTransaction(UUID apiKey, DummyTransactionRequestDto req) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        name = req.getName() == null ? "거래내역" + req.getCount() + "개 만들기" : req.getName();
         Dummy dummy = Dummy.builder()
                 .name(name)
                 .transactionCount(req.getCount())
@@ -198,7 +217,9 @@ public class DummyService {
     }
 
     @Transactional
-    public DummyResponseDto deleteDummy(UUID dummyId) {
+    public DummyResponseDto deleteDummy(UUID apiKey, UUID dummyId) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        AuthoriaztionDummy(dummyId, adminId);
         Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
         if (dummy.getMemberCount() != null) {
             List<Member> memberList = memberRepository.findByDummyId(dummyId);
@@ -228,37 +249,51 @@ public class DummyService {
     }
 
     @Transactional
-    public List<DummyResponseDto> deleteAllDummy(UUID adminId) {
+    public List<DummyResponseDto> deleteAllDummy(UUID apiKey) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
         List<Dummy> dummyList = dummyRepository.findAllByAdminId(adminId);
         List<DummyResponseDto> dummyResponseDtoList = new ArrayList<>();
         for (Dummy dummy: dummyList) {
-            dummyResponseDtoList.add(deleteDummy(dummy.getId()));
+            dummyResponseDtoList.add(deleteDummy(apiKey, dummy.getId()));
         }
         return dummyResponseDtoList;
     }
 
     @Transactional
-    public DummyResponseDto update(UUID dummyId, DummyUpdateRequestDto req) {
+    public DummyResponseDto update(UUID apiKey, UUID dummyId, DummyUpdateRequestDto req) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        AuthoriaztionDummy(dummyId, adminId);
         Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
         if (req.getName() != null) dummy.updateName(req.getName());
         return DummyResponseDto.toDto(dummy);
     }
 
-    public DummyResponseDto search(UUID dummyId) {
+    public DummyResponseDto search(UUID apiKey, UUID dummyId) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        AuthoriaztionDummy(dummyId, adminId);
         Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
         return DummyResponseDto.toDto(dummy);
     }
 
-    public List<DummyResponseDto> searchAll(UUID adminId) {
-        List<Dummy> dummyList = dummyRepository.findAllByAdminId(adminId);
-        List<DummyResponseDto> dummyResponseDtoList = new ArrayList<>();
-        for (Dummy dummy: dummyList) {
-            dummyResponseDtoList.add(DummyResponseDto.toDto(dummy));
-        }
-        return dummyResponseDtoList;
+    public Page<DummyResponseDto> searchAll(DummySearchRequestDto req, UUID apiKey, Pageable pageable) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        log.info("검색어: {}", req.getSearchKeyWord());
+//        List<Dummy> dummyList = dummyRepository.findAllByAdminId(adminId);
+//        List<DummyResponseDto> dummyResponseDtoList = new ArrayList<>();
+//        for (Dummy dummy: dummyList) {
+//            dummyResponseDtoList.add(DummyResponseDto.toDto(dummy));
+//        }
+        return dummyRepository.searchDummyCustom(req, adminId, pageable);
     }
 
     public String makeName(int cnt) {
         return neyhuingName.makeNeyhuing(cnt);
+    }
+
+    // 관리자 아이디가 만든 더미인지
+    public void AuthoriaztionDummy(UUID dummyId, UUID adminId) {
+        if (!dummyId.equals(adminId)) {
+            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+        }
     }
 }

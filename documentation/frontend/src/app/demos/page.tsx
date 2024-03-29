@@ -60,7 +60,7 @@ const Demo = () => {
                 </div>
                 <SubItemDetail>{person.description}</SubItemDetail>
                 <PurpleButtonContainer>
-                  <PurpleButtonItem href="#">지금 가입하기</PurpleButtonItem>
+                  <PurpleButtonItem href={person.url}>지금 가입하기</PurpleButtonItem>
                 </PurpleButtonContainer>
               </SubItemContainer>
             ))}
@@ -314,6 +314,7 @@ const people = [
     name: '제목 텍스트 1',
     description: '내용 테스트 내용 테스트 내용 테스트 내용 테스트 내용 테스트 내용 테스트',
     imageUrl: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43',
+    url: 'https://joa13.site/dashboard',
   },
 ]
 
@@ -321,7 +322,7 @@ const posts = [
   {
     id: 1,
     title: '샘플 코드',
-    href: '#',
+    href: 'https://github.com/',
     description:
       'GitHub에서 샘플 코드를 둘러보세요.',
     image: {
@@ -331,7 +332,7 @@ const posts = [
   {
     id: 2,
     title: '이슈 제보',
-    href: '#',
+    href: 'https://github.com/',
     description:
       '기능의 Docs에 기재된 것과 다르게 동작하는 경우, GitHub에 Issue를 생성하여 알려주세요. 문제 해결을 위해 노력하겠습니다.',
     image: {

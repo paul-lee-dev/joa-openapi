@@ -1,4 +1,4 @@
-package com.joa.openapi.transaction.dto;
+package com.joa.openapi.transaction.dto.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

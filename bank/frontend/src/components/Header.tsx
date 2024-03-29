@@ -1,5 +1,7 @@
+import {bankDataAtom} from '@/store/atoms';
 import {Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useRecoilValue} from 'recoil';
 
 interface IMenu {
   title: string;
@@ -13,6 +15,8 @@ interface IProps {
 }
 
 function Header({stack, goBack, menu}: IProps): React.JSX.Element {
+  const bankData = useRecoilValue(bankDataAtom);
+
   return (
     <View className="w-full h-16 flex flex-row justify-between px-4">
       <View className=" w-40 flex flex-row items-center flex-grow ">
@@ -26,7 +30,7 @@ function Header({stack, goBack, menu}: IProps): React.JSX.Element {
         ) : null}
 
         <Text className="text-2xl font-semibold text-gray-700">
-          {stack || 'JOA BANK'}
+          {stack || bankData.bankName}
         </Text>
       </View>
       <View className=" w-24 flex flex-row justify-end space-x-4 pr-2 items-center">
