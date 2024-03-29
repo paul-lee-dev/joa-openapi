@@ -43,29 +43,29 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @PostMapping("/deposit")
-    public ResponseEntity<?> create(@RequestHeader("memberId") UUID memberId,
+    public ResponseEntity<?> create(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
         @RequestBody TransactionRequestDto req) {
-        TransactionResponseDto response = transactionService.deposit(memberId, req);
+        TransactionResponseDto response = transactionService.deposit(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 입금에 성공했습니다.", response));
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity<?> withdraw(@RequestHeader("memberId") UUID memberId,
+    public ResponseEntity<?> withdraw(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
         @RequestBody TransactionRequestDto req) {
-        TransactionResponseDto response = transactionService.withdraw(memberId, req);
+        TransactionResponseDto response = transactionService.withdraw(apiKey, memberId, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 출금에 성공했습니다.", response));
     }
 
     @PostMapping("/send")
-    public ResponseEntity<?> send(@RequestHeader("memberId") UUID memberId,
+    public ResponseEntity<?> send(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
         @RequestBody TransactionRequestDto req) {
-        TransactionResponseDto response = transactionService.send(memberId, req);
+        TransactionResponseDto response = transactionService.send(apiKey, memberId, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 이체에 성공했습니다.", response));
     }
 
     @PostMapping("/1wonSend")
-    public ResponseEntity<?> oneSend(@RequestBody Transaction1wonRequestDto req) {
-        Transaction1wonResponseDto res = transactionService.oneSend(req);
+    public ResponseEntity<?> oneSend(@RequestHeader("apiKey") UUID apiKey, @RequestBody Transaction1wonRequestDto req) {
+        Transaction1wonResponseDto res = transactionService.oneSend(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("1원 인증 4글자 전송에 성공했습니다.", res));
     }
 
@@ -76,16 +76,16 @@ public class TransactionController {
     }
 
     @PatchMapping
-    public ResponseEntity<?> update(@RequestHeader("memberId") UUID memberId,
+    public ResponseEntity<?> update(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
         @RequestBody TransactionUpdateRequestDto req) {
-        TransactionUpdateResponseDto response = transactionService.update(memberId, req);
+        TransactionUpdateResponseDto response = transactionService.update(apiKey, memberId, req);
         return ResponseEntity.ok(ApiResponse.success("거래내역 수정에 성공했습니다.", response));
     }
 
     @DeleteMapping
     public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId,
         @RequestBody TransactionDeleteRequestDto req) {
-        transactionService.delete(memberId, req);
+        transactionService.delete(req);
         return ResponseEntity.ok(ApiResponse.success("거래내역 삭제에 성공했습니다."));
     }
 

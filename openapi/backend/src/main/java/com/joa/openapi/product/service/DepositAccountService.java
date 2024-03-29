@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -86,7 +87,7 @@ public class DepositAccountService {
         return (long) (principal * minuteInterestRate); // 매 분마다의 이자 계산
     }
 
-    public ProductRateResponseDto calculateRate(ProductRateRequestDto req) {
+    public ProductRateResponseDto calculateRate(UUID apiKey, ProductRateRequestDto req) {
         Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
         Product product = productRepository.findById(req.getProductId()).orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT));
 

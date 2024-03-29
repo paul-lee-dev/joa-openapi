@@ -4,7 +4,9 @@ import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.bank.entity.Bank;
 import com.joa.openapi.bank.errorcode.BankErrorCode;
 import com.joa.openapi.bank.repository.BankRepository;
+import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.product.dto.req.ProductCreateRequestDto;
 import com.joa.openapi.product.dto.req.ProductSearchRequestDto;
 import com.joa.openapi.product.dto.res.ProductCreateResponseDto;
@@ -30,11 +32,13 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final BankRepository bankRepository;
+    private final ApiRepository apiRepository;
 
     @Transactional
-    public ProductCreateResponseDto create(ProductCreateRequestDto req) {
+    public ProductCreateResponseDto create(UUID apiKey, ProductCreateRequestDto req) {
 
-        //authorityValidation(memberId); /* TODO 관리자 권한 설정 */
+        bankAuthorityValidation(apiKey, req.getBankId());
+
         Bank bank = bankRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
 
         Product product = Product.builder()
@@ -55,9 +59,9 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductUpdateIsDoneResponseDto end(UUID productId) {
+    public ProductUpdateIsDoneResponseDto end(UUID apiKey, UUID productId) {
 
-        //authorityValidation(memberId);
+        productAuthorityValidation(apiKey, productId);
 
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT));
@@ -73,9 +77,9 @@ public class ProductService {
     }
 
     @Transactional
-    public void delete(UUID productId) {
+    public void delete(UUID apiKey, UUID productId) {
 
-        //authorityValidation(memberId);
+        productAuthorityValidation(apiKey, productId);
 
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT));
@@ -90,18 +94,26 @@ public class ProductService {
         }
     }
 
-    public void authorityValidation(UUID memberId) {
-
-    }
-
-    public Page<ProductSearchResponseDto> search(ProductSearchRequestDto req, Pageable pageable) {
+    public Page<ProductSearchResponseDto> search(UUID apiKey, ProductSearchRequestDto req, Pageable pageable) {
         return productRepository.searchProductCustom(req, pageable);
     }
 
-    public ProductDetailResponseDto searchOne(UUID productId) {
+    public ProductDetailResponseDto searchOne(UUID apiKey, UUID productId) {
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT));
 
         return ProductDetailResponseDto.toDto(product);
+    }
+
+    public void bankAuthorityValidation(UUID apiKey, UUID bankId) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+        if (bank.getAdminId().equals(adminId))
+            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+    }
+
+    public void productAuthorityValidation(UUID apiKey, UUID productId) {
+        Product product = productRepository.findById(productId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+        bankAuthorityValidation(apiKey, product.getProductsBank().getId());
     }
 }

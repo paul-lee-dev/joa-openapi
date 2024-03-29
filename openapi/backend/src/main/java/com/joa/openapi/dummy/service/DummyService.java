@@ -91,7 +91,7 @@ public class DummyService {
                     .productId(productId)
                     .bankId(req.getBankId())
                     .build();
-            String accountId = accountService.create(memberId, ACRdto).getAccountId();
+            String accountId = accountService.create(apiKey, memberId, ACRdto).getAccountId();
             // 계좌 별 기본금 10만원 입금
             TransactionRequestDto TRdto = TransactionRequestDto.builder()
                     .amount(100000L)
@@ -130,7 +130,7 @@ public class DummyService {
                     .productId(productId)
                     .bankId(req.getBankId())
                     .build();
-            String accountId = accountService.create(req.getUsers().get(randomMember), dto).getAccountId();
+            String accountId = accountService.create(apiKey, req.getUsers().get(randomMember), dto).getAccountId();
             // 계좌 별 기본금 10만원 입금
             TransactionRequestDto TRdto = TransactionRequestDto.builder()
                     .amount(100000L)
@@ -276,7 +276,7 @@ public class DummyService {
                         .accountId(account.getId())
                         .password(account.getPassword())
                         .build();
-                accountService.delete(account.getDummy().getAdminId(), dto);
+                accountService.delete(apiKey, account.getDummy().getAdminId(), dto);
             }
         } else if (dummy.getTransactionCount() != null) {
             List<Transaction> transactionsList = transactionRepository.findByDummyId(dummyId);

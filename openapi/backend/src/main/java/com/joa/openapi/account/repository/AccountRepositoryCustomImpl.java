@@ -36,6 +36,7 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
                 .leftJoin(account.holder)
                 .leftJoin(account.dummy)
                 .fetchJoin()
+                //account의 은행아이디로 은행을 가져와서 은행의 어드민아이디 == apiKey로 admin가져온거랑
                 .where(eqBankList(req.getBankList()), eqDormant(req.getIsDormant()), eqDummy(req.getIsDummy()), eqSearchKeyword(req.getKeywordType(), req.getSearchKeyword()))
                 .orderBy(eqSortBy(req.getSortBy()));
 

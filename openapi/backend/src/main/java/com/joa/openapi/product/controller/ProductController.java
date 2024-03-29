@@ -40,25 +40,25 @@ public class ProductController {
     private final DepositAccountService depositAccountService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody ProductCreateRequestDto req) {
-        ProductCreateResponseDto res = productService.create(req);
+    public ResponseEntity<?> create(@RequestHeader("apiKey") UUID apiKey, @RequestBody ProductCreateRequestDto req) {
+        ProductCreateResponseDto res = productService.create(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("상품 등록에 성공했습니다.", res));
     }
 
     @PatchMapping("/{productId}")
-    public ResponseEntity<?> end(@PathVariable(value = "productId") UUID productId) {
-        ProductUpdateIsDoneResponseDto res = productService.end(productId);
+    public ResponseEntity<?> end(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "productId") UUID productId) {
+        ProductUpdateIsDoneResponseDto res = productService.end(apiKey, productId);
         return ResponseEntity.ok(ApiResponse.success("상품 종료에 성공했습니다.", res));
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<?> delete(@PathVariable(value = "productId") UUID productId) {
-        productService.delete(productId);
+    public ResponseEntity<?> delete(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "productId") UUID productId) {
+        productService.delete(apiKey, productId);
         return ResponseEntity.ok(ApiResponse.success("계좌 해지에 성공했습니다."));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> search(@RequestParam Map<String, String> allParams,
+    public ResponseEntity<?> search(@RequestHeader("apiKey") UUID apiKey, @RequestParam Map<String, String> allParams,
         @PageableDefault Pageable pageable) {
 
         // TODO : AuthoriaztionBank로 Apikey & BankId 체크
@@ -76,20 +76,19 @@ public class ProductController {
                 : ProductOrderBy.valueOf(allParams.get("orderBy")))
             .build();
 
-        Page<ProductSearchResponseDto> productsPage = productService.search(req, pageable);
+        Page<ProductSearchResponseDto> productsPage = productService.search(apiKey, req, pageable);
         return ResponseEntity.ok(ApiResponse.success("예적금 상품 조회에 성공했습니다.", productsPage));
     }
 
-
     @GetMapping("/{productId}")
     public ResponseEntity<?> searchOne(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "productId") UUID productId) {
-        ProductDetailResponseDto productDetail = productService.searchOne(productId);
+        ProductDetailResponseDto productDetail = productService.searchOne(apiKey, productId);
         return ResponseEntity.ok(ApiResponse.success("예적금 상품 상세 조회에 성공했습니다.", productDetail));
     }
 
     @GetMapping("/interest")
-    public ResponseEntity<?> calculateInterest(@RequestBody ProductRateRequestDto req) {
-        ProductRateResponseDto rate = depositAccountService.calculateRate(req);
+    public ResponseEntity<?> calculateInterest(@RequestHeader("apiKey") UUID apiKey, @RequestBody ProductRateRequestDto req) {
+        ProductRateResponseDto rate = depositAccountService.calculateRate(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("만기 이자율 조회에 성공했습니다.", rate));
     }
 }
