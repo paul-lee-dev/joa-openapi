@@ -3,12 +3,17 @@ package com.joa.openapi.transaction.service;
 import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.account.errorcode.AccountErrorCode;
 import com.joa.openapi.account.repository.AccountRepository;
+import com.joa.openapi.bank.entity.Bank;
+import com.joa.openapi.bank.errorcode.BankErrorCode;
+import com.joa.openapi.bank.repository.BankRepository;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.repository.DummyRepository;
 import com.joa.openapi.product.dto.res.ProductSearchResponseDto;
+import com.joa.openapi.product.entity.Product;
 import com.joa.openapi.transaction.dto.req.Transaction1wonConfirmRequestDto;
 import com.joa.openapi.transaction.dto.req.Transaction1wonRequestDto;
 import com.joa.openapi.transaction.dto.req.TransactionDeleteRequestDto;
@@ -42,9 +47,11 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final AccountRepository accountRepository;
     private final DummyRepository dummyRepository;
+    private final ApiRepository apiRepository;
+    private final BankRepository bankRepository;
 
     @Transactional
-    public TransactionResponseDto deposit(UUID memberId, TransactionRequestDto req) {
+    public TransactionResponseDto deposit(UUID apiKey, TransactionRequestDto req) {
 
         String to = req.getToAccount();
 
@@ -54,7 +61,7 @@ public class TransactionService {
                 .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(
                     DummyErrorCode.NO_DUMMY)));
 
-        authorityValidation(memberId, account);
+        bankAuthorityValidation(apiKey, account.getBankId());
         checkPassword(account, req.getPassword());
 
         Long toPrevBalance = account.getBalance();
@@ -78,7 +85,7 @@ public class TransactionService {
     }
 
     @Transactional
-    public TransactionResponseDto withdraw(UUID memberId, TransactionRequestDto req) {
+    public TransactionResponseDto withdraw(UUID apiKey, UUID memberId, TransactionRequestDto req) {
 
         String from = req.getFromAccount();
 
@@ -87,7 +94,7 @@ public class TransactionService {
         Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
                 .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
 
-        authorityValidation(memberId, account);
+        bankAuthorityValidation(apiKey, account.getBankId());
         checkPassword(account, req.getPassword());
 
         if(account.getBalance() < req.getAmount())
@@ -96,7 +103,6 @@ public class TransactionService {
         Long fromPrevBalance = account.getBalance();
 
         account.updateBalance(account.getBalance() - req.getAmount());
-
 
         Transaction transaction = Transaction.builder()
                 .amount(req.getAmount())
@@ -114,7 +120,7 @@ public class TransactionService {
 
 
     @Transactional
-    public TransactionResponseDto send(UUID memberId, TransactionRequestDto req) {
+    public TransactionResponseDto send(UUID apiKey, UUID memberId, TransactionRequestDto req) {
 
         Account fromAccount = accountRepository.findById(req.getFromAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
         Account toAccount = accountRepository.findById(req.getToAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
@@ -122,7 +128,7 @@ public class TransactionService {
         Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
                 .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
 
-        authorityValidation(memberId, fromAccount);
+        bankAuthorityValidation(apiKey, fromAccount.getBankId());
         checkPassword(fromAccount, req.getPassword());
 
         if(fromAccount.getBalance() < req.getAmount())
@@ -150,7 +156,7 @@ public class TransactionService {
     }
 
     @Transactional
-    public TransactionUpdateResponseDto update(UUID memberId, TransactionUpdateRequestDto req) {
+    public TransactionUpdateResponseDto update(UUID apiKey, UUID memberId, TransactionUpdateRequestDto req) {
         Transaction transaction = transactionRepository.findById(req.getTransactionId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
 //        if(transaction.getDummy() == null)
@@ -173,13 +179,13 @@ public class TransactionService {
         if(req.getFromAccount() == null && req.getToAccount() != null){
             Account toAccount = accountRepository.findById(req.getToAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
             toPrevBalance = toAccount.getBalance();
-            toBalance = updateDeposit(req);
+            toBalance = updateDeposit(apiKey, req);
         }
 
         else if(req.getFromAccount() != null && req.getToAccount() == null){
             Account fromAccount = accountRepository.findById(req.getFromAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
             fromPrevBalance = fromAccount.getBalance();
-            fromBalance = updateWithdraw(req);
+            fromBalance = updateWithdraw(apiKey, req);
         }
 
         else if(req.getFromAccount() != null){
@@ -187,7 +193,7 @@ public class TransactionService {
             Account toAccount = accountRepository.findById(req.getToAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
             toPrevBalance = toAccount.getBalance();
             fromPrevBalance = fromAccount.getBalance();
-            Long[] balance = updateSend(req);
+            Long[] balance = updateSend(apiKey, req);
             fromBalance = balance[0];
             toBalance = balance[1];
         }
@@ -197,8 +203,10 @@ public class TransactionService {
         return TransactionUpdateResponseDto.toDto(transaction, fromPrevBalance, fromBalance, toPrevBalance, toBalance);
     }
 
-    public Long updateDeposit(TransactionUpdateRequestDto req) {
+    public Long updateDeposit(UUID apiKey, TransactionUpdateRequestDto req) {
         Account account = accountRepository.findById(req.getToAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        bankAuthorityValidation(apiKey, account.getBankId());
 
         if (req.getAmount() != null) {
             //refund(req);
@@ -210,11 +218,13 @@ public class TransactionService {
         return account.getBalance();
     }
 
-    public Long updateWithdraw(TransactionUpdateRequestDto req) {
+    public Long updateWithdraw(UUID apiKey, TransactionUpdateRequestDto req) {
         Account account = accountRepository.findById(req.getFromAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         if(account.getBalance() < req.getAmount())
             throw new RestApiException(TransactionErrorCode.NO_BALANCE);
+
+        bankAuthorityValidation(apiKey, account.getBankId());
 
         //refund(req);
         account.updateBalance(account.getBalance() - req.getAmount());
@@ -224,9 +234,11 @@ public class TransactionService {
         return account.getBalance();
     }
 
-    public Long[] updateSend(TransactionUpdateRequestDto req) {
+    public Long[] updateSend(UUID apiKey, TransactionUpdateRequestDto req) {
         Account fromAccount = accountRepository.findById(req.getFromAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
         Account toAccount = accountRepository.findById(req.getToAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        bankAuthorityValidation(apiKey, fromAccount.getBankId());
 
         if(fromAccount.getBalance() < req.getAmount())
             throw new RestApiException(TransactionErrorCode.NO_BALANCE);
@@ -243,7 +255,7 @@ public class TransactionService {
     }
 
     @Transactional
-    public Transaction1wonResponseDto oneSend(Transaction1wonRequestDto req) {
+    public Transaction1wonResponseDto oneSend(UUID apiKey, Transaction1wonRequestDto req) {
         Account toAccount = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         String depositorName = Fourwords.chooseWord();
@@ -298,7 +310,7 @@ public class TransactionService {
     }
 
     @Transactional
-    public void delete(UUID memberId, TransactionDeleteRequestDto req) {
+    public void delete(TransactionDeleteRequestDto req) {
         Transaction transaction = transactionRepository.findById(req.getTransactionId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
 //        if(transaction.getDummy() == null)
@@ -346,16 +358,16 @@ public class TransactionService {
         accountRepository.save(account);
     }
 
-    public void authorityValidation(UUID memberId, Account account) {
-        if (account.getDummy() != null) {
-            Dummy dummy = dummyRepository.findById(account.getDummy().getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT)); /* TODO: 더미 에러 코드로 변경 */
-            if (!dummy.getAdminId().equals(memberId))
-                throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
-        } else {
-            if (!account.getHolder().getId().equals(memberId))
-                throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
-        }
-    }
+//    public void authorityValidation(UUID memberId, Account account) {
+//        if (account.getDummy() != null) {
+//            Dummy dummy = dummyRepository.findById(account.getDummy().getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT)); /* TODO: 더미 에러 코드로 변경 */
+//            if (!dummy.getAdminId().equals(memberId))
+//                throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+//        } else {
+//            if (!account.getHolder().getId().equals(memberId))
+//                throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+//        }
+//    }
 
     public void checkPassword(Account account, String password){
         if (!account.getPassword().equals(password))
@@ -372,5 +384,12 @@ public class TransactionService {
 
     public boolean checkAccountId(String accountId) {
         return accountRepository.existsById(accountId);
+    }
+
+    public void bankAuthorityValidation(UUID apiKey, UUID bankId) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+        if (bank.getAdminId().equals(adminId))
+            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
     }
 }

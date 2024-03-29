@@ -80,7 +80,6 @@ public class ProductController {
         return ResponseEntity.ok(ApiResponse.success("예적금 상품 조회에 성공했습니다.", productsPage));
     }
 
-
     @GetMapping("/{productId}")
     public ResponseEntity<?> searchOne(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "productId") UUID productId) {
         ProductDetailResponseDto productDetail = productService.searchOne(apiKey, productId);
