@@ -22,9 +22,9 @@ export const getAxios =  async ( url: string, params?: any )  => {
   }
 } 
 
-export const postAxios =  async( url: string, params?: any, multi?:any )  =>{
+export const postAxios =  async( url: string, params?: any )  =>{
   try{
-    const response = await useAxios.post( url, params, multi )
+    const response = await useAxios.post( url, params )
     console.log(response)
     return response
   } catch( error ){

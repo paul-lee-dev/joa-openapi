@@ -2,23 +2,21 @@
 import tw from "tailwind-styled-components";
 import { useState } from "react";
 import { JoinMemberParams, JoinMemberResponse } from "./components/api";
-import { postAxios } from "./components/http-common";
+import { postAxios, useAxios } from "./components/http-common";
 
 const Home = () => {
 
   const [formData, setFormData] = useState<JoinMemberParams>({
     name: "김김",
-    email: "asd@asdas.com",
-    phone: "00013131313",
+    email: "asd22@asdas.com",
+    phone: "00013131212",
     password: "1234",
     bankId: "bdbbfe2c-dc15-4c85-8706-dac0299e7ff6"
   });
 
-  const joinMember = async (data: JoinMemberParams): Promise<JoinMemberResponse> => {
-    console.log("여기 들어오나");
+  const joinMember = async (params: JoinMemberParams): Promise<JoinMemberResponse> => {
     const url = "member";
-    console.log(formData.name);
-    const response = await postAxios(url, data);
+    const response = await postAxios(url, params);
     return response.data;
   };
 
@@ -30,7 +28,10 @@ const Home = () => {
             <MainTitleItem>Joa Open API</MainTitleItem>
             <MainTextItem>
 
-              <form onSubmit={() => joinMember}>
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                joinMember(formData);
+                }}>
 
             <ButtonContainer>
               <button type="submit">시작하기</button>

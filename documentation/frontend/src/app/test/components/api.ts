@@ -7,7 +7,9 @@ export interface JoinMemberParams {
 }
 
 export interface JoinMemberResponse {
-
+  id: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ExampleMemberParams {
