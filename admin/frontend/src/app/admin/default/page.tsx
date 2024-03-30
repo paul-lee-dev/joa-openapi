@@ -1,9 +1,17 @@
 "use client";
 import { localAxios } from "@/api/http-common";
-import WeekTransactionGraph from "@/components/graph/Graph";
+import { WeekTransactionGraph } from "@/components/graph/Graph";
+import {
+  FaExchangeAlt,
+  FaUsers,
+  FaMoneyBillAlt,
+  FaMoneyCheckAlt,
+} from "react-icons/fa";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
+
+// TODO: change if dummy is enough
 
 interface Bank {
   bankId: string;
@@ -13,6 +21,19 @@ interface Bank {
   uri: string;
   createdAt: string;
   updatedAt: string;
+}
+
+interface totalTransactionList {
+  time: string;
+  deposit: number;
+  withdraw: number;
+}
+interface BankStat {
+  totalTransactionsCnt: number;
+  totalMemberCnt: number;
+  totalWithdrawAmount: number;
+  totalDepositAmount: number;
+  totalTransactionList: totalTransactionList[];
 }
 
 const Dashboard = () => {
@@ -25,6 +46,9 @@ const Dashboard = () => {
   });
 
   const [bankList, setBankList] = useState<Bank[]>([]);
+  const [selectedBankId, setSelectedBankId] = useState<string | null>(null);
+
+  const [bankStat, setBankStat] = useState<BankStat | undefined>(undefined);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,30 +64,66 @@ const Dashboard = () => {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, [api]);
 
+  const handleBankChange = async (bankId: string) => {
+    setSelectedBankId(bankId);
+    try {
+      const response: AxiosResponse<BankStat> = await localAxios.get(
+        "/bank/dashboard/" + selectedBankId
+      );
+      setBankStat(response.data);
+      console.log("bankstat response.data: " + response.data);
+    } catch (error) {
+      console.error("Error fetching bank statistics:", error);
+    }
+  };
+
   return (
     <div>
-      <div className="flex">
-        <Select id="banks">
+      <div className="flex-end">
+        <Select id="banks" onChange={(e) => handleBankChange(e.target.value)}>
           {bankList.map((bank) => (
             <option key={bank.bankId} value={bank.bankId}>
               {bank.name}
             </option>
           ))}
-        </Select>{" "}
+        </Select>
       </div>
-      <div className="flex"></div>
-      <WeekTransactionGraph></WeekTransactionGraph>
+      <div id="statCards" className="flex justify-between gap-2 m-3">
+        <StatCard>
+          <FaExchangeAlt />
+          <div>
+            <span>총 거래횟수</span>
+            {bankStat && bankStat.totalTransactionsCnt}
+          </div>
+        </StatCard>
+        <StatCard>
+          <FaUsers />
+          <div>
+            <span>고객 수</span>
+            {bankStat && bankStat.totalMemberCnt}
+          </div>
+        </StatCard>
+        <StatCard>
+          <FaMoneyBillAlt />
+          <span>총 출금</span> {bankStat && bankStat.totalWithdrawAmount}
+        </StatCard>
+        <StatCard>
+          <FaMoneyCheckAlt />
+          <span>총 입금</span>
+          {bankStat && bankStat.totalDepositAmount}
+        </StatCard>
+      </div>
+      {/* {bankStat && <WeekTransactionGraph bankStat={bankStat} />} */}
+      <WeekTransactionGraph />
     </div>
   );
 };
 
 const Select = tw.select`
 block 
-w-full 
 rounded-md 
 border-0 
 px-1.5
@@ -79,6 +139,17 @@ focus:ring-inset
 focus:ring-pink-500 
 sm:text-sm 
 sm:leading-6
+`;
+
+const StatCard = tw.div`
+  flex
+  w-full
+  gap-3
+  bg-gray-100
+  shadow-md
+  p-3
+  rounded-md
+  text-center
 `;
 
 export default Dashboard;
