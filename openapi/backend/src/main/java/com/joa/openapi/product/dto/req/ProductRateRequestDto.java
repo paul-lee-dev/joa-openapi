@@ -1,5 +1,6 @@
 package com.joa.openapi.product.dto.req;
 
+import com.joa.openapi.account.enums.TaxType;
 import com.joa.openapi.product.enums.PaymentType;
 import com.joa.openapi.product.enums.ProductType;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ProductRateRequestDto {
 
-    private String accountId;
+    private Long amount;
+    private Integer term;
+    private PaymentType paymentType;
+    private TaxType taxType;
     private UUID productId;
 }

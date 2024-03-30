@@ -34,7 +34,7 @@ public class AccountController {
 
     @PatchMapping("/limit")
     public ResponseEntity<?> updateLimit(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId, @RequestBody AccountUpdateRequestDto req) {
-        Long limit = accountService.updateLimit(memberId, req);
+        Long limit = accountService.updateLimit(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("이체한도 변경에 성공했습니다.", limit));
     }
 
