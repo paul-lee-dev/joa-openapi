@@ -45,7 +45,6 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
         config => {
           config.headers.memberId = member.id;
           config.headers.apiKey = bankData.apiKey;
-          console.log(config.headers);
           return config;
         },
         error => {

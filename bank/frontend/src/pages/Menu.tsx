@@ -66,16 +66,25 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
       },
     ],
     이체: [
-      {title: '이체', onPress: () => {}},
-      {title: '이체결과 조회', onPress: () => {}},
-      {title: '이체한도 조회/변경', onPress: () => {}},
+      {title: '이체', onPress: () => navigation.navigate('AccountList')},
+      {
+        title: '이체결과 조회',
+        onPress: () => navigation.navigate('AccountList'),
+      },
+      {
+        title: '이체한도 조회/변경',
+        onPress: () => navigation.navigate('AccountList'),
+      },
     ],
     조회: [
       {
         title: '전체계좌 조회',
         onPress: () => navigation.navigate('AccountList'),
       },
-      {title: '통합거래내역 조회', onPress: () => {}},
+      {
+        title: '통합거래내역 조회',
+        onPress: () => navigation.navigate('AccountList'),
+      },
       {
         title: '휴면계좌 조회',
         onPress: () => navigation.navigate('AccountList'),

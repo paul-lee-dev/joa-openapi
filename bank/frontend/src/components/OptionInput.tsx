@@ -20,7 +20,7 @@ function OptionInput({
   setValue,
 }: IProps): React.JSX.Element {
   return (
-    <View className="w-full px-6 py-4 flex space-y-2">
+    <View className="w-full px-6 py-8 flex space-y-2">
       <Text className="text-lg font-semibold text-slate-700">{label}</Text>
       <View className="w-full h-12 flex flex-row bg-gray-300">
         {options.map(option => (
