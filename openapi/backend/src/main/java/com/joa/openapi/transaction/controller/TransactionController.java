@@ -1,6 +1,7 @@
 package com.joa.openapi.transaction.controller;
 
 import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.common.response.ApiResponse;
 import com.joa.openapi.transaction.dto.req.Transaction1wonConfirmRequestDto;
 import com.joa.openapi.transaction.dto.req.Transaction1wonRequestDto;
@@ -41,6 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionController {
 
     private final TransactionService transactionService;
+    private final ApiRepository apiRepository;
 
     @PostMapping("/deposit")
     public ResponseEntity<?> create(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
@@ -90,11 +92,13 @@ public class TransactionController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> search(@RequestHeader("apiKey") UUID apiKey,
+    public ResponseEntity<?> search(@RequestHeader(value="apiKey", required=false) UUID apiKey,
         @RequestParam Map<String, String> allParams,
         @PageableDefault Pageable pageable) {
 
-        if(apiKey == null) {
+        if(apiKey == null || apiKey.toString().isEmpty()) {
+            throw new RestApiException(TransactionErrorCode.NO_APIKEY);
+        } else if(apiRepository.getByApiKey(apiKey) == null) {
             throw new RestApiException(TransactionErrorCode.INVALID_API_KEY);
         }
 
