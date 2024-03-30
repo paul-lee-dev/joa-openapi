@@ -108,7 +108,8 @@ public class ProductService {
     public void bankAuthorityValidation(UUID apiKey, UUID bankId) {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
         Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
-        if (bank.getAdminId().equals(adminId))
+
+        if (!bank.getAdminId().equals(adminId))
             throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
     }
 
