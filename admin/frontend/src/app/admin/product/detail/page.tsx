@@ -11,14 +11,7 @@ export default function ProductDetail() {
       <Form>
         <div className="grid gap-3 mb-4 md:grid-cols-2">
           <BankSelect></BankSelect>
-          <InputText
-            id={"productId"}
-            name={"productId"}
-            type={"text"}
-            placeholder={"4d1g3ffd3432rd32rdf43asd4"}
-            label={"상품 코드"}
-            htmlFor={"productId"}
-          ></InputText>
+
           <InputText
             id={"name"}
             name={"name"}
@@ -58,6 +51,14 @@ export default function ProductDetail() {
             placeholder={"100000000"}
             label={"최대 금액"}
             htmlFor={"maxAmount"}
+          ></InputText>
+          <InputText
+            id={"productId"}
+            name={"productId"}
+            type={"text"}
+            placeholder={"4d1g3ffd3432rd32rdf43asd4"}
+            label={"상품 코드"}
+            htmlFor={"productId"}
           ></InputText>
         </div>
         <div className="flex gap-6 justify-end">

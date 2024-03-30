@@ -2,6 +2,9 @@
 
 import Button from "@/components/button/button";
 import Pagination from "@/components/pagination";
+import AccountMultiSearchSelect from "@/components/select/accountMultiSearchSelect";
+import BankMultiSearchSelect from "@/components/select/bankMultiSearchSelect";
+import MultiSearchSelect from "@/components/select/customerMultiSearchSelect";
 import TransactionTable from "@/components/table/transactionTable";
 import { useRouter } from "next/navigation";
 
@@ -9,6 +12,28 @@ const Dashboard = () => {
   const router = useRouter();
   return (
     <>
+      <form className="flex justify-end m-2">
+        <div className="flex gap-8 ">
+          <BankMultiSearchSelect
+            placeholder={"은행검색"}
+            label={""}
+            htmlFor={""}
+          ></BankMultiSearchSelect>
+          <MultiSearchSelect
+            placeholder={"고객 검색"}
+            label={""}
+            htmlFor={""}
+          ></MultiSearchSelect>
+          <AccountMultiSearchSelect
+            placeholder={""}
+            label={""}
+            htmlFor={""}
+          ></AccountMultiSearchSelect>
+
+          {/* <TransactionGroupSearch></TransactionGroupSearch> */}
+          <Button id={"submit"} name={"검색"} onClick={() => {}}></Button>
+        </div>
+      </form>
       <TransactionTable></TransactionTable>
       <div className="flex mt-5 justify-between gap-5">
         <div className="flex">

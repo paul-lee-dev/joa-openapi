@@ -1,53 +1,63 @@
 "use client";
-import Image from "next/image";
 import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
 import { HiEmojiSad } from "react-icons/hi";
+import { localAxios } from "@/api/http-common";
+import { SearchBankParams } from "@/models/Bank.interface";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { useState, useEffect } from "react";
 
-export default function BankTable() {
+interface Bank {
+  bankId: string;
+  adminId: string;
+  name: string;
+  description: string;
+  uri: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface BankTableProps {
+  apiKey: string;
+}
+
+export default function BankTable({ apiKey }: BankTableProps) {
+  const [bankList, setBankList] = useState<Bank[]>([]);
+  const [searchBankParams, setSearchBankParams] = useState<SearchBankParams>({
+    name: "",
+  });
+
+  const api: AxiosInstance = axios.create({
+    baseURL: "https://joa13.site/v1", // JSON 데이터를 가져올 엔드포인트의 URL
+    headers: {
+      apiKey: "9b5c450f-abd4-419f-b092-bcd96e66392f",
+      "Content-Type": "application/json",
+    },
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response: AxiosResponse<{
+          status: string;
+          message: string;
+          data: Bank[];
+          page: null;
+        }> = await localAxios.get("/bank/search");
+        setBankList(response.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [api]);
+
   const router = useRouter();
-  const Banks = [
-    {
-      id: 1,
-      uri: "/asset/shc_symbol_ci.png",
-      name: "조아은행",
-      description: "좋은 은행이에요!",
-      // customers: "100,000,121",
-      bankId: "6ba6d937-134d-4a88-8384-ac33fb8e5c05",
-    },
-    {
-      id: 2,
-      uri: "/asset/shc_symbol_ci.png",
-      name: "다른은행",
-      description: "다른 은행입니다.",
-      // customers: "80,000,000",
-      bankId: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
-    },
-    {
-      id: 3,
-      uri: "/asset/shc_symbol_ci.png",
-      name: "다른은행",
-      description: "다른 은행입니다.",
-      customers: "80,000,000",
-      bankId: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
-    },
-    {
-      id: 4,
-      uri: "/asset/shc_symbol_ci.png",
-      name: "다른은행",
-      description: "다른 은행입니다.",
-      // customers: "80,000,000",
-      bankId: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
-    },
-    {
-      id: 5,
-      uri: "/asset/shc_symbol_ci.png",
-      name: "다른은행",
-      description: "다른 은행입니다.",
-      // customers: "80,000,000",
-      bankId: "a3e8e346-1d32-4b67-9e32-7b9b7d81c5ac",
-    },
-  ];
+
+  const handleBankDetail = (bankId: string) => {
+    router.push(`bank/${bankId}`);
+  };
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -75,9 +85,9 @@ export default function BankTable() {
           </tr>
         </thead>
         <tbody>
-          {Banks.map((bank) => (
+          {bankList.map((bank) => (
             <tr
-              key={bank.id}
+              key={bank.bankId}
               className="border-b transition duration-300 ease-in-out hover:bg-pink-300"
             >
               <TableData>
@@ -95,10 +105,8 @@ export default function BankTable() {
               <TableData>{bank.bankId}</TableData>
               <TableData>
                 <a
-                  onClick={() => {
-                    router.push("bank/detail");
-                  }}
-                  className="font-medium text-pink-400 hover:text-pink-500"
+                  onClick={() => handleBankDetail(bank.bankId)}
+                  className="font-medium text-pink-400 hover:text-pink-500 cursor-pointer"
                 >
                   자세히
                 </a>

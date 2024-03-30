@@ -2,10 +2,8 @@
 
 import Button from "@/components/button/button";
 import Pagination from "@/components/pagination";
-import GroupSearch from "@/components/search/accountGroupSearch";
+import ProductGroupSearch from "@/components/search/productGroupSearch";
 import BankSelect from "@/components/select/bankNoLabel";
-import ProductMultiSearchSelect from "@/components/select/productMultiSearchSelect";
-import ProductSelect from "@/components/select/productNoLabel";
 import ProductTypeMultiSearchSelect from "@/components/select/productTypeMultiSearchSelect";
 import ProductTable from "@/components/table/productTable";
 import { useRouter } from "next/navigation";
@@ -21,12 +19,7 @@ const ProductList = () => {
             label={""}
             htmlFor={""}
           ></ProductTypeMultiSearchSelect>
-          <ProductMultiSearchSelect
-            placeholder={""}
-            label={""}
-            htmlFor={""}
-          ></ProductMultiSearchSelect>
-
+          <ProductGroupSearch></ProductGroupSearch>
           <Button id={"search"} name={"검색"} onClick={() => {}}></Button>
         </div>
       </form>

@@ -13,7 +13,6 @@ export interface CreateDummyTransactionParams {
   users?: string[];
 }
 
-
 export interface SearchDummyParams {
   dummyId: string;
   page?: number;
@@ -23,16 +22,14 @@ export interface SearchDummyContent {
   dummyId: string;
   adminId: string;
   name: string;
-  userCount?: number;
+  memberCount?: number;
   accountCount?: number;
   transactionCount?: number;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface CreateDummyMemberResponse{
-  
-}
+export interface CreateDummyMemberResponse {}
 
 export default interface SearchDummyResponse {
   data: SearchDummyContent[];
@@ -60,17 +57,16 @@ export interface ModifyDummyResponse {
   updatedAt: string;
 }
 
-export interface DeleteDummyContent {
+export interface DeleteDummyParams {
+  dummyId?: string;
+}
+export default interface DeleteDummyResponse {
   dummyId: string;
   adminId: string;
   name: string;
-  userCount?: number;
+  memberCount?: number;
   accountCount?: number;
   transactionCount?: number;
   createdAt: string;
   updatedAt: string;
-}
-export default interface DeleteDummyResponse {
-  data: DeleteDummyContent[];
-  page?: number;
 }

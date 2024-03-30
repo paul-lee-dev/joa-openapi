@@ -34,6 +34,10 @@ public class MemberService {
     //회원가입
     @Transactional
     public MemberIdResponseDto addMember(MemberJoinRequestDto request) {
+
+        if(memberRepository.findByEmail(request.getEmail())!=null) throw new RestApiException(MemberErrorCode.EMAIL_CONFLICT);
+        if(memberRepository.findByPhone(request.getPhone())!=null) throw new RestApiException(MemberErrorCode.PHONE_CONFLICT);
+
         Bank bank = bankRepository.findById(request.getBankId()).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
         Member member = Member.builder()
                 .name(request.getName())
@@ -93,11 +97,19 @@ public class MemberService {
     @Transactional
     public MemberInfoResponseDto update(UUID memberId, MemberUpdateRequestDto request) {
         Member member = memberRepository.findById(memberId).orElseThrow(()->new RestApiException(MemberErrorCode.NO_MEMBER));
-        if (request.getName()!=null) member.updateName(request.getName());
-        if (request.getPassword() !=null) member.updatePassword(request.getPassword());
+        if (!request.getName().equals("")) member.updateName(request.getName());
+        if (!request.getPassword().equals("")) member.updatePassword(request.getPassword());
 //        if (request.getPassword()!=null) member.updatePassword(encoder.encode(request.getPassword()));
-        if (request.getEmail()!=null) member.updateEmail(request.getEmail());
-        if (request.getPhone()!=null) member.updatePhone(request.getPhone());
+        if (!request.getEmail().equals("")) {
+            Member foundByEmail = memberRepository.findByEmail(request.getEmail());
+            if (foundByEmail!=null) throw new RestApiException(MemberErrorCode.EMAIL_CONFLICT);
+            member.updateEmail(request.getEmail());
+        }
+        if (!request.getPhone().equals("")) {
+            Member foundByPhone = memberRepository.findByPhone(request.getPhone());
+            if (foundByPhone!=null) throw new RestApiException(MemberErrorCode.PHONE_CONFLICT);
+            member.updatePhone(request.getPhone());
+        }
         Member updatedMember = memberRepository.save(member);
         MemberInfoResponseDto response = modelMapper.map(updatedMember, MemberInfoResponseDto.class);
         return response;

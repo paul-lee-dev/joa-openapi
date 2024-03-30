@@ -1,12 +1,15 @@
 import {RootStackParamList} from '@/Router';
+import {axiosInstance} from '@/api';
+import {logout} from '@/api/member';
 import BottomButton from '@/components/BottomButton';
 import CommonInput from '@/components/CommonInput';
 import Header from '@/components/Header';
 import {bankDataAtom, memberDataAtom} from '@/store/atoms';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useMutation} from '@tanstack/react-query';
 import {Controller, useForm} from 'react-hook-form';
 import {Text, TextInput, View} from 'react-native';
-import {useRecoilState, useSetRecoilState} from 'recoil';
+import {useSetRecoilState} from 'recoil';
 
 type ChangeBankIdScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -21,16 +24,34 @@ interface ChangeBankIdForm {
 function ChangeBankId({
   navigation,
 }: ChangeBankIdScreenProps): React.JSX.Element {
-  const [bankData, setBankData] = useRecoilState(bankDataAtom);
+  const setBankData = useSetRecoilState(bankDataAtom);
   const setMemberData = useSetRecoilState(memberDataAtom);
+  const mutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      axiosInstance.interceptors.request.use(
+        config => {
+          config.headers.memberId = '';
+          return config;
+        },
+        error => {
+          return Promise.reject(error);
+        },
+      );
+      navigation.popToTop();
+      setMemberData({isLogin: false, member: null});
+      navigation.replace('Intro');
+    },
+    onError: err => console.log(err),
+  });
   const {
     control,
     handleSubmit,
     formState: {errors},
   } = useForm<ChangeBankIdForm>({
     defaultValues: {
-      bankId: bankData.bankId,
-      apiKey: bankData.apiKey,
+      bankId: '',
+      apiKey: '',
     },
   });
 
@@ -40,15 +61,7 @@ function ChangeBankId({
       bankName: 'JOA BANK',
       apiKey: data.apiKey,
     });
-    logout();
-  };
-
-  const logout = () => {
-    setMemberData({
-      isLogin: false,
-      member: null,
-    });
-    navigation.popToTop();
+    mutation.mutate();
   };
 
   return (

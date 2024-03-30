@@ -65,7 +65,7 @@ export default function DummyTable() {
       <table className="w-full text-sm text-left text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" className="relative px-6 py-3">
+            <th scope="col" className="relative px-6 py-3 sr">
               <input
                 id="bordered-checkbox-1"
                 type="checkbox"
@@ -112,6 +112,7 @@ export default function DummyTable() {
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
                 />
               </td>
+              <td className="px-6 py-4">{dummy.dummyId}</td>
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                 <input type="text" placeholder={dummy.dummyName} />
               </td>

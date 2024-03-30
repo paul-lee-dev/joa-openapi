@@ -1,6 +1,7 @@
 package com.joa.openapi.transaction.controller;
 
 import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.common.response.ApiResponse;
 import com.joa.openapi.transaction.dto.req.Transaction1wonConfirmRequestDto;
 import com.joa.openapi.transaction.dto.req.Transaction1wonRequestDto;
@@ -41,31 +42,32 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionController {
 
     private final TransactionService transactionService;
+    private final ApiRepository apiRepository;
 
     @PostMapping("/deposit")
-    public ResponseEntity<?> create(@RequestHeader("memberId") UUID memberId,
+    public ResponseEntity<?> create(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
         @RequestBody TransactionRequestDto req) {
-        TransactionResponseDto response = transactionService.deposit(memberId, req);
+        TransactionResponseDto response = transactionService.deposit(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 입금에 성공했습니다.", response));
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity<?> withdraw(@RequestHeader("memberId") UUID memberId,
+    public ResponseEntity<?> withdraw(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
         @RequestBody TransactionRequestDto req) {
-        TransactionResponseDto response = transactionService.withdraw(memberId, req);
+        TransactionResponseDto response = transactionService.withdraw(apiKey, memberId, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 출금에 성공했습니다.", response));
     }
 
     @PostMapping("/send")
-    public ResponseEntity<?> send(@RequestHeader("memberId") UUID memberId,
+    public ResponseEntity<?> send(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
         @RequestBody TransactionRequestDto req) {
-        TransactionResponseDto response = transactionService.send(memberId, req);
+        TransactionResponseDto response = transactionService.send(apiKey, memberId, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 이체에 성공했습니다.", response));
     }
 
     @PostMapping("/1wonSend")
-    public ResponseEntity<?> oneSend(@RequestBody Transaction1wonRequestDto req) {
-        Transaction1wonResponseDto res = transactionService.oneSend(req);
+    public ResponseEntity<?> oneSend(@RequestHeader("apiKey") UUID apiKey, @RequestBody Transaction1wonRequestDto req) {
+        Transaction1wonResponseDto res = transactionService.oneSend(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("1원 인증 4글자 전송에 성공했습니다.", res));
     }
 
@@ -76,48 +78,60 @@ public class TransactionController {
     }
 
     @PatchMapping
-    public ResponseEntity<?> update(@RequestHeader("memberId") UUID memberId,
+    public ResponseEntity<?> update(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
         @RequestBody TransactionUpdateRequestDto req) {
-        TransactionUpdateResponseDto response = transactionService.update(memberId, req);
+        TransactionUpdateResponseDto response = transactionService.update(apiKey, memberId, req);
         return ResponseEntity.ok(ApiResponse.success("거래내역 수정에 성공했습니다.", response));
     }
 
     @DeleteMapping
     public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId,
         @RequestBody TransactionDeleteRequestDto req) {
-        transactionService.delete(memberId, req);
+        transactionService.delete(req);
         return ResponseEntity.ok(ApiResponse.success("거래내역 삭제에 성공했습니다."));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> search(@RequestParam Map<String, String> allParams,
+    public ResponseEntity<?> search(@RequestHeader(value="apiKey", required=false) UUID apiKey,
+        @RequestParam Map<String, String> allParams,
         @PageableDefault Pageable pageable) {
 
-        // TODO : API Key 확인
+        if(apiKey == null || apiKey.toString().isEmpty()) {
+            throw new RestApiException(TransactionErrorCode.NO_APIKEY);
+        } else if(apiRepository.getByApiKey(apiKey) == null) {
+            throw new RestApiException(TransactionErrorCode.INVALID_API_KEY);
+        }
 
-        // TODO : 은행별
+        // 은행별
+        UUID bankId = Optional.ofNullable(allParams.get("bankId"))
+            .map(UUID::fromString)
+            .orElse(null);
 
-        // TODO : 더미여부
+        // 더비여부
+        Boolean isDummy = Optional.ofNullable(allParams.get("isDummy"))
+            .map(Boolean::parseBoolean)
+            .orElse(null);
 
-        // TODO : 고객이름별
+        // 입금주명 키워드
+        String depositorNameKeyword = Optional.ofNullable(allParams.get("depositorNameKeyword"))
+            .orElse(null);
 
         // 계좌번호
         String accountId = Optional.ofNullable(allParams.get("accountId"))
-            .orElseThrow(() -> new RestApiException(TransactionErrorCode.NO_ACCOUNTID));
+            .orElse(null);
 
-        // TODO : 더미이름별
+        // 더미이름별
+        String dummyName = Optional.ofNullable(allParams.get("dummyName"))
+            .orElse(null);
 
-        // 검색 타입 (입금, 출금, 전체)
-        TransactionSearchType searchType = Optional.ofNullable(allParams.get("searchType"))
-            .map(String::toUpperCase)
-            .map(TransactionSearchType::valueOf)
-            .orElse(TransactionSearchType.ALL);
+        // 금액 범위
+        Long fromAmount = Optional.ofNullable(allParams.get("fromAmount"))
+            .map(Long::parseLong)
+            .orElse(0L);
 
-        // 최신순 | 과거순
-        TransactionOrderBy orderBy = Optional.ofNullable(allParams.get("orderBy"))
-            .map(String::toUpperCase)
-            .map(TransactionOrderBy::valueOf)
-            .orElse(TransactionOrderBy.NEWEST); // orderBy 기본값 지정
+        Long toAmount = Optional.ofNullable(allParams.get("toAmount"))
+            .map(Long::parseLong)
+            .orElse(Long.MAX_VALUE);
 
         // 조회 날짜 범위
         LocalDate fromDate = Optional.ofNullable(allParams.get("fromDate"))
@@ -128,23 +142,34 @@ public class TransactionController {
             .map(LocalDate::parse)
             .orElse(LocalDate.of(3000, 12, 31));
 
-        // TODO : 금액순
+        // 검색 타입 (입금, 출금, 전체)
+        TransactionSearchType searchType = Optional.ofNullable(allParams.get("searchType"))
+            .map(String::toUpperCase)
+            .map(TransactionSearchType::valueOf)
+            .orElse(TransactionSearchType.ALL);
 
-
-
+        // 최신순 | 과거순 | 금액 적은순 | 금액 높은 순
+        TransactionOrderBy orderBy = Optional.ofNullable(allParams.get("orderBy"))
+            .map(String::toUpperCase)
+            .map(TransactionOrderBy::valueOf)
+            .orElse(TransactionOrderBy.LATEST);
 
         // DTO 구성
         TransactionSearchRequestDto req = TransactionSearchRequestDto.builder()
+            .apiKey(apiKey)
+            .bankId(bankId)
+            .isDummy(Boolean.TRUE.equals(isDummy))
+            .depositorNameKeyword(depositorNameKeyword)
             .accountId(accountId)
+            .dummyName(dummyName)
+            .fromAmount(fromAmount)
+            .toAmount(toAmount)
             .fromDate(fromDate)
             .toDate(toDate)
             .searchType(searchType)
             .orderBy(orderBy)
             .build();
 
-        if (!transactionService.checkAccountId(req.getAccountId())) {
-            throw new RestApiException(TransactionErrorCode.NO_ACCOUNTID);
-        }
         Page<TransactionSearchResponseDto> transactionsPage = transactionService.search(req,
             pageable);
         return ResponseEntity.ok(ApiResponse.success("거래내역 조회에 성공했습니다.", transactionsPage));

@@ -67,7 +67,7 @@ export default function Sidebar() {
           }}
         >
           <MdFactory></MdFactory>
-          <ListName>자동생성</ListName>
+          <ListName>더미데이터</ListName>
         </ListAnchor>
         <ListAnchor
           onClick={() => {
