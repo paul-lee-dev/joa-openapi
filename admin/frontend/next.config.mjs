@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/dashboard",
   // distDir: "build",
   // output: "export",
   // generateBuildId: async () => {
