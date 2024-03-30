@@ -69,7 +69,7 @@ public class AccountController {
     }
 
     @GetMapping("/member/{memberId}")
-    public ResponseEntity<?> getAccounts(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "memberId") UUID memberId, @PageableDefault Pageable pageable) {
+    public ResponseEntity<?> getAccountByMemberId(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "memberId") UUID memberId, @PageableDefault Pageable pageable) {
         Page<AccountGetAccountsResponseDto> accountsPage = accountService.getAccounts(apiKey, memberId, pageable);
         return ResponseEntity.ok(ApiResponse.success("계좌 조회에 성공했습니다.", accountsPage));
     }
