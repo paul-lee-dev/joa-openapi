@@ -69,7 +69,7 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
     <View className="w-full h-full bg-gray-100">
       <Header
         menu={[
-          {title: 'magnify', onPress: () => navigation.navigate('Search')},
+          // {title: 'magnify', onPress: () => navigation.navigate('Search')},
           {title: 'menu', onPress: () => navigation.navigate('Menu')},
         ]}
       />
