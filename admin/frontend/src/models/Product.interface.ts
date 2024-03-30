@@ -1,15 +1,14 @@
-export interface Product {
+export interface IProduct {
   productId: string;
   name: string;
   description: string;
   minAmount: number;
   maxAmount: number;
-  rate: null;
+  rate: number;
   productType: ProductType;
   paymentType: ProductPaymentType;
   isDone: boolean;
-  createdAt: string;
-  updatedAt: string;
+  bankId: string;
 }
 
 export type ProductPaymentType = "SIMPLE" | "COMPOUND";

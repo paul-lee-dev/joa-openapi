@@ -1,7 +1,7 @@
 import Table from "@/components/table/bankTable";
 
 const Dashboard = () => {
-  return <Table></Table>;
+  return null;
 };
 
 export default Dashboard;

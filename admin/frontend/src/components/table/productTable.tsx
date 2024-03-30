@@ -1,22 +1,18 @@
 import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
 import { FaSort } from "react-icons/fa6";
+import { IProduct } from "@/models/Product.interface";
 
-export default function ProductTable() {
+interface IProps {
+  productList: IProduct[];
+}
+
+export default function ProductTable({ productList }: IProps) {
   const router = useRouter();
-  const Products = [
-    {
-      id: 1,
-      name: "청년희망정기예금",
-      bankId: "21",
-      description: "청년을 위한 예적금 상품",
-      rate: "4.2",
-      paymentType: "단리",
-      interestTaxType: "과세",
-      maxAmount: 10000000,
-      createdDate: "2023-04-15",
-    },
-  ];
+
+  const handleProductDetail = (productId: string) => {
+    router.push(`product/${productId}`);
+  };
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -56,9 +52,9 @@ export default function ProductTable() {
           </tr>
         </thead>
         <tbody>
-          {Products.map((product) => (
+          {productList.map((product) => (
             <tr
-              key={product.id}
+              key={product.productId}
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
               <TableData className="font-medium text-gray-900 whitespace-nowrap">
@@ -68,14 +64,12 @@ export default function ProductTable() {
               <TableData>{product.description}</TableData>
               <TableData>{product.rate}%</TableData>
               <TableData>{product.paymentType}</TableData>
-              <TableData>{product.interestTaxType}</TableData>
+              <TableData>{product.paymentType}</TableData>
+              <TableData>{product.minAmount}</TableData>
               <TableData>{product.maxAmount}</TableData>
-              <TableData>{product.createdDate}</TableData>
               <TableData className="cursor-pointer">
                 <a
-                  onClick={() => {
-                    router.push(`product/detail`);
-                  }}
+                  onClick={() => handleProductDetail(product.productId)}
                   className="font-medium text-pink-400 hover:text-pink-500"
                 >
                   자세히
