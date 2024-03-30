@@ -392,4 +392,5 @@ public class TransactionService {
         if (bank.getAdminId().equals(adminId))
             throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
     }
+
 }
