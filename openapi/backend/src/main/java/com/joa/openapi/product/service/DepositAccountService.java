@@ -44,7 +44,6 @@ public class DepositAccountService {
 
         Long calculatedInterest = 0L; // 계산된 이자액
 
-
         for (Account account : accounts) {
             Long totalPrincipal = account.getAmount(); // 원금
 
@@ -93,9 +92,6 @@ public class DepositAccountService {
         Long calculatedInterest = 0L; // 계산된 이자액
         Long totalPrincipal = req.getAmount(); // 원금
 
-        System.out.println("지급 타입 : " + product.getPaymentType());
-        System.out.println("상품 타입 : " + product.getProductType());
-
         if(product.getProductType().equals(ProductType.TERM_DEPOSIT)) {
             // 예금 이자 계산
             calculatedInterest = calculateTermDeposit(req.getAmount(), product.getRate(), req.getTerm(), product.getPaymentType());
@@ -113,7 +109,7 @@ public class DepositAccountService {
 
         Long totalAmount = totalPrincipal + calculatedInterest - taxInterest;
 
-        return ProductRateResponseDto.toDto(product, calculatedInterest, taxInterest, totalAmount); //계산된 이자액, 세금액, 최종 지금액
+        return ProductRateResponseDto.toDto(product, totalPrincipal, calculatedInterest, taxInterest, totalAmount); //계산된 이자액, 세금액, 최종 지금액
     }
 
     //예금
