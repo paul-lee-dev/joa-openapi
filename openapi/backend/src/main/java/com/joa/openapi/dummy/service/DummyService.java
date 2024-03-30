@@ -210,7 +210,7 @@ public class DummyService {
                             .password("dummy")
                             .dummyId(dummy.getId())
                             .build();
-                    transactionService.withdraw(apiKey, adminId, dto);
+                    transactionService.withdraw(apiKey, dto);
                     break;
                 // 송금
                 case 2 :
@@ -230,7 +230,7 @@ public class DummyService {
                             .password("dummy")
                             .dummyId(dummy.getId())
                             .build();
-                    transactionService.send(apiKey, adminId, dto);
+                    transactionService.send(apiKey, dto);
                     break;
             }
         }

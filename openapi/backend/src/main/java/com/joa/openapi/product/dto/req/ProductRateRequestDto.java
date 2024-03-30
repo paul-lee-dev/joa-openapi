@@ -16,9 +16,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ProductRateRequestDto {
 
-    private Long amount;
-    private Integer term;
-    private PaymentType paymentType;
-    private TaxType taxType;
-    private UUID productId;
+    private Long amount;    //변경되면 재요청
+    private Integer term;   //변경되면 재요청
+    private TaxType taxType;    //변경되면 재요청
+    private UUID productId;     //고정
 }
