@@ -10,6 +10,11 @@ export const getAccountList = async (): Promise<any> => {
   return response.data;
 };
 
+export const getAccountDetail = async (params: any): Promise<any> => {
+  const response = await axiosInstance.post('/account/detail', params);
+  return response.data;
+};
+
 export const updateAccount = async (params: any): Promise<any> => {
   const response = await axiosInstance.patch('/account', params);
   return response.data;

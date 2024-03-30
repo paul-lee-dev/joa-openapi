@@ -36,7 +36,7 @@ function EditProfile({navigation}: EditProfileScreenProps): React.JSX.Element {
   return (
     <View className="w-full h-full bg-gray-100 flex">
       <Header
-        stack="은행코드 변경"
+        stack="사용자 정보 변경"
         menu={[{title: 'close', onPress: () => navigation.pop()}]}
       />
       <View className="w-full h-24 p-8 flex justify-center items-center">

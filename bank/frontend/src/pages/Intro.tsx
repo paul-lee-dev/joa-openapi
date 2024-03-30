@@ -17,10 +17,14 @@ import CommonInput from '@/components/CommonInput';
 import BottomButton from '@/components/BottomButton';
 import {useFocusEffect} from '@react-navigation/native';
 import {useCallback} from 'react';
-import {useSetRecoilState} from 'recoil';
-import {memberDataAtom} from '@/store/atoms';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
+import {bankDataAtom, memberDataAtom} from '@/store/atoms';
 import {RootStackParamList} from '@/Router';
 import LoadingScreen from '@/components/LoadingScreen';
+import {useMutation} from '@tanstack/react-query';
+import {login} from '@/api/member';
+import {axiosInstance} from '@/api';
+import {IMember} from '@/models';
 
 interface LoginForm {
   email: string;
@@ -31,6 +35,28 @@ type IntroScreenProps = NativeStackScreenProps<RootStackParamList, 'Intro'>;
 
 function Intro({navigation}: IntroScreenProps): React.JSX.Element {
   const setMemberData = useSetRecoilState(memberDataAtom);
+  const bankData = useRecoilValue(bankDataAtom);
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess: data => {
+      console.log(data);
+      const member: IMember = data.data;
+      axiosInstance.interceptors.request.use(
+        config => {
+          config.headers.memberId = member.id;
+          return config;
+        },
+        error => {
+          return Promise.reject(error);
+        },
+      );
+      setMemberData({
+        isLogin: true,
+        member: data.data,
+      });
+    },
+    onError: err => console.log(err),
+  });
   const {
     control,
     handleSubmit,
@@ -45,17 +71,10 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const onSubmit = (data: LoginForm) => {
-    console.log(data);
-    setMemberData({
-      isLogin: true,
-      member: {
-        id: '90240424-7a53-460c-8d4e-f786eda65fbb',
-        name: '이유로',
-        email: 'eurohand@naver.com',
-        phone: '01099306272',
-        createdAt: '2024-03-27 00:18',
-        updatedAt: '2024-03-27 00:18',
-      },
+    mutation.mutate({
+      email: data.email,
+      password: data.password,
+      bankId: bankData.bankId,
     });
   };
 
@@ -143,6 +162,10 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      autoComplete="email"
                     />
                   )}
                   name="email"

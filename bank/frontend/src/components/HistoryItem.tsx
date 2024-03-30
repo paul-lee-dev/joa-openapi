@@ -5,7 +5,7 @@ interface IProps {
   date: string;
   title: string;
   amount: number;
-  balance: number;
+  balance?: number;
 }
 
 function HistoryItem({
@@ -17,7 +17,11 @@ function HistoryItem({
   return (
     <View className="w-full h-28 border-b border-gray-300 p-4 flex flex-row items-center justify-between">
       <View className="flex flex-row space-x-6 items-center">
-        <Text className="text-sm font-light">{date}</Text>
+        <Text className="text-sm font-light">
+          {date.startsWith(String(new Date().getFullYear()).slice(2, 4))
+            ? date.slice(3)
+            : date}
+        </Text>
         <Text className="text-lg font-semibold">{title}</Text>
       </View>
       <View className="flex items-end">
@@ -26,14 +30,15 @@ function HistoryItem({
             amount,
           )}원`}</Text>
         ) : (
-          <Text className="text-lg font-semibold">{`${formatAmount(
+          <Text className="text-lg font-semibold text-red-600">{`${formatAmount(
             amount,
           )}원`}</Text>
         )}
-
-        <Text className="text-sm font-light">{`${formatAmount(
-          balance,
-        )}원`}</Text>
+        {balance && (
+          <Text className="text-sm font-light">{`${formatAmount(
+            balance,
+          )}원`}</Text>
+        )}
       </View>
     </View>
   );

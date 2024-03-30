@@ -7,7 +7,7 @@ interface IProps {
   link: () => void;
 }
 
-function AccountItem({account, link}: IProps): React.JSX.Element {
+function AccountListItem({account, link}: IProps): React.JSX.Element {
   return (
     <View className="h-36 w-full flex justify-center p-4 bg-pink-100 rounded-xl space-y-2 shadow-sm shadow-black">
       <View className="w-full flex flex-row justify-between">
@@ -29,4 +29,4 @@ function AccountItem({account, link}: IProps): React.JSX.Element {
   );
 }
 
-export default AccountItem;
+export default AccountListItem;

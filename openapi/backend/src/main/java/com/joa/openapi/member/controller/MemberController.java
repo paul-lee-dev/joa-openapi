@@ -38,24 +38,44 @@ public class MemberController {
         return ResponseEntity.ok(ApiResponse.success("사용 가능한 번호입니다."));
     }
 
-    //회원정보 조회
+    //내 회원정보 조회
     @GetMapping
-    public ResponseEntity<?> info(@RequestHeader("memberId") UUID memberId) {
+    public ResponseEntity<?> myInfo(@RequestHeader("memberId") UUID memberId) {
         MemberInfoResponseDto response = memberService.getInfo(memberId);
         return ResponseEntity.ok(ApiResponse.success("회원 정보 조회에 성공했습니다.", response));
     }
 
-    //회원정보 수정
+    //회원정보 조회
+    @GetMapping("{memberId}")
+    public ResponseEntity<?> info(@PathVariable UUID memberId) {
+        MemberInfoResponseDto response = memberService.getInfo(memberId);
+        return ResponseEntity.ok(ApiResponse.success("회원 정보 조회에 성공했습니다.", response));
+    }
+
+    //내 회원정보 수정
     @PatchMapping
-    public ResponseEntity<?> update(@RequestHeader("memberId") UUID memberId,
+    public ResponseEntity<?> updateMyInfo(@RequestHeader("memberId") UUID memberId,
                                     @RequestBody MemberUpdateRequestDto request) {
         MemberInfoResponseDto response = memberService.update(memberId, request);
         return ResponseEntity.ok(ApiResponse.success("회원 정보 수정에 성공했습니다.", response));
     }
 
+    //회원정보 수정
+    @PatchMapping("{memberId}")
+    public ResponseEntity<?> update(@PathVariable UUID memberId, @RequestBody MemberUpdateRequestDto request) {
+        MemberInfoResponseDto response = memberService.update(memberId, request);
+        return ResponseEntity.ok(ApiResponse.success("회원 정보 수정에 성공했습니다.", response));
+    }
+
+    //TODO: 은행별 고객 전체 조회, 검색
+    @GetMapping("search")
+    public ResponseEntity<?> search() {
+        return null;
+    }
+
     //회원 탈퇴
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId) {
+    @DeleteMapping("{memberId}")
+    public ResponseEntity<?> delete(@PathVariable("memberId") UUID memberId) {
         MemberIdResponseDto response = memberService.delete(memberId);
         return ResponseEntity.ok(ApiResponse.success("회원 탈퇴에 성공했습니다.", response));
     }

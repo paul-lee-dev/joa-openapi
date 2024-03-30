@@ -9,10 +9,13 @@ function Interceptor({children}: any): React.JSX.Element {
   useEffect(() => {
     axiosInstance.interceptors.request.use(
       config => {
+        console.log(memberData);
         if (memberData.isLogin && memberData.member) {
-          config.headers.memberId = memberData.member.memberId;
+          config.headers.memberId = memberData.member.id;
+        } else {
+          config.headers.memberId = '';
         }
-        console.log(config);
+        console.log(config.headers);
         return config;
       },
       error => {

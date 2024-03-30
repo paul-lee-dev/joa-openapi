@@ -14,6 +14,9 @@ import Header from '@/components/Header';
 import {RootStackParamList} from '@/Router';
 import {memberDataAtom} from '@/store/atoms';
 import {useRecoilState} from 'recoil';
+import {useMutation} from '@tanstack/react-query';
+import {logout} from '@/api/member';
+import {axiosInstance} from '@/api';
 
 type MenuScreenProps = NativeStackScreenProps<RootStackParamList, 'Menu'>;
 type MenuType = '뱅킹' | '이체' | '조회';
@@ -22,13 +25,36 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
   const [memberData, setMemberData] = useRecoilState(memberDataAtom);
   const [keyword, setKeyword] = useState<string>('');
   const [menu, setMenu] = useState<MenuType>('뱅킹');
+  const mutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      axiosInstance.interceptors.request.use(
+        config => {
+          config.headers.memberId = '';
+          return config;
+        },
+        error => {
+          return Promise.reject(error);
+        },
+      );
+      navigation.popToTop();
+      setMemberData({isLogin: false, member: null});
+      navigation.replace('Intro');
+    },
+    onError: err => console.log(err),
+  });
   const detailMenu = {
     뱅킹: [
       {
         title: '입출금 계좌 개설',
-        onPress: () => navigation.navigate('CreateAccount'),
+        onPress: () =>
+          navigation.navigate('ProductList', {productType: 'ORDINARY_DEPOSIT'}),
       },
-      {title: '예적금 상품 조회', onPress: () => {}},
+      {
+        title: '예적금 상품 조회',
+        onPress: () =>
+          navigation.navigate('ProductList', {productType: 'TERM_DEPOSIT'}),
+      },
       {title: '계좌 관리', onPress: () => navigation.navigate('AccountList')},
       {
         title: '이체한도변경',
@@ -61,9 +87,14 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
     ],
   };
 
-  const logout = () => {
-    setMemberData({isLogin: false, member: null});
-    navigation.popToTop();
+  const filterOnPress = (onPress: () => void) => {
+    return () => {
+      if (memberData.isLogin) {
+        onPress();
+      } else {
+        navigation.popToTop();
+      }
+    };
   };
 
   return (
@@ -100,7 +131,10 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
                   </Text>
                 </TouchableOpacity>
                 <Text className="text-sm font-medium text-gray-700">|</Text>
-                <TouchableOpacity onPress={logout}>
+                <TouchableOpacity
+                  onPress={() => {
+                    mutation.mutate();
+                  }}>
                   <Text className="text-sm font-medium text-gray-700">
                     로그아웃
                   </Text>
@@ -181,7 +215,7 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
             {detailMenu[menu].map(m => (
               <View key={m.title} className="w-full h-16 flex justify-center">
                 <TouchableOpacity
-                  onPress={m.onPress}
+                  onPress={filterOnPress(m.onPress)}
                   className="px-2 pl-12 py-2">
                   <Text className="text-lg font-medium text-gray-700">
                     {m.title}

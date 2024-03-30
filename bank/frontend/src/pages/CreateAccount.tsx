@@ -4,6 +4,10 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Header from '@/components/Header';
 import BottomButton from '@/components/BottomButton';
 import {RootStackParamList} from '@/Router';
+import {formatAmount, getProductTypeName} from '@/utils';
+import BottomPopup from '@/components/BottomPopup';
+import {useState} from 'react';
+import {ProductPaymentTypeName} from '@/models';
 
 type CreateAccountScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -11,8 +15,12 @@ type CreateAccountScreenProps = NativeStackScreenProps<
 >;
 
 function CreateAccount({
+  route,
   navigation,
 }: CreateAccountScreenProps): React.JSX.Element {
+  const {product} = route.params;
+  const [detailModalOpen, setDetailModalOpen] = useState<boolean>(false);
+
   return (
     <View className="w-full h-full bg-gray-100 flex">
       <Header
@@ -22,36 +30,40 @@ function CreateAccount({
       />
       <ScrollView className="w-full flex-grow mb-16">
         <View>
-          <View className="w-full h-96 bg-purple-400 items-center p-8 justify-between">
+          <View className="w-full bg-purple-400 flex space-y-8 items-center p-8 justify-between">
             <View className="w-full flex space-y-3">
-              <Text className="text-xl font-medium text-gray-50">
-                조아은행 입출금통장
+              <Text className="text-lg font-medium text-gray-50">
+                {getProductTypeName(product.productType)!.title}
               </Text>
-              <Text className="text-5xl text-gray-50">손쉬운 계좌개설</Text>
+              <Text className="text-4xl text-gray-50">{product.name}</Text>
             </View>
             <View className="w-full px-4 flex flex-row items-center justify-around">
-              <View className="flex items-center">
+              <View className="flex items-center space-y-1">
                 <Icon
-                  name={'account-multiple-outline'}
+                  name={'sack-percent'}
                   color={'#eee'}
                   onPress={() => {}}
                   size={50}
                 />
-                <Text className="text-base text-gray-50">친구에게</Text>
-                <Text className="text-base text-gray-50">간편하게 이체</Text>
+                <Text className="text-xs text-gray-50">이자율</Text>
+                <Text className="text-lg text-gray-50 font-bold">{`연 ${product.rate}%`}</Text>
               </View>
-              <View className="flex items-center">
+              <View className="flex items-center space-y-1">
                 <Icon
-                  name={'key-outline'}
+                  name={'piggy-bank'}
                   color={'#eee'}
                   onPress={() => {}}
                   size={50}
                 />
-                <Text className="text-base text-gray-50">보안은</Text>
-                <Text className="text-base text-gray-50">더 강력하게</Text>
+                <Text className="text-xs text-gray-50">지급방식</Text>
+                <Text className="text-lg text-gray-50 font-bold">
+                  {ProductPaymentTypeName[product.paymentType]}
+                </Text>
               </View>
             </View>
-            <TouchableOpacity className="w-80 h-14 bg-purple-900/70 flex justify-center items-center">
+            <TouchableOpacity
+              onPress={() => setDetailModalOpen(true)}
+              className="w-80 h-14 bg-purple-900/70 flex justify-center items-center">
               <Text className="text-xl text-gray-50 font-medium">
                 자세히보기
               </Text>
@@ -59,23 +71,56 @@ function CreateAccount({
           </View>
           <View className="w-full flex p-6">
             <Text className="text-2xl mb-4 font-semibold text-gray-700">
-              누구나 쉽고 스마트하게
+              {getProductTypeName(product.productType)!.description}
             </Text>
             <Text className="text-base font-medium text-gray-700">
-              통장의 많은 정보와 기능들을 쉽고 편리하게 이용할 수 있도록
-              디자인했습니다.
-            </Text>
-            <Text className="text-base font-medium text-gray-700">
-              간편하게 이체, 거래내역 자세히보기도 바로바로, 중요한 내용은
-              놓치지 않고 확인할 수 있습니다.
+              {product.description}
             </Text>
           </View>
         </View>
       </ScrollView>
       <BottomButton
         title={'신청하기'}
-        onPress={() => navigation.navigate('CreateAccountConfirm')}
+        onPress={() => navigation.navigate('CreateAccountConfirm', {product})}
       />
+      {detailModalOpen && (
+        <BottomPopup close={() => setDetailModalOpen(false)}>
+          <View className="w-full p-6 flex space-y-2">
+            <View className="w-full flex flex-row justify-between">
+              <Text className="text-base font-semibold">상품분류</Text>
+              <Text>{getProductTypeName(product.productType)!.title}</Text>
+            </View>
+            <View className="w-full flex flex-row justify-between">
+              <Text className="text-base font-semibold">상품명</Text>
+              <Text>{product.name}</Text>
+            </View>
+            <View className="w-full flex flex-row justify-between">
+              <Text className="text-base font-semibold">종료여부</Text>
+              <Text>{product.isDone ? 'Y' : 'N'}</Text>
+            </View>
+            <View className="w-full flex flex-row justify-between">
+              <Text className="text-base font-semibold">저축 최소한도</Text>
+              <Text>{`${formatAmount(product.minAmount)}원`}</Text>
+            </View>
+            <View className="w-full flex flex-row justify-between">
+              <Text className="text-base font-semibold">저축 최대한도</Text>
+              <Text>{`${formatAmount(product.maxAmount)}원`}</Text>
+            </View>
+            <View className="w-full flex flex-row justify-between">
+              <Text className="text-base font-semibold">이자율</Text>
+              <Text>{`연 ${product.rate}%`}</Text>
+            </View>
+            <View className="w-full flex flex-row justify-between">
+              <Text className="text-base font-semibold">지급방식</Text>
+              <Text>{ProductPaymentTypeName[product.paymentType]}</Text>
+            </View>
+          </View>
+          <BottomButton
+            title={'확인'}
+            onPress={() => setDetailModalOpen(false)}
+          />
+        </BottomPopup>
+      )}
     </View>
   );
 }
