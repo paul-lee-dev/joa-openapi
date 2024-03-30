@@ -1,7 +1,5 @@
-import Table from "@/components/table/bankTable";
-
 const Dashboard = () => {
-  return <Table></Table>;
+  return;
 };
 
 export default Dashboard;
