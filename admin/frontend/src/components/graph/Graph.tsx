@@ -112,27 +112,29 @@ export default function WeekTransactionGraph() {
       },
     };
 
-    if (
-      document.getElementById("column-chart") &&
-      typeof ApexCharts !== "undefined"
-    ) {
-      if (!chartRef.current) {
-        chartRef.current = new ApexCharts(
-          document.getElementById("column-chart"),
-          options
-        );
-        chartRef.current.render();
+    if (typeof window !== "undefined") {
+      if (
+        document.getElementById("column-chart") &&
+        typeof ApexCharts !== "undefined"
+      ) {
+        if (!chartRef.current) {
+          chartRef.current = new ApexCharts(
+            document.getElementById("column-chart"),
+            options
+          );
+          chartRef.current.render();
+        }
       }
-    }
 
-    return () => {
-      if (chartRef.current) {
-        chartRef.current.destroy();
-        chartRef.current = null;
-      }
-    };
+      return () => {
+        if (chartRef.current) {
+          chartRef.current.destroy();
+          chartRef.current = null;
+        }
+      };
+    }
   }, []);
-  
+
   return (
     <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <div id="column-chart"></div>
