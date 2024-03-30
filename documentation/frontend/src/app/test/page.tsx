@@ -6,11 +6,19 @@ import { postAxios, useAxios } from "./components/http-common";
 
 const Home = () => {
 
+  // const [formData, setFormData] = useState<JoinMemberParams>({
+  //   name: "김김",
+  //   email: "asd22@asdas.com",
+  //   phone: "00013131212",
+  //   password: "1234",
+  //   bankId: "bdbbfe2c-dc15-4c85-8706-dac0299e7ff6"
+  // });
+
   const [formData, setFormData] = useState<JoinMemberParams>({
-    name: "김김",
-    email: "asd22@asdas.com",
-    phone: "00013131212",
-    password: "1234",
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
     bankId: "bdbbfe2c-dc15-4c85-8706-dac0299e7ff6"
   });
 
@@ -32,6 +40,31 @@ const Home = () => {
                 e.preventDefault();
                 joinMember(formData);
                 }}>
+
+              <input
+                type="text"
+                name="name"
+                placeholder="이름"
+                value={formData.name}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="이메일"
+                value={formData.email}
+              />
+              <input
+                type="text"
+                name="phone"
+                placeholder="전화번호"
+                value={formData.phone}
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="비밀번호"
+                value={formData.password}
+              />
 
             <ButtonContainer>
               <button type="submit">시작하기</button>
