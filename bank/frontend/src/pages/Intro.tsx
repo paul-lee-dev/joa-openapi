@@ -43,7 +43,10 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
       const member: IMember = data.data;
       axiosInstance.interceptors.request.use(
         config => {
+          console.log(member.id);
+          console.log(bankData.apiKey);
           config.headers.memberId = member.id;
+          config.headers.apiKey = bankData.apiKey;
           return config;
         },
         error => {
