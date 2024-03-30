@@ -99,7 +99,7 @@ public class DummyService {
                     .password("dummy")
                     .dummyId(dummy.getId())
                     .build();
-            transactionService.deposit(adminId, TRdto);
+            transactionService.deposit(apiKey, TRdto);
         }
 
         return DummyResponseDto.toDto(dummy);
@@ -138,7 +138,7 @@ public class DummyService {
                     .password("dummy")
                     .dummyId(dummy.getId())
                     .build();
-            transactionService.deposit(adminId, TRdto);
+            transactionService.deposit(apiKey, TRdto);
         }
 
         return DummyResponseDto.toDto(dummy);
@@ -199,7 +199,7 @@ public class DummyService {
                             .password("dummy")
                             .dummyId(dummy.getId())
                             .build();
-                    transactionService.deposit(adminId, dto);
+                    transactionService.deposit(apiKey, dto);
                     break;
                 // 출금
                 case 1 :
