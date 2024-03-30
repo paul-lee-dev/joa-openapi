@@ -45,6 +45,7 @@ function ChangeAccountName({
     mutation.mutate({
       accountId,
       nickname: data.nickname,
+      password: '1234',
     });
   };
 

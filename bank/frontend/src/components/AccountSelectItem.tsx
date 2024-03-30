@@ -15,7 +15,7 @@ function AccountItem({account, onPress}: IProps): React.JSX.Element {
           {account?.nickname}
         </Text>
         <Text className="text-sm font-normal text-gray-400">
-          {`조아은행 ${account?.accountId}`}
+          {account?.accountId}
         </Text>
       </TouchableOpacity>
     </View>

@@ -11,8 +11,10 @@ type CreateAccountResultScreenProps = NativeStackScreenProps<
 >;
 
 function CreateAccountResult({
+  route,
   navigation,
 }: CreateAccountResultScreenProps): React.JSX.Element {
+  const {account} = route.params;
   return (
     <View className="w-full h-full bg-gray-100 flex">
       <Header
@@ -29,7 +31,7 @@ function CreateAccountResult({
             />
           </View>
           <View className="flex flex-row">
-            <Text className="text-2xl font-bold">내 입출금통장</Text>
+            <Text className="text-2xl font-bold">{`내 ${account.nickname}`}</Text>
             <Text className="text-2xl font-medium">을</Text>
           </View>
           <Text className="text-2xl font-medium">성공적으로 개설했어요</Text>
@@ -38,13 +40,13 @@ function CreateAccountResult({
           <View className="flex flex-row justify-between px-6">
             <Text className="font-bold text-sm text-gray-700">계좌 이름</Text>
             <Text className="font-semibold text-sm text-gray-700">
-              입출금통장
+              {account.nickname}
             </Text>
           </View>
           <View className="flex flex-row justify-between px-6">
             <Text className="font-bold text-sm text-gray-700">계좌번호</Text>
             <Text className="font-semibold text-sm text-gray-700">
-              신한은행 1234121231234
+              {`조아은행 ${account.accountId}`}
             </Text>
           </View>
         </View>

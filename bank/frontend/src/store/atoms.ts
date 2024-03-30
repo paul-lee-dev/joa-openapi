@@ -20,8 +20,8 @@ const defaultMemberData: IMemberData = {
 
 const defaultBankData: IBankData = {
   bankId: 'bdbbfe2c-dc15-4c85-8706-dac0299e7ff6',
-  bankName: 'JOA BANK',
-  apiKey: '1',
+  bankName: '조아은행',
+  apiKey: '9c485803-0697-4235-8014-a08d3aea77f4',
 };
 
 export const persistAtom =
