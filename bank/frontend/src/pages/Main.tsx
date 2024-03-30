@@ -65,6 +65,8 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
     }, [refetch]),
   );
 
+  console.log(data);
+
   return (
     <View className="w-full h-full bg-gray-100">
       <Header

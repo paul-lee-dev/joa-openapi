@@ -1,16 +1,22 @@
+import { IBank } from "@/models/Bank.interface";
 import tw from "tailwind-styled-components";
 
-export default function BankSelect() {
+interface IProps {
+  bankList: IBank[];
+}
+
+export default function BankSelect({ bankList }: IProps) {
   return (
     <InputContainer>
       <Select id="banks">
-        <option value="" disabled selected className="text-gray-300">
-          조아은행
+        <option selected key={"all"} value={""}>
+          전체
         </option>
-        <option value="US">우리 은행</option>
-        <option value="CA">신한 은행</option>
-        <option value="FR">유로 은행</option>
-        <option value="DE">본승 은행</option>
+        {bankList.map((bank) => (
+          <option key={bank.bankId} value={bank.bankId}>
+            {bank.name}
+          </option>
+        ))}
       </Select>
     </InputContainer>
   );

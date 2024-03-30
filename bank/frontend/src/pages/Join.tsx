@@ -12,7 +12,13 @@ import {useState} from 'react';
 import Header from '@/components/Header';
 import CommonInput from '@/components/CommonInput';
 import BottomButton from '@/components/BottomButton';
-import {emailConfirm, join, phoneConfirm} from '@/api/member';
+import {
+  checkEmailCode,
+  emailConfirm,
+  emailSend,
+  join,
+  phoneConfirm,
+} from '@/api/member';
 import {useMutation} from '@tanstack/react-query';
 import {useRecoilValue} from 'recoil';
 import {bankDataAtom} from '@/store/atoms';
@@ -99,14 +105,22 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
   };
 
   const sendEmailCode = () => {
-    // TODO: 이메일 인증 보내기 API
-    // setSendingEmail(true);
+    emailSend({email: getValues('email')}).then(res => {
+      console.log(res);
+      setSendingEmail(true);
+    });
   };
 
-  const checkEmailCode = () => {
-    console.log(emailCode);
+  const checkEmailCodeValid = () => {
+    checkEmailCode({email: getValues('email'), code: emailCode})
+      .then(res => {
+        console.log(res);
+        setEmailCodeValid(true);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
     // TODO: 이메일 코드 체크
-    setEmailCodeValid(true);
   };
 
   const onSubmit = (data: JoinForm) => {
@@ -159,14 +173,17 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                       value={value}
                       keyboardType="email-address"
                       autoCapitalize="none"
+                      editable={!sendingEmail}
                     />
-                    <TouchableOpacity
-                      onPress={emailValid ? sendEmailCode : checkEmailValid}
-                      className="absolute top-0 right-0 translate-y-3 border border-gray-400 rounded-full p-1 flex justify-center items-center">
-                      <Text className="text-sm font-medium text-gray-700">
-                        {emailValid ? '인증번호 전송' : '중복 확인'}
-                      </Text>
-                    </TouchableOpacity>
+                    {!sendingEmail && (
+                      <TouchableOpacity
+                        onPress={emailValid ? sendEmailCode : checkEmailValid}
+                        className="absolute top-0 right-0 translate-y-3 border border-gray-400 rounded-full p-1 flex justify-center items-center">
+                        <Text className="text-sm font-medium text-gray-700">
+                          {emailValid ? '인증번호 전송' : '중복 확인'}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
                   </View>
                 )}
                 name="email"
@@ -185,7 +202,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                     onChangeText={setEmailCode}
                   />
                   <TouchableOpacity
-                    onPress={checkEmailCode}
+                    onPress={checkEmailCodeValid}
                     className="absolute top-0 right-0 translate-y-3 border border-gray-400 rounded-full p-1 flex justify-center items-center">
                     <Text className="text-sm font-medium text-gray-700">
                       인증번호 확인

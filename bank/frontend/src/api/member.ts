@@ -26,3 +26,16 @@ export const phoneConfirm = async (phone: string): Promise<any> => {
   const response = await axiosInstance.get(`/member/phone/${phone}`);
   return response.data;
 };
+
+export const emailSend = async (params: any): Promise<any> => {
+  const response = await memberAxiosInstance.post('/member/emailSend', params);
+  return response.data;
+};
+
+export const checkEmailCode = async (params: any): Promise<any> => {
+  const response = await memberAxiosInstance.post(
+    '/member/emailConfirm',
+    params,
+  );
+  return response.data;
+};
