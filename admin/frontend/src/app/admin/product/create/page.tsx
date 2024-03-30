@@ -3,7 +3,6 @@
 import Button from "@/components/button/button";
 import InputText from "@/components/input/inputText";
 import BankSelect from "@/components/select/bank";
-import { useState } from "react";
 import tw from "tailwind-styled-components";
 
 export default function ProductDetail() {

@@ -6,7 +6,7 @@ import InputText from "@/components/input/inputText";
 import { modifyBank, deleteBank } from "@/api/Bank"; // 수정, 삭제 API 함수 임포트
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { localAxios } from "@/api/http-common";
-import Router, { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface Bank {
   bankId: string;
