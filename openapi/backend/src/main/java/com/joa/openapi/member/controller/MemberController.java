@@ -5,6 +5,9 @@ import com.joa.openapi.member.dto.*;
 import com.joa.openapi.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,43 +43,44 @@ public class MemberController {
 
     //내 회원정보 조회
     @GetMapping
-    public ResponseEntity<?> myInfo(@RequestHeader("memberId") UUID memberId) {
-        MemberInfoResponseDto response = memberService.getInfo(memberId);
+    public ResponseEntity<?> myInfo(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId) {
+        MemberInfoResponseDto response = memberService.getInfo(apiKey, memberId);
         return ResponseEntity.ok(ApiResponse.success("회원 정보 조회에 성공했습니다.", response));
     }
 
     //회원정보 조회
     @GetMapping("{memberId}")
-    public ResponseEntity<?> info(@PathVariable UUID memberId) {
-        MemberInfoResponseDto response = memberService.getInfo(memberId);
+    public ResponseEntity<?> info(@RequestHeader("apiKey") UUID apiKey, @PathVariable UUID memberId) {
+        MemberInfoResponseDto response = memberService.getInfo(apiKey, memberId);
         return ResponseEntity.ok(ApiResponse.success("회원 정보 조회에 성공했습니다.", response));
     }
 
     //내 회원정보 수정
     @PatchMapping
-    public ResponseEntity<?> updateMyInfo(@RequestHeader("memberId") UUID memberId,
+    public ResponseEntity<?> updateMyInfo(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
                                     @RequestBody MemberUpdateRequestDto request) {
-        MemberInfoResponseDto response = memberService.update(memberId, request);
+        MemberInfoResponseDto response = memberService.update(apiKey, memberId, request);
         return ResponseEntity.ok(ApiResponse.success("회원 정보 수정에 성공했습니다.", response));
     }
 
     //회원정보 수정
     @PatchMapping("{memberId}")
-    public ResponseEntity<?> update(@PathVariable UUID memberId, @RequestBody MemberUpdateRequestDto request) {
-        MemberInfoResponseDto response = memberService.update(memberId, request);
+    public ResponseEntity<?> update(@RequestHeader("apiKey") UUID apiKey, @PathVariable UUID memberId, @RequestBody MemberUpdateRequestDto request) {
+        MemberInfoResponseDto response = memberService.update(apiKey, memberId, request);
         return ResponseEntity.ok(ApiResponse.success("회원 정보 수정에 성공했습니다.", response));
     }
 
     //TODO: 은행별 고객 전체 조회, 검색
     @GetMapping("search")
-    public ResponseEntity<?> search() {
-        return null;
+    public ResponseEntity<?> search(@RequestHeader("apiKey") UUID apiKey, @ModelAttribute MemberSearchRequestDto req, @PageableDefault Pageable pageable) {
+        Page<MemberSearchResponseDto> membersPage = memberService.search(apiKey, req, pageable);
+        return ResponseEntity.ok(ApiResponse.success("회원 검색에 성공했습니다.", membersPage));
     }
 
     //회원 탈퇴
     @DeleteMapping("{memberId}")
-    public ResponseEntity<?> delete(@PathVariable("memberId") UUID memberId) {
-        MemberIdResponseDto response = memberService.delete(memberId);
+    public ResponseEntity<?> delete(@RequestHeader("apiKey") UUID apiKey, @PathVariable("memberId") UUID memberId) {
+        MemberIdResponseDto response = memberService.delete(apiKey, memberId);
         return ResponseEntity.ok(ApiResponse.success("회원 탈퇴에 성공했습니다.", response));
     }
 }
