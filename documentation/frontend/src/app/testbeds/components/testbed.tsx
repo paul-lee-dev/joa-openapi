@@ -3,84 +3,97 @@ import tw from "tailwind-styled-components";
 export default function testbed() {
   return (
     <>
-      {testbeds.map((t) => (
-        <Wrapper key={t.title}>
-
-          <Title>{t.title}</Title>
-          <TextItem>{t.description}</TextItem>
-
-          <Subtitle>요청 방식</Subtitle>
-          <TextItem>{t.request_method}</TextItem>
-            
-          <Subtitle>요청 URI</Subtitle>
-          <TextItem>{t.request_uri}</TextItem>
-
-          <hr />
-
-          <Subtitle>응답 클래스 (상태 200)</Subtitle>
-          <TextItem>{t.response_code_expected}</TextItem>
-            
-          <Subtitle>모델</Subtitle>
-          <RequestItem>{t.request_value}</RequestItem>
-
-          <Subtitle>Example Value</Subtitle>
-          <RequestItem>{t.request_description}</RequestItem>
-
-          <Subtitle>응답 Content Type</Subtitle>
-          <TextItem>{t.response_content_type}</TextItem>
-
-          <hr />
-
-          <Subtitle>매개변수들</Subtitle>
-          <TableItem>
-            <TheadItem>
-              <TrItem>
-                <ThItem>123</ThItem>
-                <ThItem>123</ThItem>
-                <ThItem>123</ThItem>
-              </TrItem>
-            </TheadItem>
-            <TbodyItem>
-              <TrItem>
-                <TdItem>444</TdItem>
-                <TdItem>555</TdItem>
-                <TdItem>666</TdItem>
-              </TrItem>
-            </TbodyItem>
-          </TableItem>
-
-          <Subtitle>응답 메시지</Subtitle>
-          <TableItem>
-            <TheadItem>
-              <TrItem>
-                <ThItem>123</ThItem>
-                <ThItem>123</ThItem>
-                <ThItem>123</ThItem>
-              </TrItem>
-            </TheadItem>
-            <TbodyItem>
-              <TrItem>
-                <TdItem>444</TdItem>
-                <TdItem>555</TdItem>
-                <TdItem>666</TdItem>
-              </TrItem>
-            </TbodyItem>
-          </TableItem>
-
-          <ButtonItem>실행하기</ButtonItem>
-          <ButtonItem>응답 숨기기</ButtonItem>
-
-          <Subtitle>응답 본문</Subtitle>
-          <ResponseItem>{t.response_body}</ResponseItem>
-          <Subtitle>응답 코드</Subtitle>
-          <ResponseItem>{t.response_code}</ResponseItem>
-          <Subtitle>응답 헤더</Subtitle>
-          <ResponseItem>{t.response_header}</ResponseItem>
-          <Subtitle>샘플 소스 코드 생성</Subtitle>
-          <ResponseItem>{t.sample_code}</ResponseItem>
-
-        </Wrapper>
-      ))}
+      <Wrapper>
+        <Title>{content.title} API</Title>
+        <TextItem>{content.desc}</TextItem>
+        <Subtitle>요청 Method</Subtitle>
+        <TextItem>{content.method}</TextItem>
+        <Subtitle>요청 URI</Subtitle>
+        <TextItem>{content.uri}</TextItem>
+        <Subtitle>요청 메시지 data 명세</Subtitle>
+        <TableItem>
+          <TheadItem>
+            <TrItem>
+              <ThItem>변수명</ThItem>
+              <ThItem>설명</ThItem>
+              <ThItem>타입</ThItem>
+              <ThItem>필수 여부</ThItem>
+              <ThItem>비고</ThItem>
+            </TrItem>
+          </TheadItem>
+          <TbodyItem>
+            {content.requestParam.map((p)=>(
+            <TrItem key={p.name}>
+              <TdItem>{p.name}</TdItem>
+              <TdItem>{p.desc}</TdItem>
+              <TdItem>{p.type}</TdItem>
+              <TdItem>{p.required}</TdItem>
+              <TdItem>{p.etc}</TdItem>
+            </TrItem>
+            ))}
+          </TbodyItem>
+        </TableItem>
+        <Subtitle>요청 메시지 형태 예시</Subtitle>
+        <RequestItem>{content.requestExample}</RequestItem>
+        <Subtitle>정상 응답 코드</Subtitle>
+        <TextItem>200 OK</TextItem>
+        <Subtitle>응답 Content Type</Subtitle>
+        <TextItem>application/json</TextItem>
+        <Subtitle>응답 메시지 data 명세</Subtitle>
+        <TableItem>
+          <TheadItem>
+            <TrItem>
+              <ThItem>변수명</ThItem>
+              <ThItem>설명</ThItem>
+              <ThItem>타입</ThItem>
+              <ThItem>필수 여부</ThItem>
+              <ThItem>비고</ThItem>
+            </TrItem>
+          </TheadItem>
+          <TbodyItem>
+          {content.responseParam.map((p)=>(
+            <TrItem key={p.name}>
+              <TdItem>{p.name}</TdItem>
+              <TdItem>{p.desc}</TdItem>
+              <TdItem>{p.type}</TdItem>
+              <TdItem>{p.required}</TdItem>
+              <TdItem>{p.etc}</TdItem>
+            </TrItem>
+            ))}
+          </TbodyItem>
+        </TableItem>
+        <Subtitle>응답 메시지 형태 예시</Subtitle>
+        <ResponseItem>{content.responseExample}</ResponseItem>
+        <Subtitle>에러 코드</Subtitle>
+        <TableItem>
+          <TheadItem>
+            <TrItem>
+              <ThItem>에러코드명</ThItem>
+              <ThItem>HttpStatus</ThItem>
+              <ThItem>메시지</ThItem>
+            </TrItem>
+          </TheadItem>
+          <TbodyItem>
+          {content.errorCode.map((e)=>(
+            <TrItem key={e.name}>
+              <TdItem>{e.name}</TdItem>
+              <TdItem>{e.httpstatus}</TdItem>
+              <TdItem>{e.desc}</TdItem>
+            </TrItem>
+            ))}
+          </TbodyItem>
+        </TableItem>
+        <ButtonItem>실행하기</ButtonItem>
+        <ButtonItem>응답 숨기기</ButtonItem>
+        <Subtitle>응답 본문</Subtitle>
+        <ResponseItem></ResponseItem>
+        <Subtitle>응답 코드</Subtitle>
+        <ResponseItem></ResponseItem>
+        <Subtitle>응답 헤더</Subtitle>
+        <ResponseItem></ResponseItem>
+        <Subtitle>샘플 소스 코드 생성</Subtitle>
+        <ResponseItem></ResponseItem>
+      </Wrapper>
     </>
   );
 };
@@ -102,7 +115,7 @@ font-bold
 `;
 
 const TextItem = tw.div`
-`
+`;
 
 const RequestItem = tw.div`
 bg-blue-200 
@@ -116,7 +129,7 @@ bg-purple-200
 hover:bg-purple-300
 rounded-lg
 p-8
-`
+`;
 
 const TableItem = tw.table`
 w-full 
@@ -138,7 +151,7 @@ border-b
 
 const ThItem = tw.th`
 px-4 py-3
-`
+`;
 
 const TdItem = tw.td`
 px-4 py-3 break-keep
@@ -154,19 +167,74 @@ focus-visible:outline focus-visible:outline-2
 focus-visible:outline-offset-2 focus-visible:outline-pink-600
 `;
 
-const testbeds = [
-  {
-    title: "계좌 개설 API",
-    description: "계좌 개설 API에 대한 설명이 여기에 들어갑니다.",
-    request_method: "POST",
-    request_uri: "/account/{bankId}",
-    response_code_expected: "OK",
-    request_value: "요청으로 보낼 JSON DATA",
-    request_description: "요청으로 보낼 데이터에 대한 설명",
-    response_content_type: "application/json",
-    response_body: "응답 본문",
-    response_code: "응답 코드",
-    response_header: "응답 헤더",
-    sample_code: "샘플 코드"
-  },
-]
+const content = {
+  title: '',
+  desc: '',
+  method: '',
+  uri: '',
+  requestParam: [
+    {
+      name: '',
+      desc: '',
+      type: '',
+      required: '',
+      etc: '',
+    },
+    {
+      name: '',
+      desc: '',
+      type: '',
+      required: '',
+      etc: '',
+    },
+    {
+      name: '',
+      desc: '',
+      type: '',
+      required: '',
+      etc: '',
+    },
+  ],
+  requestExample:'',
+  responseParam: [
+    {
+      name: '',
+      desc: '',
+      type: '',
+      required: '',
+      etc: '',
+    },
+    {
+      name: '',
+      desc: '',
+      type: '',
+      required: '',
+      etc: '',
+    },
+    {
+      name: '',
+      desc: '',
+      type: '',
+      required: '',
+      etc: '',
+    },
+  ],
+  responseExample:'',
+  errorCode: [
+    {
+      name: '',
+      httpstatus: '',
+      desc: '',
+    },
+    {
+      name: '',
+      httpstatus: '',
+      desc: '',
+    },
+    {
+      name: '',
+      httpstatus: '',
+      desc: '',
+    },
+  ],
+}

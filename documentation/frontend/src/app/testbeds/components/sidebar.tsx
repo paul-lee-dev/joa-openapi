@@ -54,7 +54,8 @@ const BarItemContainer = tw.div`
 `;
 
 const BarItem = tw.div`
-lg:mr-12 p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
+mr-12 p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
 `;
+
 const BarSubItem = tw.a`
 `;
