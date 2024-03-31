@@ -141,7 +141,7 @@ px-4 py-3
 `
 
 const TdItem = tw.td`
-px-4 py-3
+px-4 py-3 break-keep
 `;
 
 const ButtonItem = tw.button`

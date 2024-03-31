@@ -9,12 +9,12 @@ export default function Header() {
         <MenuContainer>
         <NavContainer>
           <NavItem><Link href="/">Home</Link></NavItem>
-          <NavItem><Link href="/demos">Demos</Link></NavItem>
-          <NavItem><Link href="/testbeds">Test Beds</Link></NavItem>
+          <NavItem><Link href="/demos">Demo</Link></NavItem>
           <NavItem><Link href="/docs">Docs</Link></NavItem>
+          <NavItem><Link href="/testbeds">APIs</Link></NavItem>
         </NavContainer>
         <ButtonContainer>
-          <ButtonItem><a href="https://joa13.site/dashboard">Admin</a></ButtonItem>
+          <ButtonItem><a href="https://admin.joa13.site/">Admin</a></ButtonItem>
         </ButtonContainer>
         </MenuContainer>
       </Wrapper>
