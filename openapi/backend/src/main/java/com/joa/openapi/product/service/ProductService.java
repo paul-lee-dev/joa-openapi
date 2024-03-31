@@ -36,7 +36,6 @@ public class ProductService {
 
     @Transactional
     public ProductCreateResponseDto create(UUID apiKey, ProductCreateRequestDto req) {
-
         bankAuthorityValidation(apiKey, req.getBankId());
 
         Bank bank = bankRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
@@ -60,7 +59,6 @@ public class ProductService {
 
     @Transactional
     public ProductUpdateIsDoneResponseDto end(UUID apiKey, UUID productId) {
-
         productAuthorityValidation(apiKey, productId);
 
         Product product = productRepository.findById(productId)
@@ -78,7 +76,6 @@ public class ProductService {
 
     @Transactional
     public void delete(UUID apiKey, UUID productId) {
-
         productAuthorityValidation(apiKey, productId);
 
         Product product = productRepository.findById(productId)
@@ -108,7 +105,8 @@ public class ProductService {
     public void bankAuthorityValidation(UUID apiKey, UUID bankId) {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
         Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
-        if (bank.getAdminId().equals(adminId))
+
+        if (!bank.getAdminId().equals(adminId))
             throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
     }
 

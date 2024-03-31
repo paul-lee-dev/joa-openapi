@@ -4,12 +4,14 @@ import static com.joa.openapi.account.entity.QAccount.account;
 import static com.joa.openapi.bank.entity.QBank.bank;
 import static com.joa.openapi.transaction.entity.QTransaction.transaction;
 
+import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.transaction.dto.req.TransactionSearchRequestDto;
 import com.joa.openapi.transaction.dto.res.DayMoneyFlow;
 import com.joa.openapi.transaction.dto.res.TransactionSearchResponseDto;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.joa.openapi.transaction.enums.TransactionOrderBy;
+import com.joa.openapi.transaction.errorcode.TransactionErrorCode;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -48,9 +50,9 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
     public Page<TransactionSearchResponseDto> searchTransactionCustom(
         TransactionSearchRequestDto req, Pageable pageable) {
 
-        // API Key 확인 & bankId 조건 처리
         BooleanBuilder condition = new BooleanBuilder();
 
+        // API Key 확인 & bankId 조건 처리
         UUID apiKey = req.getApiKey();
         List<UUID> adminBankIds = getBankIdsByApiKey(apiKey);
         UUID bankId = req.getBankId();

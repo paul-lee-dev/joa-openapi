@@ -1,9 +1,13 @@
 package com.joa.openapi.member.service;
 
+import com.joa.openapi.account.dto.AccountSearchRequestDto;
+import com.joa.openapi.account.dto.AccountSearchResponseDto;
 import com.joa.openapi.bank.entity.Bank;
 import com.joa.openapi.bank.errorcode.BankErrorCode;
 import com.joa.openapi.bank.repository.BankRepository;
+import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.dummy.errorcode.DummyErrorCode;
 import com.joa.openapi.dummy.repository.DummyRepository;
@@ -14,6 +18,8 @@ import com.joa.openapi.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,13 +36,21 @@ public class MemberService {
     private final BankRepository bankRepository;
     private final DummyRepository dummyRepository;
     private final ModelMapper modelMapper;
+    private final ApiRepository apiRepository;
 
     //회원가입
     @Transactional
     public MemberIdResponseDto addMember(MemberJoinRequestDto request) {
 
-        if(memberRepository.findByEmail(request.getEmail())!=null) throw new RestApiException(MemberErrorCode.EMAIL_CONFLICT);
-        if(memberRepository.findByPhone(request.getPhone())!=null) throw new RestApiException(MemberErrorCode.PHONE_CONFLICT);
+        // 이메일이 이미 사용 중인지 확인
+        if (memberRepository.findByEmail(request.getEmail()) != null) {
+            throw new RestApiException(MemberErrorCode.EMAIL_CONFLICT);
+        }
+
+        // 전화번호가 이미 사용 중인지 확인
+        if (memberRepository.findByPhone(request.getPhone()) != null) {
+            throw new RestApiException(MemberErrorCode.PHONE_CONFLICT);
+        }
 
         Bank bank = bankRepository.findById(request.getBankId()).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
         Member member = Member.builder()
@@ -87,21 +101,31 @@ public class MemberService {
 
     //회원정보 조회
     @Transactional(readOnly = true)
-    public MemberInfoResponseDto getInfo(UUID memberId) {
+    public MemberInfoResponseDto getInfo(UUID apiKey, UUID memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(()->new RestApiException(MemberErrorCode.NO_MEMBER));
+        bankAuthorityValidation(apiKey, member.getBank().getId());
         MemberInfoResponseDto response = modelMapper.map(member, MemberInfoResponseDto.class);
         return response;
     }
 
     //회원정보 수정
     @Transactional
-    public MemberInfoResponseDto update(UUID memberId, MemberUpdateRequestDto request) {
+    public MemberInfoResponseDto update(UUID apiKey, UUID memberId, MemberUpdateRequestDto request) {
         Member member = memberRepository.findById(memberId).orElseThrow(()->new RestApiException(MemberErrorCode.NO_MEMBER));
-        if (request.getName()!=null) member.updateName(request.getName());
-        if (request.getPassword() !=null) member.updatePassword(request.getPassword());
+        bankAuthorityValidation(apiKey, member.getBank().getId());
+        if (!request.getName().equals("")) member.updateName(request.getName());
+        if (!request.getPassword().equals("")) member.updatePassword(request.getPassword());
 //        if (request.getPassword()!=null) member.updatePassword(encoder.encode(request.getPassword()));
-        if (request.getEmail()!=null) member.updateEmail(request.getEmail());
-        if (request.getPhone()!=null) member.updatePhone(request.getPhone());
+        if (!request.getEmail().equals("")) {
+            Member foundByEmail = memberRepository.findByEmail(request.getEmail());
+            if (foundByEmail!=null) throw new RestApiException(MemberErrorCode.EMAIL_CONFLICT);
+            member.updateEmail(request.getEmail());
+        }
+        if (!request.getPhone().equals("")) {
+            Member foundByPhone = memberRepository.findByPhone(request.getPhone());
+            if (foundByPhone!=null) throw new RestApiException(MemberErrorCode.PHONE_CONFLICT);
+            member.updatePhone(request.getPhone());
+        }
         Member updatedMember = memberRepository.save(member);
         MemberInfoResponseDto response = modelMapper.map(updatedMember, MemberInfoResponseDto.class);
         return response;
@@ -109,11 +133,23 @@ public class MemberService {
 
     //회원 탈퇴
     @Transactional
-    public MemberIdResponseDto delete(UUID memberId) {
+    public MemberIdResponseDto delete(UUID apiKey, UUID memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(()->new RestApiException(MemberErrorCode.NO_MEMBER));
+        bankAuthorityValidation(apiKey, member.getBank().getId());
         member.deleteSoftly();
         MemberIdResponseDto response = new MemberIdResponseDto(member.getId().toString(),
                 member.getCreatedAt(), member.getUpdatedAt());
         return response;
+    }
+
+    public Page<MemberSearchResponseDto> search(UUID apiKey, MemberSearchRequestDto req, Pageable pageable) {
+        return memberRepository.searchMemberCustom(req, pageable);
+    }
+
+    public void bankAuthorityValidation(UUID apiKey, UUID bankId) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+        if (!bank.getAdminId().equals(adminId))
+            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
     }
 }

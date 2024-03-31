@@ -99,7 +99,7 @@ public class DummyService {
                     .password("dummy")
                     .dummyId(dummy.getId())
                     .build();
-            transactionService.deposit(adminId, TRdto);
+            transactionService.deposit(apiKey, TRdto);
         }
 
         return DummyResponseDto.toDto(dummy);
@@ -138,7 +138,7 @@ public class DummyService {
                     .password("dummy")
                     .dummyId(dummy.getId())
                     .build();
-            transactionService.deposit(adminId, TRdto);
+            transactionService.deposit(apiKey, TRdto);
         }
 
         return DummyResponseDto.toDto(dummy);
@@ -199,7 +199,7 @@ public class DummyService {
                             .password("dummy")
                             .dummyId(dummy.getId())
                             .build();
-                    transactionService.deposit(adminId, dto);
+                    transactionService.deposit(apiKey, dto);
                     break;
                 // 출금
                 case 1 :
@@ -210,7 +210,7 @@ public class DummyService {
                             .password("dummy")
                             .dummyId(dummy.getId())
                             .build();
-                    transactionService.withdraw(apiKey, adminId, dto);
+                    transactionService.withdraw(apiKey, dto);
                     break;
                 // 송금
                 case 2 :
@@ -230,7 +230,7 @@ public class DummyService {
                             .password("dummy")
                             .dummyId(dummy.getId())
                             .build();
-                    transactionService.send(apiKey, adminId, dto);
+                    transactionService.send(apiKey, dto);
                     break;
             }
         }
@@ -267,7 +267,7 @@ public class DummyService {
         if (dummy.getMemberCount() != null) {
             List<Member> memberList = memberRepository.findByDummyId(dummyId);
             for (Member member: memberList) {
-                memberService.delete(member.getId());
+                memberService.delete(apiKey, member.getId());
             }
         } else if (dummy.getAccountCount() != null) {
             List<Account> accountList = accountRepository.findByDummyId(dummyId);
@@ -335,7 +335,8 @@ public class DummyService {
 
     // 관리자 아이디가 만든 더미인지
     public void AuthoriaztionDummy(UUID dummyId, UUID adminId) {
-        if (!dummyId.equals(adminId)) {
+        Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
+        if (!dummy.getAdminId().equals(adminId)) {
             throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
         }
     }

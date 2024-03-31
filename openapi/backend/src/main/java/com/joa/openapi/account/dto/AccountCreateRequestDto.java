@@ -22,5 +22,5 @@ public class AccountCreateRequestDto {
     private UUID dummyId = null;
     private UUID bankId;
     private UUID productId;
-    private TaxType taxType;
+    private TaxType taxType = null;
 }

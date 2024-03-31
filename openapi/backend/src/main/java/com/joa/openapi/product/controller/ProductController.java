@@ -86,7 +86,7 @@ public class ProductController {
         return ResponseEntity.ok(ApiResponse.success("예적금 상품 상세 조회에 성공했습니다.", productDetail));
     }
 
-    @GetMapping("/interest")
+    @PostMapping("/interest")
     public ResponseEntity<?> calculateInterest(@RequestHeader("apiKey") UUID apiKey, @RequestBody ProductRateRequestDto req) {
         ProductRateResponseDto rate = depositAccountService.calculateRate(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("만기 이자율 조회에 성공했습니다.", rate));
