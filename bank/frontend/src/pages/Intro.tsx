@@ -187,6 +187,7 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
                         onChangeText={onChange}
                         value={value}
                         secureTextEntry={!showPassword}
+                        autoCapitalize="none"
                       />
                       <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
                         <Icon

@@ -200,6 +200,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                   <TextInput
                     className="border-b border-gray-800/50 text-gray-700"
                     onChangeText={setEmailCode}
+                    autoCapitalize="none"
                   />
                   <TouchableOpacity
                     onPress={checkEmailCodeValid}
@@ -233,6 +234,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
+                  autoCapitalize="none"
                 />
               )}
               name="name"
@@ -291,6 +293,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                     onChangeText={onChange}
                     value={value}
                     secureTextEntry={!showPassword}
+                    autoCapitalize="none"
                   />
                   <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
                     <Icon
@@ -328,6 +331,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                     onChangeText={onChange}
                     value={value}
                     secureTextEntry={!showPassword2}
+                    autoCapitalize="none"
                   />
                   <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
                     <Icon
