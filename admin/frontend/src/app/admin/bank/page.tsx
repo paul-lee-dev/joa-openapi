@@ -78,23 +78,24 @@ const BankList = () => {
         <h1>로딩중...</h1>
       ) : (
         <>
-          <form className="flex justify-end m-2">
-            <BankGroupSearch>
+          <form className="flex justify-end m-2 space-x-2 items-center">
+            <div className="w-52 h-10">
               <input
                 type="text"
                 name="searchQuery"
                 id="searchQuery"
                 autoComplete="off"
-                className="flex w-full rounded-md border-0 py-1.5 pl-28 pr-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="w-full h-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 onChange={onChangeKeyword}
                 value={keyword}
+                placeholder="은행 명"
               />
-            </BankGroupSearch>
+            </div>
             <Button
               id={"submit"}
               name={"검색"}
               onClick={() => setSearchWord(keyword)}
-            ></Button>
+            />
           </form>
           <BankTable bankList={data.data} />
           <div className="flex mt-5 justify-between gap-5">

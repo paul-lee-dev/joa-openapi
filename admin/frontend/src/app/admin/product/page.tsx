@@ -17,12 +17,6 @@ const ProductList = () => {
   const [keyword, setKeyword] = useState<string>("");
   const [searchWord, setSearchWord] = useState<string>("");
   const [bankId, setBankId] = useState<string>("");
-  const { data: bankData } = useQuery({
-    queryKey: ["BankList", searchWord],
-    queryFn: () => {
-      return searchBankList({ name: "" });
-    },
-  });
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["ProductList"],
     queryFn: () => {
@@ -37,7 +31,7 @@ const ProductList = () => {
         <>
           <form>
             <div className="flex gap-6 justify-end mt-3 mb-5">
-              <BankSelect bankList={bankData.data} />
+              <BankSelect />
               <ProductTypeMultiSearchSelect
                 placeholder={""}
                 label={""}

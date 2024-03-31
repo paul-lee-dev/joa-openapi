@@ -25,7 +25,6 @@ w-full
 `;
 
 const MainContainer = tw.div`
-flex-none
 flex-grow
 transition-all
 `;

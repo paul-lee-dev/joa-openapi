@@ -1,18 +1,26 @@
+import { searchBankList } from "@/api/Bank";
 import { IBank } from "@/models/Bank.interface";
+import { useQuery } from "@tanstack/react-query";
 import tw from "tailwind-styled-components";
 
 interface IProps {
-  bankList: IBank[];
+  bankList?: IBank[];
 }
 
 export default function BankSelect({ bankList }: IProps) {
+  const { data: bankData } = useQuery({
+    queryKey: ["BankList", ""],
+    queryFn: () => {
+      return searchBankList({ name: "" });
+    },
+  });
   return (
     <InputContainer>
-      <Select id="banks">
-        <option selected key={"all"} value={""}>
+      <Select id="banks" defaultValue={"all"}>
+        <option selected key={"all"}>
           전체
         </option>
-        {bankList.map((bank) => (
+        {bankData?.data.map((bank: IBank) => (
           <option key={bank.bankId} value={bank.bankId}>
             {bank.name}
           </option>

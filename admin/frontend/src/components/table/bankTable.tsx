@@ -2,7 +2,6 @@
 import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
 import { HiEmojiSad } from "react-icons/hi";
-import { localAxios } from "@/api/http-common";
 import { IBank } from "@/models/Bank.interface";
 
 interface BankTableProps {
@@ -21,22 +20,23 @@ export default function BankTable({ bankList }: BankTableProps) {
       <table className="w-full text-sm text-left text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" className="px-6 py-4">
+            <th scope="col" className="px-6 py-4 w-1/12">
               은행로고
             </th>
-            <th scope="col" className="px-6 py-4">
+            <th scope="col" className="px-6 py-4 w-2/12">
+              은행 코드
+            </th>
+            <th scope="col" className="px-6 py-4 w-2/12">
               은행명
             </th>
-            <th scope="col" className="px-6 py-4">
+            <th scope="col" className="px-6 py-4 w-4/12">
               은행설명
             </th>
             {/* <th scope="col" className="px-6 py-4">
               고객 수
             </th> */}
-            <th scope="col" className="px-6 py-4">
-              은행 코드
-            </th>
-            <th scope="col" className="relative px-6 py-4">
+
+            <th scope="col" className="relative px-6 py-4 w-1/12">
               <span className="sr-only"> </span>
             </th>
           </tr>
@@ -56,10 +56,23 @@ export default function BankTable({ bankList }: BankTableProps) {
                 ></Image> */}
                 <HiEmojiSad></HiEmojiSad>
               </TableData>
-              <TableData>{bank.name}</TableData>
-              <TableData>{bank.description}</TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {bank.bankId}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {bank.name}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {bank.description}
+                </div>
+              </TableData>
               {/* <TableData>{bank.customers}</TableData> */}
-              <TableData>{bank.bankId}</TableData>
+
               <TableData>
                 <a
                   onClick={() => handleBankDetail(bank.bankId)}
