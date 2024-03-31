@@ -42,8 +42,8 @@ public class MemberService {
     @Transactional
     public MemberIdResponseDto addMember(MemberJoinRequestDto request) {
 
-        if(memberRepository.findByEmail(request.getEmail())!=null) throw new RestApiException(MemberErrorCode.EMAIL_CONFLICT);
-        if(memberRepository.findByPhone(request.getPhone())!=null) throw new RestApiException(MemberErrorCode.PHONE_CONFLICT);
+        memberRepository.findByEmail(request.getEmail()).orElseThrow(()->new RestApiException(MemberErrorCode.EMAIL_CONFLICT));
+        memberRepository.findByPhone(request.getPhone()).orElseThrow(()->new RestApiException(MemberErrorCode.PHONE_CONFLICT));
 
         Bank bank = bankRepository.findById(request.getBankId()).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
         Member member = Member.builder()
