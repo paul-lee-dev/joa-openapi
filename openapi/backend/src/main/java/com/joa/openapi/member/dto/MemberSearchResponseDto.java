@@ -22,6 +22,7 @@ public class MemberSearchResponseDto {
     private UUID memberId;
     private String email;
     private String phone;
+    private String bankName;
 
     @JsonFormat(pattern = "yyyy/MM/dd")
     private LocalDateTime createdAt;
@@ -32,6 +33,7 @@ public class MemberSearchResponseDto {
                 .memberId(member.getId())
                 .email(member.getEmail())
                 .phone(member.getPhone())
+                .bankName(member.getBank().getName())
                 .createdAt(member.getCreatedAt())
                 .build();
     }
