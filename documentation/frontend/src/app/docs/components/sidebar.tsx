@@ -1,5 +1,5 @@
 import tw from "tailwind-styled-components";
-import { overviews, components } from "./item";
+import Link from 'next/link';
 
 export default function Sidebar() {
   return (
@@ -11,23 +11,18 @@ export default function Sidebar() {
           <Ver>V 1.0</Ver>
         </BarTitleContainer>
 
-        {/* <div className="relative p-2 rounded-md">
-          <SearchBox placeholder="search"></SearchBox>
-        </div> */}
-
         <BarSubTitle>Overview</BarSubTitle>
-        {
-          overviews.map((item) => (
-            <BarItem key={item.name}>{item.name}</BarItem>
-          ))
-        }
+        <BarItem>용어 정의</BarItem> 
+        <BarItem>프로젝트 구조</BarItem>
+        <BarItem>버전 정보</BarItem>
 
         <BarSubTitle>Getting Started</BarSubTitle>
-        {
-          components.map((item) => (
-            <BarItem key={item.name}>{item.name}</BarItem>
-          ))
-        }
+        <BarItem>시작하기</BarItem>
+        <BarItem>API 명세 설명</BarItem>
+        <BarItem>관리자 대시보드</BarItem>
+        <BarItem>관리자 페이지 이용법</BarItem>
+        <BarItem>샘플 앱 이용법</BarItem>
+        <BarItem>커스텀 방법</BarItem>
 
       </Wrapper>
     </>
@@ -52,15 +47,11 @@ mr-14
 text-xs
 `;
 
-const SearchBox = tw.input`
-rounded-md border-0 py-2 px-4 ring-1 ring-gray-300 placeholder:text-gray-400
-`;
-
 const BarSubTitle = tw.div`
 text-xs font-bold p-3 mt-4
 `;
 
-const BarItem = tw.a`
-p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
+const BarItem = tw.div`
+lg:mr-12 p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
 `;
 

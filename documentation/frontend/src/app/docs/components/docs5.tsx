@@ -3,8 +3,27 @@ import tw from "tailwind-styled-components";
 export default function docs() {
   return (
     <>
-    <h2>관리자 대시보드</h2>
+      <Wrapper>
+        <Title>관리자 대시보드(작성중)</Title>
+        <Subtitle>소제목</Subtitle>
+        <TextItem>내용</TextItem>
+      </Wrapper>
     </>
   );
 };
 
+const Wrapper = tw.div`
+mt-8 space-y-6 text-sm
+`;
+
+const Title = tw.h2`
+text-3xl font-bold
+`;
+
+const Subtitle = tw.h3`
+text-xl font-bold
+`;
+
+const TextItem = tw.div`
+leading-7 break-keep
+`
