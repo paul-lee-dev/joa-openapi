@@ -45,23 +45,20 @@ public class TransactionController {
     private final ApiRepository apiRepository;
 
     @PostMapping("/deposit")
-    public ResponseEntity<?> create(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
-        @RequestBody TransactionRequestDto req) {
+    public ResponseEntity<?> deposit(@RequestHeader("apiKey") UUID apiKey, @RequestBody TransactionRequestDto req) {
         TransactionResponseDto response = transactionService.deposit(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 입금에 성공했습니다.", response));
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity<?> withdraw(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
-        @RequestBody TransactionRequestDto req) {
-        TransactionResponseDto response = transactionService.withdraw(apiKey, memberId, req);
+    public ResponseEntity<?> withdraw(@RequestHeader("apiKey") UUID apiKey, @RequestBody TransactionRequestDto req) {
+        TransactionResponseDto response = transactionService.withdraw(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 출금에 성공했습니다.", response));
     }
 
     @PostMapping("/send")
-    public ResponseEntity<?> send(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
-        @RequestBody TransactionRequestDto req) {
-        TransactionResponseDto response = transactionService.send(apiKey, memberId, req);
+    public ResponseEntity<?> send(@RequestHeader("apiKey") UUID apiKey, @RequestBody TransactionRequestDto req) {
+        TransactionResponseDto response = transactionService.send(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 이체에 성공했습니다.", response));
     }
 
@@ -78,15 +75,13 @@ public class TransactionController {
     }
 
     @PatchMapping
-    public ResponseEntity<?> update(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId,
-        @RequestBody TransactionUpdateRequestDto req) {
-        TransactionUpdateResponseDto response = transactionService.update(apiKey, memberId, req);
+    public ResponseEntity<?> update(@RequestHeader("apiKey") UUID apiKey, @RequestBody TransactionUpdateRequestDto req) {
+        TransactionUpdateResponseDto response = transactionService.update(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("거래내역 수정에 성공했습니다.", response));
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestHeader("memberId") UUID memberId,
-        @RequestBody TransactionDeleteRequestDto req) {
+    public ResponseEntity<?> delete(@RequestBody TransactionDeleteRequestDto req) {
         transactionService.delete(req);
         return ResponseEntity.ok(ApiResponse.success("거래내역 삭제에 성공했습니다."));
     }
