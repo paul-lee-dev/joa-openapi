@@ -1,8 +1,6 @@
-import { IoMdDownload } from "react-icons/io";
-import { FaChrome } from "react-icons/fa";
-import { MdPersonAdd } from "react-icons/md";
 import { HiArrowDown } from "react-icons/hi";
 import tw from "tailwind-styled-components";
+import { features, posts, qna } from './items';
 
 const Demo = () => {
   return (
@@ -13,9 +11,7 @@ const Demo = () => {
             <MainTitleItem>Joa Bank</MainTitleItem>
             <MainTitleItem2>(Demo Application)</MainTitleItem2>
             <MainTextItem>
-              여기에는 조아뱅크 앱 설명이 들어갑니다.
-              여기에는 조아뱅크 앱 설명이 들어갑니다.
-              여기에는 조아뱅크 앱 설명이 들어갑니다.
+              JOA OPEN API를 활용해 제작한 샘플 은행 앱입니다. 가상의 은행인 조아은행을 배경으로 기본적인 회원 가입, 계좌 생성, 거래내역 확인 등의 대고객(B2C) 기능을 포함하여 구현하였습니다.
             </MainTextItem>
 
             <FeatureContainer>
@@ -39,39 +35,6 @@ const Demo = () => {
       <Wrapper>
         <SubWrapper>
           <ButtonContainer>
-            <PinkButtonItem>사용법</PinkButtonItem>
-          </ButtonContainer>
-          <SubTitleItem>오픈뱅크 API를 쉽고 빠르게 이용하는 방법</SubTitleItem>
-          <SubButtonContainer>
-            <SubButton1>1. 회원가입 & 로그인</SubButton1>
-            <SubButton2>2. 가상은행 개설 후 은행코드 발급</SubButton2>
-            <SubButton3>3. 은행코드로 서비스 이용</SubButton3>
-          </SubButtonContainer>
-
-          <SubWrapper2>
-            {people.map((person) => (
-              <SubItemContainer key={person.name}>
-
-                <div className="flex">
-                  <SubItemIconContainer>
-                    <MdPersonAdd className="text-2xl text-white drop-shadow" />
-                  </SubItemIconContainer>
-                  <SubItemTitle>{person.name}</SubItemTitle>
-                </div>
-                <SubItemDetail>{person.description}</SubItemDetail>
-                <PurpleButtonContainer>
-                  <PurpleButtonItem href={person.url}>지금 가입하기</PurpleButtonItem>
-                </PurpleButtonContainer>
-              </SubItemContainer>
-            ))}
-            <SubItemImage src='/sample.png' />
-          </SubWrapper2>
-        </SubWrapper>
-      </Wrapper>
-
-      <Wrapper>
-        <SubWrapper>
-          <ButtonContainer>
             <PinkButtonItem>GitHub</PinkButtonItem>
           </ButtonContainer>
 
@@ -84,7 +47,7 @@ const Demo = () => {
             {posts.map((post) => (
               <PostItem key={post.id} >
                 <PostImageContainer>
-                  <PostImage src={post.image.url} />
+                  <a href={post.href}><PostImage src={post.image.url} /></a>
                 </PostImageContainer>
                 <PostTitle>{post.title}</PostTitle>
                 <PostDetail>{post.description}</PostDetail>
@@ -144,7 +107,7 @@ mt-2 text-2xl font-bold tracking-tight sm:text-3xl
 `;
 
 const MainTextItem = tw.div`
-mt-6 leading-7
+mt-6 leading-7 break-keep
 `;
 
 const ImageItem2 = tw.img`
@@ -197,47 +160,6 @@ const SubTitleItem = tw.h3`
 mt-2 text-2xl font-bold tracking-tight
 `;
 
-const SubWrapper2 = tw.div`
-block lg:flex mx-auto max-w-7xl pt-12 px-6 lg:px-8 text-left
-`;
-
-const SubButtonContainer = tw.div`
-inline-flex items-center rounded-md shadow-sm pt-8 text-sm font-semibold
-`;
-
-const SubButton1 = tw.button`
-bg-gray-100 rounded-l-lg px-6 py-4 inline-flex items-center hover:bg-purple-300 hover:text-white
-`;
-
-const SubButton2 = tw.button`
-bg-gray-100 px-6 py-4 inline-flex items-center hover:bg-purple-300 hover:text-white
-`;
-
-const SubButton3 = tw.button`
-bg-gray-100 rounded-r-lg px-6 py-4 inline-flex items-center
-hover:bg-purple-300 hover:text-white
-`;
-
-const SubItemContainer = tw.div`
-w-full ml-6 gap-x-8 gap-y-12
-`;
-
-const SubItemTitle = tw.h3`
-font-bold my-3
-`;
-
-const SubItemIconContainer = tw.div`
-p-3 mx-4 bg-purple-400 rounded-lg
-`;
-
-const SubItemDetail = tw.div`
-text-sm m-5
-`;
-
-const SubItemImage = tw.img`
-w-[20rem] mx-8 rounded-lg
-`;
-
 const PostContainer = tw.div`
 flex mx-auto mt-10 grid lg:grid-cols-2 w-2xl
 `;
@@ -287,67 +209,10 @@ font-semibold mt-1
 `;
 
 const QnaAnswerItem = tw.div`
-mt-2 mr-none lg:mr-20 text-sm leading-6
+mt-4 px-4 text-sm leading-7 break-keep
 `;
 
 const QnaArrowContainer = tw.div`
 p-2 mx-4 mb-2 bg-purple-400 rounded-full
 `;
 
-
-const features = [
-  {
-    name: 'APK 다운로드',
-    description:
-      '다운로드에 대한 부가 설명이 들어갑니다.',
-    icon: IoMdDownload,
-  },
-  {
-    name: '웹 버전 써 보기',
-    description: '웹 버전에 대한 부가 설명이 들어갑니다.',
-    icon: FaChrome,
-  },
-]
-
-const people = [
-  {
-    name: '제목 텍스트 1',
-    description: '내용 테스트 내용 테스트 내용 테스트 내용 테스트 내용 테스트 내용 테스트',
-    imageUrl: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43',
-    url: 'https://joa13.site/dashboard',
-  },
-]
-
-const posts = [
-  {
-    id: 1,
-    title: '샘플 코드',
-    href: 'https://github.com/',
-    description:
-      'GitHub에서 샘플 코드를 둘러보세요.',
-    image: {
-      url: '/sample.png',
-    },
-  },
-  {
-    id: 2,
-    title: '이슈 제보',
-    href: 'https://github.com/',
-    description:
-      '기능의 Docs에 기재된 것과 다르게 동작하는 경우, GitHub에 Issue를 생성하여 알려주세요. 문제 해결을 위해 노력하겠습니다.',
-    image: {
-      url: '/sample.png',
-    },
-  },
-]
-
-const qna = [
-  {
-    question: '1. 자주 묻는 질문 자주 묻는 질문 자주? ',
-    answer: '여기에는 질문 내용에 대한 답변이 들어갑니다. 여기에는 질문 내용에 대한 답변이 들어갑니다. 여기에는 질문 내용에 대한 답변이 들어갑니다. 여기에는 질문 내용에 대한 답변이 들어갑니다.',
-  },
-  {
-    question: '2. 자주 묻는 질문 자주 묻는 질문 자주? ',
-    answer: '여기에는 질문 내용에 대한 답변이 들어갑니다.',
-  },
-]

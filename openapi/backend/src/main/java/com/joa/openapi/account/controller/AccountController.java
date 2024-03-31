@@ -68,6 +68,12 @@ public class AccountController {
         return ResponseEntity.ok(ApiResponse.success("계좌 조회에 성공했습니다.", accountsPage));
     }
 
+    @GetMapping("/member/{memberId}")
+    public ResponseEntity<?> getAccountByMemberId(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "memberId") UUID memberId, @PageableDefault Pageable pageable) {
+        Page<AccountGetAccountsResponseDto> accountsPage = accountService.getAccounts(apiKey, memberId, pageable);
+        return ResponseEntity.ok(ApiResponse.success("계좌 조회에 성공했습니다.", accountsPage));
+    }
+
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestHeader("apiKey") UUID apiKey, @ModelAttribute AccountSearchRequestDto req, @PageableDefault Pageable pageable){
         Page<AccountSearchResponseDto> accountsPage = accountService.search(apiKey, req, pageable);

@@ -335,7 +335,8 @@ public class DummyService {
 
     // 관리자 아이디가 만든 더미인지
     public void AuthoriaztionDummy(UUID dummyId, UUID adminId) {
-        if (!dummyId.equals(adminId)) {
+        Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
+        if (!dummy.getAdminId.equals(adminId)) {
             throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
         }
     }
