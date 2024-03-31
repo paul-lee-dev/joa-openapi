@@ -21,7 +21,7 @@ export const posts = [
       title: '개발자 대시보드',
       description:
         '은행 시스템 이용 현황을 한눈에 파악하고 관리할 수 있는 실시간 대시보드를 지원합니다.',
-        url:'https://joa13.site/dashboard',
+        url:'https://admin.joa13.site/',
       image: {
         url: '/sample.png',
       },
@@ -31,10 +31,10 @@ export const posts = [
   export const team = {
       image: 'https://images.unsplash.com/photo-1557426272-fc759fdf7a8d',
       subimage: 'https://images.unsplash.com/photo-1557426272-fc759fdf7a8d',
-      title1: '텍스트 제목',
-      detail1: '팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다. 팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다. 팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.',
-      title2: '텍스트 제목',
-      detail2: '팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다. 팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다. 팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.',
+      title1: '팀 소개',
+      detail1: '저희는 삼성 청년 SW 아카데미 10기로, 핀테크 도메인의 특화 프로젝트를 위해 결성된 팀입니다.',
+      title2: '기술 스택',
+      detail2: '프론트엔드는 React, React-Native, Next.js, TypeScript, 백엔드는 Spring Boot, Spring Security, Redis 등의 기술 스택을 사용하였습니다.',
     }
   
  export interface Stat {

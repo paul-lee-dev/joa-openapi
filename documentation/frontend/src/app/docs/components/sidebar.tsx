@@ -11,9 +11,9 @@ export default function Sidebar() {
           <Ver>V 1.0</Ver>
         </BarTitleContainer>
 
-        <div className="relative p-2 rounded-md">
+        {/* <div className="relative p-2 rounded-md">
           <SearchBox placeholder="search"></SearchBox>
-        </div>
+        </div> */}
 
         <BarSubTitle>Overview</BarSubTitle>
         {

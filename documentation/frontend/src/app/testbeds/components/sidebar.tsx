@@ -10,9 +10,9 @@ export default function Sidebar() {
           <Ver>V 1.0</Ver>
         </BarTitleContainer>
 
-        <div className="relative p-2 rounded-md">
+        {/* <div className="relative p-2 rounded-md">
           <SearchBox placeholder="search"></SearchBox>
-        </div>
+        </div> */}
 
         <BarSubTitle>Overview</BarSubTitle>
         {
@@ -65,20 +65,12 @@ p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
 
 const overviews = [
   {
-    name: '서비스 소개(Introduction)',
-    anchor: '#',
-  },
-  {
-    name: '시작하기(Getting Started)',
+    name: '공통부(Commons)',
     anchor: '#',
   },
 ]
 
 const components = [
-  {
-    name: '관리자(Admin)',
-    anchor: '#',
-  },
   {
     name: '은행(Bank)',
     anchor: '#',

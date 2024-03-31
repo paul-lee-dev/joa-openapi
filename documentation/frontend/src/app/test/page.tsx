@@ -22,6 +22,11 @@ const Home = () => {
     bankId: "bdbbfe2c-dc15-4c85-8706-dac0299e7ff6"
   });
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const joinMember = async (params: JoinMemberParams): Promise<JoinMemberResponse> => {
     const url = "member";
     const response = await postAxios(url, params);
@@ -46,24 +51,28 @@ const Home = () => {
                 name="name"
                 placeholder="이름"
                 value={formData.name}
+                onChange={handleInputChange}
               />
               <input
                 type="email"
                 name="email"
                 placeholder="이메일"
                 value={formData.email}
+                onChange={handleInputChange}
               />
               <input
                 type="text"
                 name="phone"
                 placeholder="전화번호"
                 value={formData.phone}
+                onChange={handleInputChange}
               />
               <input
                 type="password"
                 name="password"
                 placeholder="비밀번호"
                 value={formData.password}
+                onChange={handleInputChange}
               />
 
             <ButtonContainer>

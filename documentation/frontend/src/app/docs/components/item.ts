@@ -15,7 +15,11 @@ const bankItems: Item[] = [
 
 export const overviews = [
   {
-    name: '공통부(Commons)',
+    name: '서비스 소개(Introduction)',
+    anchor: '#',
+  },
+  {
+    name: '시작하기(Getting Started)',
     anchor: '#',
   },
 ]

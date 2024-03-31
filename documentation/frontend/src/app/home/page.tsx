@@ -188,12 +188,13 @@ w-full h-[16rem] rounded-lg
 `;
 
 const TeamTextContainer = tw.div`
-lg:flex pt-12 text-left 
+grid lg:grid-cols-4 pt-12 text-left 
 `;
 
 const TeamTitle = tw.h3`
-w-[28rem] px-8 text-2xl font-bold
+col-span-1 px-8 text-2xl font-bold text-right
 `;
 
 const TeamDetail = tw.div`
+col-span-3 break-keep
 `;
