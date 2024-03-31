@@ -72,7 +72,7 @@ public class TransactionService {
 
         Transaction transaction = Transaction.builder()
                 .amount(req.getAmount())
-                .depositorName(req.getDepositorName())
+                .depositorName(req.getDepositorName() == null ? "입금" : req.getDepositorName())
                 .fromAccount(null)
                 .toAccount(req.getToAccount())
                 .dummy(optionalDummy.orElse(null))
@@ -106,7 +106,7 @@ public class TransactionService {
 
         Transaction transaction = Transaction.builder()
                 .amount(req.getAmount())
-                .depositorName(req.getDepositorName())
+                .depositorName(req.getDepositorName() == null ? "출금" : req.getDepositorName())
                 .fromAccount(req.getFromAccount())
                 .toAccount(null)
                 .dummy(optionalDummy.orElse(null))
@@ -142,7 +142,7 @@ public class TransactionService {
 
         Transaction transaction = Transaction.builder()
                 .amount(req.getAmount())
-                .depositorName(req.getDepositorName())
+                .depositorName(req.getDepositorName() == null ? toAccount.getHolder().getName() : req.getDepositorName())
                 .fromAccount(req.getFromAccount())
                 .toAccount(req.getToAccount())
                 .dummy(optionalDummy.orElse(null))

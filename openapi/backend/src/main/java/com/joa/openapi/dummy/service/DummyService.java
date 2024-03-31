@@ -267,7 +267,7 @@ public class DummyService {
         if (dummy.getMemberCount() != null) {
             List<Member> memberList = memberRepository.findByDummyId(dummyId);
             for (Member member: memberList) {
-                memberService.delete(member.getId());
+                memberService.delete(apiKey, member.getId());
             }
         } else if (dummy.getAccountCount() != null) {
             List<Account> accountList = accountRepository.findByDummyId(dummyId);
@@ -336,7 +336,7 @@ public class DummyService {
     // 관리자 아이디가 만든 더미인지
     public void AuthoriaztionDummy(UUID dummyId, UUID adminId) {
         Dummy dummy = dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY));
-        if (!dummy.getAdminId.equals(adminId)) {
+        if (!dummy.getAdminId().equals(adminId)) {
             throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
         }
     }
