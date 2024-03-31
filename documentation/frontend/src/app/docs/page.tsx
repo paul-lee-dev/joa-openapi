@@ -1,3 +1,4 @@
+import Doc0 from "@/app/docs/components/docs0";
 import Doc1 from "@/app/docs/components/docs1";
 import Doc2 from "@/app/docs/components/docs2";
 import Doc3 from "@/app/docs/components/docs3";
@@ -11,6 +12,7 @@ import Doc9 from "@/app/docs/components/docs9";
 const Docs = () => {
   return (
     <>
+      <Doc0 />
       <Doc1 />
       <Doc2 />
       <Doc3 />

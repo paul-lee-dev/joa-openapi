@@ -4,7 +4,7 @@ export default function docs() {
   return (
     <>
       <Wrapper>
-        <Title>관리자 대시보드(작성중)</Title>
+        <Title>관리자 대시보드 이용법(작성중)</Title>
         <Subtitle>소제목</Subtitle>
         <TextItem>내용</TextItem>
       </Wrapper>

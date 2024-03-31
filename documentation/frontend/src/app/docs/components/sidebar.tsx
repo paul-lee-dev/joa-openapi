@@ -12,14 +12,15 @@ export default function Sidebar() {
         </BarTitleContainer>
 
         <BarSubTitle>Overview</BarSubTitle>
+        <BarItem>시작하기</BarItem>
         <BarItem>용어 정의</BarItem> 
         <BarItem>프로젝트 구조</BarItem>
         <BarItem>버전 정보</BarItem>
 
-        <BarSubTitle>Getting Started</BarSubTitle>
-        <BarItem>시작하기</BarItem>
+        <BarSubTitle>How to use</BarSubTitle>
         <BarItem>API 명세 설명</BarItem>
-        <BarItem>관리자 대시보드</BarItem>
+        <BarItem>테스트베드 이용법</BarItem>
+        <BarItem>관리자 대시보드 이용법</BarItem>
         <BarItem>관리자 페이지 이용법</BarItem>
         <BarItem>샘플 앱 이용법</BarItem>
         <BarItem>커스텀 방법</BarItem>
@@ -52,6 +53,6 @@ text-xs font-bold p-3 mt-4
 `;
 
 const BarItem = tw.div`
-lg:mr-12 p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
+mr-12 p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
 `;
 

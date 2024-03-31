@@ -5,7 +5,6 @@ export default function docs() {
     <>
       <Wrapper>
         <Title>용어 정의</Title>
-
         <Subtitle>관리자(Admin)</Subtitle>
         <TextItem>
           본 JOA OPEN API의 핵심 이용자입니다. 주로 개발자들로서, JOA OPEN API에 회원가입 후 API 키를 발급받아 자신만의 은행 시스템을 구축할 수 있습니다. JOA OPEN API는 실제 은행 시스템에서 사용되는 기능을 가상으로 구현할 수 있도록 설계되었기에, 이를 활용한다면 은행 관련 개발 프로젝트를 보다 쉽게 진행할 수 있을 것입니다.
