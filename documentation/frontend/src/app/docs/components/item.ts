@@ -1,54 +1,41 @@
-interface Item {
-  id: number;
-  title: string;
-  to?: string; //선택
-}
-
-const bankItems: Item[] = [
-  { id: 1, title: '은행 생성', to: '' },
-  { id: 2, title: '은행 정보 조회', to: '' },
-  { id: 3, title: '은행 정보 수정', to: '' },
-  { id: 4, title: '은행 목록 조회/검색 ', to: '' },
-  { id: 5, title: '은행 삭제', to: '' },
-];
-
-
 export const overviews = [
   {
-    name: '서비스 소개(Introduction)',
-    anchor: '#',
+    name: '용어 정의',
+    anchor: 'doc1',
   },
   {
-    name: '시작하기(Getting Started)',
-    anchor: '#',
+    name: '프로젝트 구조',
+    anchor: 'doc2',
   },
 ]
 
-
 export const components = [
   {
-    name: '은행(Bank)',
-    anchor: '#',
-    sub: bankItems
-  },
-  {
-    name: '고객(Member)',
+    name: '시작하기',
     anchor: '#',
   },
   {
-    name: '예적금상품(Product)',
+    name: 'API 명세 설명',
     anchor: '#',
   },
   {
-    name: '계좌(Account)',
+    name: '관리자 대시보드',
     anchor: '#',
   },
   {
-    name: '거래내역(Transaction)',
+    name: '관리자 페이지 사용법',
     anchor: '#',
   },
   {
-    name: '더미데이터(Dummy)',
+    name: '샘플 앱 조아은행 사용법',
+    anchor: '#',
+  },
+  {
+    name: '커스텀 방법',
+    anchor: '#',
+  },
+  {
+    name: '버전 정보',
     anchor: '#',
   },
 ]
