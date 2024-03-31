@@ -267,7 +267,7 @@ public class DummyService {
         if (dummy.getMemberCount() != null) {
             List<Member> memberList = memberRepository.findByDummyId(dummyId);
             for (Member member: memberList) {
-                memberService.delete(member.getId());
+                memberService.delete(apiKey, member.getId());
             }
         } else if (dummy.getAccountCount() != null) {
             List<Account> accountList = accountRepository.findByDummyId(dummyId);
