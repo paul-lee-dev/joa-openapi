@@ -27,6 +27,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "build/types/**/*.ts"
-  ],
+, "src/app/admin/dashboard/component/ApexGraph.jsx", "src/components/graph/lineGraph.jsx", "src/components/graph/Graph.jsx"  ],
   "exclude": ["node_modules"]
 }

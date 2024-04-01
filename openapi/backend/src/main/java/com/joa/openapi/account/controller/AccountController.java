@@ -27,8 +27,8 @@ public class AccountController {
     }
 
     @PatchMapping
-    public ResponseEntity<?> update(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId, @RequestBody AccountUpdateRequestDto req) {
-        AccountUpdateResponseDto response = accountService.update(apiKey, memberId, req);
+    public ResponseEntity<?> update(@RequestHeader("apiKey") UUID apiKey, @RequestBody AccountUpdateRequestDto req) {
+        AccountUpdateResponseDto response = accountService.update(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 수정에 성공했습니다.", response));
     }
 
@@ -45,8 +45,8 @@ public class AccountController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId, @RequestBody AccountDeleteRequestDto req) {
-        String accountId = accountService.delete(apiKey, memberId, req);
+    public ResponseEntity<?> delete(@RequestHeader("apiKey") UUID apiKey, @RequestBody AccountDeleteRequestDto req) {
+        String accountId = accountService.delete(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 해지에 성공했습니다.", accountId));
     }
 

@@ -62,7 +62,7 @@ public class TransactionService {
                     DummyErrorCode.NO_DUMMY)));
 
         bankAuthorityValidation(apiKey, account.getBankId());
-        checkPassword(account, req.getPassword());
+        // checkPassword(account, req.getPassword());
 
         Long toPrevBalance = account.getBalance();
 
@@ -95,7 +95,7 @@ public class TransactionService {
                 .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
 
         bankAuthorityValidation(apiKey, account.getBankId());
-        checkPassword(account, req.getPassword());
+        // checkPassword(account, req.getPassword());
 
         if(account.getBalance() < req.getAmount())
             throw new RestApiException(TransactionErrorCode.NO_BALANCE);
@@ -129,7 +129,7 @@ public class TransactionService {
                 .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(DummyErrorCode.NO_DUMMY)));
 
         bankAuthorityValidation(apiKey, fromAccount.getBankId());
-        checkPassword(fromAccount, req.getPassword());
+        // checkPassword(fromAccount, req.getPassword());
 
         if(fromAccount.getBalance() < req.getAmount())
             throw new RestApiException(TransactionErrorCode.NO_BALANCE);
