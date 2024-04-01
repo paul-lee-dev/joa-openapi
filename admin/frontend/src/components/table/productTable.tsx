@@ -1,7 +1,11 @@
 import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
 import { FaSort } from "react-icons/fa6";
-import { IProduct, ProductPaymentTypeName, ProductTypeName } from "@/models/Product.interface";
+import {
+  IProduct,
+  ProductPaymentTypeName,
+  ProductTypeName,
+} from "@/models/Product.interface";
 import { formatAmount } from "@/util";
 
 interface IProps {
@@ -57,43 +61,43 @@ export default function ProductTable({ productList }: IProps) {
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {product.bankId}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {ProductTypeName[product.productType]}
                 </div>
               </TableData>
               <TableData className="font-medium whitespace-nowrap">
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {product.name}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {product.description}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {product.rate}%
                 </div>
               </TableData>
 
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {ProductPaymentTypeName[product.paymentType]}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {formatAmount(product.minAmount)}원
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {formatAmount(product.maxAmount)}원
                 </div>
               </TableData>

@@ -44,18 +44,10 @@ const CustomerList = () => {
             <div className="flex gap-3 px-3">
               <Button
                 onClick={() => {
-                  router.push("customer/create");
+                  router.push("member/create");
                 }}
                 id={"create"}
                 name={"생성"}
-              ></Button>
-              <Button
-                onClick={() => {
-                  console.log("customer create btn clicked");
-                  router.push("customer/delete");
-                }}
-                id={"delete"}
-                name={"삭제"}
               ></Button>
             </div>
           </div>

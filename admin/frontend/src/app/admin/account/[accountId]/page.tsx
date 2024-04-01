@@ -64,7 +64,7 @@ export default function AccountDetail({ params: { accountId } }: IProps) {
           <Form>
             <div className="grid gap-3 mb-4 md:grid-cols-2">
               <h1>{`accountId: ${data?.data.accountId}`}</h1>
-              <h1>{`accountName: ${data?.data.accountName}`}</h1>
+              <h1>{`nickname: ${data?.data.nickname}`}</h1>
               <h1>{`balance: ${data?.data.balance}`}</h1>
               <h1>{`isDormant: ${data?.data.isDormant}`}</h1>
               <h1>{`transferLimit: ${data?.data.transferLimit}`}</h1>
@@ -74,12 +74,7 @@ export default function AccountDetail({ params: { accountId } }: IProps) {
               <h1>{`depositAccount: ${data?.data.depositAccount}`}</h1>
               <h1>{`withdrawAccount: ${data?.data.withdrawAccount}`}</h1>
               <h1>{`amount: ${data?.data.amount}`}</h1>
-              <h1>{`holderName: ${data?.data.holderName}`}</h1>
-              <h1>{`productName: ${data?.data.productName}`}</h1>
-              <h1>{`dummyName: ${data?.data.dummyName}`}</h1>
-              <h1>{`bankId: ${data?.data.bankId}`}</h1>
-              <h1>{`createdAt: ${data?.data.createdAt}`}</h1>
-              <h1>{`updatedAt: ${data?.data.updatedAt}`}</h1>
+              <h1>{`dummyId: ${data?.data.dummyId}`}</h1>
             </div>
             {data?.data.isDone ? (
               <div className="flex gap-6 justify-end">

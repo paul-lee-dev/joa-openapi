@@ -1,14 +1,10 @@
 import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
 import { FaSort } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { localAxios } from "@/api/http-common";
-import { useQuery } from "@tanstack/react-query";
-import { IAccount } from "@/models/Account.interface";
+import { IAccountSearch } from "@/models/Account.interface";
 
 interface IProps {
-  accountList: IAccount[];
+  accountList: IAccountSearch[];
 }
 
 export default function AccountTable({ accountList }: IProps) {
@@ -61,32 +57,32 @@ export default function AccountTable({ accountList }: IProps) {
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
               <TableData className="font-medium text-gray-900 whitespace-nowrap">
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {account.accountName}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {account.holderName}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {account.productName ?? ""}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {account.startDate}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {account.endDate}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {account.balance}
                 </div>
               </TableData>

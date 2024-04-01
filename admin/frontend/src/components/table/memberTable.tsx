@@ -45,32 +45,32 @@ export default function MemberTable({ memberList }: IProps) {
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {member.memberId}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {member.bankName}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {member.memberName}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {member.email}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {member.phone}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {member.createdAt}
                 </div>
               </TableData>
@@ -81,7 +81,9 @@ export default function MemberTable({ memberList }: IProps) {
                 }}
                 className="cursor-pointer"
               >
-                <a className="font-medium text-pink-400 hover:text-pink-500">자세히</a>
+                <a className="font-medium text-pink-400 hover:text-pink-500">
+                  자세히
+                </a>
               </TableData>
             </tr>
           ))}
