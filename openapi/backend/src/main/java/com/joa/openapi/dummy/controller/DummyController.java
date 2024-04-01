@@ -24,7 +24,6 @@ public class DummyController {
 
     @PostMapping("/member")
     public ResponseEntity<?> createMember(@RequestHeader("apiKey") UUID apiKey, @RequestBody DummyMemberRequestDto req) {
-        System.out.println(apiKey);
         DummyResponseDto dummyResponseDto = dummyService.createMember(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("멤버 더미데이터 생성 성공했습니다.", dummyResponseDto));
     }
