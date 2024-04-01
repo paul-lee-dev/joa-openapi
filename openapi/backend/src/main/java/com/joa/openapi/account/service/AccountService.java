@@ -7,6 +7,7 @@ import com.joa.openapi.account.repository.AccountRepository;
 import com.joa.openapi.bank.entity.Bank;
 import com.joa.openapi.bank.errorcode.BankErrorCode;
 import com.joa.openapi.bank.repository.BankRepository;
+import com.joa.openapi.common.entity.Api;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.common.repository.ApiRepository;
@@ -203,7 +204,10 @@ public class AccountService {
     }
 
     public Page<AccountSearchResponseDto> search(UUID apiKey, AccountSearchRequestDto req, Pageable pageable) {
-        return accountRepository.searchAccountCustom(req, pageable);
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        List<UUID> bankIds =  bankRepository.findByAdminId(adminId).stream().map(Bank::getId).toList();
+
+        return accountRepository.searchAccountCustom(bankIds, req, pageable);
     }
 
     public void bankAuthorityValidation(UUID apiKey, UUID bankId) {
