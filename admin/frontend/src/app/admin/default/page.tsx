@@ -77,7 +77,6 @@ const Dashboard = () => {
     try {
       const response: AxiosResponse<any> = await localAxios.get(
         "/bank/dashboard/" + bankId
-        // "/bank/dashboard/044664ab-9889-456c-816d-7a0c817733d5"
       );
       setBankStat(response.data.data);
       console.log(
@@ -105,25 +104,25 @@ const Dashboard = () => {
       <div id="statCards" className="flex justify-between gap-2 m-3">
         <StatCard>
           <FaExchangeAlt />
-          <div>
-            <span>총 거래횟수</span>
+          <div className="h-40">
+            <span className="text-50">총 거래횟수 </span>
             {bankStat && bankStat.totalTransactionCnt}
           </div>
         </StatCard>
         <StatCard>
           <FaUsers />
           <div>
-            <span>고객 수</span>
+            <span>고객 수 </span>
             {bankStat && bankStat.totalMemberCnt}
           </div>
         </StatCard>
         <StatCard>
           <FaMoneyBillAlt />
-          <span>총 출금</span> {bankStat && bankStat.totalWithdrawAmount}
+          <span>총 출금 </span> {bankStat && bankStat.totalWithdrawAmount}
         </StatCard>
         <StatCard>
           <FaMoneyCheckAlt />
-          <span>총 입금</span>
+          <span>총 입금 </span>
           {bankStat && bankStat.totalDepositAmount}
         </StatCard>
       </div>
