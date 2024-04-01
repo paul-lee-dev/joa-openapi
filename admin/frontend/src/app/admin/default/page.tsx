@@ -127,7 +127,7 @@ const Dashboard = () => {
           {bankStat && bankStat.totalDepositAmount}
         </StatCard>
       </div>
-      {/* {bankStat && <WeekTransactionGraph bankStat={bankStat} />} */}
+      {bankStat && <WeekTransactionGraph bankStat={bankStat} />}
       {/* <WeekTransactionGraph /> */}
     </div>
   );
