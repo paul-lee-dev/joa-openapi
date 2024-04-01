@@ -1,4 +1,5 @@
 import {
+  Alert,
   ScrollView,
   Text,
   TextInput,
@@ -8,7 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Controller, useForm} from 'react-hook-form';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import Header from '@/components/Header';
 import CommonInput from '@/components/CommonInput';
 import BottomButton from '@/components/BottomButton';
@@ -42,6 +43,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
     mutationFn: join,
     onSuccess: data => {
       console.log(data);
+      Alert.alert('회원가입에 성공했습니다.');
       navigation.replace('Intro');
     },
     onError: err => console.log(err),
@@ -52,6 +54,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
       console.log(data);
       clearErrors('email');
       setEmailValid(true);
+      sendEmailCode();
     },
     onError: err => {
       console.log(err);
@@ -94,6 +97,8 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
   const [emailCode, setEmailCode] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showPassword2, setShowPassword2] = useState<boolean>(false);
+  const emailCount = useRef<number>(300);
+  const intervalId = useRef<any>(null);
 
   const checkEmailValid = () => {
     const emailValue = getValues('email');
@@ -108,19 +113,40 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
     emailSend({email: getValues('email')}).then(res => {
       console.log(res);
       setSendingEmail(true);
+      intervalId.current = setInterval(() => {
+        emailCount.current -= 1;
+        setError('email', {
+          type: 'count',
+          message: `${String(Math.floor(emailCount.current / 60)).padStart(
+            2,
+            '0',
+          )}:${String(emailCount.current % 60).padStart(2, '0')}`,
+        });
+        if (emailCount.current < 0) {
+          clearInterval(intervalId.current);
+          setEmailValid(false);
+          setSendingEmail(false);
+          clearErrors('email');
+          emailCount.current = 300;
+        }
+      }, 1000);
     });
   };
 
   const checkEmailCodeValid = () => {
+    setEmailCodeError(false);
     checkEmailCode({email: getValues('email'), code: emailCode})
       .then(res => {
         console.log(res);
+        clearErrors('email');
         setEmailCodeValid(true);
+        setSendingEmail(false);
+        clearInterval(intervalId.current);
       })
       .catch((err: any) => {
         console.log(err);
+        setEmailCodeError(true);
       });
-    // TODO: 이메일 코드 체크
   };
 
   const onSubmit = (data: JoinForm) => {
@@ -173,14 +199,14 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                       value={value}
                       keyboardType="email-address"
                       autoCapitalize="none"
-                      editable={!sendingEmail}
+                      editable={!emailValid}
                     />
-                    {!sendingEmail && (
+                    {!emailValid && !sendingEmail && (
                       <TouchableOpacity
-                        onPress={emailValid ? sendEmailCode : checkEmailValid}
+                        onPress={checkEmailValid}
                         className="absolute top-0 right-0 translate-y-3 border border-gray-400 rounded-full p-1 flex justify-center items-center">
                         <Text className="text-sm font-medium text-gray-700">
-                          {emailValid ? '인증번호 전송' : '중복 확인'}
+                          {'인증번호 전송'}
                         </Text>
                       </TouchableOpacity>
                     )}
@@ -195,6 +221,16 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                 )}>
                 {errors.email?.message}
               </Text>
+              {emailValid && !sendingEmail && !emailCodeValid && (
+                <Text className="absolute text-blue-400 -bottom-6 left-2">
+                  인증번호를 전송중입니다.
+                </Text>
+              )}
+              {emailCodeValid && (
+                <Text className="absolute text-blue-400 -bottom-6 left-2">
+                  이메일 인증이 완료되었습니다.
+                </Text>
+              )}
               {sendingEmail && (
                 <View className="w-full relative">
                   <TextInput
@@ -210,7 +246,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                     </Text>
                   </TouchableOpacity>
                   {emailCodeError && (
-                    <Text className="absolute bottom-10 left-2 text-red-400">
+                    <Text className="absolute -bottom-6 left-2 text-red-400">
                       인증번호가 올바르지 않습니다.
                     </Text>
                   )}

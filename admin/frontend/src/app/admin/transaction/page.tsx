@@ -2,6 +2,7 @@
 
 import { searchTransactionList } from "@/api/Transaction";
 import Button from "@/components/button/button";
+import { LoadingSpinner } from "@/components/loadingSpinner";
 import Pagination from "@/components/pagination";
 import AccountMultiSearchSelect from "@/components/select/accountMultiSearchSelect";
 import BankMultiSearchSelect from "@/components/select/bankMultiSearchSelect";
@@ -9,7 +10,7 @@ import MultiSearchSelect from "@/components/select/customerMultiSearchSelect";
 import TransactionTable from "@/components/table/transactionTable";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -22,10 +23,14 @@ const Dashboard = () => {
     },
   });
 
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   return (
     <>
       {isLoading ? (
-        <h1>로딩중...</h1>
+        <LoadingSpinner />
       ) : (
         <>
           <form className="flex justify-end m-2">
@@ -66,14 +71,7 @@ const Dashboard = () => {
                 }}
                 id={"create"}
                 name={"생성"}
-              ></Button>
-              <Button
-                onClick={() => {
-                  console.log("delete transaction");
-                }}
-                id={"delete"}
-                name={"삭제"}
-              ></Button>
+              />
             </div>
           </div>
         </>

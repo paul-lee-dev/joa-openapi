@@ -59,14 +59,36 @@ export default function DummyTable({ dummyList }: IProps) {
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
                 />
               </td>
-              <td className="px-6 py-4">{dummy.dummyId}</td>
-              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                {dummy.name}
+              <td className="px-6 py-4">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {dummy.dummyId}
+                </div>
               </td>
-              <td className="px-6 py-4">{dummy.memberCount ?? 0}</td>
-              <td className="px-6 py-4">{dummy.accountCount ?? 0}</td>
-              <td className="px-6 py-4">{dummy.transactionCount ?? 0}</td>
-              <td className="px-6 py-4">{dummy.createdAt}</td>
+              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {dummy.name}
+                </div>
+              </td>
+              <td className="px-6 py-4">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {dummy.memberCount ?? 0}
+                </div>
+              </td>
+              <td className="px-6 py-4">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {dummy.accountCount ?? 0}
+                </div>
+              </td>
+              <td className="px-6 py-4">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {dummy.transactionCount ?? 0}
+                </div>
+              </td>
+              <td className="px-6 py-4">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {dummy.createdAt}
+                </div>
+              </td>
               <td className="px-6 py-4">
                 <a
                   onClick={() => {

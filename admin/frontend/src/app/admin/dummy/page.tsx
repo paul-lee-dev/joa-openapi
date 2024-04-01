@@ -1,6 +1,7 @@
 "use client";
 import { searchDummyList } from "@/api/Dummy";
 import Button from "@/components/button/button";
+import { LoadingSpinner } from "@/components/loadingSpinner";
 import Pagination from "@/components/pagination";
 import BankSelect from "@/components/select/bankNoLabel";
 import DummyTable from "@/components/table/dummyTable";
@@ -21,7 +22,7 @@ const DummyList = () => {
   return (
     <>
       {isLoading ? (
-        <h1>로딩중...</h1>
+        <LoadingSpinner />
       ) : (
         <>
           <div className="flex gap-6 justify-end mt-3 mb-5">
@@ -40,9 +41,10 @@ const DummyList = () => {
               <Button
                 onClick={() => {
                   console.log("dummy edit submit");
+                  router.push("dummy/create");
                 }}
-                id={"edit"}
-                name={"수정"}
+                id={"create"}
+                name={"생성"}
               ></Button>
               <Button
                 onClick={() => {

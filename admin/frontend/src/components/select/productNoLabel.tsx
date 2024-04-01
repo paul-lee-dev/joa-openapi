@@ -1,6 +1,6 @@
 import tw from "tailwind-styled-components";
 
-export default function ProductSelect() {
+export default function ProductNoLabel() {
   return (
     <Wrapper>
       <Label htmlFor="products" className="sr-only">

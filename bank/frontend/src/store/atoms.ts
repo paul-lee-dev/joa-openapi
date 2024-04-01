@@ -20,9 +20,9 @@ const defaultMemberData: IMemberData = {
 };
 
 const defaultBankData: IBankData = {
-  bankId: JOABANK_BANKID ?? '',
+  bankId: JOABANK_BANKID,
   bankName: '조아은행',
-  apiKey: API_KEY ?? '',
+  apiKey: API_KEY,
 };
 
 export const persistAtom =
