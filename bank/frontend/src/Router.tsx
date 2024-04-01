@@ -90,20 +90,9 @@ const globalOption = {options: {headerShown: false}};
 
 function Router(): React.JSX.Element {
   const memberData = useRecoilValue(memberDataAtom);
-  const bankData = useRecoilValue(bankDataAtom);
   useEffect(() => {
     SplashScreen.hide();
-    axiosInstance.interceptors.request.use(
-      config => {
-        config.headers.memberId = memberData?.member?.id;
-        config.headers.apiKey = bankData.apiKey;
-        return config;
-      },
-      error => {
-        return Promise.reject(error);
-      },
-    );
-  }, [memberData, bankData]);
+  }, []);
 
   return (
     <NavigationContainer>

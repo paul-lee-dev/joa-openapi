@@ -51,7 +51,7 @@ function ProductList({
               : 'border border-gray-300 bg-gray-200',
             'flex-grow h-10 flex justify-center items-center ',
           )}>
-          <Text className="text-xl font-medium">입출금통장</Text>
+          <Text className="text-xl font-medium text-gray-700">입출금통장</Text>
         </Pressable>
         <Pressable
           onPress={() => setType('TERM_DEPOSIT')}
@@ -61,7 +61,7 @@ function ProductList({
               : 'border border-gray-300 bg-gray-200',
             'flex-grow h-10 flex justify-center items-center ',
           )}>
-          <Text className="text-xl font-medium">정기예금</Text>
+          <Text className="text-xl font-medium text-gray-700">정기예금</Text>
         </Pressable>
         <Pressable
           onPress={() => setType('FIXED_DEPOSIT')}
@@ -71,7 +71,7 @@ function ProductList({
               : 'border border-gray-300 bg-gray-200',
             'flex-grow h-10 flex justify-center items-center ',
           )}>
-          <Text className="text-xl font-medium">정기적금</Text>
+          <Text className="text-xl font-medium text-gray-700">정기적금</Text>
         </Pressable>
       </View>
       <ScrollView className="w-full flex-grow flex bg-gray-200">
