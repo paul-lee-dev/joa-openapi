@@ -101,7 +101,7 @@ public class ProductService {
     public ProductDetailResponseDto searchOne(UUID apiKey, UUID productId) {
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT));
-        bankAuthorityValidation(apiKey, productId.getBankId());
+        bankAuthorityValidation(apiKey, product.getBankId());
         return ProductDetailResponseDto.toDto(product);
     }
 
