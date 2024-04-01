@@ -13,10 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.joa.openapi.account.entity.QAccount.account;
 import static com.joa.openapi.member.entity.QMember.member;
+import static com.joa.openapi.product.entity.QProduct.product;
 
 @Repository
 @RequiredArgsConstructor
@@ -25,7 +27,7 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory; // JPA 쿼리를 생성하고 실행하는데 사용
 
     @Override
-    public Page<MemberSearchResponseDto> searchMemberCustom(MemberSearchRequestDto req, Pageable pageable) {
+    public Page<MemberSearchResponseDto> searchMemberCustom(UUID adminId, MemberSearchRequestDto req, Pageable pageable) {
 
         // 쿼리 설정
         JPAQuery<Member> query = jpaQueryFactory
@@ -33,7 +35,7 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
                 .leftJoin(member.bank)
                 .fetchJoin()
                 //account의 은행아이디로 은행을 가져와서 은행의 어드민아이디 == apiKey로 admin가져온거랑
-                .where(eqBankName(req.getBankName()), eqMemberName(req.getMemberName()), eqDummy(req.getIsDummy()));
+                .where(eqAdminId(adminId), eqBankName(req.getBankName()), eqMemberName(req.getMemberName()), eqDummy(req.getIsDummy()));
 
         long total = query.fetchCount(); // 전체 계좌 수
 
@@ -49,6 +51,10 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
 
         //페이지 객체 반환
         return new PageImpl<>(res, pageable, total);
+    }
+
+    private BooleanExpression eqAdminId(UUID adminId) {
+        return member.bank.adminId.eq(adminId);
     }
 
     private BooleanExpression eqBankName(String name) {

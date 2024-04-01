@@ -4,7 +4,7 @@ export interface IProduct {
   description: string;
   minAmount: number;
   maxAmount: number;
-  rate: null;
+  rate: number;
   productType: ProductType;
   paymentType: ProductPaymentType;
   isDone: boolean;
