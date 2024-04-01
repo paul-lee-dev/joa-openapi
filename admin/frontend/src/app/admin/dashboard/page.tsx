@@ -1,6 +1,6 @@
 "use client";
 import { localAxios } from "@/api/http-common";
-import { WeekTransactionGraph } from "@/components/graph/Graph";
+// import { WeekTransactionGraph } from "@/components/graph/Graph";
 import {
   FaExchangeAlt,
   FaUsers,
@@ -11,8 +11,7 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import { WeekTransactionLineGraph } from "@/components/graph/lineGraph";
-
-// TODO: change if dummy is enough
+import { WeekTransactionGraph } from "@/components/graph/Graph";
 
 interface Bank {
   bankId: string;
@@ -45,7 +44,7 @@ export interface BankStat {
 
 const Dashboard = () => {
   const api: AxiosInstance = axios.create({
-    baseURL: "https://joa13.site/v1", // JSON 데이터를 가져올 엔드포인트의 URL
+    baseURL: "https://joa13.site/v1",
     headers: {
       apiKey: "638b26db-a6d9-4f08-be30-5ce9f248067e",
       "Content-Type": "application/json",

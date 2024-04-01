@@ -1,173 +1,97 @@
-"use client"
+"use client";
 
-import React, { useEffect, useRef } from "react";
-import dynamic from 'next/dynamic'
-    
-const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
+import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 
-export const WeekTransactionGraph = ({ bankStat }) => {
-  const chartRef = useRef(null);
-  
+const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
+interface WeekTransactionGraphProps {
+  bankStat: {
+    totalTransactionCnt: number;
+    totalMemberCnt: number;
+    totalWithdrawAmount: number | null;
+    totalDepositAmount: number | null;
+    totalTransactionList: {
+      time: string;
+      deposit: number;
+      withdraw: number;
+    }[];
+  };
+}
+
+export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
+  bankStat,
+}) => {
+  const configOption = {
+    chart: {
+      id: "apexchart-example",
+    },
+    xaxis: {
+      floating: false,
+      categories: [
+        "03-02",
+        "03-03",
+        "03-04",
+        "03-05",
+        "03-06",
+        "03-07",
+        "03-08",
+        "03-09",
+      ],
+    },
+   
+  };
+
+  const configSeries = [
+    {
+      name: "입금",
+      color: "#FF82AC",
+      data: [30, 40, 35, 50, 49, 60, 70],
+    },
+    {
+      name: "출금",
+      color: "#16DBCC",
+      data: [12, 20, 31, 51, 29, 13, 10],
+    },
+  ];
+
+  const plotOptions = {
+    bar: {
+      horizontal: false,
+      columnWidth: "80%",
+      borderRadiusApplication: "end",
+      borderRadius: 8,
+    },
+  };
+
+  const [option, setOption] = useState<{
+    chart: { id: string };
+    xaxis: {
+      categories: string[],
+    };
+  }>(configOption);
+
+  const [series, setSeries] = useState(configSeries);
+
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const options = {
-        colors: ["#FF82AC", "#16DBCC"],
-        series: [
-          {
-            name: "입금",
-            color: "#FF82AC",
-            data: [
-              { x: "03-23", y: 131 },
-              { x: "03-24", y: 431 },
-              { x: "03-25", y: 531 },
-              { x: "03-26", y: 231 },
-              { x: "03-26", y: 231 },
-              { x: "03-28", y: 281 },
-              { x: "03-29", y: 422 },
-            ],
-          },
-          {
-            name: "출금",
-            color: "#16DBCC",
-            data: [
-              { x: "03-23", y: 531 },
-              { x: "03-24", y: 431 },
-              { x: "03-25", y: 331 },
-              { x: "03-26", y: 231 },
-              { x: "03-27", y: 431 },
-              { x: "03-28", y: 332 },
-              { x: "03-29", y: 713 },
-            ],
-          },
-        ],
-        chart: {
-          type: "bar",
-          height: "320px",
-          fontFamily: "Inter, sans-serif",
-          toolbar: {
-            show: true,
-          },
-        },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: "80%",
-            borderRadiusApplication: "end",
-            borderRadius: 8,
-          },
-        },
-        tooltip: {
-          shared: true,
-          intersect: false,
-          style: {
-            fontFamily: "Inter, sans-serif",
-          },
-        },
-        states: {
-          hover: {
-            filter: {
-              type: "darken",
-              value: 1,
-            },
-          },
-        },
-        stroke: {
-          show: true,
-          width: 0,
-          colors: ["transparent"],
-        },
-        grid: {
-          show: false,
-          strokeDashArray: 4,
-          padding: {
-            left: 2,
-            right: 2,
-            top: -14,
-          },
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        legend: {
-          show: false,
-        },
-        xaxis: {
-          floating: false,
-          labels: {
-            show: true,
-            style: {
-              fontFamily: "Inter, sans-serif",
-              cssClass: "text-xs font-normal fill-gray-500 dark:fill-gray-400",
-            },
-          },
-          axisBorder: {
-            show: false,
-          },
-          axisTicks: {
-            show: false,
-          },
-        },
-        yaxis: {
-          show: false,
-        },
-        fill: {
-          opacity: 1,
-        },
-      };
+    const depositData = bankStat.totalTransactionList.map(
+      (transaction) => transaction.deposit
+    );
+    const withdrawData = bankStat.totalTransactionList.map(
+      (transaction) => transaction.withdraw
+    );
+    const timeData = bankStat.totalTransactionList.map((transaction) =>
+      transaction.time.slice(5, 10)
+    );
+    setSeries([
+      { name: "입금", data: depositData, color: "#FF82AC" },
+      { name: "출금", data: withdrawData, color: "#16DBCC" },
+    ]);
 
-      const depositData = bankStat.totalTransactionList.map((transaction) => ({
-        x: transaction.time.slice(5, 10),
-        y: transaction.deposit,
-      }));
-
-      const withdrawData = bankStat.totalTransactionList.map((transaction) => ({
-        x: transaction.time.slice(5, 10),
-        y: transaction.withdraw,
-      }));
-
-      options.series = [
-        {
-          name: "입금",
-          color: "#FF82AC",
-          data: depositData,
-        },
-        {
-          name: "출금",
-          color: "#16DBCC",
-          data: withdrawData,
-        },
-      ];
-
-      options.plotOptions = {
-        bar: {
-          horizontal: false,
-          columnWidth: "80%",
-          borderRadiusApplication: "end",
-          borderRadius: 8,
-        },
-      };
-
-      if (
-        document.getElementById("column-chart") &&
-        typeof ApexCharts !== "undefined"
-      ) {
-        if (!chartRef.current) {
-          chartRef.current = new ApexCharts(
-            document.getElementById("column-chart"),
-            options
-          );
-          chartRef.current.render();
-        }
-      }
-
-      return () => {
-        if (chartRef.current) {
-          chartRef.current.destroy();
-          chartRef.current = null;
-        }
-      };
-    }
-  }, [bankStat]);
+    setOption((prevOptions) => ({
+      chart: prevOptions.chart,
+      xaxis: { categories: timeData },
+    }));
+  }, [bankStat.totalTransactionList]);
 
   return (
     <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
@@ -241,7 +165,15 @@ export const WeekTransactionGraph = ({ bankStat }) => {
           </dd>
         </dl>
       </div>
-      <div id="column-chart"></div>
+      <div>
+        <ApexCharts
+          type="bar"
+          options={option}
+          series={series}
+          height={320}
+          width={300}
+        />{" "}
+      </div>
       <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
         <div className="flex justify-between items-center pt-5">
           {/* Button */}

@@ -1,134 +1,85 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+// import ApexCharts from "apexcharts";
 import dynamic from "next/dynamic";
 
 const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-export const WeekTransactionLineGraph = ({ bankStat }) => {
-  const chartRef = useRef(null);
+interface WeekTransactionGraphProps {
+  bankStat: {
+    totalTransactionCnt: number;
+    totalMemberCnt: number;
+    totalWithdrawAmount: number | null;
+    totalDepositAmount: number | null;
+    totalTransactionList: {
+      time: string;
+      deposit: number;
+      withdraw: number;
+    }[];
+  };
+}
+
+export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
+  bankStat,
+}) => {
+  const configOption = {
+    chart: {
+      id: "apexchart-example",
+    },
+    xaxis: {
+      categories: [
+        "03-02",
+        "03-03",
+        "03-04",
+        "03-05",
+        "03-06",
+        "03-07",
+        "03-08",
+        "03-09",
+      ],
+    },
+
+  };
+
+  const configSeries = [
+    {
+      name: "입금",
+      data: [30, 40, 35, 50, 49, 60, 70],
+    },
+    {
+      name: "출금",
+      data: [12, 20, 31, 51, 29, 13, 10],
+    },
+  ];
+
+  const [option, setOption] = useState<{
+    chart: { id: string };
+    xaxis: { categories: string[] };
+  }>(configOption);
+
+  const [series, setSeries] = useState(configSeries);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const options = {
-        series: [
-          {
-            name: "입금",
-            data: [1500, 1418, 1456, 1526, 1356, 1256],
-            color: "#1A56DB",
-          },
-          {
-            name: "출금",
-            data: [643, 413, 765, 412, 1423, 1731],
-            color: "#7E3BF2",
-          },
-        ],
-        chart: {
-          height: "320px",
-          maxWidth: "100%",
-          type: "area",
-          fontFamily: "Inter, sans-serif",
-          dropShadow: {
-            enabled: false,
-          },
-          toolbar: {
-            show: false,
-          },
-        },
-        tooltip: {
-          enabled: true,
-          x: {
-            show: false,
-          },
-        },
-        legend: {
-          show: true,
-        },
-        fill: {
-          type: "gradient",
-          gradient: {
-            opacityFrom: 0.55,
-            opacityTo: 0,
-            shade: "#1C64F2",
-            gradientToColors: ["#1C64F2"],
-          },
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        stroke: {
-          width: 6,
-        },
-        grid: {
-          show: false,
-          strokeDashArray: 4,
-          padding: {
-            left: 2,
-            right: 2,
-            top: -26,
-          },
-        },
-        xaxis: {
-          categories: [
-            "03-05",
-            "03-06",
-            "03-07",
-            "03-08",
-            "03-09",
-            "03-10",
-            "03-11",
-          ],
-          labels: {
-            show: false,
-          },
-          axisBorder: {
-            show: false,
-          },
-          axisTicks: {
-            show: false,
-          },
-        },
-        yaxis: {
-          show: false,
-          labels: {
-            formatter: function (value) {
-              return "₩" + value;
-            },
-          },
-        },
-      };
+    const depositData = bankStat.totalTransactionList.map(
+      (transaction) => transaction.deposit
+    );
+    const withdrawData = bankStat.totalTransactionList.map(
+      (transaction) => transaction.withdraw
+    );
+    const timeData = bankStat.totalTransactionList.map(
+      (transaction) => transaction.time.slice(5, 10)
+    );
+    setSeries([
+      { name: "입금", data: depositData },
+      { name: "출금", data: withdrawData },
+    ]);
 
-      const depositData = bankStat.totalTransactionList.map(
-        (transaction) => transaction.deposit
-      );
-      const withdrawData = bankStat.totalTransactionList.map(
-        (transaction) => transaction.withdraw
-      );
-
-      options.series[0].data = depositData;
-      options.series[1].data = withdrawData;
-
-      if (
-        document.getElementById("column-chart-2") &&
-        typeof ApexCharts !== "undefined"
-      ) {
-        if (!chartRef.current) {
-          chartRef.current = new ApexCharts(
-            document.getElementById("column-chart-2"),
-            options
-          );
-          chartRef.current.render();
-        }
-      }
-
-      return () => {
-        if (chartRef.current) {
-          chartRef.current.destroy();
-          chartRef.current = null;
-        }
-      };
-    }
-  }, [bankStat]);
+    setOption((prevOptions) => ({
+      chart: prevOptions.chart,
+      xaxis: { categories: timeData },
+    }));
+  }, [bankStat.totalTransactionList]);
 
   return (
     <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
@@ -166,7 +117,15 @@ export const WeekTransactionLineGraph = ({ bankStat }) => {
           </svg>
         </div>
       </div>
-      <div id="column-chart-2"></div>
+      <div id="column-chart-2">
+        <ApexCharts
+          type="line"
+          options={option}
+          series={series}
+          height={300}
+          width={300}
+        />
+      </div>
       <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
         <div className="flex justify-between items-center pt-5">
           {/* Button */}
