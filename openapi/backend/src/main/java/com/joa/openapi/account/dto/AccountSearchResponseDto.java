@@ -52,7 +52,7 @@ public class AccountSearchResponseDto {
                 .withdrawAccount(account.getWithdrawAccount())
                 .amount(account.getAmount())
                 .holderName(account.getHolder().getName())
-                /* TODO productName 추가 */
+                .productName(account.getProduct().getName())
                 .dummyName(account.getDummy() == null ? null : account.getDummy().getName())
                 .bankId(account.getBankId())
                 .createdAt(account.getCreatedAt())
