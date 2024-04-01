@@ -73,14 +73,17 @@ export default function BankDetail({ params: { bankId } }: IProps) {
   }, [refetch]);
 
   const onSubmit = (formData: UpdateBankForm) => {
-    updateMutation.mutate([
-      bankId,
-      {
-        name: formData.name,
-        description: formData.description,
-        uri: formData.uri,
-      },
-    ]);
+    let result = confirm("정말로 수정하시겠습니까?");
+    if (result) {
+      updateMutation.mutate([
+        bankId,
+        {
+          name: formData.name,
+          description: formData.description,
+          uri: formData.uri,
+        },
+      ]);
+    }
   };
 
   const deleteBankConfirm = () => {

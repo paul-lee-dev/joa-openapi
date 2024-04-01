@@ -66,8 +66,6 @@ export default function AccountDetail({ params: { accountId } }: IProps) {
     onError: (err) => console.log(err),
   });
 
-  const updateAccountConfirm = () => {};
-
   const deleteAccountConfirm = () => {
     let result = confirm("정말로 계좌를 삭제하시겠습니까?");
     if (result) {

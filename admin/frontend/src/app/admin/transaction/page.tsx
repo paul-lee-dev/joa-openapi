@@ -10,7 +10,7 @@ import MultiSearchSelect from "@/components/select/customerMultiSearchSelect";
 import TransactionTable from "@/components/table/transactionTable";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -22,6 +22,10 @@ const Dashboard = () => {
       return searchTransactionList({ depositorNameKeyword: searchWord });
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   return (
     <>

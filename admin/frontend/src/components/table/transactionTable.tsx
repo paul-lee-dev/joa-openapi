@@ -65,12 +65,12 @@ export default function transactionTable({ transactionList }: IProps) {
               </TableData>
               <TableData>
                 <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
-                  <a
+                  {/* <a
                     href="/admin/transaction/detail"
                     className="font-medium text-pink-400 hover:text-pink-500"
                   >
                     자세히
-                  </a>
+                  </a> */}
                 </div>
               </TableData>
             </tr>

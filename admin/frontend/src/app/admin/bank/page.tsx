@@ -9,15 +9,10 @@ import BankGroupSearch from "@/components/search/bankGroupSearch";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { LoadingSpinner } from "@/components/loadingSpinner";
-
-interface CreateBankForm {
-  name: string;
-  description: string;
-  uri: string;
-}
+import { useRouter } from "next/navigation";
 
 const BankList = () => {
-  const [isModalOpen, setModalState] = useState(false);
+  const router = useRouter();
   const [keyword, setKeyword] = useState<string>("");
   const [searchWord, setSearchWord] = useState<string>("");
   const { data, isLoading, refetch } = useQuery({
@@ -26,47 +21,10 @@ const BankList = () => {
       return searchBankList({ name: searchWord });
     },
   });
-  const mutation = useMutation({
-    mutationFn: createBank,
-    onSuccess: (data) => {
-      console.log(data);
-      reset();
-      toggleModal();
-      alert("은행 생성에 성공했습니다.");
-      refetch();
-    },
-    onError: (err) => alert(err.message),
-  });
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-    reset,
-  } = useForm<CreateBankForm>({
-    defaultValues: {
-      name: "",
-      description: "",
-      uri: "",
-    },
-  });
 
   useEffect(() => {
     refetch();
   }, [refetch]);
-
-  const toggleModal = () => {
-    setModalState(!isModalOpen);
-    console.log("Toggle modal");
-  };
-
-  const onSubmit = (formData: CreateBankForm) => {
-    mutation.mutate({
-      name: formData.name,
-      description: formData.description,
-      uri: formData.uri,
-    });
-  };
 
   const onChangeKeyword = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e);
@@ -110,71 +68,13 @@ const BankList = () => {
             <div className="flex gap-3 px-3">
               <Button
                 onClick={() => {
-                  toggleModal();
+                  router.push("bank/create");
                 }}
                 id={"create"}
                 name={"생성"}
               ></Button>
             </div>
           </div>
-          {isModalOpen && (
-            <Modal>
-              <ModalContent>
-                <InputFormWithButton onSubmit={handleSubmit(onSubmit)}>
-                  <div className="col-span-full">
-                    <label
-                      htmlFor="name"
-                      className="block pb-1 text-sm font-medium leading-6 text-gray-900"
-                    >
-                      은행 이름
-                    </label>
-                    <Input
-                      {...register("name", {
-                        required: "은행명을 입력해주세요.",
-                      })}
-                      placeholder="은행명"
-                    />
-                    <ErrorMsg>{errors.name?.message}</ErrorMsg>
-                  </div>
-                  <div className="col-span-full">
-                    <label
-                      htmlFor="description"
-                      className="block pb-1 text-sm font-medium leading-6 text-gray-900"
-                    >
-                      은행 설명
-                    </label>
-                    <Input
-                      {...register("description", {
-                        required: "은행 설명을 입력해주세요.",
-                      })}
-                      placeholder="은행 설명"
-                    />
-                    <ErrorMsg>{errors.description?.message}</ErrorMsg>
-                  </div>
-                  <div className="col-span-full">
-                    <label
-                      htmlFor="uri"
-                      className="block pb-1 text-sm font-medium leading-6 text-gray-900"
-                    >
-                      은행 로고 (선택)
-                    </label>
-                    <Input {...register("uri")} placeholder="은행 로고 uri" />
-                    <ErrorMsg>{errors.uri?.message}</ErrorMsg>
-                  </div>
-                  <div className="w-full flex justify-end space-x-4">
-                    <SmallBtn
-                      type="submit"
-                      className="bg-gray-400 hover:bg-gray-500"
-                      onClick={toggleModal}
-                    >
-                      취소
-                    </SmallBtn>
-                    <SmallBtn type="submit">추가</SmallBtn>
-                  </div>
-                </InputFormWithButton>
-              </ModalContent>
-            </Modal>
-          )}
         </>
       )}
     </>

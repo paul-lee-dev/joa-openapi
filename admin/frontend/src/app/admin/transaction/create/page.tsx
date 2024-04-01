@@ -1,6 +1,5 @@
 "use client";
 
-import { createProduct } from "@/api/Product";
 import Button from "@/components/button/button";
 import InputText, {
   CommonErrorMsg,
@@ -42,7 +41,7 @@ export default function TransactionCreate() {
     onSuccess: (data) => {
       console.log(data);
       alert("거래내역이 생성되었습니다.");
-      router.replace(`/admin/product/${data.data.transactionId}`);
+      router.replace("/admin/transaction");
     },
     onError: (err) => alert(err.message),
   });
@@ -51,7 +50,7 @@ export default function TransactionCreate() {
     onSuccess: (data) => {
       console.log(data);
       alert("거래내역이 생성되었습니다.");
-      router.replace(`/admin/product/${data.data.transactionId}`);
+      router.replace("/admin/transaction");
     },
     onError: (err) => alert(err.message),
   });
@@ -60,7 +59,7 @@ export default function TransactionCreate() {
     onSuccess: (data) => {
       console.log(data);
       alert("거래내역이 생성되었습니다.");
-      router.replace(`/admin/product/${data.data.transactionId}`);
+      router.replace("/admin/transaction");
     },
     onError: (err) => alert(err.message),
   });
