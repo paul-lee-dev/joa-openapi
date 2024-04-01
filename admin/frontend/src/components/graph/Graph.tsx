@@ -3,37 +3,51 @@
 import React, { useEffect, useRef } from "react";
 import ApexCharts from "apexcharts";
 
-export default function WeekTransactionGraph() {
-  const chartRef = useRef<ApexCharts | null>(null);
+// TODO: change if dummy is enough
+interface WeekTransactionGraphProps {
+  bankStat: {
+    totalTransactionList: {
+      time: string;
+      deposit: number;
+      withdraw: number;
+    }[];
+  };
+}
 
+// export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
+//   bankStat,
+// }) => {
+
+export function WeekTransactionGraph() {
+  const chartRef = useRef<ApexCharts | null>(null);
   useEffect(() => {
     const options = {
       colors: ["#FF82AC", "#16DBCC"],
       series: [
         {
-          name: "Organic",
+          name: "입금",
           color: "#FF82AC",
           data: [
-            { x: "Mon", y: 231 },
-            { x: "Tue", y: 122 },
-            { x: "Wed", y: 63 },
-            { x: "Thu", y: 421 },
-            { x: "Fri", y: 122 },
-            { x: "Sat", y: 323 },
-            { x: "Sun", y: 111 },
+            { x: "03-23", y: 131 },
+            { x: "03-24", y: 431 },
+            { x: "03-25", y: 531 },
+            { x: "03-26", y: 231 },
+            { x: "03-26", y: 231 },
+            { x: "03-28", y: 281 },
+            { x: "03-29", y: 422 },
           ],
         },
         {
-          name: "Social media",
+          name: "출금",
           color: "#16DBCC",
           data: [
-            { x: "Mon", y: 232 },
-            { x: "Tue", y: 113 },
-            { x: "Wed", y: 341 },
-            { x: "Thu", y: 224 },
-            { x: "Fri", y: 522 },
-            { x: "Sat", y: 411 },
-            { x: "Sun", y: 243 },
+            { x: "03-23", y: 531 },
+            { x: "03-24", y: 431 },
+            { x: "03-25", y: 331 },
+            { x: "03-26", y: 231 },
+            { x: "03-27", y: 431 },
+            { x: "03-28", y: 332 },
+            { x: "03-29", y: 713 },
           ],
         },
       ],
@@ -112,27 +126,43 @@ export default function WeekTransactionGraph() {
       },
     };
 
-    if (
-      document.getElementById("column-chart") &&
-      typeof ApexCharts !== "undefined"
-    ) {
-      if (!chartRef.current) {
-        chartRef.current = new ApexCharts(
-          document.getElementById("column-chart"),
-          options
-        );
-        chartRef.current.render();
-      }
-    }
+    // const chartData = bankStat.totalTransactionList.map((transaction) => ({
+    //   x: transaction.time.slice(5,10),
+    //   y: transaction.deposit,
+    // }));
 
-    return () => {
-      if (chartRef.current) {
-        chartRef.current.destroy();
-        chartRef.current = null;
+    // options.series = [
+    //   {
+    //     name: "Deposit",
+    //     color: "#FF82AC",
+    //     data: chartData,
+    //   },
+    // ];
+
+    if (typeof window !== "undefined") {
+      if (
+        document.getElementById("column-chart") &&
+        typeof ApexCharts !== "undefined"
+      ) {
+        if (!chartRef.current) {
+          chartRef.current = new ApexCharts(
+            document.getElementById("column-chart"),
+            options
+          );
+          chartRef.current.render();
+        }
       }
-    };
+
+      return () => {
+        if (chartRef.current) {
+          chartRef.current.destroy();
+          chartRef.current = null;
+        }
+      };
+    }
+    // }, [bankStat]);
   }, []);
-  
+
   return (
     <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <div id="column-chart"></div>
@@ -140,7 +170,7 @@ export default function WeekTransactionGraph() {
         <div className="flex justify-between items-center pt-5">
           {/* Button */}
           <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white">
-            Last 7 days
+            지난 7 일
           </button>
         </div>
       </div>

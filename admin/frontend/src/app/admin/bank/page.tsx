@@ -1,6 +1,6 @@
 "use client";
 import tw from "tailwind-styled-components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import BankTable from "@/components/table/bankTable";
 import Pagination from "@/components/pagination";
 import Button from "@/components/button/button";

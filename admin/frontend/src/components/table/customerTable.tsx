@@ -1,5 +1,6 @@
 import { useRouter, usePathname } from "next/navigation";
 import tw from "tailwind-styled-components";
+import React from "react";
 
 export default function CustomerTable() {
   const router = useRouter();
