@@ -13,7 +13,7 @@ export const memberCreateContent = {
     title: '고객 가입',
     desc: '은행에 가입하여 고객 정보를 등록하는 API입니다. 가입을 통해 은행 고객이 되면 해당 은행 내에서 계좌 생성, 거래내역 조회 등이 가능합니다.',
     method: 'POST',
-    uri: '/v1/member',
+    uri: 'member',
     requestParam: [
         {
             name: 'email',
@@ -92,7 +92,7 @@ export const emailCheckContent = {
     title: '이메일 중복 검사',
     desc: '이메일 중복 검사를 통해 해당 이메일이 이미 은행에 가입되어 있는지 확인을 진행하는 api입니다.  ',
     method: 'GET',
-    uri: '/v1/member/email/{keyword}',
+    uri: 'member/email/{keyword}',
     requestParam: [],
     requestExample: '',
     responseParam: [],
@@ -117,7 +117,7 @@ export const phoneCheckContent = {
     title: '전화번호 중복 검사',
     desc: '전화번호 중복 검사를 통해 해당 전화번호가 이미 은행에 등록되어 있는지 확인을 진행하는 api입니다.  ',
     method: 'GET',
-    uri: '/v1/member/email/{keyword}',
+    uri: 'member/email/{keyword}',
     requestParam: [],
     requestExample: '',
     responseParam: [],
@@ -142,7 +142,7 @@ export const memberReadContent = {
     title: '고객 정보 조회',
     desc: '해당 은행에 등록된 고객의 정보를 조회하여 확인할 수 있는 API입니다. ',
     method: 'GET',
-    uri: '/v1/member/{memberId}',
+    uri: 'member/{memberId}',
     requestParam: [],
     requestExample: '',
     responseParam: [
@@ -209,7 +209,7 @@ export const memberUpdateContent = {
     title: '고객 정보 수정',
     desc: '해당 은행에 등록된 고객의 정보를 수정할 수 있는 API입니다. ',
     method: 'PATCH',
-    uri: '/v1/member/{memberId}',
+    uri: 'member/{memberId}',
     requestParam: [
         {
             name: 'email',
@@ -334,7 +334,7 @@ export const memberDeleteContent = {
     title: '고객 탈퇴',
     desc: '은행에 가입하여 고객 정보를 등록하는 API입니다. 가입을 통해 은행 고객이 되면 해당 은행 내에서 계좌 생성, 거래내역 조회 등이 가능합니다. ',
     method: 'DELETE',
-    uri: '/v1/member/{memberId}',
+    uri: 'member/{memberId}',
     requestParam: [],
     requestExample: '',
     responseParam: [],

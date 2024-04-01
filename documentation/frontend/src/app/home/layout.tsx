@@ -7,7 +7,7 @@ export default function Joa({ children }: { children: React.ReactNode }) {
     <Wrapper>
       <HomeContainer>
         <MainContainer>
-            <Children>{children}</Children>
+          <Children>{children}</Children>
         </MainContainer>
       </HomeContainer>
     </Wrapper>
@@ -24,6 +24,7 @@ h-full
 w-full`;
 
 const MainContainer = tw.div`
+z-10
 mx-2.5  
 flex-none 
 transition-all 

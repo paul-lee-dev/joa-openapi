@@ -13,7 +13,7 @@ export const dummyMemberContent = {
   title: '더미 은행고객 자동 생성',
   desc: '특정 은행에 더미 고객 데이터를 생성하는 API입니다. 더미 고객마다 기본 계좌가 함께 생성되고, 각 계좌에는 10만원의 기본 예치금이 설정됩니다.',
   method: 'POST',
-  uri: 'v1/dummy/member',
+  uri: 'dummy/member',
   requestParam: [
     {
       name: 'count',
@@ -120,7 +120,7 @@ export const dummyAccountContent = {
   title: '더미 계좌 자동 생성',
   desc: '은행의 고객을 선택해 더미 계좌를 생성하는 API입니다. 각 계좌에는 10만원의 기본 예치금이 설정됩니다. 관리자 대시보드 페이지에서는 더미 고객에만 더미 계좌 생성이 가능합니다.',
   method: 'POST',
-  uri: 'v1/dummy/account',
+  uri: 'dummy/account',
   requestParam: [
     {
       name: 'count',
@@ -250,7 +250,7 @@ export const dummyTransactionContent = {
   title: '더미 거래내역 자동 생성',
   desc: '해당 고객의 계좌를 랜덤으로 지정하여 더미 거래내역을 생성하는 API입니다. 입/출금액은 선택된 유저가 소유한 계좌의 잔액을 넘지 않습니다. 반복 주기를 선택하면 그 주기마다 거래내역을 자동으로 생성합니다.',
   method: 'POST',
-  uri: 'v1/dummy/transaction',
+  uri: 'dummy/transaction',
   requestParam: [
     {
       name: 'count',
@@ -395,7 +395,7 @@ export const dummyReadContent = {
   title: '더미 생성내역 상세',
   desc: '특정 더미데이터 생성내역 정보를 조회하는 API입니다.',
   method: 'GET',
-  uri: 'v1/dummy/{DummyId}',
+  uri: 'dummy/{DummyId}',
   requestParam: [],
   requestExample: '',
   responseParam: [
@@ -472,7 +472,7 @@ export const dummyUpdateContent = {
   title: '더미 생성내역 수정',
   desc: '특정 더미데이터 생성내역 정보 중 생성내역의 이름을 수정하는 API입니다.',
   method: 'PATCH',
-  uri: 'v1/dummy/{DummyId}',
+  uri: 'dummy/{DummyId}',
   requestParam: [
     {
       name: 'name',
@@ -574,7 +574,7 @@ export const dummyDeleteContent = {
   title: '더미 생성내역 삭제',
   desc: '특정 더미데이터 생성내역을 삭제하는 API입니다. 삭제 시 해당 생성내역으로 생성한 더미데이터가 함께 삭제됩니다. 거래내역이 삭제되어도 기존의 계좌 잔액은 그대로 유지됩니다.',
   method: 'DELETE',
-  uri: 'v1/dummy/{DummyId}',
+  uri: 'dummy/{DummyId}',
   requestParam: [],
   requestExample: '',
   responseParam: [
@@ -651,7 +651,7 @@ export const dummyDeleteAllContent = {
   title: '더미 전체 삭제',
   desc: '해당 은행에 생성된 더미데이터 전체를 삭제하는 API입니다.',
   method: 'DELETE',
-  uri: 'v1/dummy',
+  uri: 'dummy',
   requestParam: [],
   requestExample: '',
   responseParam: [

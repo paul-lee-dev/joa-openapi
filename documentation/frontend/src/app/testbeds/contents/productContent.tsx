@@ -11,7 +11,7 @@ export const productCreateContent = {
     title: '예적금상품 등록',
     desc: '은행에 가입하여 예적금상품을 등록하는 API입니다. 상품 이름, 설명, 입금 최소/최대 한도, 금리, 상품 타입, 지급 타입을 등록할 수 있습니다.',
     method: 'POST',
-    uri: '/product',
+    uri: 'product',
     requestParam: [
         {
             name: 'name',
@@ -74,9 +74,9 @@ export const productCreateContent = {
     {
         "name" : "보통예금",
         "description" : "예시 설명",
-        "minAmount" : 10000,
-        "maxAmount" : 1000000,
-        "rate" : 5,
+        "minAmount" : "10000",
+        "maxAmount" : "1000000",
+        "rate" : "5",
         "productType" : "ORDINARY_DEPOSIT",
         "paymentType" : "SIMPLE"
     }
@@ -186,7 +186,7 @@ export const productReadContent = {
     title: '예적금상품 상세 조회',
     desc: '등록되어있는 예적금상품의 정보를 상세조회하는 API입니다. 예적금상품을 신청하기 전, 예적금상품의 정보를 확인하고 신청할 수 있습니다.',
     method: 'GET',
-    uri: '/product/{productId}',
+    uri: 'product/{productId}',
     requestParam: [
         {
             name: 'productId',
@@ -301,7 +301,7 @@ export const productUpdateContent = {
     title: '예적금상품 종료',
     desc: '예적금 상품을 종료하는 API입니다. 예적금상품이 종료된 후에는 해당 상품에 가입할 수 없습니다.',
     method: 'PATCH',
-    uri: '/product/{productId}',
+    uri: 'product/{productId}',
     requestParam: [
         {
             name: 'productId',
@@ -386,7 +386,7 @@ export const productDeleteContent = {
     title: '예적금상품 삭제',
     desc: '예적금상품을 삭제하는 API입니다. 종료된 예적금상품 중에서 가입한 고객이 없을 경우에만 삭제가능합니다.',
     method: 'DELETE',
-    uri: '/product/{productId}',
+    uri: 'product/{productId}',
     requestParam: [
         {
             name: 'productId',
