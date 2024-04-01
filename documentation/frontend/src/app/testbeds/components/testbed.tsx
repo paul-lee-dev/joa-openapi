@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { postAxios, getAxios, deleteAxios, patchAxios } from "../api/http-common";
 import tw from "tailwind-styled-components";
 import {
   bankCreateContent,
@@ -58,6 +59,8 @@ import {
 import { components } from "./sidebar";
 
 export interface Content {
+  params?: any;
+  response?: any;
   title: string;
   desc: string;
   method: string;
@@ -91,11 +94,32 @@ export interface ErrorCode {
   desc: string;
 }
 
+export interface responseContent {
+  status: string,
+  message: string,
+  data?: any;
+}
+
 export default function Testbed() {
-  const [content, setContent] = useState<Content>(bankCreateContent);
+
+  //테스트베드 요청 및 응답 연결을 위한 변수
+  const [responseContent, setResponseContent] = useState<responseContent>({
+    status: "",
+    message: "",
+    data: ""
+  });
+
+  //사이드바 클릭 시 렌더링 설정
+  const [content, setContent] = useState<Content>(transactionDepositContent);
   const [selectedItem, setSelectedItem] = useState(1);
 
   const handleItemClick = (index: number) => {
+
+    setResponseContent({
+      ...responseContent,
+      status: '', message: '', data: ''
+    });
+
     switch (index) {
       case 1:
         setContent(bankCreateContent);
@@ -243,12 +267,7 @@ export default function Testbed() {
             <BarItemContainer key={item.name}>
               <BarItem>{item.name}</BarItem>
               {item.sub?.map((sub) => (
-                <BarSubItem
-                  key={sub.id}
-                  onClick={() => handleItemClick(sub.id)}
-                >
-                  {sub.title}
-                </BarSubItem>
+                <BarSubItem key={sub.id} onClick={() => handleItemClick(sub.id)}>{sub.title}</BarSubItem>
               ))}
             </BarItemContainer>
           ))}
@@ -284,7 +303,7 @@ export default function Testbed() {
             ))}
           </TbodyItem>
         </TableItem>
-        <Subtitle>요청 메시지 형태 예시</Subtitle>
+        <Subtitle>요청 예시</Subtitle>
         <RequestItem>{content.requestExample}</RequestItem>
         <Subtitle>정상 응답 코드</Subtitle>
         <TextItem>200 OK</TextItem>
@@ -313,7 +332,7 @@ export default function Testbed() {
             ))}
           </TbodyItem>
         </TableItem>
-        <Subtitle>응답 메시지 형태 예시</Subtitle>
+        <Subtitle>응답 예시</Subtitle>
         <ResponseItem>{content.responseExample}</ResponseItem>
         <Subtitle>에러 코드</Subtitle>
         <TableItem>
@@ -334,13 +353,80 @@ export default function Testbed() {
             ))}
           </TbodyItem>
         </TableItem>
-        <Subtitle>아래의 데이터로 요청 보내기</Subtitle>
-        <RequestItem>{content.requestExample}</RequestItem>
-        <ButtonItem>실행하기</ButtonItem>
-        <Subtitle>응답 본문</Subtitle>
-        <ResponseItem></ResponseItem>
-        <Subtitle>응답 헤더</Subtitle>
-        <ResponseItem></ResponseItem>
+
+        <form className="space-y-6" onSubmit={(e) => {
+          e.preventDefault();
+          const uri = content.uri;
+          const postFunc = async (params: string) => {
+            const response = await postAxios(uri, JSON.parse(params));
+            setResponseContent({
+              ...responseContent,
+              status: response.data.status,
+              message: response.data.message,
+              data: JSON.stringify(response.data.data)
+            });
+            return response.data;
+          };
+          const getFunc = async (params: string) => {
+            const response = await getAxios(uri, JSON.parse(params));
+            setResponseContent({
+              ...responseContent,
+              status: response.data.status,
+              message: response.data.message,
+              data: JSON.stringify(response.data.data)
+            });
+            return response.data;
+          };
+          const patchFunc = async (params: string) => {
+            const response = await patchAxios(uri, JSON.parse(params));
+            setResponseContent({
+              ...responseContent,
+              status: response.data.status,
+              message: response.data.message,
+              data: JSON.stringify(response.data.data)
+            });
+            return response.data;
+          };
+          const deleteFunc = async (params: string) => {
+            const response = await deleteAxios(uri, JSON.parse(params));
+            setResponseContent({
+              ...responseContent,
+              status: response.data.status,
+              message: response.data.message,
+              data: JSON.stringify(response.data.data)
+            });
+            return response.data;
+          };
+
+          switch (content.method) {
+            case "GET":
+              getFunc(content.requestExample);
+              break;
+            case "POST":
+              postFunc(content.requestExample);
+              break;
+            case "PATCH":
+              patchFunc(content.requestExample);
+              break;
+            case "DELETE":
+              deleteFunc(content.requestExample);
+              break;
+            default:
+              break;
+          }
+          // postFunc(content.requestExample);
+        }
+        }>
+          <Subtitle>아래의 데이터로 요청 보내기</Subtitle>
+          <RequestItem>{content.requestExample}</RequestItem>
+          <ButtonItem type='submit'>실행하기</ButtonItem>
+        </form>
+        <Subtitle>응답 status</Subtitle>
+        <ResponseItem>{responseContent.status}</ResponseItem>
+        <Subtitle>응답 message</Subtitle>
+        <ResponseItem>{responseContent.message}</ResponseItem>
+        <Subtitle>응답 data</Subtitle>
+        <ResponseItem>{responseContent.data}</ResponseItem>
       </Wrapper>
     </>
   );
@@ -363,6 +449,7 @@ font-bold
 `;
 
 const TextItem = tw.div`
+leading-7
 `;
 
 const RequestItem = tw.div`
@@ -387,7 +474,6 @@ break-keep
 `;
 
 const TheadItem = tw.thead`
-uppercase 
 bg-gray-100
 `;
 

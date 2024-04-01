@@ -50,7 +50,7 @@ mt-8 space-y-6 text-sm
 `;
 
 const Title = tw.h2`
-text-3xl font-bold mt-24
+text-3xl font-bold mt-24 
 `;
 
 const Subtitle = tw.h3`

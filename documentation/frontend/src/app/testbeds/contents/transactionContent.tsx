@@ -1,6 +1,5 @@
 import { postAxios, getAxios, deleteAxios, patchAxios } from "../api/http-common";
-import {TransactionDepositParams,TransactionDepositResponse} from "../api/transaction.api"
-
+import { TransactionDepositParams, TransactionDepositResponse } from "../api/transaction.api"
 
 //목록 조회/검색 제외 완료 
 
@@ -18,13 +17,15 @@ export const deposit = async (params: TransactionDepositParams): Promise<Transac
     const url = "transaction/deposit";
     const response = await postAxios(url, params);
     return response.data;
-  };
+};
 
 export const transactionDepositContent = {
+    params: Promise<TransactionDepositParams>,
+    response: Promise<TransactionDepositResponse>,
     title: '입금',
     desc: '계좌에 돈을 입금할 때 사용되는 API입니다.',
     method: 'POST',
-    uri: '/transaction/deposit',
+    uri: 'transaction/deposit',
     requestParam: [
         {
             name: 'password',
@@ -65,10 +66,11 @@ export const transactionDepositContent = {
     requestExample: `
     {
         "password": "1234",
-        "amount" : 1500,
-        "toAccount" : "07519673423949533"
+        "amount" : "1500",
+        "toAccount" : "424442390202548348"
     }
-    `,
+    `
+    ,
     responseParam: [
         {
             name: 'transactionId',
@@ -190,7 +192,7 @@ export const transactionWithdrawContent = {
     title: '출금',
     desc: '계좌에 돈을 출금할 때 사용되는 API입니다.',
     method: 'POST',
-    uri: '/transaction/withdraw',
+    uri: 'transaction/withdraw',
     requestParam: [
         {
             name: 'password',
@@ -356,7 +358,7 @@ export const transactionSendContent = {
     title: '이체',
     desc: '한 계좌에서 다른 계좌로 금액을 이체할 수 있는 API입니다.',
     method: 'POST',
-    uri: '/transaction/send',
+    uri: 'transaction/send',
     requestParam: [
         {
             name: 'password',
@@ -530,7 +532,7 @@ export const transaction1wonSendContent = {
     title: '1원 전송',
     desc: '본인 확인을 위해 사용하는 1원 인증 API입니다. 고객의 거래내역의 입금주명에 4글자 단어를 전송해줍니다. ',
     method: 'POST',
-    uri: '/transaction/1wonSend',
+    uri: 'transaction/1wonSend',
     requestParam: [
         {
             name: 'accountId',
@@ -585,7 +587,7 @@ export const transaction1wonConfirmContent = {
     title: '1원인증 확인',
     desc: '1원 인증을 확인하는 API입니다. 1원 인증에서 보낸 4글자가 일치하는지 확인합니다.',
     method: 'POST',
-    uri: '/transaction/1wonConfirm',
+    uri: 'transaction/1wonConfirm',
     requestParam: [
         {
             name: 'accountId',
@@ -640,7 +642,7 @@ export const transactionUpdateContent = {
     title: '거래내역 수정',
     desc: '거래 내역을 수정하는 API입니다. 관리자는 프로젝트 개발의 편의를 위해 필요한 경우 자신의 은행에 속한 고객의 거래 내역을 임의로 수정할 수 있습니다.',
     method: 'PATCH',
-    uri: '/v1/transaction/{transactionId}',
+    uri: 'transaction/{transactionId}',
     requestParam: [
         {
             name: 'transactionId',
@@ -727,7 +729,7 @@ export const transactionDeleteContent = {
     title: '거래내역 삭제',
     desc: '특정 거래 내역을 삭제하는 API입니다. 관리자는 프로젝트 개발의 편의를 위해 필요한 경우 자신의 은행에 속한 고객의 거래 내역을 임의로 수정할 수 있습니다.',
     method: 'DELETE',
-    uri: '/v1/transaction',
+    uri: 'transaction',
     requestParam: [
         {
             name: 'transactionId',

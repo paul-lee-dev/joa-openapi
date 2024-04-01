@@ -10,7 +10,7 @@ export const bankCreateContent = {
   title: "은행 생성",
   desc: "관리자가 은행을 생성하는 API입니다.",
   method: "POST",
-  uri: "/bank",
+  uri: "bank",
   requestParam: [
     {
       name: "name",
@@ -115,7 +115,7 @@ export const bankReadContent = {
   title: "은행 정보 조회",
   desc: "관리자가 특정 은행을 조회하는 API입니다.",
   method: "GET",
-  uri: "/bank/{bankId}",
+  uri: "bank/{bankId}",
   requestParam: [],
   requestExample: "",
   responseParam: [
@@ -185,14 +185,14 @@ export const bankReadContent = {
         "page": null
     }
     `,
-    errorCode: [],
+  errorCode: [],
 };
 
 export const BankUpdateContent = {
   title: "은행 정보 수정",
   desc: "관리자가 은행정보를 수정하는 API입니다.",
   method: "PATCH",
-  uri: "/bank/{bankId}",
+  uri: "bank/{bankId}",
   requestParam: [
     {
       name: "name",
@@ -297,7 +297,7 @@ export const BankListContent = {
   title: "은행 목록 조회/검색",
   desc: "관리자가 은행을 은행 명으로 검색하여 은행 목록을 보는 API입니다.",
   method: "GET",
-  uri: "/bank/search?name={string}",
+  uri: "bank/search?name={string}",
   requestParam: [],
   requestExample: "",
   responseParam: [
@@ -377,14 +377,14 @@ export const BankListContent = {
         ],
         "page": null
     `,
-    errorCode: [],
+  errorCode: [],
 };
 
 export const BankDeleteContent = {
   title: "은행 삭제",
   desc: "관리자가 은행을 삭제하는 API입니다.",
   method: "DELETE",
-  uri: "/bank/{bankId}",
+  uri: "bank/{bankId}",
   requestParam: [],
   requestExample: "",
   responseParam: [
@@ -454,5 +454,5 @@ export const BankDeleteContent = {
         "page": null
     }
     `,
-    errorCode: [],
+  errorCode: [],
 };

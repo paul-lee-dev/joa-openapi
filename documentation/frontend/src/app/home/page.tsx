@@ -1,6 +1,6 @@
 import tw from "tailwind-styled-components";
 import { HiArrowDown } from "react-icons/hi";
-import {posts, stats, post2, qna} from './items';
+import { posts, stats, post2, qna } from './items';
 import { IoMdDownload } from "react-icons/io";
 
 
@@ -16,14 +16,14 @@ const Home = () => {
               <PurpleButtonItem href="/docs">시작하기</PurpleButtonItem>
             </ButtonContainer>
           </SubContainer>
-          <ImageItem src="/sample.png" alt="Product screenshot" />
+          <a href='https://admin.joa13.site/'><ImageItem src="/sample.png" alt="Product screenshot" /></a>
         </MainContainer>
       </Wrapper>
 
       <Wrapper>
         <SubWrapper>
           <ButtonContainer>
-            <PinkButtonItem>특징</PinkButtonItem>
+            <PinkButtonItem>Feature</PinkButtonItem>
           </ButtonContainer>
           <SubTitleItem>개발 생산성 향상을 위한<br />강력하고 편리한 기능</SubTitleItem>
 
@@ -35,50 +35,57 @@ const Home = () => {
                 </SubImageContainer>
                 <FeatureTitle>{post.title}</FeatureTitle>
                 <FeatureDetail>{post.description}</FeatureDetail>
-                </a></FeatureItem>
+              </a></FeatureItem>
             ))}
           </FeatureContainer>
         </SubWrapper>
       </Wrapper>
 
-        <StatContainer>
-          {stats.map((stat) => (
-            <StatItem key={stat.id} >
-              <div>
-                <StatNum>{stat.value}</StatNum>
-                <StatPlus>+</StatPlus>
-              </div>
-              <StatName>{stat.name}</StatName>
-            </StatItem>
-          ))}
-        </StatContainer>
+      <StatContainer>
+        {stats.map((stat) => (
+          <StatItem key={stat.id} >
+            <div>
+              <StatNum>{stat.value}</StatNum>
+              <StatPlus>+</StatPlus>
+            </div>
+            <StatName>{stat.name}</StatName>
+          </StatItem>
+        ))}
+      </StatContainer>
 
-        <Wrapper>
+      <Wrapper>
+        <SubWrapper2>
+          <ButtonContainer>
+            <PurpleButtonItem>Demo</PurpleButtonItem>
+          </ButtonContainer>
+          <SubTitleItem>샘플 앱을 다운받아 사용해 보세요</SubTitleItem>
+        </SubWrapper2>
         <MainContainer>
+          <a href='#'><ImageItem2 src='/joabank1.png' /></a>
           <SubContainer2>
             <MainTitleItem>Joa Bank</MainTitleItem>
-            <MainTitleItem2>(Demo Application)</MainTitleItem2>
             <MainTextItem>
               JOA OPEN API를 활용해 제작한 샘플 은행 앱입니다. 가상의 은행인 조아은행을 배경으로 기본적인 회원 가입, 계좌 생성, 거래내역 확인 등의 대고객(B2C) 기능을 포함하여 구현하였습니다.
             </MainTextItem>
 
             <FeatureContainer2>
-                <FeatureItem2>
-                  <FeatureIconContainer>
-                    <IoMdDownload className="text-2xl text-white drop-shadow" />
-                  </FeatureIconContainer>
-                  <div>
-                    <FeatureTitle2>APK 다운로드</FeatureTitle2>
-                    <FeatureDetail2>조아은행 앱을 직접 사용해 보세요</FeatureDetail2>
-                  </div>
-                </FeatureItem2>
+              <FeatureItem2>
+                <FeatureIconContainer>
+                  <a href="#"><IoMdDownload className="text-2xl text-white drop-shadow" /></a>
+                </FeatureIconContainer>
+                <div>
+                  <FeatureTitle2>APK 다운로드</FeatureTitle2>
+                  <FeatureDetail2>조아은행 앱을 직접 사용해 보세요</FeatureDetail2>
+                </div>
+
+              </FeatureItem2>
             </FeatureContainer2>
           </SubContainer2>
-          <ImageItem2 src='/sample.png' />
+
         </MainContainer>
       </Wrapper>
 
-        <Wrapper>
+      <Wrapper>
         <SubWrapper>
           <ButtonContainer>
             <PinkButtonItem>GitHub</PinkButtonItem>
@@ -135,8 +142,12 @@ const SubWrapper = tw.div`
 mx-auto max-w-7xl px-6 lg:px-8 text-center
 `;
 
+const SubWrapper2 = tw.div`
+mx-auto max-w-7xl px-6 lg:px-8 mb-12 text-center
+`;
+
 const MainContainer = tw.div`
-mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2
+mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 
 `;
 
 const SubContainer = tw.div`
@@ -152,7 +163,7 @@ mt-6 leading-7 break-keep
 `;
 
 const ButtonContainer = tw.div`
-mt-2 py-6
+mt-2 py-6 
 `;
 
 const PinkButtonItem = tw.a`
@@ -166,7 +177,7 @@ text-center font-semibold shadow-md focus:ring-2 focus:ring-offset-2 rounded-ful
 `;
 
 const ImageItem = tw.img`
-rounded-xl shadow-xl 
+rounded-xl shadow-xl z-10
 `;
 
 const SubTitleItem = tw.h3`
@@ -178,7 +189,7 @@ w-full flex justify-center
 `;
 
 const SubImageItem = tw.img`
-w-[12rem] h-[10rem] rounded-lg
+w-[12rem] h-[10rem] rounded-lg object-contain
 `;
 
 const FeatureContainer = tw.div`
@@ -186,7 +197,7 @@ mx-auto my-10 grid max-w-2xl grid-cols-3 gap-y-16 lg:mx-0 lg:max-w-none
 `;
 
 const FeatureIconContainer = tw.div`
-p-4 mx-4 bg-purple-200 rounded-lg
+p-4 mx-4 bg-purple-200 rounded-lg hover:bg-purple-400
 `;
 
 
@@ -208,7 +219,7 @@ mt-10 max-w-xl space-y-8 leading-7
 
 
 const FeatureItem2 = tw.div`
-flex relative gap-2
+flex relative
 `;
 
 
@@ -217,7 +228,7 @@ font-semibold
 `;
 
 const FeatureDetail2 = tw.div`
-text-sm
+text-sm my-1
 `;
 
 
@@ -234,7 +245,7 @@ text-5xl font-semibold
 `;
 
 const StatPlus = tw.span`
-text-5xl text-purple-400
+text-5xl text-pink-400
 `;
 
 const StatName = tw.span`
@@ -247,7 +258,7 @@ flex mx-auto mt-10 grid lg:grid-cols-2 w-2xl
 `;
 
 const PostItem = tw.div`
-group relative m-4 px-3 pt-3 py-8 rounded-lg bg-gray-100 text-left
+group relative m-4 px-3 pt-3 py-8 rounded-lg bg-gray-100 text-left hover:bg-gray-200
 `;
 
 const PostImageContainer = tw.div`
@@ -255,7 +266,7 @@ flex justify-center w-full p-2
 `;
 
 const PostImage = tw.img`
-rounded-lg
+rounded-lg w-[20rem] h-[15rem] object-cover
 `;
 
 const PostTitle = tw.h3`
@@ -300,7 +311,7 @@ p-2 mx-4 mb-2 bg-purple-400 rounded-full
 
 
 const SubContainer2 = tw.div`
-lg:pr-8 lg:pt-4
+lg:pl-8 lg:pt-4
 `;
 
 
@@ -309,6 +320,6 @@ mt-2 text-2xl font-bold tracking-tight sm:text-3xl
 `;
 
 const ImageItem2 = tw.img`
-w-[32rem] h-[22rem] rounded-xl shadow-xl
+h-[22rem] rounded-xl shadow-lg object-cover
 `;
 
