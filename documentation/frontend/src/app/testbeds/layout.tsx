@@ -7,12 +7,7 @@ export default function Joa({ children }: { children: React.ReactNode }) {
   return (
     <Wrapper>
       <DemoContainer>
-        <MainContainer>
-          <SidebarContainer>
-            <Sidebar />
-          </SidebarContainer>
-          <Children>{children}</Children>
-        </MainContainer>
+        <MainContainer>{children}</MainContainer>
       </DemoContainer>
     </Wrapper>
   );
@@ -34,12 +29,3 @@ my-4
 transition-all 
 md:pr-2
 xl:mx-[240px]`;
-
-const SidebarContainer = tw.div`
-`;
-
-const Children = tw.div`
-xl:w-full
-min-h-screen
-p-2
-!pt-[10px] md:p-2`;

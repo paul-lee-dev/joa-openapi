@@ -1,5 +1,8 @@
 import tw from "tailwind-styled-components";
-import {posts, team, stats} from './items';
+import { HiArrowDown } from "react-icons/hi";
+import { posts, stats, post2, qna } from './items';
+import { IoMdDownload } from "react-icons/io";
+
 
 const Home = () => {
   return (
@@ -13,14 +16,14 @@ const Home = () => {
               <PurpleButtonItem href="/docs">시작하기</PurpleButtonItem>
             </ButtonContainer>
           </SubContainer>
-          <ImageItem src="/sample.png" alt="Product screenshot" />
+          <a href='https://admin.joa13.site/'><ImageItem src="/sample.png" alt="Product screenshot" /></a>
         </MainContainer>
       </Wrapper>
 
       <Wrapper>
         <SubWrapper>
           <ButtonContainer>
-            <PinkButtonItem>특징</PinkButtonItem>
+            <PinkButtonItem>Feature</PinkButtonItem>
           </ButtonContainer>
           <SubTitleItem>개발 생산성 향상을 위한<br />강력하고 편리한 기능</SubTitleItem>
 
@@ -32,48 +35,98 @@ const Home = () => {
                 </SubImageContainer>
                 <FeatureTitle>{post.title}</FeatureTitle>
                 <FeatureDetail>{post.description}</FeatureDetail>
-                </a></FeatureItem>
+              </a></FeatureItem>
             ))}
           </FeatureContainer>
         </SubWrapper>
       </Wrapper>
 
-        <StatContainer>
-          {stats.map((stat) => (
-            <StatItem key={stat.id} >
-              <div>
-                <StatNum>{stat.value}</StatNum>
-                <StatPlus>+</StatPlus>
-              </div>
-              <StatName>{stat.name}</StatName>
-            </StatItem>
-          ))}
-        </StatContainer>
+      <StatContainer>
+        {stats.map((stat) => (
+          <StatItem key={stat.id} >
+            <div>
+              <StatNum>{stat.value}</StatNum>
+              <StatPlus>+</StatPlus>
+            </div>
+            <StatName>{stat.name}</StatName>
+          </StatItem>
+        ))}
+      </StatContainer>
+
+      <Wrapper>
+        <SubWrapper2>
+          <ButtonContainer>
+            <PurpleButtonItem>Demo</PurpleButtonItem>
+          </ButtonContainer>
+          <SubTitleItem>샘플 앱을 다운받아 사용해 보세요</SubTitleItem>
+        </SubWrapper2>
+        <MainContainer>
+          <a href='#'><ImageItem2 src='/joabank1.png' /></a>
+          <SubContainer2>
+            <MainTitleItem>Joa Bank</MainTitleItem>
+            <MainTextItem>
+              JOA OPEN API를 활용해 제작한 샘플 은행 앱입니다. 가상의 은행인 조아은행을 배경으로 기본적인 회원 가입, 계좌 생성, 거래내역 확인 등의 대고객(B2C) 기능을 포함하여 구현하였습니다.
+            </MainTextItem>
+
+            <FeatureContainer2>
+              <FeatureItem2>
+                <FeatureIconContainer>
+                  <a href="#"><IoMdDownload className="text-2xl text-white drop-shadow" /></a>
+                </FeatureIconContainer>
+                <div>
+                  <FeatureTitle2>APK 다운로드</FeatureTitle2>
+                  <FeatureDetail2>조아은행 앱을 직접 사용해 보세요</FeatureDetail2>
+                </div>
+
+              </FeatureItem2>
+            </FeatureContainer2>
+          </SubContainer2>
+
+        </MainContainer>
+      </Wrapper>
 
       <Wrapper>
         <SubWrapper>
           <ButtonContainer>
-            <PinkButtonItem>팀</PinkButtonItem>
+            <PinkButtonItem>GitHub</PinkButtonItem>
           </ButtonContainer>
-          <SubTitleItem>제작자 소개</SubTitleItem>
 
-          <TeamContainer>
-            <TeamImageContainer>
-              <TeamImageItem src={team.image} />
-              <TeamSubImageItem src={team.subimage} />
-            </TeamImageContainer>
+          <SubTitleItem>
+            샘플 서비스에 쓰인 코드를 눈으로 확인하고<br />
+            직접 커스텀해서 활용하세요
+          </SubTitleItem>
 
-            <TeamTextContainer>
-              <TeamTitle>{team.title1}</TeamTitle>
-              <TeamDetail>{team.detail1}</TeamDetail>
-            </TeamTextContainer>
-            <TeamTextContainer>
-              <TeamTitle>{team.title2}</TeamTitle>
-              <TeamDetail>{team.detail2}</TeamDetail>
-            </TeamTextContainer>
-          </TeamContainer>
+          <PostContainer>
+            {post2.map((post) => (
+              <PostItem key={post.id} >
+                <PostImageContainer>
+                  <a href={post.href}><PostImage src={post.image.url} /></a>
+                </PostImageContainer>
+                <PostTitle>{post.title}</PostTitle>
+                <PostDetail>{post.description}</PostDetail>
+                <PostLink href={post.href}>바로가기</PostLink>
+              </PostItem>
+            ))}
+          </PostContainer>
         </SubWrapper>
       </Wrapper>
+
+      <QnaWrapper>
+        <QnaTitle> FAQ </QnaTitle>
+        {qna.map((qna) => (
+          <QnaContainer key={qna.question}>
+
+            <QnaQuestionContainer>
+              <QnaQuestionItem> {qna.question} </QnaQuestionItem>
+              <QnaArrowContainer>
+                <HiArrowDown className="text-xl font-bold text-white drop-shadow" />
+              </QnaArrowContainer>
+            </QnaQuestionContainer>
+            <QnaAnswerItem> {qna.answer} </QnaAnswerItem>
+          </QnaContainer>
+        ))}
+      </QnaWrapper>
+
     </>
   );
 };
@@ -89,8 +142,12 @@ const SubWrapper = tw.div`
 mx-auto max-w-7xl px-6 lg:px-8 text-center
 `;
 
+const SubWrapper2 = tw.div`
+mx-auto max-w-7xl px-6 lg:px-8 mb-12 text-center
+`;
+
 const MainContainer = tw.div`
-mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2
+mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2 
 `;
 
 const SubContainer = tw.div`
@@ -106,7 +163,7 @@ mt-6 leading-7 break-keep
 `;
 
 const ButtonContainer = tw.div`
-mt-2 py-6
+mt-2 py-6 
 `;
 
 const PinkButtonItem = tw.a`
@@ -120,7 +177,7 @@ text-center font-semibold shadow-md focus:ring-2 focus:ring-offset-2 rounded-ful
 `;
 
 const ImageItem = tw.img`
-rounded-xl shadow-xl 
+rounded-xl shadow-xl z-10
 `;
 
 const SubTitleItem = tw.h3`
@@ -132,12 +189,17 @@ w-full flex justify-center
 `;
 
 const SubImageItem = tw.img`
-w-[12rem] h-[10rem] rounded-lg
+w-[12rem] h-[10rem] rounded-lg object-contain
 `;
 
 const FeatureContainer = tw.div`
 mx-auto my-10 grid max-w-2xl grid-cols-3 gap-y-16 lg:mx-0 lg:max-w-none
 `;
+
+const FeatureIconContainer = tw.div`
+p-4 mx-4 bg-purple-200 rounded-lg hover:bg-purple-400
+`;
+
 
 const FeatureItem = tw.div`
 flex max-w-xl flex-col justify-between p-2 lg:px-4 lg:py-8 hover:bg-gray-100 rounded-lg
@@ -150,6 +212,25 @@ mt-5 text-lg font-semibold
 const FeatureDetail = tw.div`
 mt-3 text-sm leading-6 break-keep
 `;
+
+const FeatureContainer2 = tw.div`
+mt-10 max-w-xl space-y-8 leading-7
+`;
+
+
+const FeatureItem2 = tw.div`
+flex relative
+`;
+
+
+const FeatureTitle2 = tw.div`
+font-semibold
+`;
+
+const FeatureDetail2 = tw.div`
+text-sm my-1
+`;
+
 
 const StatContainer = tw.div`
 grid grid-cols-2 gap-x-8 gap-y-16 lg:grid-cols-4 p-8 bg-gray-100   rounded-lg text-center
@@ -164,37 +245,81 @@ text-5xl font-semibold
 `;
 
 const StatPlus = tw.span`
-text-5xl text-purple-400
+text-5xl text-pink-400
 `;
 
 const StatName = tw.span`
 font-semibold leading-7
 `;
 
-const TeamContainer = tw.div`
-mx-auto max-w-7xl pt-12 px-6
+
+const PostContainer = tw.div`
+flex mx-auto mt-10 grid lg:grid-cols-2 w-2xl
 `;
 
-const TeamImageContainer = tw.div`
-grid grid-cols-1 lg:grid-cols-3 gap-8 text-center
+const PostItem = tw.div`
+group relative m-4 px-3 pt-3 py-8 rounded-lg bg-gray-100 text-left hover:bg-gray-200
 `;
 
-const TeamImageItem = tw.img`
-col-span-2 w-full h-[16rem] rounded-lg
+const PostImageContainer = tw.div`
+flex justify-center w-full p-2
 `;
 
-const TeamSubImageItem = tw.img`
-w-full h-[16rem] rounded-lg
+const PostImage = tw.img`
+rounded-lg w-[20rem] h-[15rem] object-cover
 `;
 
-const TeamTextContainer = tw.div`
-grid lg:grid-cols-4 pt-12 text-left 
+const PostTitle = tw.h3`
+mt-4 text-lg font-semibold leading-6
 `;
 
-const TeamTitle = tw.h3`
-col-span-1 px-8 text-2xl font-bold text-right
+const PostDetail = tw.div`
+my-4 text-sm leading-6 
 `;
 
-const TeamDetail = tw.div`
-col-span-3 break-keep
+const PostLink = tw.a`
+text-sm leading-6
 `;
+
+const QnaWrapper = tw.div`
+mt-24 py-24 bg-purple-300
+`;
+
+const QnaTitle = tw.h2`
+text-3xl pb-4 text-center font-bold text-white
+`;
+
+const QnaContainer = tw.div`
+min-w-0 gap-x-4 mx-24 my-6 p-6 bg-gray-50 rounded-lg
+`;
+
+const QnaQuestionContainer = tw.div`
+flex justify-between
+`;
+
+const QnaQuestionItem = tw.div`
+font-semibold mt-1
+`;
+
+const QnaAnswerItem = tw.div`
+mt-4 px-4 text-sm leading-7 break-keep
+`;
+
+const QnaArrowContainer = tw.div`
+p-2 mx-4 mb-2 bg-purple-400 rounded-full
+`;
+
+
+const SubContainer2 = tw.div`
+lg:pl-8 lg:pt-4
+`;
+
+
+const MainTitleItem2 = tw.h3`
+mt-2 text-2xl font-bold tracking-tight sm:text-3xl
+`;
+
+const ImageItem2 = tw.img`
+h-[22rem] rounded-xl shadow-lg object-cover
+`;
+

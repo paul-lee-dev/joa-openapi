@@ -15,7 +15,7 @@ export default function Sidebar() {
       <SidebarContainer>
         <ListAnchor
           onClick={() => {
-            router.push("/admin");
+            router.push("/admin/dashboard");
           }}
         >
           <GrOverview></GrOverview>

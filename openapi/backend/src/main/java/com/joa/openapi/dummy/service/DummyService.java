@@ -173,10 +173,20 @@ public class DummyService {
         dummyRepository.save(dummy);
 
         int userCount = req.getUsers().size();
+        // 거래내역 생성 시 유저를 선택하지 않았을 때
+        if (userCount == 0) {
+            throw new RestApiException(DummyErrorCode.NO_SELECT_MEMBER);
+        }
         Random random = new Random();
         for (int i = 0; i < cnt; i++) {
             // 입금 할지, 출금 할지, 송금 할지
-            int type = random.nextInt(3);
+            int type;
+            // 선택한 유저가 1명이하면 입/출금 거래내역만 생성
+            if (userCount == 1) {
+                type = random.nextInt(2);
+            } else {
+                type = random.nextInt(3);
+            }
             // 대상 멤버 번호
             int fromMemberNum = random.nextInt(userCount);
             // 대상 멤버
@@ -276,7 +286,7 @@ public class DummyService {
                         .accountId(account.getId())
                         .password(account.getPassword())
                         .build();
-                accountService.delete(apiKey, account.getDummy().getAdminId(), dto);
+                accountService.delete(apiKey, dto);
             }
         } else if (dummy.getTransactionCount() != null) {
             List<Transaction> transactionsList = transactionRepository.findByDummyId(dummyId);
