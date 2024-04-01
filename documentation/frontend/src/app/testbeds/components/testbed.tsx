@@ -10,11 +10,51 @@ import {
 } from "../contents/bankContent";
 import {
   memberCreateContent,
-  memberDeleteContent,
-  memberListContent,
+  emailCheckContent,
+  phoneCheckContent,
   memberReadContent,
   memberUpdateContent,
+  memberListContent,
+  memberDeleteContent,
 } from "../contents/memberContent";
+import {
+  productCreateContent,
+  productReadContent,
+  productUpdateContent,
+  productListContent,
+  productDeleteContent
+} from "../contents/productContent";
+import {
+  accountCreateContent,
+  accountReadContent,
+  accountRemainReadContent,
+  accountUpdateContent,
+  accountLimitUpdateContent,
+  accountPasswordUpdateContent,
+  accountMemberListContent,
+  accountListContent,
+  accountDeleteContent
+} from "../contents/accountContent";
+import {
+transactionDepositContent,
+transactionWithdrawContent,
+transactionSendContent,
+transaction1wonSendContent,
+transaction1wonConfirmContent,
+transactionUpdateContent,
+transactionListContent,
+transactionDeleteContent
+} from "../contents/transactionContent";
+import {
+dummyMemberContent,
+dummyAccountContent,
+dummyTransactionContent,
+dummyReadContent,
+dummyListContent,
+dummyUpdateContent,
+dummyDeleteContent,
+dummyDeleteAllContent
+} from "../contents/dummyContent";
 import { components } from "./sidebar";
 
 export interface Content {
@@ -72,14 +112,117 @@ export default function Testbed() {
       case 5:
         setContent(BankDeleteContent);
         break;
-
       case 11:
         setContent(memberCreateContent);
         break;
-      // case 12:
-      //   setContent(member);
-      //   break;
+      case 12:
+        setContent(emailCheckContent);
+        break;
       case 13:
+        setContent(phoneCheckContent);
+        break;
+      case 14:
+        setContent(memberReadContent);
+        break;
+      case 15:
+        setContent(memberUpdateContent);
+        break;
+      case 16:
+        setContent(memberListContent);
+        break;
+      case 17:
+        setContent(memberDeleteContent);
+        break;
+      case 21:
+        setContent(productCreateContent);
+        break;
+      case 22:
+        setContent(productReadContent);
+        break;
+      case 23:
+        setContent(productUpdateContent);
+        break;
+      case 24:
+        setContent(productListContent);
+        break;
+      case 25:
+        setContent(productDeleteContent);
+        break;
+      case 31:
+        setContent(accountCreateContent);
+        break;
+      case 32:
+        setContent(accountReadContent);
+        break;
+      case 33:
+        setContent(accountRemainReadContent);
+        break;
+      case 34:
+        setContent(accountUpdateContent);
+        break;
+      case 35:
+        setContent(accountLimitUpdateContent);
+        break;
+      case 36:
+        setContent(accountPasswordUpdateContent);
+        break;
+      case 37:
+        setContent(accountMemberListContent);
+        break;
+      case 38:
+        setContent(accountListContent);
+        break;
+      case 39:
+        setContent(accountDeleteContent);
+        break;
+      case 41: 
+      setContent(transactionDepositContent);
+      break;
+      case 42: 
+      setContent(transactionWithdrawContent);
+      break;
+      case 43: 
+      setContent(transactionSendContent);
+      break;
+      case 44: 
+      setContent(transaction1wonSendContent);
+      break;
+      case 45: 
+      setContent(transaction1wonConfirmContent);
+      break;
+      case 46: 
+      setContent(transactionUpdateContent);
+      break;
+      case 47: 
+      setContent(transactionListContent);
+      break;
+      case 48: 
+      setContent(transactionDeleteContent);
+      break;
+      case 51: 
+      setContent(dummyMemberContent);
+      break;
+      case 52: 
+      setContent(dummyAccountContent);
+      break;
+      case 53: 
+      setContent(dummyTransactionContent);
+      break;
+      case 54: 
+      setContent(dummyReadContent);
+      break;
+      case 55: 
+      setContent(dummyListContent);
+      break;
+      case 56: 
+      setContent(dummyUpdateContent);
+      break;
+      case 57: 
+      setContent(dummyDeleteContent);
+      break;
+      case 58: 
+      setContent(dummyDeleteAllContent);
+      break;
       default:
         setContent(bankCreateContent); // Set content to null if selectedItem doesn't match any case
     }
@@ -185,11 +328,11 @@ export default function Testbed() {
             </TrItem>
           </TheadItem>
           <TbodyItem>
-            {content.errorCode.map((e) => (
-              <TrItem key={e.name}>
-                <TdItem>{e.name}</TdItem>
-                <TdItem>{e.httpstatus}</TdItem>
-                <TdItem>{e.desc}</TdItem>
+            {content.errorCode.map((err) => (
+              <TrItem key={err.name}>
+                <TdItem>{err.name}</TdItem>
+                <TdItem>{err.httpstatus}</TdItem>
+                <TdItem>{err.desc}</TdItem>
               </TrItem>
             ))}
           </TbodyItem>
@@ -246,6 +389,7 @@ const TableItem = tw.table`
 w-full 
 text-xs
 text-left 
+break-keep
 `;
 
 const TheadItem = tw.thead`
@@ -265,7 +409,7 @@ px-4 py-3
 `;
 
 const TdItem = tw.td`
-px-4 py-3 break-keep
+px-4 py-3
 `;
 
 const ButtonItem = tw.button`

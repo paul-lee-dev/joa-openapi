@@ -396,7 +396,7 @@ export const dummyReadContent = {
   desc: '특정 더미데이터 생성내역 정보를 조회하는 API입니다.',
   method: 'GET',
   uri: 'v1/dummy/{DummyId}',
-  requestParam: '',
+  requestParam: [],
   requestExample: '',
   responseParam: [
     {
@@ -563,71 +563,11 @@ export const dummyListContent = {
   desc: '',
   method: '',
   uri: '',
-  requestParam: [
-    {
-      name: '',
-      desc: '',
-      type: '',
-      required: '',
-      etc: '',
-    },
-    {
-      name: '',
-      desc: '',
-      type: '',
-      required: '',
-      etc: '',
-    },
-    {
-      name: '',
-      desc: '',
-      type: '',
-      required: '',
-      etc: '',
-    },
-  ],
+  requestParam: [],
   requestExample: '',
-  responseParam: [
-    {
-      name: '',
-      desc: '',
-      type: '',
-      required: '',
-      etc: '',
-    },
-    {
-      name: '',
-      desc: '',
-      type: '',
-      required: '',
-      etc: '',
-    },
-    {
-      name: '',
-      desc: '',
-      type: '',
-      required: '',
-      etc: '',
-    },
-  ],
+  responseParam: [],
   responseExample: '',
-  errorCode: [
-    {
-      name: '',
-      httpstatus: '',
-      desc: '',
-    },
-    {
-      name: '',
-      httpstatus: '',
-      desc: '',
-    },
-    {
-      name: '',
-      httpstatus: '',
-      desc: '',
-    },
-  ],
+  errorCode: [],
 }
 
 export const dummyDeleteContent = {
@@ -635,7 +575,7 @@ export const dummyDeleteContent = {
   desc: '특정 더미데이터 생성내역을 삭제하는 API입니다. 삭제 시 해당 생성내역으로 생성한 더미데이터가 함께 삭제됩니다. 거래내역이 삭제되어도 기존의 계좌 잔액은 그대로 유지됩니다.',
   method: 'DELETE',
   uri: 'v1/dummy/{DummyId}',
-  requestParam: '',
+  requestParam: [],
   requestExample: '',
   responseParam: [
     {
@@ -712,7 +652,7 @@ export const dummyDeleteAllContent = {
   desc: '해당 은행에 생성된 더미데이터 전체를 삭제하는 API입니다.',
   method: 'DELETE',
   uri: 'v1/dummy',
-  requestParam: '',
+  requestParam: [],
   requestExample: '',
   responseParam: [
     {
@@ -807,5 +747,5 @@ export const dummyDeleteAllContent = {
     "page": null
 }
   `,
-  errorCode: '',
+  errorCode: [],
 }

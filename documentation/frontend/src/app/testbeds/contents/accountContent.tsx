@@ -4,7 +4,7 @@
 //accountReadContent 계좌 상세 조회
 //accountRemainReadContent 계좌 잔액 조회
 //accountUpdateContent 계좌 정보 수정
-//acoountLimitUpdateContent 계좌 이체 한도 변경
+//accountLimitUpdateContent 계좌 이체 한도 변경
 //accountPasswordUpdateContent 계좌 비밀번호 변경
 //accountMemberListContent 고객 계좌 목록 조회
 //accountListContent 계좌 목록 조회/검색
@@ -14,7 +14,7 @@ export const accountCreateContent = {
     title: '계좌 개설',
     desc: '은행에 가입하여 계좌를 등록하는 API입니다. 해당 은행에 등록된 예적금상품을 바탕으로 등록할 수 있습니다.',
     method: 'POST',
-    uri: '/account/{bankId}',
+    uri: 'account/{bankId}',
     requestParam: [
         {
             name: 'nickname',
@@ -274,7 +274,7 @@ export const accountReadContent = {
     title: '계좌 상세 조회',
     desc: '해당 은행에 등록된 고객의 특정 계좌 정보를 조회하여 확인할 수 있는 API입니다.',
     method: 'POST',
-    uri: '/account/detail',
+    uri: 'account/detail',
     requestParam: [
         {
             name: 'accountId',
@@ -456,7 +456,7 @@ export const accountRemainReadContent = {
     title: '계좌 잔액 조회',
     desc: '해당 계좌의 잔액을 조회하는 API입니다.',
     method: 'POST',
-    uri: '/account/balance',
+    uri: 'account/balance',
     requestParam: [
         {
             name: 'accountId',
@@ -519,7 +519,7 @@ export const accountUpdateContent = {
     title: '계좌 정보 수정',
     desc: '계좌 정보를 수정하는 API입니다. 계좌이름, 입금 계좌 변경, 출금 계좌 변경이 가능합니다.',
     method: 'PATCH',
-    uri: '/account',
+    uri: 'account',
     requestParam: [
         {
             name: 'accountId',
@@ -695,11 +695,11 @@ export const accountUpdateContent = {
     ],
 }
 
-export const acoountLimitUpdateContent = {
+export const accountLimitUpdateContent = {
     title: '계좌 이체한도 변경',
     desc: '계좌의 이체 한도를 변경하는 API입니다.',
     method: 'PATCH',
-    uri: '/account',
+    uri: 'account',
     requestParam: [
         {
             name: 'accountId',
@@ -722,7 +722,7 @@ export const acoountLimitUpdateContent = {
         "transferLimit": "200"
     }
     `,
-    responseParam: '',
+    responseParam: [],
     responseExample: `
     {
         "status": "SUCCESS",
@@ -744,7 +744,7 @@ export const accountPasswordUpdateContent = {
     title: '계좌 비밀번호 변경',
     desc: '계좌 비밀번호를 수정하는 API입니다.',
     method: 'PATCH',
-    uri: '/account',
+    uri: 'account',
     requestParam: [
         {
             name: 'accountId',
@@ -767,7 +767,7 @@ export const accountPasswordUpdateContent = {
         "password": "5555"
     }
     `,
-    responseParam: '',
+    responseParam: [],
     responseExample: `
     {
         "status": "SUCCESS",
@@ -789,8 +789,8 @@ export const accountMemberListContent = {
     title: '고객 계좌 목록 조회',
     desc: '특정 고객이 개설한 계좌 목록을 조회할 수 있는 API입니다.',
     method: 'GET',
-    uri: '/account/member',
-    requestParam: '',
+    uri: 'account/member',
+    requestParam: [],
     requestExample: '',
     responseParam: [
         {
@@ -924,78 +924,18 @@ export const accountListContent = {
     desc: '',
     method: '',
     uri: '',
-    requestParam: [
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-    ],
+    requestParam: [],
     requestExample: '',
-    responseParam: [
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-    ],
+    responseParam: [],
     responseExample: '',
-    errorCode: [
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-    ],
+    errorCode: [],
 }
 
 export const accountDeleteContent = {
     title: '계좌 해지',
     desc: '등록한 계좌를 해지하는 API입니다.',
     method: 'DELETE',
-    uri: '/account',
+    uri: 'account',
     requestParam: [
         {
             name: 'accountId',
@@ -1018,7 +958,7 @@ export const accountDeleteContent = {
         "password": 5555
     }
     `,
-    responseParam: '',
+    responseParam: [],
     responseExample: `
     {
         "status": "SUCCESS",

@@ -7,7 +7,7 @@
 //productListContent
 //productDeleteContent 
 
-const productCreateContent = {
+export const productCreateContent = {
     title: '예적금상품 등록',
     desc: '은행에 가입하여 예적금상품을 등록하는 API입니다. 상품 이름, 설명, 입금 최소/최대 한도, 금리, 상품 타입, 지급 타입을 등록할 수 있습니다.',
     method: 'POST',
@@ -182,7 +182,7 @@ const productCreateContent = {
     ],
 }
 
-const productReadContent = {
+export const productReadContent = {
     title: '예적금상품 상세 조회',
     desc: '등록되어있는 예적금상품의 정보를 상세조회하는 API입니다. 예적금상품을 신청하기 전, 예적금상품의 정보를 확인하고 신청할 수 있습니다.',
     method: 'GET',
@@ -297,7 +297,7 @@ const productReadContent = {
     ],
 }
 
-const productUpdateContent = {
+export const productUpdateContent = {
     title: '예적금상품 종료',
     desc: '예적금 상품을 종료하는 API입니다. 예적금상품이 종료된 후에는 해당 상품에 가입할 수 없습니다.',
     method: 'PATCH',
@@ -370,79 +370,19 @@ const productUpdateContent = {
     ],
 }
 
-const productListContent = {
+export const productListContent = {
     title: '예적금상품 목록 조회/검색',
     desc: '예적금상품을 조회할 수 있는 API입니다. 특정 조건이 없으면 전체 조회가 되고, 특정 조건으로 원하는 상품 조회도 가능합니다.',
     method: 'GET',
     uri: '',
-    requestParam: [
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-    ],
+    requestParam: [],
     requestExample: '',
-    responseParam: [
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-    ],
+    responseParam: [],
     responseExample: '',
-    errorCode: [
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-    ],
+    errorCode: [],
 }
 
-const productDeleteContent = {
+export const productDeleteContent = {
     title: '예적금상품 삭제',
     desc: '예적금상품을 삭제하는 API입니다. 종료된 예적금상품 중에서 가입한 고객이 없을 경우에만 삭제가능합니다.',
     method: 'DELETE',

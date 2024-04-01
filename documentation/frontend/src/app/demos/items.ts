@@ -8,11 +8,6 @@ export const features = [
         '조아은행 앱을 직접 사용해 보세요.',
       icon: IoMdDownload,
     },
-    {
-      name: '웹 버전 써 보기',
-      description: '조아은행 앱의 웹 버전을 둘러보세요.',
-      icon: FaChrome,
-    },
   ]
   
   export const posts = [

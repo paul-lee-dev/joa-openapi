@@ -93,9 +93,9 @@ export const emailCheckContent = {
     desc: '이메일 중복 검사를 통해 해당 이메일이 이미 은행에 가입되어 있는지 확인을 진행하는 api입니다.  ',
     method: 'GET',
     uri: '/v1/member/email/{keyword}',
-    requestParam: '',
+    requestParam: [],
     requestExample: '',
-    responseParam: '',
+    responseParam: [],
     responseExample: `
     {
         "status": "SUCCESS",
@@ -118,9 +118,9 @@ export const phoneCheckContent = {
     desc: '전화번호 중복 검사를 통해 해당 전화번호가 이미 은행에 등록되어 있는지 확인을 진행하는 api입니다.  ',
     method: 'GET',
     uri: '/v1/member/email/{keyword}',
-    requestParam: '',
+    requestParam: [],
     requestExample: '',
-    responseParam: '',
+    responseParam: [],
     responseExample: `
     {
         "status": "SUCCESS",
@@ -143,7 +143,7 @@ export const memberReadContent = {
     desc: '해당 은행에 등록된 고객의 정보를 조회하여 확인할 수 있는 API입니다. ',
     method: 'GET',
     uri: '/v1/member/{memberId}',
-    requestParam: '',
+    requestParam: [],
     requestExample: '',
     responseParam: [
         {
@@ -323,71 +323,11 @@ export const memberListContent = {
     desc: '',
     method: '',
     uri: '',
-    requestParam: [
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-    ],
+    requestParam: [],
     requestExample: '',
-    responseParam: [
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-    ],
+    responseParam: [],
     responseExample: '',
-    errorCode: [
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-    ],
+    errorCode: [],
 }
 
 export const memberDeleteContent = {
@@ -395,9 +335,9 @@ export const memberDeleteContent = {
     desc: '은행에 가입하여 고객 정보를 등록하는 API입니다. 가입을 통해 은행 고객이 되면 해당 은행 내에서 계좌 생성, 거래내역 조회 등이 가능합니다. ',
     method: 'DELETE',
     uri: '/v1/member/{memberId}',
-    requestParam: '',
+    requestParam: [],
     requestExample: '',
-    responseParam: '',
+    responseParam: [],
     responseExample: `
     {
         "status": "SUCCESS",

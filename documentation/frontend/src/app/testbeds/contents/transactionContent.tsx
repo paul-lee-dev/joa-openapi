@@ -597,7 +597,7 @@ export const transaction1wonConfirmContent = {
         "transactionId" : "1d20aba9-ee39-4444-92e4-c542a6aa417d"
     }
     `,
-    responseParam: '',
+    responseParam: [],
     responseExample: `
     {
         "status": "SUCCESS",
@@ -676,7 +676,7 @@ export const transactionUpdateContent = {
         "toAccount" : "0.44020096888170424"
       }
     `,
-    responseParam: '',
+    responseParam: [],
     responseExample: `
     {
         "status": "SUCCESS",
@@ -705,71 +705,11 @@ export const transactionListContent = {
     desc: '',
     method: '',
     uri: '',
-    requestParam: [
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-    ],
+    requestParam: [],
     requestExample: '',
-    responseParam: [
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-        {
-            name: '',
-            desc: '',
-            type: '',
-            required: '',
-            etc: '',
-        },
-    ],
+    responseParam: [],
     responseExample: '',
-    errorCode: [
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-    ],
+    errorCode: [],
 }
 
 export const transactionDeleteContent = {
@@ -791,7 +731,7 @@ export const transactionDeleteContent = {
         "transactionId" : "1d20aba9-ee39-4444-92e4-c542a6aa417d"
     }
     `,
-    responseParam: '',
+    responseParam: [],
     responseExample: `
     {
         "status": "SUCCESS",

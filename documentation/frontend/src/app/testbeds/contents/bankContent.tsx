@@ -108,23 +108,7 @@ export const bankCreateContent = {
         "page": null
     }
     `,
-  errorCode: [
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-  ],
+  errorCode: [],
 };
 
 export const bankReadContent = {
@@ -201,23 +185,7 @@ export const bankReadContent = {
         "page": null
     }
     `,
-  errorCode: [
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-  ],
+    errorCode: [],
 };
 
 export const BankUpdateContent = {
@@ -322,23 +290,7 @@ export const BankUpdateContent = {
         "page": null
     }
     `,
-  errorCode: [
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-  ],
+  errorCode: [],
 };
 
 export const BankListContent = {
@@ -425,23 +377,7 @@ export const BankListContent = {
         ],
         "page": null
     `,
-  errorCode: [
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-  ],
+    errorCode: [],
 };
 
 export const BankDeleteContent = {
@@ -518,21 +454,5 @@ export const BankDeleteContent = {
         "page": null
     }
     `,
-  errorCode: [
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-    {
-      name: "",
-      httpstatus: "",
-      desc: "",
-    },
-  ],
+    errorCode: [],
 };
