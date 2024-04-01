@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-// import ApexCharts from "apexcharts";
 import dynamic from "next/dynamic";
 
 const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
@@ -39,7 +38,6 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
         "03-09",
       ],
     },
-
   };
 
   const configSeries = [
@@ -67,8 +65,8 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
     const withdrawData = bankStat.totalTransactionList.map(
       (transaction) => transaction.withdraw
     );
-    const timeData = bankStat.totalTransactionList.map(
-      (transaction) => transaction.time.slice(5, 10)
+    const timeData = bankStat.totalTransactionList.map((transaction) =>
+      transaction.time.slice(5, 10)
     );
     setSeries([
       { name: "입금", data: depositData },
@@ -137,21 +135,6 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
             type="button"
           >
             지난 {bankStat.totalTransactionList.length} 일
-            <svg
-              className="w-2.5 m-2.5 ms-1.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m1 1 4 4 4-4"
-              />
-            </svg>
           </button>
           <a
             href="#"

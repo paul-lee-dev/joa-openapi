@@ -11,7 +11,7 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import { WeekTransactionLineGraph } from "@/components/graph/lineGraph";
-import { WeekTransactionGraph } from "@/components/graph/Graph";
+import { WeekTransactionGraph } from "@/components/graph/barGraph";
 
 interface Bank {
   bankId: string;
