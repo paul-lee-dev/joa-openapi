@@ -22,6 +22,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -58,17 +59,24 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         UUID bankId = req.getBankId();
 
         if (bankId == null) {
+            // bankId선택 안했는데, admin의 은행들이 여러개인 경우
             if (!adminBankIds.isEmpty()) {
                 List<String> accountIds = jpaQueryFactory.select(account.id)
                     .from(account)
                     .where(account.bankId.in(adminBankIds))
                     .fetch();
 
+                // 은행의 계좌가 하나라도 있을 때
                 if (!accountIds.isEmpty()) {
                     condition.and(transaction.fromAccount.in(accountIds)
                         .or(transaction.toAccount.in(accountIds)));
                 }
+
+            } else {
+                // adminBankIds가 비어있는 경우, 즉 admin에 할당된 은행이 없을 때
+                return new PageImpl<>(Collections.emptyList(), pageable, 0); // 비어있는 결과 반환
             }
+
         } else {
             if (adminBankIds.contains(bankId)) {
                 List<String> accountIds = jpaQueryFactory.select(account.id)
