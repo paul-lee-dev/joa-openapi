@@ -37,7 +37,89 @@ interface BankStat {
 }
 
 const Dashboard = () => {
-  return <Table></Table>;
+  const api: AxiosInstance = axios.create({
+    baseURL: "https://joa13.site/v1", // JSON 데이터를 가져올 엔드포인트의 URL
+    headers: {
+      apiKey: "9b5c450f-abd4-419f-b092-bcd96e66392f",
+      "Content-Type": "application/json",
+    },
+  });
+
+  const [bankList, setBankList] = useState<Bank[]>([]);
+  const [selectedBankId, setSelectedBankId] = useState<string | null>(null);
+
+  const [bankStat, setBankStat] = useState<BankStat | undefined>(undefined);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response: AxiosResponse<{
+          status: string;
+          message: string;
+          data: Bank[];
+          page: null;
+        }> = await localAxios.get("/bank/search");
+        setBankList(response.data.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, [api]);
+
+  const handleBankChange = async (bankId: string) => {
+    setSelectedBankId(bankId);
+    try {
+      const response: AxiosResponse<BankStat> = await localAxios.get(
+        "/bank/dashboard/" + selectedBankId
+      );
+      setBankStat(response.data);
+      console.log("bankstat response.data: " + response.data);
+    } catch (error) {
+      console.error("Error fetching bank statistics:", error);
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex-end">
+        <Select id="banks" onChange={(e) => handleBankChange(e.target.value)}>
+          {bankList.map((bank) => (
+            <option key={bank.bankId} value={bank.bankId}>
+              {bank.name}
+            </option>
+          ))}
+        </Select>
+      </div>
+      <div id="statCards" className="flex justify-between gap-2 m-3">
+        <StatCard>
+          <FaExchangeAlt />
+          <div>
+            <span>총 거래횟수</span>
+            {bankStat && bankStat.totalTransactionsCnt}
+          </div>
+        </StatCard>
+        <StatCard>
+          <FaUsers />
+          <div>
+            <span>고객 수</span>
+            {bankStat && bankStat.totalMemberCnt}
+          </div>
+        </StatCard>
+        <StatCard>
+          <FaMoneyBillAlt />
+          <span>총 출금</span> {bankStat && bankStat.totalWithdrawAmount}
+        </StatCard>
+        <StatCard>
+          <FaMoneyCheckAlt />
+          <span>총 입금</span>
+          {bankStat && bankStat.totalDepositAmount}
+        </StatCard>
+      </div>
+      {bankStat && <WeekTransactionGraph bankStat={bankStat} />}
+      {/* <WeekTransactionGraph /> */}
+    </div>
+  );
 };
 
 const Select = tw.select`
