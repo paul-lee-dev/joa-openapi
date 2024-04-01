@@ -17,7 +17,9 @@ export default function Sidebar() {
           components.map((item) => (
             <BarItemContainer key={item.name}>
             <BarItem>{item.name}</BarItem>
-
+            {item.sub?.map((sub)=>(
+            <BarSubItem key={sub.id}>{sub.title}</BarSubItem>
+            ))}
             </BarItemContainer>
           ))
         }
@@ -50,12 +52,13 @@ text-xs font-bold p-3 mt-4
 `;
 
 const BarItemContainer = tw.div`
-
+rounded-md hover:bg-gray-100 
 `;
 
 const BarItem = tw.div`
-mr-12 p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
+mr-12 p-2 flex space-4 font-bold
 `;
 
 const BarSubItem = tw.a`
+mr-12 p-2 flex space-2 text-xs hover:font-bold
 `;

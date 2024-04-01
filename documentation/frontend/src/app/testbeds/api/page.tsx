@@ -1,8 +1,8 @@
 "use client";
 import tw from "tailwind-styled-components";
 import { useState } from "react";
-import { JoinMemberParams, JoinMemberResponse } from "./components/api";
-import { postAxios, useAxios } from "./components/http-common";
+import { JoinMemberParams, JoinMemberResponse } from "./member.api";
+import { postAxios, useAxios } from "./http-common";
 
 const Home = () => {
 
