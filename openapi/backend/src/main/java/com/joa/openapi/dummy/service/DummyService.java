@@ -286,7 +286,7 @@ public class DummyService {
                         .accountId(account.getId())
                         .password(account.getPassword())
                         .build();
-                accountService.delete(apiKey, account.getDummy().getAdminId(), dto);
+                accountService.delete(apiKey, dto);
             }
         } else if (dummy.getTransactionCount() != null) {
             List<Transaction> transactionsList = transactionRepository.findByDummyId(dummyId);
