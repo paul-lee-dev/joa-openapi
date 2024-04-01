@@ -69,7 +69,8 @@ export const components = [
       { id: 44, title: "1원 전송", to: "" },
       { id: 45, title: "1원 인증 확인", to: "" },
       { id: 46, title: "거래내역 수정", to: "" },
-      { id: 47, title: "거래내역 삭제", to: "" },
+      { id: 47, title: "거래내역 목록 조회/검색", to: ""}, 
+      { id: 48, title: "거래내역 삭제", to: "" },
     ],
   },
   {
