@@ -46,7 +46,7 @@ public class AccountController {
 
     @DeleteMapping
     public ResponseEntity<?> delete(@RequestHeader("apiKey") UUID apiKey, @RequestBody AccountDeleteRequestDto req) {
-        String accountId = accountService.delete(apiKey, memberId, req);
+        String accountId = accountService.delete(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("계좌 해지에 성공했습니다.", accountId));
     }
 
