@@ -1,3 +1,7 @@
+import { postAxios, getAxios, deleteAxios, patchAxios } from "../api/http-common";
+import {TransactionDepositParams,TransactionDepositResponse} from "../api/transaction.api"
+
+
 //목록 조회/검색 제외 완료 
 
 //transactionDepositContent 입금
@@ -8,6 +12,13 @@
 //transactionUpdateContent 거래내역 수정
 //transactionListContent 거래내역 목록 조회/검색
 //transactionDeleteContent 거래내역 삭제
+
+
+export const deposit = async (params: TransactionDepositParams): Promise<TransactionDepositResponse> => {
+    const url = "transaction/deposit";
+    const response = await postAxios(url, params);
+    return response.data;
+  };
 
 export const transactionDepositContent = {
     title: '입금',

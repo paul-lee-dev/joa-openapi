@@ -33,6 +33,7 @@ const Docs: React.FC = () => {
 
   return (
     <Wrapper>
+      <SubWrapper>
       <SidebarContainer>
         <SidebarWrapper>
           <BarTitleContainer>
@@ -64,6 +65,7 @@ const Docs: React.FC = () => {
           ))}
         </Children>
       </MainContainer>
+      </SubWrapper>
     </Wrapper>
   );
 };
@@ -72,6 +74,10 @@ const Wrapper = tw.div`
 flex
 h-full
 w-full`;
+
+const SubWrapper = tw.div`
+xl:ml-[120px]
+`;
 
 const MainContainer = tw.div`
 flex

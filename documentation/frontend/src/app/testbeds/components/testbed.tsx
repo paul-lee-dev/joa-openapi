@@ -36,24 +36,24 @@ import {
   accountDeleteContent
 } from "../contents/accountContent";
 import {
-transactionDepositContent,
-transactionWithdrawContent,
-transactionSendContent,
-transaction1wonSendContent,
-transaction1wonConfirmContent,
-transactionUpdateContent,
-transactionListContent,
-transactionDeleteContent
+  transactionDepositContent,
+  transactionWithdrawContent,
+  transactionSendContent,
+  transaction1wonSendContent,
+  transaction1wonConfirmContent,
+  transactionUpdateContent,
+  transactionListContent,
+  transactionDeleteContent
 } from "../contents/transactionContent";
 import {
-dummyMemberContent,
-dummyAccountContent,
-dummyTransactionContent,
-dummyReadContent,
-dummyListContent,
-dummyUpdateContent,
-dummyDeleteContent,
-dummyDeleteAllContent
+  dummyMemberContent,
+  dummyAccountContent,
+  dummyTransactionContent,
+  dummyReadContent,
+  dummyListContent,
+  dummyUpdateContent,
+  dummyDeleteContent,
+  dummyDeleteAllContent
 } from "../contents/dummyContent";
 import { components } from "./sidebar";
 
@@ -175,61 +175,58 @@ export default function Testbed() {
       case 39:
         setContent(accountDeleteContent);
         break;
-      case 41: 
-      setContent(transactionDepositContent);
-      break;
-      case 42: 
-      setContent(transactionWithdrawContent);
-      break;
-      case 43: 
-      setContent(transactionSendContent);
-      break;
-      case 44: 
-      setContent(transaction1wonSendContent);
-      break;
-      case 45: 
-      setContent(transaction1wonConfirmContent);
-      break;
-      case 46: 
-      setContent(transactionUpdateContent);
-      break;
-      case 47: 
-      setContent(transactionListContent);
-      break;
-      case 48: 
-      setContent(transactionDeleteContent);
-      break;
-      case 51: 
-      setContent(dummyMemberContent);
-      break;
-      case 52: 
-      setContent(dummyAccountContent);
-      break;
-      case 53: 
-      setContent(dummyTransactionContent);
-      break;
-      case 54: 
-      setContent(dummyReadContent);
-      break;
-      case 55: 
-      setContent(dummyListContent);
-      break;
-      case 56: 
-      setContent(dummyUpdateContent);
-      break;
-      case 57: 
-      setContent(dummyDeleteContent);
-      break;
-      case 58: 
-      setContent(dummyDeleteAllContent);
-      break;
+      case 41:
+        setContent(transactionDepositContent);
+        break;
+      case 42:
+        setContent(transactionWithdrawContent);
+        break;
+      case 43:
+        setContent(transactionSendContent);
+        break;
+      case 44:
+        setContent(transaction1wonSendContent);
+        break;
+      case 45:
+        setContent(transaction1wonConfirmContent);
+        break;
+      case 46:
+        setContent(transactionUpdateContent);
+        break;
+      case 47:
+        setContent(transactionListContent);
+        break;
+      case 48:
+        setContent(transactionDeleteContent);
+        break;
+      case 51:
+        setContent(dummyMemberContent);
+        break;
+      case 52:
+        setContent(dummyAccountContent);
+        break;
+      case 53:
+        setContent(dummyTransactionContent);
+        break;
+      case 54:
+        setContent(dummyReadContent);
+        break;
+      case 55:
+        setContent(dummyListContent);
+        break;
+      case 56:
+        setContent(dummyUpdateContent);
+        break;
+      case 57:
+        setContent(dummyDeleteContent);
+        break;
+      case 58:
+        setContent(dummyDeleteAllContent);
+        break;
       default:
         setContent(bankCreateContent); // Set content to null if selectedItem doesn't match any case
     }
-
-    console.log("index: ", index);
     setSelectedItem(index);
-    console.log("after set: ", selectedItem);
   };
 
   return (
@@ -337,15 +334,12 @@ export default function Testbed() {
             ))}
           </TbodyItem>
         </TableItem>
+        <Subtitle>아래의 데이터로 요청 보내기</Subtitle>
+        <RequestItem>{content.requestExample}</RequestItem>
         <ButtonItem>실행하기</ButtonItem>
-        <ButtonItem>응답 숨기기</ButtonItem>
         <Subtitle>응답 본문</Subtitle>
         <ResponseItem></ResponseItem>
-        <Subtitle>응답 코드</Subtitle>
-        <ResponseItem></ResponseItem>
         <Subtitle>응답 헤더</Subtitle>
-        <ResponseItem></ResponseItem>
-        <Subtitle>샘플 소스 코드 생성</Subtitle>
         <ResponseItem></ResponseItem>
       </Wrapper>
     </>
