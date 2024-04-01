@@ -3,7 +3,6 @@
 import Button from "@/components/button/button";
 import InputText from "@/components/input/inputText";
 import BankSelect from "@/components/select/bank";
-import MyAsyncSelect from "@/components/select/multiSearchSelect";
 import tw from "tailwind-styled-components";
 
 export default function CustomerCreate() {
@@ -22,7 +21,7 @@ export default function CustomerCreate() {
           ></InputText>
         </div>
         <div className="flex justify-end">
-          <Button id={"detailSubmit"} name={"생성"}></Button>
+          {/* <Button id={"detailSubmit"} name={"생성"}></Button> */}
         </div>
       </Form>
     </>

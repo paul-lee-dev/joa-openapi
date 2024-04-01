@@ -59,8 +59,8 @@ export default function CustomerDetail() {
           ></InputText>
         </div>
         <div className="flex gap-6 justify-end">
-          <Button id={"edit"} name={"수정"}></Button>
-          <Button id={"delete"} name={"삭제"}></Button>
+          {/* <Button id={"edit"} name={"수정"}></Button>
+          <Button id={"delete"} name={"삭제"}></Button> */}
         </div>
       </Form>
     </>
