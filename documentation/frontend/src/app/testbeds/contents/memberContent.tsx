@@ -1,4 +1,5 @@
-//고객목록 제외 완료
+//목록 조회/검색 제외 완료
+//export 붙이기
 
 //memberCreateContent
 //emailCheckContent
