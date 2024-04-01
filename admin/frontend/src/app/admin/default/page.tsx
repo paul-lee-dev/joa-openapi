@@ -28,26 +28,31 @@ interface totalTransactionList {
   deposit: number;
   withdraw: number;
 }
-interface BankStat {
-  totalTransactionsCnt: number;
+export interface BankStat {
+  totalTransactionCnt: number;
   totalMemberCnt: number;
-  totalWithdrawAmount: number;
-  totalDepositAmount: number;
-  totalTransactionList: totalTransactionList[];
+  totalWithdrawAmount: number | null;
+  totalDepositAmount: number | null;
+  totalTransactionList: [
+    {
+      time: string;
+      deposit: number;
+      withdraw: number;
+    }
+  ];
 }
 
 const Dashboard = () => {
   const api: AxiosInstance = axios.create({
     baseURL: "https://joa13.site/v1", // JSON 데이터를 가져올 엔드포인트의 URL
     headers: {
-      apiKey: "9b5c450f-abd4-419f-b092-bcd96e66392f",
+      apiKey: "638b26db-a6d9-4f08-be30-5ce9f248067e",
       "Content-Type": "application/json",
     },
   });
 
   const [bankList, setBankList] = useState<Bank[]>([]);
   const [selectedBankId, setSelectedBankId] = useState<string | null>(null);
-
   const [bankStat, setBankStat] = useState<BankStat | undefined>(undefined);
 
   useEffect(() => {
@@ -65,16 +70,22 @@ const Dashboard = () => {
       }
     };
     fetchData();
-  }, [api]);
+  }, []);
 
   const handleBankChange = async (bankId: string) => {
     setSelectedBankId(bankId);
     try {
-      const response: AxiosResponse<BankStat> = await localAxios.get(
-        "/bank/dashboard/" + selectedBankId
+      const response: AxiosResponse<any> = await localAxios.get(
+        "/bank/dashboard/" + bankId
+        // "/bank/dashboard/044664ab-9889-456c-816d-7a0c817733d5"
       );
-      setBankStat(response.data);
-      console.log("bankstat response.data: " + response.data);
+      setBankStat(response.data.data);
+      console.log(
+        "bankstat response.data: " + JSON.stringify(response.data.data)
+      );
+      console.log(
+        "bankstat.totalTransactionCnt: " + bankStat?.totalDepositAmount
+      );
     } catch (error) {
       console.error("Error fetching bank statistics:", error);
     }
@@ -96,7 +107,7 @@ const Dashboard = () => {
           <FaExchangeAlt />
           <div>
             <span>총 거래횟수</span>
-            {bankStat && bankStat.totalTransactionsCnt}
+            {bankStat && bankStat.totalTransactionCnt}
           </div>
         </StatCard>
         <StatCard>
@@ -116,7 +127,7 @@ const Dashboard = () => {
           {bankStat && bankStat.totalDepositAmount}
         </StatCard>
       </div>
-      {bankStat && <WeekTransactionGraph bankStat={bankStat} />}
+      {/* {bankStat && <WeekTransactionGraph bankStat={bankStat} />} */}
       {/* <WeekTransactionGraph /> */}
     </div>
   );
