@@ -80,12 +80,6 @@ const Dashboard = () => {
         "/bank/dashboard/" + bankId
       );
       setBankStat(response.data.data);
-      console.log(
-        "bankstat response.data: " + JSON.stringify(response.data.data)
-      );
-      console.log(
-        "bankstat.totalTransactionCnt: " + bankStat?.totalDepositAmount
-      );
     } catch (error) {
       console.error("Error fetching bank statistics:", error);
     }

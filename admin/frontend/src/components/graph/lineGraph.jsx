@@ -1,26 +1,13 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import ApexCharts from "apexcharts";
+import dynamic from "next/dynamic";
 
-interface WeekTransactionGraphProps {
-  bankStat: {
-    totalTransactionCnt: number;
-    totalMemberCnt: number;
-    totalWithdrawAmount: number | null;
-    totalDepositAmount: number | null;
-    totalTransactionList: {
-      time: string;
-      deposit: number;
-      withdraw: number;
-    }[];
-  };
-}
+const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
-  bankStat,
-}) => {
-  const chartRef = useRef<ApexCharts | null>(null);
+export const WeekTransactionLineGraph = ({ bankStat }) => {
+  const chartRef = useRef(null);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const options = {
@@ -104,7 +91,7 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
         yaxis: {
           show: false,
           labels: {
-            formatter: function (value: number) {
+            formatter: function (value) {
               return "₩" + value;
             },
           },
@@ -121,28 +108,25 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
       options.series[0].data = depositData;
       options.series[1].data = withdrawData;
 
-      // TODO: refactor this window rendering problem
-      if (typeof window !== "undefined") {
-        if (
-          document.getElementById("column-chart-2") &&
-          typeof ApexCharts !== "undefined"
-        ) {
-          if (!chartRef.current) {
-            chartRef.current = new ApexCharts(
-              document.getElementById("column-chart-2"),
-              options
-            );
-            chartRef.current.render();
-          }
+      if (
+        document.getElementById("column-chart-2") &&
+        typeof ApexCharts !== "undefined"
+      ) {
+        if (!chartRef.current) {
+          chartRef.current = new ApexCharts(
+            document.getElementById("column-chart-2"),
+            options
+          );
+          chartRef.current.render();
         }
-
-        return () => {
-          if (chartRef.current) {
-            chartRef.current.destroy();
-            chartRef.current = null;
-          }
-        };
       }
+
+      return () => {
+        if (chartRef.current) {
+          chartRef.current.destroy();
+          chartRef.current = null;
+        }
+      };
     }
   }, [bankStat]);
 

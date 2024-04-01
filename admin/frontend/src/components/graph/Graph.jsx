@@ -1,26 +1,13 @@
-"use client";
+"use client"
 
 import React, { useEffect, useRef } from "react";
-import ApexCharts from "apexcharts";
+import dynamic from 'next/dynamic'
+    
+const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-interface WeekTransactionGraphProps {
-  bankStat: {
-    totalTransactionCnt: number;
-    totalMemberCnt: number;
-    totalWithdrawAmount: number | null;
-    totalDepositAmount: number | null;
-    totalTransactionList: {
-      time: string;
-      deposit: number;
-      withdraw: number;
-    }[];
-  };
-}
-
-export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
-  bankStat,
-}) => {
-  const chartRef = useRef<ApexCharts | null>(null);
+export const WeekTransactionGraph = ({ bankStat }) => {
+  const chartRef = useRef(null);
+  
   useEffect(() => {
     if (typeof window !== "undefined") {
       const options = {
@@ -160,27 +147,25 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
         },
       };
 
-      if (typeof window !== "undefined") {
-        if (
-          document.getElementById("column-chart") &&
-          typeof ApexCharts !== "undefined"
-        ) {
-          if (!chartRef.current) {
-            chartRef.current = new ApexCharts(
-              document.getElementById("column-chart"),
-              options
-            );
-            chartRef.current.render();
-          }
+      if (
+        document.getElementById("column-chart") &&
+        typeof ApexCharts !== "undefined"
+      ) {
+        if (!chartRef.current) {
+          chartRef.current = new ApexCharts(
+            document.getElementById("column-chart"),
+            options
+          );
+          chartRef.current.render();
         }
-
-        return () => {
-          if (chartRef.current) {
-            chartRef.current.destroy();
-            chartRef.current = null;
-          }
-        };
       }
+
+      return () => {
+        if (chartRef.current) {
+          chartRef.current.destroy();
+          chartRef.current = null;
+        }
+      };
     }
   }, [bankStat]);
 
