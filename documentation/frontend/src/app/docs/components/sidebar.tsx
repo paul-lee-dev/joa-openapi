@@ -53,6 +53,6 @@ text-xs font-bold p-3 mt-4
 `;
 
 const BarItem = tw.div`
-mr-12 p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
+mr-12 p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold cursor-pointer
 `;
 
