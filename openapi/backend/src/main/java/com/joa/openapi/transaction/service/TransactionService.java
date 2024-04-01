@@ -348,7 +348,7 @@ public class TransactionService {
     }
 
     public Page<TransactionSearchResponseDto> search(TransactionSearchRequestDto req, Pageable pageable) {
-        return transactionRepository.searchTransactionCustom(req, pageable);
+        return transactionRepository.   searchTransactionCustom(req, pageable);
     }
 
     public void bankAuthorityValidation(UUID apiKey, UUID bankId) {
