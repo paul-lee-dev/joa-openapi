@@ -14,11 +14,10 @@ interface WeekTransactionGraphProps {
   };
 }
 
-// export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
-//   bankStat,
-// }) => {
-
-export function WeekTransactionGraph() {
+export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
+  bankStat,
+}) => {
+  // export function WeekTransactionGraph() {
   const chartRef = useRef<ApexCharts | null>(null);
   useEffect(() => {
     const options = {
@@ -126,18 +125,18 @@ export function WeekTransactionGraph() {
       },
     };
 
-    // const chartData = bankStat.totalTransactionList.map((transaction) => ({
-    //   x: transaction.time.slice(5,10),
-    //   y: transaction.deposit,
-    // }));
+    const chartData = bankStat.totalTransactionList.map((transaction) => ({
+      x: transaction.time.slice(5, 10),
+      y: transaction.deposit,
+    }));
 
-    // options.series = [
-    //   {
-    //     name: "Deposit",
-    //     color: "#FF82AC",
-    //     data: chartData,
-    //   },
-    // ];
+    options.series = [
+      {
+        name: "Deposit",
+        color: "#FF82AC",
+        data: chartData,
+      },
+    ];
 
     if (typeof window !== "undefined") {
       if (
@@ -160,8 +159,8 @@ export function WeekTransactionGraph() {
         }
       };
     }
-    // }, [bankStat]);
-  }, []);
+  }, [bankStat]);
+  // }, []);
 
   return (
     <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
@@ -176,4 +175,4 @@ export function WeekTransactionGraph() {
       </div>
     </div>
   );
-}
+};

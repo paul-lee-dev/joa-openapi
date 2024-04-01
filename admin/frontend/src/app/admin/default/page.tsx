@@ -40,7 +40,7 @@ const Dashboard = () => {
   const api: AxiosInstance = axios.create({
     baseURL: "https://joa13.site/v1", // JSON 데이터를 가져올 엔드포인트의 URL
     headers: {
-      apiKey: "9b5c450f-abd4-419f-b092-bcd96e66392f",
+      apiKey: "edbe9696-1dc3-44c6-a23c-33598f111e16",
       "Content-Type": "application/json",
     },
   });
@@ -116,8 +116,8 @@ const Dashboard = () => {
           {bankStat && bankStat.totalDepositAmount}
         </StatCard>
       </div>
-      {/* {bankStat && <WeekTransactionGraph bankStat={bankStat} />} */}
-      <WeekTransactionGraph />
+      {bankStat && <WeekTransactionGraph bankStat={bankStat} />}
+      {/* <WeekTransactionGraph /> */}
     </div>
   );
 };
