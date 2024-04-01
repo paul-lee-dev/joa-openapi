@@ -15,11 +15,11 @@ export default function Sidebar() {
       <SidebarContainer>
         <ListAnchor
           onClick={() => {
-            router.push("/admin");
+            router.push("/admin/dashboard");
           }}
         >
           <GrOverview></GrOverview>
-          <ListName>Overview</ListName>
+          <ListName>대시보드</ListName>
         </ListAnchor>
         <ListAnchor
           onClick={() => {
