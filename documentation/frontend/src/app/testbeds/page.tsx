@@ -5,9 +5,9 @@ import Sidebar from "./components/sidebar";
 const Home = () => {
   return (
     <>
-      <SidebarContainer>
+      {/* <SidebarContainer>
         <Sidebar></Sidebar>
-      </SidebarContainer>
+      </SidebarContainer> */}
       <TestBedContainer>
         <Testbed></Testbed>
       </TestBedContainer>
@@ -20,6 +20,7 @@ const SidebarContainer = tw.div`
 `;
 
 const TestBedContainer = tw.div`
+flex
 xl:w-full
 min-h-screen
 p-2

@@ -4,14 +4,17 @@ import tw from "tailwind-styled-components";
 import {
   bankCreateContent,
   bankReadContent,
+  BankDeleteContent,
   BankListContent,
   BankUpdateContent,
-  BankDeleteContent,
 } from "../contents/bankContent";
 import {
-  accountCreateContent,
-  accountReadContent,
-} from "../contents/accountContent";
+  memberCreateContent,
+  memberDeleteContent,
+  memberListContent,
+  memberReadContent,
+  memberUpdateContent,
+} from "../contents/memberContent";
 import { components } from "./sidebar";
 
 export interface Content {
@@ -19,40 +22,68 @@ export interface Content {
   desc: string;
   method: string;
   uri: string;
-  requestParam: [
-    {
-      name: string;
-      desc: string;
-      type: string;
-      required: string;
-      etc: string;
-    }
-  ];
+  requestParam: RequestParam[];
   requestExample: string;
-  responseParam: [
-    {
-      name: string;
-      desc: string;
-      type: string;
-      required: string;
-      etc: string;
-    }
-  ];
+  responseParam: ResponseParam[];
   responseExample: string;
-  errorCode: [
-    {
-      name: string;
-      httpstatus: string;
-      desc: string;
-    }
-  ];
+  errorCode: ErrorCode[];
+}
+
+export interface RequestParam {
+  name: string;
+  desc: string;
+  type: string;
+  required: string;
+  etc: string;
+}
+
+export interface ResponseParam {
+  name: string;
+  desc: string;
+  type: string;
+  required: string;
+  etc: string;
+}
+
+export interface ErrorCode {
+  name: string;
+  httpstatus: string;
+  desc: string;
 }
 
 export default function Testbed() {
-  const [content, setContent] = useState(bankCreateContent);
+  const [content, setContent] = useState<Content>(bankCreateContent);
   const [selectedItem, setSelectedItem] = useState(1);
 
   const handleItemClick = (index: number) => {
+    switch (index) {
+      case 1:
+        setContent(bankCreateContent);
+        break;
+      case 2:
+        setContent(bankReadContent);
+        break;
+      case 3:
+        setContent(BankUpdateContent);
+        break;
+      case 4:
+        setContent(BankListContent);
+        break;
+      case 5:
+        setContent(BankDeleteContent);
+        break;
+
+      case 11:
+        setContent(memberCreateContent);
+        break;
+      // case 12:
+      //   setContent(member);
+      //   break;
+      case 13:
+      default:
+        setContent(bankCreateContent); // Set content to null if selectedItem doesn't match any case
+    }
+
     console.log("index: ", index);
     setSelectedItem(index);
     console.log("after set: ", selectedItem);
