@@ -22,22 +22,22 @@ public class MemberController {
 
     //회원가입
     @PostMapping
-    public ResponseEntity<?> join(@Valid @RequestBody MemberJoinRequestDto request) {
-        MemberIdResponseDto response = memberService.addMember(request);
+    public ResponseEntity<?> join(@RequestHeader("apiKey") UUID apiKey, @Valid @RequestBody MemberJoinRequestDto request) {
+        MemberIdResponseDto response = memberService.addMember(apiKey, request);
         return ResponseEntity.ok(ApiResponse.success("회원 가입에 성공했습니다.",response));
     }
 
     //이메일 중복 검사
     @GetMapping("email/{keyword}")
-    public ResponseEntity<?> confirmEmail(@PathVariable String keyword) {
-        memberService.confirmEmail(keyword);
+    public ResponseEntity<?> confirmEmail(@RequestHeader("apiKey") UUID apiKey, @PathVariable String keyword) {
+        memberService.confirmEmail(apiKey, keyword);
         return ResponseEntity.ok(ApiResponse.success("사용 가능한 이메일입니다."));
     }
 
     //TODO: 휴대폰 중복 검사 API 적용
     @GetMapping("phone/{keyword}")
-    public ResponseEntity<?> confirmPhone(@PathVariable String keyword) {
-        memberService.confirmPhone(keyword);
+    public ResponseEntity<?> confirmPhone(@RequestHeader("apiKey") UUID apiKey, @PathVariable String keyword) {
+        memberService.confirmPhone(apiKey, keyword);
         return ResponseEntity.ok(ApiResponse.success("사용 가능한 번호입니다."));
     }
 
