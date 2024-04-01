@@ -1,7 +1,7 @@
 "use client";
 import tw from "tailwind-styled-components";
 import { useState } from "react";
-import { JoinMemberParams, JoinMemberResponse } from "./member.api";
+import { memberCreateParams, memberCreateResponse } from "./member.api";
 import { postAxios, useAxios } from "./http-common";
 
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
   //   bankId: "bdbbfe2c-dc15-4c85-8706-dac0299e7ff6"
   // });
 
-  const [formData, setFormData] = useState<JoinMemberParams>({
+  const [formData, setFormData] = useState<memberCreateParams>({
     name: "",
     email: "",
     phone: "",
@@ -27,7 +27,7 @@ const Home = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const joinMember = async (params: JoinMemberParams): Promise<JoinMemberResponse> => {
+  const joinMember = async (params: memberCreateParams): Promise<memberCreateResponse> => {
     const url = "member";
     const response = await postAxios(url, params);
     return response.data;
