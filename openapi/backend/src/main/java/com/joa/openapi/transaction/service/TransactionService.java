@@ -305,7 +305,7 @@ public class TransactionService {
 
     @Transactional
     public void delete(TransactionDeleteRequestDto req) {
-        Transaction transaction = transactionRepository.findById(req.getTransactionId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+        Transaction transaction = transactionRepository.findById(req.getTransactionId()).orElseThrow(() -> new RestApiException(TransactionErrorCode.NO_TRANSACTION));
         transaction.deleteSoftly();
     }
 
