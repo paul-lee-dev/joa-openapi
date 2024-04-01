@@ -3,6 +3,7 @@
 import { searchBankList } from "@/api/Bank";
 import { searchProductList } from "@/api/Product";
 import Button from "@/components/button/button";
+import { LoadingSpinner } from "@/components/loadingSpinner";
 import Pagination from "@/components/pagination";
 import ProductGroupSearch from "@/components/search/productGroupSearch";
 import BankSelect from "@/components/select/bankNoLabel";
@@ -26,7 +27,7 @@ const ProductList = () => {
   return (
     <>
       {isLoading ? (
-        <h1>로딩중...</h1>
+        <LoadingSpinner />
       ) : (
         <>
           <form>

@@ -2,6 +2,7 @@
 
 import { searchAccountList } from "@/api/Account";
 import Button from "@/components/button/button";
+import { LoadingSpinner } from "@/components/loadingSpinner";
 import Pagination from "@/components/pagination";
 import AccountGroupSearch from "@/components/search/accountGroupSearch";
 import BankSelect from "@/components/select/bankNoLabel";
@@ -26,7 +27,7 @@ const AccountList = () => {
   return (
     <>
       {isLoading ? (
-        <h1>로딩중...</h1>
+        <LoadingSpinner />
       ) : (
         <>
           <form className="flex justify-end m-2">
@@ -67,14 +68,7 @@ const AccountList = () => {
                 }}
                 id={"create"}
                 name={"생성"}
-              ></Button>
-              <Button
-                onClick={() => {
-                  console.log("account delete ");
-                }}
-                id={"delete"}
-                name={"삭제"}
-              ></Button>
+              />
             </div>
           </div>
         </>

@@ -57,17 +57,17 @@ export default function BankTable({ bankList }: BankTableProps) {
                 <HiEmojiSad></HiEmojiSad>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
                   {bank.bankId}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
                   {bank.name}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
                   {bank.description}
                 </div>
               </TableData>

@@ -2,6 +2,7 @@
 
 import { doneProduct, deleteProduct, getProductDetail } from "@/api/Product";
 import Button from "@/components/button/button";
+import { LoadingSpinner } from "@/components/loadingSpinner";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import tw from "tailwind-styled-components";
@@ -55,7 +56,7 @@ export default function ProductDetail({ params: { productId } }: IProps) {
   return (
     <>
       {isLoading ? (
-        <h1>로딩중...</h1>
+        <LoadingSpinner />
       ) : (
         <>
           <Form>
@@ -82,12 +83,7 @@ export default function ProductDetail({ params: { productId } }: IProps) {
               </div>
             ) : (
               <div className="flex gap-6 justify-end">
-                <Button
-                  onClick={productDone}
-                  id={"done"}
-                  name={"종료"}
-                  type="button"
-                ></Button>
+                <Button onClick={productDone} id={"done"} name={"종료"} type="button"></Button>
               </div>
             )}
           </Form>

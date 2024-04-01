@@ -14,33 +14,26 @@ export default function MemberTable({ memberList }: IProps) {
       <table className="w-full text-sm text-left text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" className="relative px-6 py-3">
-              <span
-                onClick={() => {}}
-                className="hover:text-pink-400 cursor-pointer"
-              >
-                전체
-              </span>
+            <th scope="col" className="px-6 py-3 w-2/12">
+              고객 아이디
             </th>
-            <th scope="col" className="px-6 py-3">
-              ClientName
+            <th scope="col" className="px-6 py-3 w-2/12">
+              은행명
             </th>
-            <th scope="col" className="px-6 py-3">
-              ClientID
+            <th scope="col" className="px-6 py-3 w-1/12">
+              고객명
             </th>
-            <th scope="col" className="px-6 py-3">
-              ID
+            <th scope="col" className="px-6 py-3 w-2/12">
+              이메일
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 w-2/12">
               전화번호
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 w-1/12">
               가입일자
             </th>
-            <th scope="col" className="px-6 py-3">
-              최근거래금액
-            </th>
-            <th scope="col" className="relative px-6 py-3">
+
+            <th scope="col" className="relative px-6 py-3 w-">
               <span className="sr-only"> </span>
             </th>
           </tr>
@@ -52,31 +45,43 @@ export default function MemberTable({ memberList }: IProps) {
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
               <TableData>
-                <input
-                  id="bordered-checkbox-1"
-                  type="checkbox"
-                  value=""
-                  name="bordered-checkbox"
-                  className="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 rounded focus:ring-pink-500 "
-                />
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                  {member.memberId}
+                </div>
               </TableData>
-              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                {member.memberName}
-              </td>
-              <TableData>{member.memberId}</TableData>
-              <TableData>{member.memberId}</TableData>
-              <TableData>{member.phone}</TableData>
-              <TableData>{member.createdAt}</TableData>
-              <td className={"px-6 py-4"}></td>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                  {member.bankName}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                  {member.memberName}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                  {member.email}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                  {member.phone}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
+                  {member.createdAt}
+                </div>
+              </TableData>
+
               <TableData
                 onClick={() => {
                   router.push("member/detail");
                 }}
                 className="cursor-pointer"
               >
-                <a className="font-medium text-pink-400 hover:text-pink-500">
-                  자세히
-                </a>
+                <a className="font-medium text-pink-400 hover:text-pink-500">자세히</a>
               </TableData>
             </tr>
           ))}

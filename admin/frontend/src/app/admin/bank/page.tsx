@@ -8,6 +8,7 @@ import { createBank, searchBankList } from "@/api/Bank";
 import BankGroupSearch from "@/components/search/bankGroupSearch";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { LoadingSpinner } from "@/components/loadingSpinner";
 
 interface CreateBankForm {
   name: string;
@@ -75,7 +76,7 @@ const BankList = () => {
   return (
     <>
       {isLoading ? (
-        <h1>로딩중...</h1>
+        <LoadingSpinner />
       ) : (
         <>
           <form className="flex justify-end m-2 space-x-2 items-center">
@@ -91,13 +92,9 @@ const BankList = () => {
                 placeholder="은행 명"
               />
             </div>
-            <Button
-              id={"submit"}
-              name={"검색"}
-              onClick={() => setSearchWord(keyword)}
-            />
+            <Button id={"submit"} name={"검색"} onClick={() => setSearchWord(keyword)} />
           </form>
-          <BankTable bankList={data.data} />
+          <BankTable bankList={data.data ?? []} />
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
               {/* <Pagination

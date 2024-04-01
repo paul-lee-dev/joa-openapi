@@ -3,18 +3,17 @@
 import { createDummyMembers } from "@/api/Dummy";
 import Button from "@/components/button/button";
 import InputText from "@/components/input/inputText";
-import BankSelect from "@/components/select/bank";
+import BankSelect from "@/components/select/bankSelect";
 import MyAsyncSelect from "@/components/select/customerMultiSearchSelect";
 import { CreateDummyMemberParams } from "@/models/Dummy.interface";
 import { useState } from "react";
 import tw from "tailwind-styled-components";
 
 export default function CustomerCreate() {
-  const [dummyMemberInfo, setDummyMemberInfo] =
-    useState<CreateDummyMemberParams>({
-      count: 10,
-      bankId: "2601aff2-7423-4c24-b3b0-1bbea6ad9bc3",
-    });
+  const [dummyMemberInfo, setDummyMemberInfo] = useState<CreateDummyMemberParams>({
+    count: 10,
+    bankId: "2601aff2-7423-4c24-b3b0-1bbea6ad9bc3",
+  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

@@ -19,7 +19,7 @@ export default function Sidebar() {
           }}
         >
           <GrOverview></GrOverview>
-          <ListName>Overview</ListName>
+          <ListName>대시보드</ListName>
         </ListAnchor>
         <ListAnchor
           onClick={() => {

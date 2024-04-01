@@ -2,6 +2,7 @@
 
 import { searchTransactionList } from "@/api/Transaction";
 import Button from "@/components/button/button";
+import { LoadingSpinner } from "@/components/loadingSpinner";
 import Pagination from "@/components/pagination";
 import AccountMultiSearchSelect from "@/components/select/accountMultiSearchSelect";
 import BankMultiSearchSelect from "@/components/select/bankMultiSearchSelect";
@@ -25,7 +26,7 @@ const Dashboard = () => {
   return (
     <>
       {isLoading ? (
-        <h1>로딩중...</h1>
+        <LoadingSpinner />
       ) : (
         <>
           <form className="flex justify-end m-2">

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteBank, getBankDetail, updateBank } from "@/api/Bank";
 import { useForm } from "react-hook-form";
+import { LoadingSpinner } from "@/components/loadingSpinner";
 
 interface IProps {
   params: {
@@ -87,7 +88,7 @@ export default function BankDetail({ params: { bankId } }: IProps) {
   return (
     <>
       {isLoading ? (
-        <h1>로딩중...</h1>
+        <LoadingSpinner />
       ) : (
         <>
           <Form>

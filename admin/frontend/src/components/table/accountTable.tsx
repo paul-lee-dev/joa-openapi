@@ -61,32 +61,32 @@ export default function AccountTable({ accountList }: IProps) {
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
               <TableData className="font-medium text-gray-900 whitespace-nowrap">
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
                   {account.accountName}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
                   {account.holderName}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
                   {account.productName ?? ""}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
                   {account.startDate}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
                   {account.endDate}
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-2">
                   {account.balance}
                 </div>
               </TableData>
@@ -103,7 +103,7 @@ export default function AccountTable({ accountList }: IProps) {
               <td className="px-6 py-4">
                 <a
                   onClick={() => {
-                    router.push(`account/detail`);
+                    router.push(`account/${account.accountId}`);
                   }}
                   className="font-medium text-pink-400 hover:text-pink-500 cursor-pointer"
                 >

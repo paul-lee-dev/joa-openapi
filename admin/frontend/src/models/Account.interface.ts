@@ -17,3 +17,5 @@ export interface IAccount {
   createdAt: string;
   updatedAt: string;
 }
+
+export type AccountTaxType = "TAX" | "NO_TAX";
