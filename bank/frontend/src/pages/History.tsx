@@ -63,7 +63,7 @@ function History({route, navigation}: HistoryScreenProps): React.JSX.Element {
         toDate: formatDate(new Date()),
         searchType:
           typeName[type].value === 'ALL' ? null : typeName[type].value,
-        orderBy: latest ? 'NEWEST' : 'OLDEST',
+        orderBy: latest ? 'LATEST' : 'OLDEST',
       });
     },
   });

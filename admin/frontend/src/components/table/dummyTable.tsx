@@ -1,64 +1,11 @@
+import { IDummy } from "@/models/Dummy.interface";
 import { useRouter } from "next/navigation";
 
-export default function DummyTable() {
-  const Dummies = [
-    {
-      id: 1,
-      dummyId: "6ba6d937-134d-4a88-8384-ac33fb8e5c05",
-      dummyName: "곧서른청년",
-      userCount: 100000,
-      accountCount: 100005,
-      transactionCount: 100000,
-      createDate: "2023-04-15",
-      // adminId: "b8530ac-35b1-4e9a-8013-5a4607d96a45",
-    },
-    {
-      id: 2,
-      dummyId: "6ba6d937-134d-4a88-8384-ac33fb8e5c05",
-      dummyName: "곧서른청년",
-      userCount: 100000,
-      accountCount: 100005,
-      transactionCount: 100000,
-      createDate: "2023-04-15",
-    },
-    {
-      id: 3,
-      dummyId: "6ba6d937-134d-4a88-8384-ac33fb8e5c05",
-      dummyName: "곧서른청년",
-      userCount: 100000,
-      accountCount: 100005,
-      transactionCount: 100000,
-      createDate: "2023-04-15",
-    },
-    {
-      id: 4,
-      dummyId: "6ba6d937-134d-4a88-8384-ac33fb8e5c05",
-      dummyName: "곧서른청년",
-      userCount: 100000,
-      accountCount: 100005,
-      transactionCount: 100000,
-      createDate: "2023-04-15",
-    },
-    {
-      id: 5,
-      dummyId: "6ba6d937-134d-4a88-8384-ac33fb8e5c05",
-      dummyName: "곧서른청년",
-      userCount: 100000,
-      accountCount: 100005,
-      transactionCount: 100000,
-      createDate: "2023-04-15",
-    },
-    {
-      id: 6,
-      dummyId: "6ba6d937-134d-4a88-8384-ac33fb8e5c05",
-      dummyName: "곧서른청년",
-      userCount: 100000,
-      accountCount: 100005,
-      transactionCount: 100000,
-      createDate: "2023-04-15",
-    },
-  ];
+interface IProps {
+  dummyList: IDummy[];
+}
 
+export default function DummyTable({ dummyList }: IProps) {
   const router = useRouter();
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -98,9 +45,9 @@ export default function DummyTable() {
           </tr>
         </thead>
         <tbody>
-          {Dummies.map((dummy) => (
+          {dummyList.map((dummy) => (
             <tr
-              key={dummy.id}
+              key={dummy.dummyId}
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
               <td className="px-6 py-4">
@@ -114,12 +61,12 @@ export default function DummyTable() {
               </td>
               <td className="px-6 py-4">{dummy.dummyId}</td>
               <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                <input type="text" placeholder={dummy.dummyName} />
+                {dummy.name}
               </td>
-              <td className="px-6 py-4">{dummy.userCount}</td>
-              <td className="px-6 py-4">{dummy.accountCount}</td>
-              <td className="px-6 py-4">{dummy.transactionCount}</td>
-              <td className="px-6 py-4">{dummy.createDate}</td>
+              <td className="px-6 py-4">{dummy.memberCount ?? 0}</td>
+              <td className="px-6 py-4">{dummy.accountCount ?? 0}</td>
+              <td className="px-6 py-4">{dummy.transactionCount ?? 0}</td>
+              <td className="px-6 py-4">{dummy.createdAt}</td>
               <td className="px-6 py-4">
                 <a
                   onClick={() => {

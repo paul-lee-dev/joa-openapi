@@ -14,7 +14,7 @@ import {
 import {useMutation, useQuery} from '@tanstack/react-query';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createAccount, getAccountList} from '@/api/account';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {bankDataAtom} from '@/store/atoms';
 import {useRecoilValue} from 'recoil';
 import {RootStackParamList} from '@/Router';
@@ -22,6 +22,7 @@ import LoadingScreen from '@/components/LoadingScreen';
 import {IAccount} from '@/models';
 import DropdownInput from '@/components/DropdownInput';
 import OptionInput from '@/components/OptionInput';
+import {calculateRate, formatAmount} from '@/utils';
 
 type CreateAccountConfirmScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -34,7 +35,14 @@ interface CreateAccountForm {
   password: string;
   password2: string;
   term: number;
-  tax: string;
+  taxType: 'TAX' | 'NO_TAX';
+}
+
+interface ICalculatedValue {
+  totalPrincipal: number;
+  calculatedInterest: number;
+  taxInterest: number;
+  totalAmount: number;
 }
 
 function CreateAccountConfirm({
@@ -73,14 +81,36 @@ function CreateAccountConfirm({
       term: 6,
       password: '',
       password2: '',
-      tax: 'TAX',
+      taxType: 'TAX',
     },
   });
+  const [calcValue, setCalcValue] = useState<ICalculatedValue>({
+    totalPrincipal: 0,
+    calculatedInterest: 0,
+    taxInterest: 0,
+    totalAmount: 0,
+  });
+
+  useEffect(() => {
+    const subscirbe = watch((data, {name}) => {
+      console.log(data, name);
+      setCalcValue(
+        calculateRate(
+          product,
+          +getValues('amount'),
+          getValues('term'),
+          getValues('taxType'),
+        ),
+      );
+    });
+    //모든 input 데이터를 담은 객체 data, change 이벤트가 발생하고 있는 input의 name을 인자로 받는 콜백함수
+    return () => subscirbe.unsubscribe();
+  }, [watch, getValues, product]);
 
   const onSubmit = async (formData: CreateAccountForm) => {
     mutation.mutate({
       amount: formData.amount || undefined,
-      tax: formData.tax,
+      taxType: formData.taxType,
       term: formData.term,
       withdrawAccount: formData.withdrawAccount || undefined,
       nickname: product.name,
@@ -224,9 +254,47 @@ function CreateAccountConfirm({
                   {label: '과세', value: 'TAX'},
                   {label: '비과세', value: 'NO_TAX'},
                 ]}
-                value={watch('tax')}
-                setValue={value => setValue('tax', value)}
+                value={watch('taxType')}
+                setValue={value => setValue('taxType', value)}
               />
+              <CommonInput label={'만기시 지급액'}>
+                <View className="w-full flex space-y-1 border p-4 rounded-sm border-gray-300 bg-gray-200 mt-4">
+                  <View className="w-full flex flex-row justify-between">
+                    <Text className="text-base font-semibold text-gray-400">
+                      원금합계
+                    </Text>
+                    <Text className="text-base font-medium text-gray-400">
+                      {`${formatAmount(calcValue.totalPrincipal)}원`}
+                    </Text>
+                  </View>
+                  <View className="w-full flex flex-row justify-between">
+                    <Text className="text-base font-semibold text-gray-400">
+                      세전이자
+                    </Text>
+                    <Text className="text-base font-medium text-gray-400">
+                      {`${formatAmount(calcValue.calculatedInterest)}원`}
+                    </Text>
+                  </View>
+                  <View className="w-full flex flex-row justify-between">
+                    <Text className="text-base font-semibold text-red-400">
+                      {`이자과세(${
+                        watch('taxType') === 'TAX' ? '15.4' : '0'
+                      }%)`}
+                    </Text>
+                    <Text className="text-base font-medium text-red-400">
+                      {`${formatAmount(calcValue.taxInterest)}원`}
+                    </Text>
+                  </View>
+                  <View className="w-full flex flex-row justify-between">
+                    <Text className="text-base font-semibold text-gray-400">
+                      세후수령액
+                    </Text>
+                    <Text className="text-base font-medium text-gray-400">
+                      {`${formatAmount(calcValue.totalAmount)}원`}
+                    </Text>
+                  </View>
+                </View>
+              </CommonInput>
             </>
           )}
           <CommonInput label={'계좌 비밀번호'}>

@@ -26,9 +26,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory; // JPA 쿼리를 생성하고 실행하는데 사용
 
-
     @Override
-    public Page<ProductSearchResponseDto> searchProductCustom(ProductSearchRequestDto req,
+    public Page<ProductSearchResponseDto> searchProductCustom(UUID adminId, ProductSearchRequestDto req,
         Pageable pageable) {
 
         BooleanBuilder condition = new BooleanBuilder();
@@ -60,7 +59,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
         // 쿼리 설정
         JPAQuery<Product> query = jpaQueryFactory
             .selectFrom(product)
-            .where(condition);
+                .leftJoin(product.productsBank)
+            .where(eqAdminId(adminId), condition);
 
         // 정렬 조건 처리
         OrderSpecifier<?> orderBySpecifier = eqOrderBy(req.getOrderBy());
@@ -80,6 +80,10 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
 
         // 페이지 객체 반환
         return new PageImpl<>(res, pageable, products.size());
+    }
+
+    private BooleanExpression eqAdminId(UUID adminId) {
+        return product.productsBank.adminId.eq(adminId);
     }
 
     private BooleanExpression eqSearchProductKeyword(String productKeyword) {

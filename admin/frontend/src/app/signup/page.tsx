@@ -2,10 +2,45 @@
 
 import { useState } from "react";
 import tw from "tailwind-styled-components";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { join } from "@/api/Admin";
+import { useRouter } from "next/navigation";
+
+interface JoinForm {
+  email: string;
+  name: string;
+  phone: string;
+  password: string;
+  password2: string;
+}
 
 export default function SignUpPage() {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
+  const joinMutation = useMutation({
+    mutationFn: join,
+    onSuccess: (data) => {
+      console.log(data);
+      router.replace("/");
+    },
+    onError: (err) => console.log(err),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<JoinForm>({
+    defaultValues: {
+      email: "",
+      name: "",
+      phone: "",
+      password: "",
+      password2: "",
+    },
+  });
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -23,63 +58,100 @@ export default function SignUpPage() {
     console.log("Verifying code:", verificationCode);
   };
 
+  const onSubmit = (data: JoinForm) => {
+    if (data.password !== data.password2) {
+      setError(
+        "password2",
+        { message: "비밀번호가 일치하지 않습니다." },
+        { shouldFocus: true }
+      );
+    }
+    joinMutation.mutate({
+      email: data.email,
+      name: data.name,
+      phone: data.phone,
+      password: data.password,
+    });
+  };
+
   return (
     <>
       <Wrapper>
         <MainContainer>
-          <LoginFormContainer action="#" method="POST">
+          <LoginFormContainer onSubmit={handleSubmit(onSubmit)}>
             <InputFormWrapper>
               <LoginLabel htmlFor="email">이메일</LoginLabel>
               <InputContainerWithButton>
                 <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
+                  {...register("email", {
+                    required: "이메일을 입력해주세요.",
+                    pattern: {
+                      value:
+                        /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/,
+                      message: "올바른 이메일 형식이 아닙니다.",
+                    },
+                  })}
                 />
                 <PhoneCallCheckBtn type="button" onClick={toggleModal}>
                   확인
                 </PhoneCallCheckBtn>
               </InputContainerWithButton>
+              <ErrorMsg>{errors?.email?.message}</ErrorMsg>
             </InputFormWrapper>
 
             <InputFormWrapper>
-              <LoginLabel htmlFor="tel">전화번호</LoginLabel>
+              <LoginLabel htmlFor="name">이름</LoginLabel>
               <InputContainer>
                 <Input
-                  id="tel"
-                  name="tel"
-                  type="tel"
-                  autoComplete="tel"
-                  required
+                  {...register("name", {
+                    required: "이름을 입력해주세요.",
+                  })}
                 />
               </InputContainer>
+              <ErrorMsg>{errors?.name?.message}</ErrorMsg>
+            </InputFormWrapper>
+
+            <InputFormWrapper>
+              <LoginLabel htmlFor="phone">전화번호</LoginLabel>
+              <InputContainer>
+                <Input
+                  {...register("phone", {
+                    required: "전화번호을 입력해주세요.",
+                    pattern: {
+                      value:
+                        /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
+                      message: "올바른 전화번호 형식이 아닙니다.",
+                    },
+                  })}
+                />
+              </InputContainer>
+              <ErrorMsg>{errors?.phone?.message}</ErrorMsg>
             </InputFormWrapper>
 
             <InputFormWrapper>
               <LoginLabel htmlFor="password">비밀번호</LoginLabel>
               <InputContainer>
                 <Input
-                  id="password"
-                  name="password"
                   type="password"
-                  autoComplete="current-password"
-                  required
+                  {...register("password", {
+                    required: "비밀번호를 입력해주세요.",
+                  })}
                 />
               </InputContainer>
+              <ErrorMsg>{errors?.password?.message}</ErrorMsg>
             </InputFormWrapper>
 
             <InputFormWrapper>
-              <LoginLabel htmlFor="passwordCheck">비밀번호 확인</LoginLabel>
+              <LoginLabel htmlFor="password2">비밀번호 확인</LoginLabel>
               <InputContainer>
                 <Input
-                  id="passwordCheck"
-                  name="passwordCheck"
                   type="password"
-                  required
+                  {...register("password2", {
+                    required: "비밀번호를 한번 더 입력해주세요.",
+                  })}
                 />
               </InputContainer>
+              <ErrorMsg>{errors?.password2?.message}</ErrorMsg>
             </InputFormWrapper>
             <InputFormWrapper>
               <Button type="submit">회원가입</Button>
@@ -134,6 +206,11 @@ const InputFormWrapper = tw.div`
 
 const InputContainer = tw.div`
 mt-2
+`;
+
+const ErrorMsg = tw.span`
+text-sm
+text-red-400
 `;
 
 const InputContainerWithButton = tw.div`

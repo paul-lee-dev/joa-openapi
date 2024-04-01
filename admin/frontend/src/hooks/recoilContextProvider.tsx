@@ -9,10 +9,6 @@ export const todoListState = atom({
   default: [],
 });
 
-export default function RecoilContextProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RecoilContextProvider({ children }: { children: React.ReactNode }) {
   return <RecoilRoot>{children}</RecoilRoot>;
 }
