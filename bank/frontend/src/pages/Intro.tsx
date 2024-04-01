@@ -10,12 +10,21 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Controller, useForm} from 'react-hook-form';
-import {RootStackParamList} from 'App';
 import Header from '@/components/Header';
 import PiggyBank2 from '@/assets/piggy-bank2.png';
 import BottomPopup from '@/components/BottomPopup';
 import CommonInput from '@/components/CommonInput';
 import BottomButton from '@/components/BottomButton';
+import {useFocusEffect} from '@react-navigation/native';
+import {useCallback} from 'react';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
+import {bankDataAtom, memberDataAtom} from '@/store/atoms';
+import {RootStackParamList} from '@/Router';
+import LoadingScreen from '@/components/LoadingScreen';
+import {useMutation} from '@tanstack/react-query';
+import {login} from '@/api/member';
+import {axiosInstance} from '@/api';
+import {IMember} from '@/models';
 
 interface LoginForm {
   email: string;
@@ -25,6 +34,30 @@ interface LoginForm {
 type IntroScreenProps = NativeStackScreenProps<RootStackParamList, 'Intro'>;
 
 function Intro({navigation}: IntroScreenProps): React.JSX.Element {
+  const setMemberData = useSetRecoilState(memberDataAtom);
+  const bankData = useRecoilValue(bankDataAtom);
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess: data => {
+      console.log(data);
+      const member: IMember = data.data;
+      axiosInstance.interceptors.request.use(
+        config => {
+          config.headers.memberId = member.id;
+          config.headers.apiKey = bankData.apiKey;
+          return config;
+        },
+        error => {
+          return Promise.reject(error);
+        },
+      );
+      setMemberData({
+        isLogin: true,
+        member: data.data,
+      });
+    },
+    onError: err => console.log(err),
+  });
   const {
     control,
     handleSubmit,
@@ -39,9 +72,19 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const onSubmit = (data: LoginForm) => {
-    console.log(data);
-    navigation.replace('Main');
+    mutation.mutate({
+      email: data.email,
+      password: data.password,
+      bankId: bankData.bankId,
+    });
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      setLoginModalOpen(false);
+    }, []),
+  );
+
   useEffect(() => {
     reset();
   }, [loginModalOpen, reset]);
@@ -106,27 +149,36 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
               <CommonInput label={'이메일'}>
                 <Controller
                   control={control}
-                  rules={{required: true}}
+                  rules={{
+                    required: '이메일을 입력해주세요.',
+                    pattern: {
+                      value:
+                        /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/,
+                      message: '올바른 이메일 형식이 아닙니다.',
+                    },
+                  }}
                   render={({field: {onChange, onBlur, value}}) => (
                     <TextInput
                       className="border-b border-gray-800/50 text-gray-700"
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      autoComplete="email"
                     />
                   )}
                   name="email"
                 />
-                {errors.email && (
-                  <Text className="absolute bottom-2 left-8 text-red-400">
-                    이메일을 입력해주세요.
-                  </Text>
-                )}
+                <Text className="absolute bottom-2 left-8 text-red-400">
+                  {errors.email?.message}
+                </Text>
               </CommonInput>
               <CommonInput label={'비밀번호'}>
                 <Controller
                   control={control}
-                  rules={{required: true}}
+                  rules={{required: '비밀번호를 입력해주세요.'}}
                   render={({field: {onChange, onBlur, value}}) => (
                     <View className="w-full relative">
                       <TextInput
@@ -135,6 +187,7 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
                         onChangeText={onChange}
                         value={value}
                         secureTextEntry={!showPassword}
+                        autoCapitalize="none"
                       />
                       <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
                         <Icon
@@ -150,11 +203,9 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
                   )}
                   name="password"
                 />
-                {errors.password && (
-                  <Text className="absolute bottom-2 left-8 text-red-400">
-                    비밀번호를 입력해주세요.
-                  </Text>
-                )}
+                <Text className="absolute bottom-2 left-8 text-red-400">
+                  {errors.password?.message}
+                </Text>
               </CommonInput>
               <View className="w-full flex flex-row justify-center space-x-8">
                 <TouchableOpacity onPress={() => navigation.navigate('Join')}>
@@ -170,6 +221,7 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
           <BottomButton title={'로그인'} onPress={handleSubmit(onSubmit)} />
         </BottomPopup>
       )}
+      <LoadingScreen isLoading={false} />
     </View>
   );
 }

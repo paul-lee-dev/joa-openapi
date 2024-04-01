@@ -47,7 +47,7 @@ export default function Sidebar() {
         </ListAnchor>
         <ListAnchor
           onClick={() => {
-            router.push("/admin/customer");
+            router.push("/admin/member");
           }}
         >
           <FaUserFriends></FaUserFriends>
@@ -67,7 +67,7 @@ export default function Sidebar() {
           }}
         >
           <MdFactory></MdFactory>
-          <ListName>자동생성</ListName>
+          <ListName>더미데이터</ListName>
         </ListAnchor>
         <ListAnchor
           onClick={() => {
@@ -87,6 +87,7 @@ lg:block
 hidden 
 bg-white 
 w-64 
+min-w-64
 h-screen
 rounded-none 
 border-slate-400

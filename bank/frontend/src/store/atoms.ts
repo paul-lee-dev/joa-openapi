@@ -1,14 +1,17 @@
+import {IMember} from '@/models';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AtomEffect, atom} from 'recoil';
+import {API_KEY, JOABANK_BANKID} from '@env';
 
 interface IMemberData {
   isLogin: boolean;
-  member: any | null;
+  member: IMember | null;
 }
 
 interface IBankData {
   bankId: string;
   bankName: string;
+  apiKey: string;
 }
 
 const defaultMemberData: IMemberData = {
@@ -17,8 +20,9 @@ const defaultMemberData: IMemberData = {
 };
 
 const defaultBankData: IBankData = {
-  bankId: 'JOABANKID',
-  bankName: 'JOA BANK',
+  bankId: JOABANK_BANKID ?? '',
+  bankName: '조아은행',
+  apiKey: API_KEY ?? '',
 };
 
 export const persistAtom =

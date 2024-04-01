@@ -1,4 +1,5 @@
 import tw from "tailwind-styled-components";
+import {posts, team, stats} from './items';
 
 const Home = () => {
   return (
@@ -9,7 +10,7 @@ const Home = () => {
             <MainTitleItem>Joa Open API</MainTitleItem>
             <MainTextItem>은행 업무와 관련된 다양한 금융 API를 제공하여 핀테크 프로젝트를 간편하고 효율적으로 개발할 수 있도록 실시간으로 지원합니다. </MainTextItem>
             <ButtonContainer>
-              <PurpleButtonItem href="#">시작하기</PurpleButtonItem>
+              <PurpleButtonItem href="/docs">시작하기</PurpleButtonItem>
             </ButtonContainer>
           </SubContainer>
           <ImageItem src="/sample.png" alt="Product screenshot" />
@@ -25,13 +26,13 @@ const Home = () => {
 
           <FeatureContainer>
             {posts.map((post) => (
-              <FeatureItem key={post.title}>
+              <FeatureItem key={post.title}><a href={post.url}>
                 <SubImageContainer>
                   <SubImageItem src={post.image.url} />
                 </SubImageContainer>
                 <FeatureTitle>{post.title}</FeatureTitle>
                 <FeatureDetail>{post.description}</FeatureDetail>
-              </FeatureItem>
+                </a></FeatureItem>
             ))}
           </FeatureContainer>
         </SubWrapper>
@@ -58,29 +59,19 @@ const Home = () => {
 
           <TeamContainer>
             <TeamImageContainer>
-              <TeamImageItem src="https://images.unsplash.com/photo-1557426272-fc759fdf7a8d" />
-              <TeamSubImageItem src="https://images.unsplash.com/photo-1557426272-fc759fdf7a8d" />
+              <TeamImageItem src={team.image} />
+              <TeamSubImageItem src={team.subimage} />
             </TeamImageContainer>
 
             <TeamTextContainer>
-              <TeamTitle>텍스트 제목</TeamTitle>
-              <TeamDetail>
-                팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.
-                팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.
-                팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.
-              </TeamDetail>
+              <TeamTitle>{team.title1}</TeamTitle>
+              <TeamDetail>{team.detail1}</TeamDetail>
             </TeamTextContainer>
-
             <TeamTextContainer>
-              <TeamTitle>텍스트 제목</TeamTitle>
-              <TeamDetail>
-                팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.
-                팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.
-                팀 소개, 기술 스택 등 팀 소개 내용이 들어갑니다.
-              </TeamDetail>
+              <TeamTitle>{team.title2}</TeamTitle>
+              <TeamDetail>{team.detail2}</TeamDetail>
             </TeamTextContainer>
           </TeamContainer>
-
         </SubWrapper>
       </Wrapper>
     </>
@@ -197,62 +188,13 @@ w-full h-[16rem] rounded-lg
 `;
 
 const TeamTextContainer = tw.div`
-lg:flex pt-12 text-left 
+grid lg:grid-cols-4 pt-12 text-left 
 `;
 
 const TeamTitle = tw.h3`
-w-[28rem] px-8 text-2xl font-bold
+col-span-1 px-8 text-2xl font-bold text-right
 `;
 
 const TeamDetail = tw.div`
+col-span-3 break-keep
 `;
-
-const posts = [
-  {
-    title: '금융 API 테스트베드',
-    description:
-      '별도의 클라이언트 프로그램 없이도, 은행 시스템을 구축하고 Restful 방식을 테스트할 수 있습니다.',
-    image: {
-      url: '/sample.png',
-    },
-  },
-  {
-    title: '샘플 어플리케이션',
-    description:
-      '클라이언트 개발 기간을 단축할 수 있도록 샘플 앱과 코드, 도커 이미지를 오픈 소스로 제공합니다.',
-    image: {
-      url: '/sample.png',
-    },
-  },
-  {
-    title: '개발자 대시보드',
-    description:
-      '은행 시스템 이용 현황을 한눈에 파악하고 관리할 수 있는 실시간 대시보드를 지원합니다.',
-    image: {
-      url: '/sample.png',
-    },
-  },
-]
-
-const team = {
-    image: '',
-    subimage: '',
-    title1: '',
-    detail1: '',
-    title2: '',
-    detail2: '',
-  }
-
-
-interface Stat {
-  id: number;
-  name: string;
-  value: string;
-}
-
-const stats: Stat[] = [
-  { id: 1, name: '서비스 이용자 수', value: '10' },
-  { id: 2, name: '생성된 가상은행 수', value: '30' },
-  { id: 3, name: '생성된 가상유저 수', value: '120' },
-  { id: 4, name: '앱 다운로드 횟수', value: '0' }
-];

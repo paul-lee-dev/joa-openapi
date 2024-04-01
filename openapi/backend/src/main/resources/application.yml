@@ -2,6 +2,20 @@ spring:
   profiles:
     include: secret
 
+  mail:
+    host:
+    port:
+    username:
+    password:
+    properties:
+      mail:
+        debug:
+        smtp:
+          timeout:
+          starttls:
+            enable:
+          auth:
+
   datasource:
     url:
     username:
@@ -16,8 +30,27 @@ spring:
         format_sql:
         dialect:
 
-  jwt:
+  data:
+    redis:
+      host:
+      port:
+      password:
+
+logging:
+  level:
+    org.hibernate.SQL:
+    org.hibernate.type:
+
+error:
+  printStackTrace:
+
+jwt:
+  secret:
+  access:
+    expiration:
     header:
-    secret:
-    access-token-validity-in-seconds :
-    refresh-token-validity-in-seconds :
+  refresh:
+    expiration:
+    header:
+
+term:

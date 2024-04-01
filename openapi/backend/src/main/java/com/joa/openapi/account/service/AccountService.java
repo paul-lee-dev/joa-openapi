@@ -4,24 +4,36 @@ import com.joa.openapi.account.dto.*;
 import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.account.errorcode.AccountErrorCode;
 import com.joa.openapi.account.repository.AccountRepository;
+import com.joa.openapi.bank.entity.Bank;
+import com.joa.openapi.bank.errorcode.BankErrorCode;
+import com.joa.openapi.bank.repository.BankRepository;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
+import com.joa.openapi.common.repository.ApiRepository;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.dummy.repository.DummyRepository;
 import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
+import com.joa.openapi.product.entity.Product;
+import com.joa.openapi.product.errorcode.ProductErrorCode;
+import com.joa.openapi.product.repository.ProductRepository;
+import com.joa.openapi.product.service.DepositAccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -32,13 +44,22 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final MemberRepository memberRepository;
     private final DummyRepository dummyRepository;
+    private final ProductRepository productRepository;
+    private final ApiRepository apiRepository;
+    private final BankRepository bankRepository;
 
     @Transactional
-    public AccountCreateResponseDto create(UUID memberId, AccountCreateRequestDto req) {
+    public AccountCreateResponseDto create(UUID apiKey, UUID memberId, AccountCreateRequestDto req) {
+
+        bankAuthorityValidation(apiKey, req.getBankId());
+
         // 계좌번호 임시 랜덤 생성
-        String accountId = String.valueOf(Math.random());
+        String accountId = createAccountId(memberId, req);
+
+        System.out.println("멤버아이디 : " + memberId.toString());
 
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
+        Product product = productRepository.findById(req.getProductId()).orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT));
 
         Optional<Dummy> optionalDummy = Optional.ofNullable(req.getDummyId())
                 .map(dummyId -> dummyRepository.findById(dummyId).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT))); /* TODO: 더미 에러 코드로 변경 */
@@ -48,13 +69,17 @@ public class AccountService {
         LocalDate startDate = LocalDate.parse(startDateStr, formatter);
         String endDateStr = startDate.plusMonths(req.getTerm()).minusDays(1).format(formatter);
 
-        if(req.getPassword() == null || req.getPassword().trim().isBlank())
+        if (req.getPassword() == null || req.getPassword().trim().isBlank())
             throw new RestApiException(AccountErrorCode.PASSWORD_REQUIRED);
+
+        System.out.println("==============");
+        System.out.println("계좌 금액 : " + req.getBalance());
+        System.out.println("계좌 양 : " + req.getAmount());
 
         Account account = Account.builder()
                 .id(accountId)
-                .name(req.getNickname()) /* TODO 예적금 상품 연결시키면 디폴트 닉네임 예적금 상품명 */
-                .balance(req.getBalance())
+                .name((req.getNickname() == null) ? product.getName() : req.getNickname())
+                .balance((req.getAmount() == 0) ? req.getBalance() : req.getAmount())
                 .password(req.getPassword())
                 .isDormant(false)
                 .transferLimit(req.getTransferLimit())
@@ -69,6 +94,8 @@ public class AccountService {
                 .bankId(req.getBankId())
                 .holder(member)
                 .dummy(optionalDummy.orElse(null))
+                .product(product)
+                .taxType(req.getTaxType())
                 .build();
 
         accountRepository.save(account);
@@ -77,18 +104,18 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountUpdateResponseDto update(UUID memberId, AccountUpdateRequestDto req) {
+    public AccountUpdateResponseDto update(UUID apiKey, UUID memberId, AccountUpdateRequestDto req) {
         Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
-        authorityValidation(memberId, account);
+        bankAuthorityValidation(apiKey, account.getBankId());
 
-        if(req.getNickname() != null && !req.getPassword().trim().isBlank())
+        if (req.getNickname() != null)
             account.updateNickname(req.getNickname());
-        if (req.getDepositAccount() != null && !req.getPassword().trim().isBlank()){
+        if (req.getDepositAccount() != null) {
             accountRepository.findById(req.getDepositAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_WITHDRAW_ACCOUNT));
             account.updateDepositAccount(req.getDepositAccount());
         }
-        if (req.getWithdrawAccount() != null && !req.getPassword().trim().isBlank()){
+        if (req.getWithdrawAccount() != null) {
             accountRepository.findById(req.getWithdrawAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_WITHDRAW_ACCOUNT));
             account.updateWithdrawAccount(req.getWithdrawAccount());
         }
@@ -99,12 +126,12 @@ public class AccountService {
     }
 
     @Transactional
-    public Long updateLimit(UUID memberId, AccountUpdateRequestDto req) {
+    public Long updateLimit(UUID apiKey, AccountUpdateRequestDto req) {
         Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
-        authorityValidation(memberId, account);
+        bankAuthorityValidation(apiKey, account.getBankId());
 
-        if(req.getTransferLimit() != null && req.getTransferLimit() >= 20)
+        if (req.getTransferLimit() != null && req.getTransferLimit() >= 20)
             account.updateLimit(req.getTransferLimit());
 
         accountRepository.save(account);
@@ -113,22 +140,22 @@ public class AccountService {
     }
 
     @Transactional
-    public void updatePassword(UUID memberId, AccountUpdateRequestDto req) {
+    public void updatePassword(UUID apiKey, UUID memberId, AccountUpdateRequestDto req) {
         Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
-        authorityValidation(memberId, account);
+        bankAuthorityValidation(apiKey, account.getBankId());
 
-        if(req.getPassword() != null && !req.getPassword().trim().isBlank())
+        if (req.getPassword() != null && !req.getPassword().trim().isBlank())
             account.updatePassword(req.getPassword());
 
         accountRepository.save(account);
     }
 
     @Transactional
-    public String delete(UUID memberId, AccountDeleteRequestDto req) {
+    public String delete(UUID apiKey, UUID memberId, AccountDeleteRequestDto req) {
         Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
-        authorityValidation(memberId, account);
+        bankAuthorityValidation(apiKey, account.getBankId());
         checkPassword(account, req.getPassword());
 
         account.deleteSoftly();
@@ -136,45 +163,100 @@ public class AccountService {
         return account.getId();
     }
 
-    public AccountGetBalanceResponseDto getBalance(UUID memberId, AccountGetBalanceRequestDto req) {
+    public AccountGetBalanceResponseDto getBalance(UUID apiKey, UUID memberId, AccountGetBalanceRequestDto req) {
         Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
-        authorityValidation(memberId, account);
+        bankAuthorityValidation(apiKey, account.getBankId());
 
         return AccountGetBalanceResponseDto.toDto(account);
     }
 
-    public Page<AccountGetAccountsResponseDto> getAccounts(UUID memberId, Pageable pageable) {
-        Page<Account> accountsPage = accountRepository.findByHolderId(memberId, pageable);
-        return accountsPage.map(AccountGetAccountsResponseDto::toDto);
+    public AccountGetDetailResponseDto getDetail(UUID apiKey, AccountGetDetailRequestDto req) {
+        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
+        bankAuthorityValidation(apiKey, account.getBankId());
+
+        return AccountGetDetailResponseDto.toDto(account);
     }
 
-    public Page<AccountSearchResponseDto> search(AccountSearchRequestDto req, Pageable pageable) {
+    public Page<AccountGetAccountsResponseDto> getAccounts(UUID apiKey, UUID memberId, Pageable pageable) {
+        // apiKey로부터 adminId 조회
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+
+        // memberId에 해당하는 계좌 조회
+        Page<Account> accountsPage = accountRepository.findByHolderId(memberId, pageable);
+
+        // 필터링을 위해 스트림 사용
+        List<AccountGetAccountsResponseDto> filteredAccounts = accountsPage.getContent().stream()
+                .filter(account -> {
+                    // 각 계좌의 bankId로 은행 조회
+                    Bank bank = bankRepository.findById(account.getBankId()).orElse(null);
+                    // 은행의 adminId와 비교
+                    return bank != null && bank.getAdminId().equals(adminId);
+                })
+                .map(AccountGetAccountsResponseDto::toDto)
+                .collect(Collectors.toList());
+
+        // Page 객체 생성 방법은 구현 환경에 따라 다를 수 있음
+        return new PageImpl<>(filteredAccounts, pageable, filteredAccounts.size());
+        //return accountsPage.map(AccountGetAccountsResponseDto.toDto(filteredAccounts));
+    }
+
+    public Page<AccountSearchResponseDto> search(UUID apiKey, AccountSearchRequestDto req, Pageable pageable) {
         return accountRepository.searchAccountCustom(req, pageable);
     }
 
-    public void authorityValidation(UUID memberId, Account account) {
-        if(account.getDummy() != null){
-            Dummy dummy = dummyRepository.findById(account.getDummy().getId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT)); /* TODO: 더미 에러 코드로 변경 */
-            if(!dummy.getAdminId().equals(memberId))
-                throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
-        } else{
-            if (!account.getHolder().getId().equals(memberId))
-                throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
-        }
+    public void bankAuthorityValidation(UUID apiKey, UUID bankId) {
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
+        if (!bank.getAdminId().equals(adminId))
+            throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
     }
 
-    public void checkPassword(Account account, String password){
-        if(!account.getPassword().equals(password))
+    public void checkPassword(Account account, String password) {
+        if (!account.getPassword().equals(password))
             throw new RestApiException(AccountErrorCode.PASSWORD_MISMATCH);
     }
 
     /**
-     *
      * 계좌번호 생성
-     * 은행 @@@@ + 상품 @@@@ + 본인 @@@@ + 체크섬 @
+     * 은행 @@ + 본인 @@ + 생성날짜 @@@@@@ + 랜덤@@@ + 체크섬 @
      */
-    public String createAccountId(){
-        return null;
+    public String createAccountId(UUID memberId, AccountCreateRequestDto req) {
+        String accountId = "";
+        int bankA = req.getBankId().toString().charAt(14)-10; //은행 아이디 뒤 2자리 아스키 코드
+        int bankB = req.getBankId().toString().charAt(15)-10; //은행 아이디 뒤 1자리 아스키 코드
+        int memberA = memberId.toString().charAt(14)-10; //고객 아이디 뒤 2자리 아스키 코드
+        int memberB = memberId.toString().charAt(15)-10; //고객 아이디 뒤 1자리 아스키 코드
+        accountId = accountId + bankA + bankB + memberA + memberB;
+        System.out.println(accountId);
+        LocalTime now = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss"); //시 분 초
+        accountId += now.format(formatter);
+        accountId += String.valueOf(Math.random()*10000).substring(0,3); //랜덤 숫자 3자리
+        accountId += calculateCheckDigit(accountId);                        //유효성검사 1자리
+        return accountId;
+    }
+
+    private int calculateCheckDigit(String accountIdWithoutCheckDigit) {
+        int sum = 0;
+        // 간단한 예시: 각 자리수에 대해 번갈아 가며 2 또는 1을 곱한 합 계산
+        for (int i = 0; i < accountIdWithoutCheckDigit.length(); i++) {
+            int digit = Character.getNumericValue(accountIdWithoutCheckDigit.charAt(i));
+            if (i % 2 == 0) {
+                // 짝수 인덱스에는 2를 곱합니다.
+                sum += digit * 2;
+            } else {
+                // 홀수 인덱스에는 1을 곱합니다.
+                sum += digit;
+            }
+        }
+        // 합계를 10으로 나눈 나머지를 사용하여 유효성 검사 숫자 계산
+        int checkDigit = 10 - (sum % 10);
+        // 만약 결과가 10이면, 유효성 검사 숫자를 0으로 설정
+        if (checkDigit == 10) {
+            checkDigit = 0;
+        }
+        return checkDigit;
     }
 }

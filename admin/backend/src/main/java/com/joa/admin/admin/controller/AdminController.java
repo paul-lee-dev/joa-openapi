@@ -7,6 +7,7 @@ import com.joa.admin.admin.dto.req.AdminLoginRequestDto;
 import com.joa.admin.admin.dto.req.AdminUpdateRequestDto;
 import com.joa.admin.admin.dto.res.AdminIdResponseDto;
 import com.joa.admin.admin.dto.res.AdminInfoResponseDto;
+import com.joa.admin.admin.dto.res.AdminLoginResponseDto;
 import com.joa.admin.admin.dto.res.AdminTokenResponseDto;
 import com.joa.admin.admin.service.AdminService;
 import com.joa.admin.admin.service.EmailService;
@@ -52,7 +53,7 @@ public class AdminController {
     //로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody AdminLoginRequestDto request) {
-        AdminTokenResponseDto response = adminService.login(request);
+        AdminLoginResponseDto response = adminService.login(request);
         return ResponseEntity.ok(ApiResponse.success("로그인에 성공했습니다.", response));
     }
 

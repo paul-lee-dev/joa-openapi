@@ -4,9 +4,11 @@ interface InputTextProps {
   id: string;
   name: string;
   type: string;
+  value?: string | number;
   placeholder: string;
   label: string;
   htmlFor: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function InputText({
@@ -14,6 +16,7 @@ export default function InputText({
   type,
   placeholder,
   name,
+  value,
   label,
   htmlFor,
 }: InputTextProps) {
@@ -21,7 +24,13 @@ export default function InputText({
     <InputFormWrapper>
       <Label htmlFor={htmlFor}>{label}</Label>
       <InputContainer>
-        <Input id={id} name={name} type={type} placeholder={placeholder} />
+        <Input
+          id={id}
+          name={name}
+          type={type}
+          value={value}
+          placeholder={placeholder}
+        />
       </InputContainer>
     </InputFormWrapper>
   );

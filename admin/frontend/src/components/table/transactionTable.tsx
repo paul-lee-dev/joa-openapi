@@ -1,73 +1,11 @@
+import { ITransaction } from "@/models/Transaction.interface";
 import tw from "tailwind-styled-components";
 
-export default function transactionTable() {
-  const Transactions = [
-    {
-      id: 1,
-      name: "예금통장",
-      from: "1010101010",
-      to: "1010101011",
-      date: "2023-12-02",
-      amount: 100000,
-    },
-    {
-      id: 2,
-      name: "예금통장",
-      from: "1010101010",
-      to: "1010101011",
-      date: "2023-12-02",
-      amount: 100000,
-    },
-    {
-      id: 3,
-      name: "예금통장",
-      from: "1010101010",
-      to: "1010101011",
-      date: "2023-12-02",
-      amount: 100000,
-    },
-    {
-      id: 4,
-      name: "예금통장",
-      from: "1010101010",
-      to: "1010101011",
-      date: "2023-12-02",
-      amount: 100000,
-    },
-    {
-      id: 5,
-      name: "예금통장",
-      from: "1010101010",
-      to: "1010101011",
-      date: "2023-12-02",
-      amount: 100000,
-    },
-    {
-      id: 6,
-      name: "예금통장",
-      from: "1010101010",
-      to: "1010101011",
-      date: "2023-12-02",
-      amount: 100000,
-    },
-    {
-      id: 7,
-      name: "예금통장",
-      from: "1010101010",
-      to: "1010101011",
-      date: "2023-12-02",
-      amount: 100000,
-    },
-    {
-      id: 8,
-      name: "예금통장",
-      from: "1010101010",
-      to: "1010101011",
-      date: "2023-12-02",
-      amount: 100000,
-    },
-  ];
+interface IProps {
+  transactionList: ITransaction[];
+}
 
+export default function transactionTable({ transactionList }: IProps) {
   return (
     <div className="relative overflow-x-auto shadow-sm sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 ">
@@ -84,17 +22,17 @@ export default function transactionTable() {
           </tr>
         </thead>
         <tbody>
-          {Transactions.map((transaction) => (
+          {transactionList.map((transaction) => (
             <tr
-              key={transaction.id}
+              key={transaction.transactionId}
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
               <TableData className="font-medium text-gray-900 whitespace-nowrap">
-                {transaction.name}
+                {transaction.depositorName}
               </TableData>
-              <TableData>{transaction.from}</TableData>
-              <TableData>{transaction.to}</TableData>
-              <TableData>{transaction.date}</TableData>
+              <TableData>{transaction.fromAccount}</TableData>
+              <TableData>{transaction.toAccount}</TableData>
+              <TableData>{transaction.createdAt}</TableData>
               <TableData>{transaction.amount}</TableData>
               <TableData>
                 <a

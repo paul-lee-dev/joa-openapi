@@ -1,22 +1,16 @@
-import {memberDataAtom} from '@/store/atoms';
+import {API_URL, MEMBER_API_URL} from '@env';
 import axios from 'axios';
-import {useRecoilValue} from 'recoil';
-
-const baseURL = process.env.REACT_APP_API_URL ?? '';
 
 export const axiosInstance = axios.create({
-  baseURL,
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-axiosInstance.interceptors.request.use(
-  config => {
-    const memberData = useRecoilValue(memberDataAtom);
-    if (memberData.isLogin && memberData.member) {
-      config.headers.memberId = memberData.member.memberId;
-    }
-    return config;
+export const memberAxiosInstance = axios.create({
+  baseURL: MEMBER_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
   },
-  error => {
-    return Promise.reject(error);
-  },
-);
+});

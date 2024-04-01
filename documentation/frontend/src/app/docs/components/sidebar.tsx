@@ -1,4 +1,5 @@
 import tw from "tailwind-styled-components";
+import Link from 'next/link';
 
 export default function Sidebar() {
   return (
@@ -10,23 +11,19 @@ export default function Sidebar() {
           <Ver>V 1.0</Ver>
         </BarTitleContainer>
 
-        <div className="relative p-2 rounded-md">
-          <SearchBox placeholder="search"></SearchBox>
-        </div>
-
         <BarSubTitle>Overview</BarSubTitle>
-        {
-          overviews.map((item) => (
-            <BarItem href={item.anchor}>{item.name}</BarItem>
-          ))
-        }
+        <BarItem>시작하기</BarItem>
+        <BarItem>용어 정의</BarItem> 
+        <BarItem>프로젝트 구조</BarItem>
+        <BarItem>버전 정보</BarItem>
 
-        <BarSubTitle>Components</BarSubTitle>
-        {
-          components.map((item) => (
-            <BarItem href={item.anchor}>{item.name}</BarItem>
-          ))
-        }
+        <BarSubTitle>How to use</BarSubTitle>
+        <BarItem>API 명세 설명</BarItem>
+        <BarItem>테스트베드 이용법</BarItem>
+        <BarItem>관리자 대시보드 이용법</BarItem>
+        <BarItem>관리자 페이지 이용법</BarItem>
+        <BarItem>샘플 앱 이용법</BarItem>
+        <BarItem>커스텀 방법</BarItem>
 
       </Wrapper>
     </>
@@ -51,56 +48,11 @@ mr-14
 text-xs
 `;
 
-const SearchBox = tw.input`
-rounded-md border-0 py-2 px-4 ring-1 ring-gray-300 placeholder:text-gray-400
-`;
-
 const BarSubTitle = tw.div`
 text-xs font-bold p-3 mt-4
 `;
 
-const BarItem = tw.a`
-p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
+const BarItem = tw.div`
+mr-12 p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold
 `;
 
-const overviews = [
-  {
-    name: '서비스 소개(Introduction)',
-    anchor: '#',
-  },
-  {
-    name: '시작하기(Getting Started)',
-    anchor: '#',
-  },
-]
-
-const components = [
-  {
-    name: '관리자(Admin)',
-    anchor: '#',
-  },
-  {
-    name: '은행(Bank)',
-    anchor: '#',
-  },
-  {
-    name: '고객(Member)',
-    anchor: '#',
-  },
-  {
-    name: '예적금상품(Product)',
-    anchor: '#',
-  },
-  {
-    name: '계좌(Account)',
-    anchor: '#',
-  },
-  {
-    name: '거래내역(Transaction)',
-    anchor: '#',
-  },
-  {
-    name: '더미데이터(Dummy)',
-    anchor: '#',
-  },
-]
