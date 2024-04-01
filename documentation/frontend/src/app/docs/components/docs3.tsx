@@ -7,7 +7,7 @@ export default function docs() {
 
         <Title>API 명세 설명</Title>
         <TextItem>
-          여기에는 관리자가 해당 API를 통해 무엇을 제공받을 수 있는지에 대한 설명이 기술됩니다. 필요한 경우 해당 API 사용 시의 주의사항 등이 포함될 수 있습니다.
+          여기에는 관리자가 해당 API를 통해 무엇을 제공받을 수 있는지에 대한 개괄적인 설명이 기술됩니다. 필요한 경우 해당 API 사용 시의 주의사항 등이 포함될 수 있습니다.
         </TextItem>
 
         <Subtitle>요청 Method</Subtitle>
@@ -123,7 +123,7 @@ mt-8 space-y-6 text-sm
 `;
 
 const Title = tw.h2`
-text-3xl font-bold
+text-3xl font-bold mt-24
 `;
 
 const Subtitle = tw.h3`

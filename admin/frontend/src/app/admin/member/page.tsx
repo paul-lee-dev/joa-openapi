@@ -1,14 +1,15 @@
 "use client";
 import { searchMemberList } from "@/api/Membr";
 import Button from "@/components/button/button";
+import { LoadingSpinner } from "@/components/loadingSpinner";
 import Pagination from "@/components/pagination";
 import GroupSearch from "@/components/search/customerGroupSearch";
 import BankSelect from "@/components/select/bankNoLabel";
 import MemberTable from "@/components/table/memberTable";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-const CustomerList = () => {
+import { useEffect, useState } from "react";
+const MemberList = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState<string>("");
   const [searchWord, setSearchWord] = useState<string>("");
@@ -18,10 +19,15 @@ const CustomerList = () => {
       return searchMemberList({ memberName: searchWord });
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   return (
     <>
       {isLoading ? (
-        <h1>로딩중...</h1>
+        <LoadingSpinner />
       ) : (
         <>
           <form>
@@ -43,18 +49,10 @@ const CustomerList = () => {
             <div className="flex gap-3 px-3">
               <Button
                 onClick={() => {
-                  router.push("customer/create");
+                  router.push("member/create");
                 }}
                 id={"create"}
                 name={"생성"}
-              ></Button>
-              <Button
-                onClick={() => {
-                  console.log("customer create btn clicked");
-                  router.push("customer/delete");
-                }}
-                id={"delete"}
-                name={"삭제"}
               ></Button>
             </div>
           </div>
@@ -64,4 +62,4 @@ const CustomerList = () => {
   );
 };
 
-export default CustomerList;
+export default MemberList;

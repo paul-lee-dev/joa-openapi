@@ -28,7 +28,7 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory; // JPA 쿼리를 생성하고 실행하는데 사용
 
     @Override
-    public Page<AccountSearchResponseDto> searchAccountCustom(AccountSearchRequestDto req, Pageable pageable) {
+    public Page<AccountSearchResponseDto> searchAccountCustom(List<UUID> bankIds, AccountSearchRequestDto req, Pageable pageable) {
 
         // 쿼리 설정
         JPAQuery<Account> query = jpaQueryFactory
@@ -37,7 +37,7 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
                 .leftJoin(account.dummy)
                 .fetchJoin()
                 //account의 은행아이디로 은행을 가져와서 은행의 어드민아이디 == apiKey로 admin가져온거랑
-                .where(eqBankList(req.getBankList()), eqDormant(req.getIsDormant()), eqDummy(req.getIsDummy()), eqSearchKeyword(req.getKeywordType(), req.getSearchKeyword()))
+                .where(eqBankIds(bankIds), eqBankList(req.getBankList()), eqDormant(req.getIsDormant()), eqDummy(req.getIsDummy()), eqSearchKeyword(req.getKeywordType(), req.getSearchKeyword()))
                 .orderBy(eqSortBy(req.getSortBy()));
 
         long total = query.fetchCount(); // 전체 계좌 수
@@ -54,6 +54,10 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
 
         //페이지 객체 반환
         return new PageImpl<>(res, pageable, total);
+    }
+
+    private BooleanExpression eqBankIds(List<UUID> bankIds) {
+        return account.bankId.in(bankIds);
     }
 
     private BooleanExpression eqDormant(Boolean type) {

@@ -15,7 +15,7 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createAccount, getAccountList} from '@/api/account';
 import {useEffect, useState} from 'react';
-import {bankDataAtom} from '@/store/atoms';
+import {bankDataAtom, memberDataAtom} from '@/store/atoms';
 import {useRecoilValue} from 'recoil';
 import {RootStackParamList} from '@/Router';
 import LoadingScreen from '@/components/LoadingScreen';
@@ -52,10 +52,13 @@ function CreateAccountConfirm({
   const {product} = route.params;
   const {data} = useQuery({
     queryKey: ['accountList'],
-    queryFn: getAccountList,
+    queryFn: () => {
+      return getAccountList(memberData.member?.id ?? '');
+    },
     retry: true,
   });
   const bankData = useRecoilValue(bankDataAtom);
+  const memberData = useRecoilValue(memberDataAtom);
   const mutation = useMutation({
     mutationFn: createAccount,
     onSuccess: res => {

@@ -109,7 +109,7 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
             </View>
             <Image source={Money} className="w-16 h-12" />
           </View>
-          {data?.page?.content.length > 1 ? (
+          {data?.page?.content.length > 0 ? (
             <View
               onLayout={event => {
                 setCarouselLayout(event.nativeEvent.layout);

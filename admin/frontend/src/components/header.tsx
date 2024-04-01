@@ -5,13 +5,10 @@ import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [title, setTitle] = useState("");
-  const handleTitle = (event: {
-    target: { value: string | ((currVal: string) => string) };
-  }) => {
+  const handleTitle = (event: { target: { value: string | ((currVal: string) => string) } }) => {
     setTitle(event.target.value);
   };
   const currentRoute = usePathname();
-  console.log(currentRoute);
   return (
     <Wrapper>
       <Title>Admin</Title>

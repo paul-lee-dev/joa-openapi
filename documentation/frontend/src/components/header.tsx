@@ -9,7 +9,6 @@ export default function Header() {
         <MenuContainer>
         <NavContainer>
           <NavItem><Link href="/">Home</Link></NavItem>
-          <NavItem><Link href="/demos">Demo</Link></NavItem>
           <NavItem><Link href="/docs">Docs</Link></NavItem>
           <NavItem><Link href="/testbeds">APIs</Link></NavItem>
         </NavContainer>
@@ -48,6 +47,7 @@ rounded-full
 px-6
 py-2
 mx-2
+opacity-75
 `;
 
 const NavItem = tw.span`
