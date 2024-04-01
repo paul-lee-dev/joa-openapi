@@ -154,9 +154,10 @@ const Dashboard = () => {
       </StatCardContainer>
       <div className="flex gap-10 py-9">
         <div>{bankStat && <WeekTransactionGraph bankStat={bankStat} />}</div>
-        {bankStat && <WeekTransactionLineGraph bankStat={bankStat} />}
+        <div>
+          {bankStat && <WeekTransactionLineGraph bankStat={bankStat} />}
+        </div>
       </div>
-      {/* <WeekTransactionGraph /> */}
     </div>
   );
 };

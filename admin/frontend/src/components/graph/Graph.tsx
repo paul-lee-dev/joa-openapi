@@ -3,7 +3,6 @@
 import React, { useEffect, useRef } from "react";
 import ApexCharts from "apexcharts";
 
-// TODO: change if dummy is enough
 interface WeekTransactionGraphProps {
   bankStat: {
     totalTransactionCnt: number;
@@ -23,163 +22,165 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
 }) => {
   const chartRef = useRef<ApexCharts | null>(null);
   useEffect(() => {
-    const options = {
-      colors: ["#FF82AC", "#16DBCC"],
-      series: [
+    if (typeof window !== "undefined") {
+      const options = {
+        colors: ["#FF82AC", "#16DBCC"],
+        series: [
+          {
+            name: "입금",
+            color: "#FF82AC",
+            data: [
+              { x: "03-23", y: 131 },
+              { x: "03-24", y: 431 },
+              { x: "03-25", y: 531 },
+              { x: "03-26", y: 231 },
+              { x: "03-26", y: 231 },
+              { x: "03-28", y: 281 },
+              { x: "03-29", y: 422 },
+            ],
+          },
+          {
+            name: "출금",
+            color: "#16DBCC",
+            data: [
+              { x: "03-23", y: 531 },
+              { x: "03-24", y: 431 },
+              { x: "03-25", y: 331 },
+              { x: "03-26", y: 231 },
+              { x: "03-27", y: 431 },
+              { x: "03-28", y: 332 },
+              { x: "03-29", y: 713 },
+            ],
+          },
+        ],
+        chart: {
+          type: "bar",
+          height: "320px",
+          fontFamily: "Inter, sans-serif",
+          toolbar: {
+            show: true,
+          },
+        },
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: "80%",
+            borderRadiusApplication: "end",
+            borderRadius: 8,
+          },
+        },
+        tooltip: {
+          shared: true,
+          intersect: false,
+          style: {
+            fontFamily: "Inter, sans-serif",
+          },
+        },
+        states: {
+          hover: {
+            filter: {
+              type: "darken",
+              value: 1,
+            },
+          },
+        },
+        stroke: {
+          show: true,
+          width: 0,
+          colors: ["transparent"],
+        },
+        grid: {
+          show: false,
+          strokeDashArray: 4,
+          padding: {
+            left: 2,
+            right: 2,
+            top: -14,
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        legend: {
+          show: false,
+        },
+        xaxis: {
+          floating: false,
+          labels: {
+            show: true,
+            style: {
+              fontFamily: "Inter, sans-serif",
+              cssClass: "text-xs font-normal fill-gray-500 dark:fill-gray-400",
+            },
+          },
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+        },
+        yaxis: {
+          show: false,
+        },
+        fill: {
+          opacity: 1,
+        },
+      };
+
+      const depositData = bankStat.totalTransactionList.map((transaction) => ({
+        x: transaction.time.slice(5, 10),
+        y: transaction.deposit,
+      }));
+
+      const withdrawData = bankStat.totalTransactionList.map((transaction) => ({
+        x: transaction.time.slice(5, 10),
+        y: transaction.withdraw,
+      }));
+
+      options.series = [
         {
           name: "입금",
           color: "#FF82AC",
-          data: [
-            { x: "03-23", y: 131 },
-            { x: "03-24", y: 431 },
-            { x: "03-25", y: 531 },
-            { x: "03-26", y: 231 },
-            { x: "03-26", y: 231 },
-            { x: "03-28", y: 281 },
-            { x: "03-29", y: 422 },
-          ],
+          data: depositData,
         },
         {
           name: "출금",
           color: "#16DBCC",
-          data: [
-            { x: "03-23", y: 531 },
-            { x: "03-24", y: 431 },
-            { x: "03-25", y: 331 },
-            { x: "03-26", y: 231 },
-            { x: "03-27", y: 431 },
-            { x: "03-28", y: 332 },
-            { x: "03-29", y: 713 },
-          ],
+          data: withdrawData,
         },
-      ],
-      chart: {
-        type: "bar",
-        height: "320px",
-        fontFamily: "Inter, sans-serif",
-        toolbar: {
-          show: true,
-        },
-      },
-      plotOptions: {
+      ];
+
+      options.plotOptions = {
         bar: {
           horizontal: false,
           columnWidth: "80%",
           borderRadiusApplication: "end",
           borderRadius: 8,
         },
-      },
-      tooltip: {
-        shared: true,
-        intersect: false,
-        style: {
-          fontFamily: "Inter, sans-serif",
-        },
-      },
-      states: {
-        hover: {
-          filter: {
-            type: "darken",
-            value: 1,
-          },
-        },
-      },
-      stroke: {
-        show: true,
-        width: 0,
-        colors: ["transparent"],
-      },
-      grid: {
-        show: false,
-        strokeDashArray: 4,
-        padding: {
-          left: 2,
-          right: 2,
-          top: -14,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      legend: {
-        show: false,
-      },
-      xaxis: {
-        floating: false,
-        labels: {
-          show: true,
-          style: {
-            fontFamily: "Inter, sans-serif",
-            cssClass: "text-xs font-normal fill-gray-500 dark:fill-gray-400",
-          },
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        show: false,
-      },
-      fill: {
-        opacity: 1,
-      },
-    };
-
-    const depositData = bankStat.totalTransactionList.map((transaction) => ({
-      x: transaction.time.slice(5, 10),
-      y: transaction.deposit,
-    }));
-
-    const withdrawData = bankStat.totalTransactionList.map((transaction) => ({
-      x: transaction.time.slice(5, 10),
-      y: transaction.withdraw,
-    }));
-
-    options.series = [
-      {
-        name: "입금",
-        color: "#FF82AC",
-        data: depositData,
-      },
-      {
-        name: "출금",
-        color: "#16DBCC",
-        data: withdrawData,
-      },
-    ];
-
-    options.plotOptions = {
-      bar: {
-        horizontal: false,
-        columnWidth: "80%",
-        borderRadiusApplication: "end",
-        borderRadius: 8,
-      },
-    };
-
-    if (typeof window !== "undefined") {
-      if (
-        document.getElementById("column-chart") &&
-        typeof ApexCharts !== "undefined"
-      ) {
-        if (!chartRef.current) {
-          chartRef.current = new ApexCharts(
-            document.getElementById("column-chart"),
-            options
-          );
-          chartRef.current.render();
-        }
-      }
-
-      return () => {
-        if (chartRef.current) {
-          chartRef.current.destroy();
-          chartRef.current = null;
-        }
       };
+
+      if (typeof window !== "undefined") {
+        if (
+          document.getElementById("column-chart") &&
+          typeof ApexCharts !== "undefined"
+        ) {
+          if (!chartRef.current) {
+            chartRef.current = new ApexCharts(
+              document.getElementById("column-chart"),
+              options
+            );
+            chartRef.current.render();
+          }
+        }
+
+        return () => {
+          if (chartRef.current) {
+            chartRef.current.destroy();
+            chartRef.current = null;
+          }
+        };
+      }
     }
   }, [bankStat]);
 
@@ -267,4 +268,3 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
     </div>
   );
 };
-

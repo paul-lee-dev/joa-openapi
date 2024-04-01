@@ -22,125 +22,127 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
 }) => {
   const chartRef = useRef<ApexCharts | null>(null);
   useEffect(() => {
-    const options = {
-      series: [
-        {
-          name: "입금",
-          data: [1500, 1418, 1456, 1526, 1356, 1256],
-          color: "#1A56DB",
-        },
-        {
-          name: "출금",
-          data: [643, 413, 765, 412, 1423, 1731],
-          color: "#7E3BF2",
-        },
-      ],
-      chart: {
-        height: "320px",
-        maxWidth: "100%",
-        type: "area",
-        fontFamily: "Inter, sans-serif",
-        dropShadow: {
-          enabled: false,
-        },
-        toolbar: {
-          show: false,
-        },
-      },
-      tooltip: {
-        enabled: true,
-        x: {
-          show: false,
-        },
-      },
-      legend: {
-        show: true,
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          opacityFrom: 0.55,
-          opacityTo: 0,
-          shade: "#1C64F2",
-          gradientToColors: ["#1C64F2"],
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        width: 6,
-      },
-      grid: {
-        show: false,
-        strokeDashArray: 4,
-        padding: {
-          left: 2,
-          right: 2,
-          top: -26,
-        },
-      },
-      xaxis: {
-        categories: [
-          "03-05",
-          "03-06",
-          "03-07",
-          "03-08",
-          "03-09",
-          "03-10",
-          "03-11",
+    if (typeof window !== "undefined") {
+      const options = {
+        series: [
+          {
+            name: "입금",
+            data: [1500, 1418, 1456, 1526, 1356, 1256],
+            color: "#1A56DB",
+          },
+          {
+            name: "출금",
+            data: [643, 413, 765, 412, 1423, 1731],
+            color: "#7E3BF2",
+          },
         ],
-        labels: {
-          show: false,
-        },
-        axisBorder: {
-          show: false,
-        },
-        axisTicks: {
-          show: false,
-        },
-      },
-      yaxis: {
-        show: false,
-        labels: {
-          formatter: function (value: number) {
-            return "₩" + value;
+        chart: {
+          height: "320px",
+          maxWidth: "100%",
+          type: "area",
+          fontFamily: "Inter, sans-serif",
+          dropShadow: {
+            enabled: false,
+          },
+          toolbar: {
+            show: false,
           },
         },
-      },
-    };
-
-    const depositData = bankStat.totalTransactionList.map(
-      (transaction) => transaction.deposit
-    );
-    const withdrawData = bankStat.totalTransactionList.map(
-      (transaction) => transaction.withdraw
-    );
-
-    options.series[0].data = depositData;
-    options.series[1].data = withdrawData;
-
-    // TODO: refactor this window rendering problem
-    if (typeof window !== "undefined") {
-      if (
-        document.getElementById("column-chart-2") &&
-        typeof ApexCharts !== "undefined"
-      ) {
-        if (!chartRef.current) {
-          chartRef.current = new ApexCharts(
-            document.getElementById("column-chart-2"),
-            options
-          );
-          chartRef.current.render();
-        }
-      }
-
-      return () => {
-        if (chartRef.current) {
-          chartRef.current.destroy();
-          chartRef.current = null;
-        }
+        tooltip: {
+          enabled: true,
+          x: {
+            show: false,
+          },
+        },
+        legend: {
+          show: true,
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            opacityFrom: 0.55,
+            opacityTo: 0,
+            shade: "#1C64F2",
+            gradientToColors: ["#1C64F2"],
+          },
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          width: 6,
+        },
+        grid: {
+          show: false,
+          strokeDashArray: 4,
+          padding: {
+            left: 2,
+            right: 2,
+            top: -26,
+          },
+        },
+        xaxis: {
+          categories: [
+            "03-05",
+            "03-06",
+            "03-07",
+            "03-08",
+            "03-09",
+            "03-10",
+            "03-11",
+          ],
+          labels: {
+            show: false,
+          },
+          axisBorder: {
+            show: false,
+          },
+          axisTicks: {
+            show: false,
+          },
+        },
+        yaxis: {
+          show: false,
+          labels: {
+            formatter: function (value: number) {
+              return "₩" + value;
+            },
+          },
+        },
       };
+
+      const depositData = bankStat.totalTransactionList.map(
+        (transaction) => transaction.deposit
+      );
+      const withdrawData = bankStat.totalTransactionList.map(
+        (transaction) => transaction.withdraw
+      );
+
+      options.series[0].data = depositData;
+      options.series[1].data = withdrawData;
+
+      // TODO: refactor this window rendering problem
+      if (typeof window !== "undefined") {
+        if (
+          document.getElementById("column-chart-2") &&
+          typeof ApexCharts !== "undefined"
+        ) {
+          if (!chartRef.current) {
+            chartRef.current = new ApexCharts(
+              document.getElementById("column-chart-2"),
+              options
+            );
+            chartRef.current.render();
+          }
+        }
+
+        return () => {
+          if (chartRef.current) {
+            chartRef.current.destroy();
+            chartRef.current = null;
+          }
+        };
+      }
     }
   }, [bankStat]);
 
