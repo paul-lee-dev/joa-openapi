@@ -5,8 +5,13 @@ export const createAccount = async (params: any): Promise<any> => {
   return response.data;
 };
 
-export const getAccountList = async (): Promise<any> => {
-  const response = await axiosInstance.post('/account/member');
+export const getAccountList = async (memberId: string): Promise<any> => {
+  const response = await axiosInstance.get(`/account/member/${memberId}`);
+  return response.data;
+};
+
+export const getAccountDetail = async (params: any): Promise<any> => {
+  const response = await axiosInstance.post('/account/detail', params);
   return response.data;
 };
 

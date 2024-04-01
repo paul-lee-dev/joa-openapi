@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: "build",
+  // distDir: "build",
   // output: "export",
   // generateBuildId: async () => {
   //   // This could be anything, using the latest git hash

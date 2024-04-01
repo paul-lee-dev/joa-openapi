@@ -1,12 +1,16 @@
 import {RootStackParamList} from '@/Router';
+import {axiosInstance} from '@/api';
+import {getBankDetail} from '@/api/bank';
+import {logout} from '@/api/member';
 import BottomButton from '@/components/BottomButton';
 import CommonInput from '@/components/CommonInput';
 import Header from '@/components/Header';
 import {bankDataAtom, memberDataAtom} from '@/store/atoms';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useMutation} from '@tanstack/react-query';
 import {Controller, useForm} from 'react-hook-form';
 import {Text, TextInput, View} from 'react-native';
-import {useRecoilState, useSetRecoilState} from 'recoil';
+import {useSetRecoilState} from 'recoil';
 
 type ChangeBankIdScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -21,34 +25,63 @@ interface ChangeBankIdForm {
 function ChangeBankId({
   navigation,
 }: ChangeBankIdScreenProps): React.JSX.Element {
-  const [bankData, setBankData] = useRecoilState(bankDataAtom);
+  const setBankData = useSetRecoilState(bankDataAtom);
   const setMemberData = useSetRecoilState(memberDataAtom);
+  const bankMutation = useMutation({
+    mutationFn: getBankDetail,
+    onSuccess: res => {
+      setBankData({
+        bankId: res.data.bankId,
+        bankName: 'JOA BANK',
+        apiKey: getValues('apiKey'),
+      });
+      logoutMutation.mutate();
+    },
+    onError: err => {
+      setError('bankId', {
+        type: 'notValid',
+        message: '유효하지 않은 은행코드입니다.',
+      });
+      setError('apiKey', {
+        type: 'notValid',
+        message: '유효하지 않은 apiKey입니다.',
+      });
+      console.log(err);
+    },
+  });
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      axiosInstance.interceptors.request.use(
+        config => {
+          config.headers.memberId = '';
+          return config;
+        },
+        error => {
+          return Promise.reject(error);
+        },
+      );
+      navigation.popToTop();
+      setMemberData({isLogin: false, member: null});
+      navigation.replace('Intro');
+    },
+    onError: err => console.log(err),
+  });
   const {
     control,
     handleSubmit,
+    getValues,
+    setError,
     formState: {errors},
   } = useForm<ChangeBankIdForm>({
     defaultValues: {
-      bankId: bankData.bankId,
-      apiKey: bankData.apiKey,
+      bankId: '',
+      apiKey: '',
     },
   });
 
   const onSubmit = (data: ChangeBankIdForm) => {
-    setBankData({
-      bankId: data.bankId,
-      bankName: 'JOA BANK',
-      apiKey: data.apiKey,
-    });
-    logout();
-  };
-
-  const logout = () => {
-    setMemberData({
-      isLogin: false,
-      member: null,
-    });
-    navigation.popToTop();
+    bankMutation.mutate({bankId: data.bankId, apiKey: data.apiKey});
   };
 
   return (

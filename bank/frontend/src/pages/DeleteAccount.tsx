@@ -65,7 +65,7 @@ function DeleteAccount({
           <View className="flex flex-row justify-between px-6">
             <Text className="font-bold text-sm text-gray-700">계좌 번호</Text>
             <Text className="font-semibold text-sm text-gray-700">
-              {`조아은행 ${account.accountId}`}
+              {account.accountId}
             </Text>
           </View>
           <View className="flex flex-row justify-between px-6">

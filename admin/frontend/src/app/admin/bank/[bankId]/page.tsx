@@ -1,164 +1,147 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import tw from "tailwind-styled-components";
 import Button from "@/components/button/button";
-import InputText from "@/components/input/inputText";
-import { modifyBank, deleteBank } from "@/api/Bank"; // 수정, 삭제 API 함수 임포트
-import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { localAxios } from "@/api/http-common";
 import { useRouter } from "next/navigation";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { deleteBank, getBankDetail, updateBank } from "@/api/Bank";
+import { useForm } from "react-hook-form";
 
-interface Bank {
-  bankId: string;
-  adminId: string;
+interface IProps {
+  params: {
+    bankId: string;
+  };
+}
+
+interface UpdateBankForm {
   name: string;
   description: string;
   uri: string;
-  createdAt: string;
-  updatedAt: string;
-}
-interface BankDetailProps {
-  bank: Bank;
 }
 
-interface ModifyBankParams {
-  bankId?: string;
-  name: string;
-  description: string;
-}
-
-interface DeleteBankParams {
-  bankId?: string;
-}
-
-export default function BankDetail({ params }: { params: { bankId: string } }) {
+export default function BankDetail({ params: { bankId } }: IProps) {
   const router = useRouter();
-
-  const [bankInfo, setBankInfo] = useState<ModifyBankParams>({
-    name: "",
-    description: "",
-    // uri: "",
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["BankDetail", bankId],
+    queryFn: async () => {
+      const res = await getBankDetail(bankId);
+      setValue("name", res.data.name);
+      setValue("description", res.data.description);
+      setValue("uri", res.data.uri);
+      return res;
+    },
   });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setBankInfo({ ...bankInfo, [name]: value });
-  };
-
-  const [bankDetail, setBankDetail] = useState<Bank>();
-  const [bankName, setBankName] = useState("");
-  const [bankDescription, setBankDescription] = useState("");
-
-  const api: AxiosInstance = axios.create({
-    baseURL: "https://joa13.site/v1", // JSON 데이터를 가져올 엔드포인트의 URL
-    headers: {
-      apiKey: "9b5c450f-abd4-419f-b092-bcd96e66392f",
-      "Content-Type": "application/json",
+  const updateMutation = useMutation({
+    mutationFn: (params: any[]) => updateBank(params[0], params[1]),
+    onSuccess: (data) => {
+      console.log(data);
+      alert("은행이 수정되었습니다.");
+      refetch();
+    },
+    onError: (err) => console.log(err),
+  });
+  const deleteMutation = useMutation({
+    mutationFn: deleteBank,
+    onSuccess: (data) => {
+      console.log(data);
+      router.replace("/admin/bank");
+    },
+    onError: (err) => console.log(err),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+    setValue,
+  } = useForm<UpdateBankForm>({
+    defaultValues: {
+      name: "",
+      description: "",
+      uri: "",
     },
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response: AxiosResponse<{
-          status: string;
-          message: string;
-          data: Bank;
-          page: null;
-        }> = await localAxios.get(`/bank/${params.bankId}`);
-        setBankDetail(response.data.data);
-        // console.log(param.bankId, response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    console.log("fetch data====================================");
-    fetchData();
-  }, [params.bankId]);
+    refetch();
+  }, [refetch]);
 
-  const handleModify = async () => {
-    try {
-      const params: ModifyBankParams = {
-        bankId: bankDetail?.bankId,
-        name: bankInfo.name, // 수정된 은행 이름
-        description: bankInfo.description, // 수정된 은행 설명
-      };
-      const response = await modifyBank(params); // 은행 수정 API 호출
-      console.log("Bank modified:", response);
-    } catch (error) {
-      console.error("Error modifying bank:", error);
-    }
+  const onSubmit = (formData: UpdateBankForm) => {
+    updateMutation.mutate([
+      bankId,
+      {
+        name: formData.name,
+        description: formData.description,
+        uri: formData.uri,
+      },
+    ]);
   };
 
-  const handleDelete = async () => {
-    try {
-      const params: any = {
-        bankId: bankDetail?.bankId, // 삭제할 은행의 ID 값
-      };
-      const response = await deleteBank(params); // 은행 삭제 API 호출
-      console.log("Bank deleted:", response);
-      router.replace("bank");
-    } catch (error) {
-      console.error("Error deleting bank:", error);
+  const deleteBankConfirm = () => {
+    let result = confirm("정말로 삭제하시겠습니까?");
+    if (result) {
+      deleteMutation.mutate(bankId);
     }
   };
 
   return (
     <>
-      <Form>
-        <div className="grid gap-3 mb-4 md:grid-cols-2">
-          <div>
-            <Label htmlFor="name">은행명</Label>
-            <InputContainer>
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                value={bankInfo.name}
-                placeholder={bankDetail?.name}
-                onChange={handleInputChange}
-              />
-            </InputContainer>
-          </div>
-          <div>
-            <Label htmlFor="description">은행 설명</Label>
-            <InputContainer>
-              <Input
-                id="description"
-                name="description"
-                type="text"
-                value={bankInfo.description}
-                placeholder={bankDetail?.description}
-                onChange={handleInputChange}
-              />
-            </InputContainer>
-          </div>
-          <InputText
-            id={"createdAt"}
-            name={"createdAt"}
-            type={"text"}
-            placeholder={"yyyy-mm-dd"}
-            value={`${bankDetail?.createdAt}`}
-            label={"생성일자"}
-            htmlFor={"createdAt"}
-          ></InputText>
-          <InputText
-            id={"bankId"}
-            name={"bankId"}
-            type={"text"}
-            placeholder={`uuid`}
-            label={"은행코드"}
-            htmlFor={"bankId"}
-            value={`${bankDetail?.bankId}`}
-          ></InputText>
-        </div>
-        <div className="flex gap-6 justify-end">
-          {/* 수정 버튼 */}
-          <Button id={"edit"} name={"수정"} onClick={handleModify}></Button>
-          {/* 삭제 버튼 */}
-          <Button id={"delete"} name={"삭제"} onClick={handleDelete}></Button>
-        </div>
-      </Form>
+      {isLoading ? (
+        <h1>로딩중...</h1>
+      ) : (
+        <>
+          <Form>
+            <div className="grid gap-3 mb-4 md:grid-cols-2">
+              <div>
+                <Label htmlFor="name">은행명</Label>
+                <InputContainer>
+                  <Input
+                    {...register("name", {
+                      required: "은행명을 입력해주세요.",
+                    })}
+                  />
+                  <ErrorMsg>{errors.name?.message}</ErrorMsg>
+                </InputContainer>
+              </div>
+              <div>
+                <Label htmlFor="description">은행 설명</Label>
+                <InputContainer>
+                  <Input
+                    {...register("description", {
+                      required: "은행 설명을 입력해주세요.",
+                    })}
+                  />
+                </InputContainer>
+              </div>
+              <div>
+                <Label htmlFor="uri">은행 로고 uri</Label>
+                <InputContainer>
+                  <Input {...register("uri")} />
+                </InputContainer>
+              </div>
+            </div>
+            <div>
+              <h1>은행코드: {data?.data?.bankId}</h1>
+              <h1>생성시각: {data?.data?.createdAt}</h1>
+              <h1>수정시각: {data?.data?.updatedAt}</h1>
+            </div>
+            <div className="flex gap-6 justify-end">
+              <Button
+                id={"edit"}
+                name={"수정"}
+                onClick={handleSubmit(onSubmit)}
+                type="submit"
+              ></Button>
+              <Button
+                id={"delete"}
+                name={"삭제"}
+                onClick={deleteBankConfirm}
+                type="button"
+              ></Button>
+            </div>
+          </Form>
+        </>
+      )}
     </>
   );
 }
@@ -173,6 +156,11 @@ mt-2
 
 const Label = tw.label`
 block text-sm font-medium leading-6 text-gray-500
+`;
+
+const ErrorMsg = tw.span`
+text-sm
+text-red-400
 `;
 
 const Input = tw.input`

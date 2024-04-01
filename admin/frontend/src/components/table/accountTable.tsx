@@ -5,94 +5,13 @@ import { useEffect, useState } from "react";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { localAxios } from "@/api/http-common";
 import { useQuery } from "@tanstack/react-query";
-import { getAccountList } from "@/api/Account";
+import { IAccount } from "@/models/Account.interface";
 
-export default function AccountTable() {
-  interface Account {
-    accountId: string;
-    accountName: string;
-    balance: number;
-    isDormant: boolean;
-    transferLimit: number;
-    startDate: string;
-    endDate: string;
-    term: number;
-    depositAccount: string;
-    withdrawAccount: string;
-    amount: number;
-    holderName: string;
-    productName: string | null;
-    dummyName: string | null;
-    bankId: string;
-    createdAt: string;
-    updatedAt: string;
-  }
+interface IProps {
+  accountList: IAccount[];
+}
 
-  const Accounts = [
-    {
-      id: 1,
-      nickname: "예금통장",
-      customerName: "조아영",
-      productName: "청년희망정기예금",
-      startDate: "2023-02-02",
-      endDate: "2023-12-02",
-      balance: 100000,
-      recentTransactionAmount: 100000,
-    },
-    {
-      id: 2,
-      nickname: "예금통장",
-      customerName: "조아영",
-      productName: "청년희망정기예금",
-      startDate: "2023-02-02",
-      endDate: "2023-12-02",
-      balance: 100000,
-      recentTransactionAmount: 100000,
-    },
-    {
-      id: 3,
-      nickname: "예금통장",
-      customerName: "조아영",
-      productName: "청년희망정기예금",
-      startDate: "2023-02-02",
-      endDate: "2023-12-02",
-      balance: 100000,
-      recentTransactionAmount: 100000,
-    },
-    {
-      id: 4,
-      nickname: "예금통장",
-      customerName: "조아영",
-      productName: "청년희망정기예금",
-      startDate: "2023-02-02",
-      endDate: "2023-12-02",
-      balance: 100000,
-      recentTransactionAmount: +100000,
-    },
-    {
-      id: 5,
-      nickname: "예금통장",
-      customerName: "조아영",
-      productName: "청년희망정기예금",
-      startDate: "2023-02-02",
-      endDate: "2023-12-02",
-      balance: 100000,
-      recentTransactionAmount: -100000,
-    },
-  ];
-
-  const [accountList, setAccountList] = useState<Account[]>([]);
-
-  const api: AxiosInstance = axios.create({
-    baseURL: "https://joa13.site/v1",
-    headers: {
-      apiKey: "9b5c450f-abd4-419f-b092-bcd96e66392f",
-      "Content-Type": "application/json",
-    },
-  });
-
-  const {data} = useQuery({queryKey: ['accountList'], queryFn: getAccountList});
-
+export default function AccountTable({ accountList }: IProps) {
   const router = useRouter();
 
   return (
@@ -100,28 +19,28 @@ export default function AccountTable() {
       <table className="w-full text-sm text-left text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 w-2/12">
               계좌별명
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 w-1/12">
               고객이름
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 w-2/12">
               상품명
             </th>
-            <th scope="col" className="px-6 py-3  gap-3">
+            <th scope="col" className="px-6 py-3  gap-3 w-1/12">
               <span className="flex gap-3">
                 신규일자
                 <FaSort></FaSort>
               </span>
             </th>
-            <th scope="col" className="px-6 py-3">
+            <th scope="col" className="px-6 py-3 w-1/12">
               <span className="flex gap-3">
                 만기일자
                 <FaSort></FaSort>
               </span>
             </th>
-            <th scope="col" className="px-6 py-3 gap-3">
+            <th scope="col" className="px-6 py-3 gap-3 w-2/12">
               <span className="flex gap-3">
                 잔액
                 <FaSort></FaSort>
@@ -130,25 +49,47 @@ export default function AccountTable() {
             {/* <th scope="col" className="px-6 py-3">
               최근거래금액
             </th> */}
-            <th scope="col" className="relative px-6 py-3">
+            <th scope="col" className="relative px-6 py-3 w-1/12">
               <span className="sr-only"> </span>
             </th>
           </tr>
         </thead>
         <tbody>
-          {Accounts.map((account) => (
+          {accountList.map((account) => (
             <tr
-              key={account.id}
+              key={account.accountId}
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
               <TableData className="font-medium text-gray-900 whitespace-nowrap">
-                {account.nickname}
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {account.accountName}
+                </div>
               </TableData>
-              <TableData>{account.customerName}</TableData>
-              <TableData>{account.productName}</TableData>
-              <TableData>{account.startDate}</TableData>
-              <TableData>{account.endDate}</TableData>
-              <TableData>{account.balance}</TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {account.holderName}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {account.productName ?? ""}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {account.startDate}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {account.endDate}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {account.balance}
+                </div>
+              </TableData>
               {/* <td
                 className={`px-6 py-4 ${
                   account.recentTransactionAmount >= 0

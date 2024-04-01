@@ -12,7 +12,13 @@ import {useState} from 'react';
 import Header from '@/components/Header';
 import CommonInput from '@/components/CommonInput';
 import BottomButton from '@/components/BottomButton';
-import {join} from '@/api/member';
+import {
+  checkEmailCode,
+  emailConfirm,
+  emailSend,
+  join,
+  phoneConfirm,
+} from '@/api/member';
 import {useMutation} from '@tanstack/react-query';
 import {useRecoilValue} from 'recoil';
 import {bankDataAtom} from '@/store/atoms';
@@ -32,7 +38,7 @@ interface JoinForm {
 
 function Join({navigation}: JoinScreenProps): React.JSX.Element {
   const bankData = useRecoilValue(bankDataAtom);
-  const mutation = useMutation({
+  const joinMutation = useMutation({
     mutationFn: join,
     onSuccess: data => {
       console.log(data);
@@ -40,11 +46,36 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
     },
     onError: err => console.log(err),
   });
+  const emailMutation = useMutation({
+    mutationFn: emailConfirm,
+    onSuccess: data => {
+      console.log(data);
+      clearErrors('email');
+      setEmailValid(true);
+    },
+    onError: err => {
+      console.log(err);
+      setError('email', {type: 'conflict', message: '중복된 이메일입니다.'});
+    },
+  });
+  const phoneMutation = useMutation({
+    mutationFn: phoneConfirm,
+    onSuccess: data => {
+      console.log(data);
+      clearErrors('phone');
+    },
+    onError: err => {
+      console.log(err);
+      setError('phone', {type: 'conflict', message: '중복된 전화번호입니다.'});
+    },
+  });
 
   const {
     control,
     handleSubmit,
     getValues,
+    setError,
+    clearErrors,
     formState: {errors},
   } = useForm<JoinForm>({
     defaultValues: {
@@ -56,6 +87,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
     },
   });
 
+  const [emailValid, setEmailValid] = useState<boolean>(false);
   const [sendingEmail, setSendingEmail] = useState<boolean>(false);
   const [emailCodeValid, setEmailCodeValid] = useState<boolean>(false);
   const [emailCodeError, setEmailCodeError] = useState<boolean>(false);
@@ -63,22 +95,39 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showPassword2, setShowPassword2] = useState<boolean>(false);
 
-  const sendEmailCode = () => {
-    // TODO: 이메일 인증 보내기 API
-    setSendingEmail(true);
+  const checkEmailValid = () => {
+    const emailValue = getValues('email');
+    if (emailValue === '') {
+      setError('email', {type: 'required', message: '이메일을 입력해주세요.'});
+      return;
+    }
+    emailMutation.mutate(emailValue);
   };
 
-  const checkEmailCode = () => {
-    console.log(emailCode);
+  const sendEmailCode = () => {
+    emailSend({email: getValues('email')}).then(res => {
+      console.log(res);
+      setSendingEmail(true);
+    });
+  };
+
+  const checkEmailCodeValid = () => {
+    checkEmailCode({email: getValues('email'), code: emailCode})
+      .then(res => {
+        console.log(res);
+        setEmailCodeValid(true);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
     // TODO: 이메일 코드 체크
-    setEmailCodeValid(true);
   };
 
   const onSubmit = (data: JoinForm) => {
     if (!emailCodeValid) {
       setEmailCodeError(true);
     }
-    mutation.mutate({
+    joinMutation.mutate({
       name: data.name,
       email: data.email,
       phone: data.phone.replaceAll('-', ''),
@@ -122,14 +171,19 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                      editable={!sendingEmail}
                     />
-                    <TouchableOpacity
-                      onPress={sendEmailCode}
-                      className="absolute top-0 right-0 translate-y-3 border border-gray-400 rounded-full p-1 flex justify-center items-center">
-                      <Text className="text-sm font-medium text-gray-700">
-                        인증번호 전송
-                      </Text>
-                    </TouchableOpacity>
+                    {!sendingEmail && (
+                      <TouchableOpacity
+                        onPress={emailValid ? sendEmailCode : checkEmailValid}
+                        className="absolute top-0 right-0 translate-y-3 border border-gray-400 rounded-full p-1 flex justify-center items-center">
+                        <Text className="text-sm font-medium text-gray-700">
+                          {emailValid ? '인증번호 전송' : '중복 확인'}
+                        </Text>
+                      </TouchableOpacity>
+                    )}
                   </View>
                 )}
                 name="email"
@@ -146,9 +200,10 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                   <TextInput
                     className="border-b border-gray-800/50 text-gray-700"
                     onChangeText={setEmailCode}
+                    autoCapitalize="none"
                   />
                   <TouchableOpacity
-                    onPress={checkEmailCode}
+                    onPress={checkEmailCodeValid}
                     className="absolute top-0 right-0 translate-y-3 border border-gray-400 rounded-full p-1 flex justify-center items-center">
                     <Text className="text-sm font-medium text-gray-700">
                       인증번호 확인
@@ -179,6 +234,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
+                  autoCapitalize="none"
                 />
               )}
               name="name"
@@ -202,8 +258,21 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                 <TextInput
                   className="border-b border-gray-800/50 text-gray-700"
                   onBlur={onBlur}
-                  onChangeText={onChange}
+                  onChangeText={t => {
+                    const newT = t.replace(/[^0-9]/g, '');
+                    if (newT.length === 11) {
+                      phoneMutation.mutate(newT);
+                    } else {
+                      setError('phone', {
+                        type: 'required',
+                        message: '전화번호를 입력해주세요.',
+                      });
+                    }
+                    onChange(newT);
+                  }}
                   value={value}
+                  maxLength={11}
+                  keyboardType="numeric"
                 />
               )}
               name="phone"
@@ -224,6 +293,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                     onChangeText={onChange}
                     value={value}
                     secureTextEntry={!showPassword}
+                    autoCapitalize="none"
                   />
                   <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
                     <Icon
@@ -261,6 +331,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                     onChangeText={onChange}
                     value={value}
                     secureTextEntry={!showPassword2}
+                    autoCapitalize="none"
                   />
                   <TouchableOpacity className="absolute right-0 top-0 translate-y-3 p-2">
                     <Icon
@@ -281,7 +352,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
         </View>
       </ScrollView>
       <BottomButton title={'회원가입'} onPress={handleSubmit(onSubmit)} />
-      <LoadingScreen isLoading={mutation.isPending} />
+      <LoadingScreen isLoading={joinMutation.isPending} />
     </View>
   );
 }

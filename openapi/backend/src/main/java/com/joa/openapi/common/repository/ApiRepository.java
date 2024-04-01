@@ -27,4 +27,5 @@ public interface ApiRepository extends JpaRepository<Api, String> {
     default Api getByApiKey(UUID apiKey) {
         return findByApiKey(apiKey).orElseThrow(() -> new RestApiException(CommonErrorCode.WRONG_APIKEY));
     }
+
 }

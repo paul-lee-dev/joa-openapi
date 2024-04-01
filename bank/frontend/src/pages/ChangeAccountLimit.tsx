@@ -52,7 +52,7 @@ function ChangeAccountLimit({
     <View className="w-full h-full bg-gray-100 flex">
       <Header
         stack="계좌한도 변경"
-        menu={[{title: 'close', onPress: () => {}}]}
+        menu={[{title: 'close', onPress: () => navigation.pop()}]}
       />
       <CommonInput label={'계좌 한도 (만원)'}>
         <Controller

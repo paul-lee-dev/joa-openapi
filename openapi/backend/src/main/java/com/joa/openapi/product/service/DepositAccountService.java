@@ -44,7 +44,6 @@ public class DepositAccountService {
 
         Long calculatedInterest = 0L; // 계산된 이자액
 
-
         for (Account account : accounts) {
             Long totalPrincipal = account.getAmount(); // 원금
 
@@ -88,33 +87,29 @@ public class DepositAccountService {
     }
 
     public ProductRateResponseDto calculateRate(UUID apiKey, ProductRateRequestDto req) {
-        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
         Product product = productRepository.findById(req.getProductId()).orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT));
 
         Long calculatedInterest = 0L; // 계산된 이자액
-        Long totalPrincipal = account.getAmount(); // 원금
-
-        System.out.println("지급 타입 : " + product.getPaymentType());
-        System.out.println("상품 타입 : " + product.getProductType());
+        Long totalPrincipal = req.getAmount(); // 원금
 
         if(product.getProductType().equals(ProductType.TERM_DEPOSIT)) {
             // 예금 이자 계산
-            calculatedInterest = calculateTermDeposit(account.getAmount(), product.getRate(), account.getTerm(), product.getPaymentType());
+            calculatedInterest = calculateTermDeposit(req.getAmount(), product.getRate(), req.getTerm(), product.getPaymentType());
 
         } else if (product.getProductType().equals(ProductType.FIXED_DEPOSIT)) {
             // 적금 이자 계산
-            calculatedInterest = calculateFixedDeposit(account.getAmount(), product.getRate(), account.getTerm(), product.getPaymentType());
-            totalPrincipal *= account.getTerm();
+            calculatedInterest = calculateFixedDeposit(req.getAmount(), product.getRate(), req.getTerm(), product.getPaymentType());
+            totalPrincipal *= req.getTerm();
         }
 
         long taxInterest = 0L;
-        if(account.getTaxType().equals(TaxType.TAX)){
+        if(req.getTaxType().equals(TaxType.TAX)){
             taxInterest = calculatedInterest * 154 / 1000;
         }
 
         Long totalAmount = totalPrincipal + calculatedInterest - taxInterest;
 
-        return ProductRateResponseDto.toDto(product, account, calculatedInterest, taxInterest, totalAmount); //계산된 이자액, 세금액, 최종 지금액
+        return ProductRateResponseDto.toDto(product, totalPrincipal, calculatedInterest, taxInterest, totalAmount); //계산된 이자액, 세금액, 최종 지금액
     }
 
     //예금

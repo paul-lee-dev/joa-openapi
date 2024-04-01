@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +54,7 @@ public class AccountService {
         bankAuthorityValidation(apiKey, req.getBankId());
 
         // 계좌번호 임시 랜덤 생성
-        String accountId = String.valueOf(Math.random());
+        String accountId = createAccountId(memberId, req);
 
         System.out.println("멤버아이디 : " + memberId.toString());
 
@@ -208,7 +209,7 @@ public class AccountService {
     public void bankAuthorityValidation(UUID apiKey, UUID bankId) {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
         Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
-        if (bank.getAdminId().equals(adminId))
+        if (!bank.getAdminId().equals(adminId))
             throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
     }
 
@@ -219,9 +220,43 @@ public class AccountService {
 
     /**
      * 계좌번호 생성
-     * 은행 @@@@ + 상품 @@@@ + 본인 @@@@ + 체크섬 @
+     * 은행 @@ + 본인 @@ + 생성날짜 @@@@@@ + 랜덤@@@ + 체크섬 @
      */
-    public String createAccountId() {
-        return null;
+    public String createAccountId(UUID memberId, AccountCreateRequestDto req) {
+        String accountId = "";
+        int bankA = req.getBankId().toString().charAt(14)-10; //은행 아이디 뒤 2자리 아스키 코드
+        int bankB = req.getBankId().toString().charAt(15)-10; //은행 아이디 뒤 1자리 아스키 코드
+        int memberA = memberId.toString().charAt(14)-10; //고객 아이디 뒤 2자리 아스키 코드
+        int memberB = memberId.toString().charAt(15)-10; //고객 아이디 뒤 1자리 아스키 코드
+        accountId = accountId + bankA + bankB + memberA + memberB;
+        System.out.println(accountId);
+        LocalTime now = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss"); //시 분 초
+        accountId += now.format(formatter);
+        accountId += String.valueOf(Math.random()*10000).substring(0,3); //랜덤 숫자 3자리
+        accountId += calculateCheckDigit(accountId);                        //유효성검사 1자리
+        return accountId;
+    }
+
+    private int calculateCheckDigit(String accountIdWithoutCheckDigit) {
+        int sum = 0;
+        // 간단한 예시: 각 자리수에 대해 번갈아 가며 2 또는 1을 곱한 합 계산
+        for (int i = 0; i < accountIdWithoutCheckDigit.length(); i++) {
+            int digit = Character.getNumericValue(accountIdWithoutCheckDigit.charAt(i));
+            if (i % 2 == 0) {
+                // 짝수 인덱스에는 2를 곱합니다.
+                sum += digit * 2;
+            } else {
+                // 홀수 인덱스에는 1을 곱합니다.
+                sum += digit;
+            }
+        }
+        // 합계를 10으로 나눈 나머지를 사용하여 유효성 검사 숫자 계산
+        int checkDigit = 10 - (sum % 10);
+        // 만약 결과가 10이면, 유효성 검사 숫자를 0으로 설정
+        if (checkDigit == 10) {
+            checkDigit = 0;
+        }
+        return checkDigit;
     }
 }

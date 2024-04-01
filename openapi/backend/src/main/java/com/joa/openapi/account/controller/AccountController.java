@@ -34,7 +34,7 @@ public class AccountController {
 
     @PatchMapping("/limit")
     public ResponseEntity<?> updateLimit(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId, @RequestBody AccountUpdateRequestDto req) {
-        Long limit = accountService.updateLimit(memberId, req);
+        Long limit = accountService.updateLimit(apiKey, req);
         return ResponseEntity.ok(ApiResponse.success("이체한도 변경에 성공했습니다.", limit));
     }
 
@@ -64,6 +64,12 @@ public class AccountController {
 
     @PostMapping("/member")
     public ResponseEntity<?> getAccounts(@RequestHeader("apiKey") UUID apiKey, @RequestHeader("memberId") UUID memberId, @PageableDefault Pageable pageable) {
+        Page<AccountGetAccountsResponseDto> accountsPage = accountService.getAccounts(apiKey, memberId, pageable);
+        return ResponseEntity.ok(ApiResponse.success("계좌 조회에 성공했습니다.", accountsPage));
+    }
+
+    @GetMapping("/member/{memberId}")
+    public ResponseEntity<?> getAccountByMemberId(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "memberId") UUID memberId, @PageableDefault Pageable pageable) {
         Page<AccountGetAccountsResponseDto> accountsPage = accountService.getAccounts(apiKey, memberId, pageable);
         return ResponseEntity.ok(ApiResponse.success("계좌 조회에 성공했습니다.", accountsPage));
     }

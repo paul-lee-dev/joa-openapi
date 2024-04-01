@@ -54,7 +54,7 @@ public class BankService {
                 .name(req.getName())
                 .uri(req.getUri())
                 .build();
-        bankRepository.save(bank);
+        Bank saved = bankRepository.save(bank);
         ProductCreateRequestDto dto = ProductCreateRequestDto.builder()
                 .name("보통 예금")
                 .description("은행 생성 시 자동 생성 되는 보통 예금")
@@ -63,11 +63,11 @@ public class BankService {
                 .rate(1D)
                 .productType(ORDINARY_DEPOSIT)
                 .paymentType(SIMPLE)
-                .bankId(bank.getId())
+                .bankId(saved.getId())
                 .build();
         productService.create(apiKey, dto);
 
-        return BankResponseDto.toDto(bank);
+        return BankResponseDto.toDto(saved);
     }
 
     @Transactional

@@ -20,12 +20,15 @@ import ChangeAccountLimit from '@/pages/ChangeAccountLimit';
 import AccountDetail from '@/pages/AccountDetail';
 import AccountList from '@/pages/AccountList';
 import {IAccount} from '@/models';
-import {memberDataAtom} from '@/store/atoms';
+import {bankDataAtom, memberDataAtom} from '@/store/atoms';
 import History from './pages/History';
 import ChangeBankId from './pages/ChangeBankId';
 import EditProfile from './pages/EditProfile';
 import DeleteAccount from './pages/DeleteAccount';
 import SplashScreen from 'react-native-splash-screen';
+import {IProduct, ProductType} from './models/product';
+import ProductList from './pages/ProductList';
+import {axiosInstance} from './api';
 
 export type RootStackParamList = {
   AccountDetail: {
@@ -45,9 +48,11 @@ export type RootStackParamList = {
   ChangePasswordResult: undefined;
   ChangePasswordStart: undefined;
   ChangePasswordVerify: undefined;
-  CreateAccount: undefined;
-  CreateAccountConfirm: undefined;
-  CreateAccountResult: undefined;
+  CreateAccount: {
+    product: IProduct;
+  };
+  CreateAccountConfirm: {product: IProduct};
+  CreateAccountResult: {account: IAccount};
   DeleteAccount: {account: IAccount};
   EditProfile: undefined;
   History: {
@@ -57,9 +62,11 @@ export type RootStackParamList = {
   Join: undefined;
   Main: undefined;
   Menu: undefined;
+  ProductList: {
+    productType: ProductType;
+  };
   Search: undefined;
   Setting: undefined;
-  Splash: undefined;
   Transfer: {account: IAccount};
   TransferAmount: {
     account: IAccount;
@@ -83,9 +90,20 @@ const globalOption = {options: {headerShown: false}};
 
 function Router(): React.JSX.Element {
   const memberData = useRecoilValue(memberDataAtom);
+  const bankData = useRecoilValue(bankDataAtom);
   useEffect(() => {
     SplashScreen.hide();
-  }, []);
+    axiosInstance.interceptors.request.use(
+      config => {
+        config.headers.memberId = memberData?.member?.id;
+        config.headers.apiKey = bankData.apiKey;
+        return config;
+      },
+      error => {
+        return Promise.reject(error);
+      },
+    );
+  }, [memberData, bankData]);
 
   return (
     <NavigationContainer>
@@ -154,11 +172,6 @@ function Router(): React.JSX.Element {
               {...globalOption}
             />
             <Stack.Screen
-              name="ChangeBankId"
-              component={ChangeBankId}
-              {...globalOption}
-            />
-            <Stack.Screen
               name="EditProfile"
               component={EditProfile}
               {...globalOption}
@@ -166,6 +179,11 @@ function Router(): React.JSX.Element {
             <Stack.Screen
               name="DeleteAccount"
               component={DeleteAccount}
+              {...globalOption}
+            />
+            <Stack.Screen
+              name="ProductList"
+              component={ProductList}
               {...globalOption}
             />
           </>
@@ -179,6 +197,11 @@ function Router(): React.JSX.Element {
         <Stack.Screen name="Search" component={Search} {...globalOption} />
         <Stack.Screen name="Menu" component={Menu} {...globalOption} />
         <Stack.Screen name="Setting" component={Setting} {...globalOption} />
+        <Stack.Screen
+          name="ChangeBankId"
+          component={ChangeBankId}
+          {...globalOption}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

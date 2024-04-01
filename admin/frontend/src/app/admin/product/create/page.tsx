@@ -1,13 +1,38 @@
 "use client";
 
+import { createProduct } from "@/api/Product";
 import Button from "@/components/button/button";
 import InputText from "@/components/input/inputText";
 import BankSelect from "@/components/select/bank";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 
-export default function ProductDetail() {
+interface CreateProductForm {
+  name: string;
+}
 
-
+export default function ProductCreate() {
+  const router = useRouter();
+  const mutation = useMutation({
+    mutationFn: createProduct,
+    onSuccess: (data) => {
+      console.log(data);
+      router.replace("/");
+    },
+    onError: (err) => console.log(err),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<CreateProductForm>({
+    defaultValues: {
+      name: "",
+    },
+  });
   return (
     <>
       <Form>
