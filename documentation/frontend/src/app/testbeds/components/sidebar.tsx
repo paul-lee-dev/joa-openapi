@@ -52,13 +52,13 @@ text-xs font-bold p-3 mt-4
 `;
 
 const BarItemContainer = tw.div`
-rounded-md hover:bg-gray-100 
+mr-12 rounded-md hover:bg-gray-100 
 `;
 
 const BarItem = tw.div`
-mr-12 p-2 flex space-4 font-bold
+p-2 flex space-4 font-bold
 `;
 
 const BarSubItem = tw.a`
-mr-12 p-2 flex space-2 text-xs hover:font-bold
+p-2 flex space-2 text-xs hover:font-bold
 `;
