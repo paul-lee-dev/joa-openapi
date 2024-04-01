@@ -10,7 +10,7 @@
 //accountListContent 계좌 목록 조회/검색
 //accountDeleteContent 계좌 해지 
 
-const accountCreateContent = {
+export const accountCreateContent = {
     title: '계좌 개설',
     desc: '은행에 가입하여 계좌를 등록하는 API입니다. 예적금상품을 바탕으로 등록할 수 있습니다.',
     method: 'POST',
@@ -82,7 +82,7 @@ const accountCreateContent = {
     ],
 }
 
-const accountReadContent = {
+export const accountReadContent = {
     title: '',
     desc: '',
     method: '',
@@ -154,7 +154,7 @@ const accountReadContent = {
     ],
 }
 
-const accountRemainReadContent = {
+export const accountRemainReadContent = {
     title: '',
     desc: '',
     method: '',
@@ -226,7 +226,7 @@ const accountRemainReadContent = {
     ],
 }
 
-const accountUpdateContent = {
+export const accountUpdateContent = {
     title: '',
     desc: '',
     method: '',
@@ -298,7 +298,7 @@ const accountUpdateContent = {
     ],
 }
 
-const acoountLimitUpdateContent = {
+export const acoountLimitUpdateContent = {
     title: '',
     desc: '',
     method: '',
@@ -370,7 +370,7 @@ const acoountLimitUpdateContent = {
     ],
 }
 
-const accountPasswordUpdateContent = {
+export const accountPasswordUpdateContent = {
     title: '',
     desc: '',
     method: '',
@@ -442,7 +442,7 @@ const accountPasswordUpdateContent = {
     ],
 }
 
-const accountMemberListContent = {
+export const accountMemberListContent = {
     title: '',
     desc: '',
     method: '',
@@ -514,7 +514,7 @@ const accountMemberListContent = {
     ],
 }
 
-const accountListContent = {
+export const accountListContent = {
     title: '',
     desc: '',
     method: '',
@@ -586,7 +586,7 @@ const accountListContent = {
     ],
 }
 
-const accountDeleteContent = {
+export const accountDeleteContent = {
     title: '',
     desc: '',
     method: '',
