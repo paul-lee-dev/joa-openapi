@@ -10,6 +10,7 @@ import {
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
+import { WeekTransactionLineGraph } from "@/components/graph/lineGraph";
 
 // TODO: change if dummy is enough
 
@@ -151,7 +152,10 @@ const Dashboard = () => {
           </div>
         </StatCard>
       </StatCardContainer>
-      {bankStat && <WeekTransactionGraph bankStat={bankStat} />}
+      <div className="flex gap-10 py-9">
+        <div>{bankStat && <WeekTransactionGraph bankStat={bankStat} />}</div>
+        {bankStat && <WeekTransactionLineGraph bankStat={bankStat} />}
+      </div>
       {/* <WeekTransactionGraph /> */}
     </div>
   );
