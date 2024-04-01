@@ -1,14 +1,12 @@
-export default function BankGroupSearch() {
+interface IProps {
+  children: React.ReactNode;
+}
+
+export default function BankGroupSearch({ children }: IProps) {
   return (
     <div>
       <div className="relative mt-2 mr-3 rounded-md shadow-sm">
-        <input
-          type="text"
-          name="searchQuery"
-          id="searchQuery"
-          className="flex w-full rounded-md border-0 py-1.5 pl-28 pr-1 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          placeholder=""
-        />
+        {children}
         <div className="absolute inset-y-0 left-0 flex items-center">
           <select
             id="options"

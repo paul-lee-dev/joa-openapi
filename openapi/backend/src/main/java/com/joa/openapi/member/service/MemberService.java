@@ -5,6 +5,7 @@ import com.joa.openapi.account.dto.AccountSearchResponseDto;
 import com.joa.openapi.bank.entity.Bank;
 import com.joa.openapi.bank.errorcode.BankErrorCode;
 import com.joa.openapi.bank.repository.BankRepository;
+import com.joa.openapi.common.entity.Api;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.common.repository.ApiRepository;
@@ -15,6 +16,7 @@ import com.joa.openapi.member.dto.*;
 import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
+import com.joa.openapi.product.entity.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -40,7 +42,7 @@ public class MemberService {
 
     //회원가입
     @Transactional
-    public MemberIdResponseDto addMember(MemberJoinRequestDto request) {
+    public MemberIdResponseDto addMember(UUID apiKey, MemberJoinRequestDto request) {
 
         // 이메일이 이미 사용 중인지 확인
         if (memberRepository.findByEmail(request.getEmail()) != null) {
@@ -53,6 +55,7 @@ public class MemberService {
         }
 
         Bank bank = bankRepository.findById(request.getBankId()).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
+        bankAuthorityValidation(apiKey, bank.getId());
         Member member = Member.builder()
                 .name(request.getName())
                 .password(request.getPassword())
@@ -85,18 +88,20 @@ public class MemberService {
 
     //이메일 중복 검증
     @Transactional
-    public boolean confirmEmail(String email) {
+    public void confirmEmail(UUID apiKey, String email) {
+        Api api = apiRepository.findByApiKey(apiKey).orElseThrow(()->new RestApiException(CommonErrorCode.NO_AUTHORIZATION));
+        System.out.println(api.getAdminId());
         Member member = memberRepository.findByEmail(email);
         if (member!=null) throw new RestApiException(MemberErrorCode.EMAIL_CONFLICT);
-        return true;
     }
 
     //전화번호 중복 검증
     @Transactional
-    public boolean confirmPhone(String phone) {
+    public void confirmPhone(UUID apiKey, String phone) {
+        Api api = apiRepository.findByApiKey(apiKey).orElseThrow(()->new RestApiException(CommonErrorCode.NO_AUTHORIZATION));
+        System.out.println(api.getAdminId());
         Member member = memberRepository.findByPhone(phone);
         if (member!=null) throw new RestApiException(MemberErrorCode.PHONE_CONFLICT);
-        return true;
     }
 
     //회원정보 조회
@@ -143,7 +148,9 @@ public class MemberService {
     }
 
     public Page<MemberSearchResponseDto> search(UUID apiKey, MemberSearchRequestDto req, Pageable pageable) {
-        return memberRepository.searchMemberCustom(req, pageable);
+        Api api = apiRepository.findByApiKey(apiKey)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.NO_AUTHORIZATION));
+        return memberRepository.searchMemberCustom(api.getAdminId(), req, pageable);
     }
 
     public void bankAuthorityValidation(UUID apiKey, UUID bankId) {
@@ -152,4 +159,5 @@ public class MemberService {
         if (!bank.getAdminId().equals(adminId))
             throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
     }
+
 }

@@ -47,7 +47,7 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
   const memberData = useRecoilValue(memberDataAtom);
   const {data, refetch} = useQuery({
     queryKey: ['accountList'],
-    queryFn: getAccountList,
+    queryFn: () => getAccountList(memberData?.member?.id || ''),
     retry: true,
   });
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
@@ -65,11 +65,13 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
     }, [refetch]),
   );
 
+  console.log(data);
+
   return (
     <View className="w-full h-full bg-gray-100">
       <Header
         menu={[
-          {title: 'magnify', onPress: () => navigation.navigate('Search')},
+          // {title: 'magnify', onPress: () => navigation.navigate('Search')},
           {title: 'menu', onPress: () => navigation.navigate('Menu')},
         ]}
       />
