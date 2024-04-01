@@ -4,6 +4,7 @@ import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.bank.entity.Bank;
 import com.joa.openapi.bank.errorcode.BankErrorCode;
 import com.joa.openapi.bank.repository.BankRepository;
+import com.joa.openapi.common.entity.Api;
 import com.joa.openapi.common.errorcode.CommonErrorCode;
 import com.joa.openapi.common.exception.RestApiException;
 import com.joa.openapi.common.repository.ApiRepository;
@@ -36,7 +37,6 @@ public class ProductService {
 
     @Transactional
     public ProductCreateResponseDto create(UUID apiKey, ProductCreateRequestDto req) {
-
         bankAuthorityValidation(apiKey, req.getBankId());
 
         Bank bank = bankRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
@@ -60,7 +60,6 @@ public class ProductService {
 
     @Transactional
     public ProductUpdateIsDoneResponseDto end(UUID apiKey, UUID productId) {
-
         productAuthorityValidation(apiKey, productId);
 
         Product product = productRepository.findById(productId)
@@ -78,7 +77,6 @@ public class ProductService {
 
     @Transactional
     public void delete(UUID apiKey, UUID productId) {
-
         productAuthorityValidation(apiKey, productId);
 
         Product product = productRepository.findById(productId)
@@ -95,13 +93,15 @@ public class ProductService {
     }
 
     public Page<ProductSearchResponseDto> search(UUID apiKey, ProductSearchRequestDto req, Pageable pageable) {
-        return productRepository.searchProductCustom(req, pageable);
+        Api api = apiRepository.findByApiKey(apiKey)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.NO_AUTHORIZATION));
+        return productRepository.searchProductCustom(api.getAdminId(), req, pageable);
     }
 
     public ProductDetailResponseDto searchOne(UUID apiKey, UUID productId) {
         Product product = productRepository.findById(productId)
             .orElseThrow(() -> new RestApiException(ProductErrorCode.NO_PRODUCT));
-
+        bankAuthorityValidation(apiKey, productId);
         return ProductDetailResponseDto.toDto(product);
     }
 

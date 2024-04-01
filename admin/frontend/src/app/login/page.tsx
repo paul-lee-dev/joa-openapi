@@ -1,24 +1,77 @@
+"use client";
+
+import { login } from "@/api/Admin";
+import { adminDataAtom } from "@/store/atom";
+import { useMutation } from "@tanstack/react-query";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { useSetRecoilState } from "recoil";
 import tw from "tailwind-styled-components";
 
+interface ILoginForm {
+  email: string;
+  password: string;
+}
+
 export default function LoginPage() {
+  const router = useRouter();
+  const setAdminData = useSetRecoilState(adminDataAtom);
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess: (data) => {
+      console.log(data);
+      setAdminData({
+        isLogin: true,
+        apiKey: data.data.apiKey,
+        accessToken: data.data.accessToken,
+        refreshToken: data.data.refreshToken,
+      });
+      router.replace("/");
+    },
+    onError: (err) => console.log(err),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<ILoginForm>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = (data: ILoginForm) => {
+    console.log(data);
+    mutation.mutate({
+      email: data.email,
+      password: data.password,
+    });
+  };
   return (
     <Wrapper>
       <TitleContainer>
         <TitleText>Admin</TitleText>
       </TitleContainer>
       <MainContainer>
-        <LoginFormContainer action="#" method="POST">
+        <LoginFormContainer onSubmit={handleSubmit(onSubmit)}>
           <InputFormWrapper>
             <LoginLabel htmlFor="email">이메일</LoginLabel>
             <InputContainer>
               <Input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
+                {...register("email", {
+                  required: "이메일을 입력해주세요.",
+                  pattern: {
+                    value:
+                      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/,
+                    message: "올바른 이메일 형식이 아닙니다.",
+                  },
+                })}
               />
             </InputContainer>
+            <ErrorMsg>{errors?.email?.message}</ErrorMsg>
           </InputFormWrapper>
 
           <InputFormWrapper>
@@ -30,13 +83,13 @@ export default function LoginPage() {
             </PasswordAlign>
             <InputContainer>
               <Input
-                id="password"
-                name="password"
                 type="password"
-                autoComplete="current-password"
-                required
+                {...register("password", {
+                  required: "비밀번호를 입력해주세요.",
+                })}
               />
             </InputContainer>
+            <ErrorMsg>{errors?.password?.message}</ErrorMsg>
           </InputFormWrapper>
 
           <InputFormWrapper>
@@ -45,7 +98,14 @@ export default function LoginPage() {
         </LoginFormContainer>
 
         <SignUpParagraph>
-          계정이 없으십니까? <SignUpAnchor href="#">회원가입</SignUpAnchor>
+          계정이 없으십니까?{" "}
+          <Link
+            href={{
+              pathname: "/",
+            }}
+          >
+            <SignUpAnchor>회원가입</SignUpAnchor>
+          </Link>
         </SignUpParagraph>
       </MainContainer>
     </Wrapper>
@@ -73,6 +133,11 @@ const TitleContainer = tw.div`
 sm:mx-auto 
 sm:w-full 
 sm:max-w-sm
+`;
+
+const ErrorMsg = tw.span`
+text-sm
+text-red-400
 `;
 
 const InputFormWrapper = tw.div`
@@ -122,7 +187,7 @@ text-center
 text-sm 
 text-gray-light
 `;
-const SignUpAnchor = tw.a`
+const SignUpAnchor = tw.span`
 font-semibold 
 leading-6 
 text-gray-500 
