@@ -157,7 +157,7 @@ public class AccountService {
         Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         bankAuthorityValidation(apiKey, account.getBankId());
-        checkPassword(account, req.getPassword());
+        // checkPassword(account, req.getPassword());
 
         account.deleteSoftly();
 
