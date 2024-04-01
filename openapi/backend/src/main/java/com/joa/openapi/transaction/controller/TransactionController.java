@@ -71,7 +71,7 @@ public class TransactionController {
     @PostMapping("/1wonConfirm")
     public ResponseEntity<?> oneSendConfirm(@RequestBody Transaction1wonConfirmRequestDto req) {
         transactionService.oneSendConfirm(req);
-        return ResponseEntity.ok(ApiResponse.success("1원 인증 4글자 확인에 성공했습니다.", req));
+        return ResponseEntity.ok(ApiResponse.success("1원 인증 4글자 확인에 성공했습니다."));
     }
 
     @PatchMapping
