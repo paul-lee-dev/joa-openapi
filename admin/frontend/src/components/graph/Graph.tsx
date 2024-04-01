@@ -6,6 +6,10 @@ import ApexCharts from "apexcharts";
 // TODO: change if dummy is enough
 interface WeekTransactionGraphProps {
   bankStat: {
+    totalTransactionCnt: number;
+    totalMemberCnt: number;
+    totalWithdrawAmount: number | null;
+    totalDepositAmount: number | null;
     totalTransactionList: {
       time: string;
       deposit: number;
@@ -17,7 +21,6 @@ interface WeekTransactionGraphProps {
 export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
   bankStat,
 }) => {
-  // export function WeekTransactionGraph() {
   const chartRef = useRef<ApexCharts | null>(null);
   useEffect(() => {
     const options = {
@@ -179,7 +182,6 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
       };
     }
   }, [bankStat]);
-  // }, []);
 
   return (
     <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
@@ -199,10 +201,10 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
           </div>
           <div>
             <h5 className="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">
-              3.4k
+              {bankStat.totalMemberCnt / 1000}K
             </h5>
             <p className="text-sm font-normal text-gray-500 dark:text-gray-400">
-              Leads generated per week
+              고객 수 증가
             </p>
           </div>
         </div>
@@ -223,25 +225,33 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
                 d="M5 13V1m0 0L1 5m4-4 4 4"
               />
             </svg>
-            42.5%
+            {(Math.random() * 100).toFixed(3)}%
           </span>
         </div>
       </div>
       <div className="grid grid-cols-2">
         <dl className="flex items-center">
           <dt className="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">
-            Money spent:
+            수익:
           </dt>
           <dd className="text-gray-900 text-sm dark:text-white font-semibold">
-            $3,232
+            {bankStat.totalDepositAmount !== null &&
+            bankStat.totalWithdrawAmount !== null
+              ? bankStat.totalDepositAmount - bankStat.totalWithdrawAmount
+              : "0"}
           </dd>
         </dl>
         <dl className="flex items-center justify-end">
           <dt className="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">
-            Conversion rate:
+            이익율:
           </dt>
           <dd className="text-gray-900 text-sm dark:text-white font-semibold">
-            1.2%
+            {bankStat.totalDepositAmount !== null &&
+            bankStat.totalWithdrawAmount !== null
+              ? (
+                  bankStat.totalDepositAmount / bankStat.totalWithdrawAmount
+                ).toFixed(4) + "%"
+              : "0"}
           </dd>
         </dl>
       </div>
@@ -250,7 +260,7 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
         <div className="flex justify-between items-center pt-5">
           {/* Button */}
           <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white">
-            지난 7 일
+            지난 {bankStat.totalTransactionList.length} 일
           </button>
         </div>
       </div>

@@ -101,31 +101,56 @@ const Dashboard = () => {
           ))}
         </Select>
       </div>
-      <div id="statCards" className="flex justify-between gap-2 m-3">
+      <StatCardContainer id="statCards">
         <StatCard>
-          <FaExchangeAlt />
-          <div className="h-40">
-            <span className="text-50">총 거래횟수 </span>
-            {bankStat && bankStat.totalTransactionCnt}
+          <CircleIcon className="bg-yellow-100">
+            <FaExchangeAlt size="50" color="#FFBB38" />
+          </CircleIcon>
+          <div className="">
+            <StatCardTitle>총 거래횟수 </StatCardTitle>
+            <StatCardContent>
+              {"\n"}
+              {bankStat && bankStat.totalTransactionCnt}
+            </StatCardContent>
           </div>
         </StatCard>
         <StatCard>
-          <FaUsers />
+          <CircleIcon className="bg-blue-200">
+            <FaUsers size="50" color="#396AFF" />
+          </CircleIcon>
           <div>
-            <span>고객 수 </span>
-            {bankStat && bankStat.totalMemberCnt}
+            <StatCardTitle>고객 수 </StatCardTitle>
+            <StatCardContent>
+              {"\n"}
+              {bankStat && bankStat.totalMemberCnt}
+            </StatCardContent>
           </div>
         </StatCard>
         <StatCard>
-          <FaMoneyBillAlt />
-          <span>총 출금 </span> {bankStat && bankStat.totalWithdrawAmount}
+          <CircleIcon className="bg-pink-200">
+            <FaMoneyBillAlt size="50" color="#FF82AC" />
+          </CircleIcon>
+          <div>
+            <StatCardTitle>총 출금 </StatCardTitle>
+            <StatCardContent>
+              {"\n"}
+              {bankStat && bankStat.totalWithdrawAmount}
+            </StatCardContent>
+          </div>
         </StatCard>
         <StatCard>
-          <FaMoneyCheckAlt />
-          <span>총 입금 </span>
-          {bankStat && bankStat.totalDepositAmount}
+          <CircleIcon className="bg-green-200">
+            <FaMoneyCheckAlt size="45" color="#16DBCC" />
+          </CircleIcon>
+          <div>
+            <StatCardTitle>총 입금 </StatCardTitle>
+            <StatCardContent>
+              {"\n"}
+              {bankStat && bankStat.totalDepositAmount}
+            </StatCardContent>
+          </div>
         </StatCard>
-      </div>
+      </StatCardContainer>
       {bankStat && <WeekTransactionGraph bankStat={bankStat} />}
       {/* <WeekTransactionGraph /> */}
     </div>
@@ -155,11 +180,35 @@ const StatCard = tw.div`
   flex
   w-full
   gap-3
-  bg-gray-100
+  bg-warmGray-50
   shadow-md
   p-3
-  rounded-md
-  text-center
+  h-28
+  rounded-lg
+  text-left
 `;
 
+const StatCardContainer = tw.div`
+flex justify-between gap-11 m-3
+`;
+
+const StatCardTitle = tw.span`
+text-sm
+text-gray-400
+`;
+
+const CircleIcon = tw.div`
+  w-20
+  h-20
+  rounded-full
+  flex
+  items-center
+  justify-center
+`;
+
+const StatCardContent = tw.span`
+whitespace-pre-wrap
+text-2xl
+text-10
+`;
 export default Dashboard;
