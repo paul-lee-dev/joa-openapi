@@ -5,7 +5,10 @@ export const searchAccountList = async (params: any): Promise<any> => {
   return response.data;
 };
 
-export const createAccount = async (memberId: string, params: any): Promise<any> => {
+export const createAccount = async (
+  memberId: string,
+  params: any
+): Promise<any> => {
   const response = await localAxios.post("/account", params, {
     headers: {
       memberId,
@@ -14,8 +17,8 @@ export const createAccount = async (memberId: string, params: any): Promise<any>
   return response.data;
 };
 
-export const updateAccount = async (accountId: string): Promise<any> => {
-  const response = await localAxios.patch(`/account/${accountId}`);
+export const updateAccount = async (params: any): Promise<any> => {
+  const response = await localAxios.patch("/account", params);
   return response.data;
 };
 

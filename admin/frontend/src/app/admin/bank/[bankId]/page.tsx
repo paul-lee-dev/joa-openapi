@@ -7,6 +7,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteBank, getBankDetail, updateBank } from "@/api/Bank";
 import { useForm } from "react-hook-form";
 import { LoadingSpinner } from "@/components/loadingSpinner";
+import { CommonForm, Divider } from "../../product/create/page";
+import { CommonInput } from "@/components/input/inputText";
+import { HiBanknotes } from "react-icons/hi2";
 
 interface IProps {
   params: {
@@ -39,15 +42,16 @@ export default function BankDetail({ params: { bankId } }: IProps) {
       alert("은행이 수정되었습니다.");
       refetch();
     },
-    onError: (err) => console.log(err),
+    onError: (err) => alert(err.message),
   });
   const deleteMutation = useMutation({
     mutationFn: deleteBank,
     onSuccess: (data) => {
       console.log(data);
+      alert("은행이 삭제되었습니다.");
       router.replace("/admin/bank");
     },
-    onError: (err) => console.log(err),
+    onError: (err) => alert(err.message),
   });
   const {
     register,
@@ -55,6 +59,7 @@ export default function BankDetail({ params: { bankId } }: IProps) {
     formState: { errors },
     setError,
     setValue,
+    watch,
   } = useForm<UpdateBankForm>({
     defaultValues: {
       name: "",
@@ -91,12 +96,35 @@ export default function BankDetail({ params: { bankId } }: IProps) {
         <LoadingSpinner />
       ) : (
         <>
-          <Form>
-            <div className="grid gap-3 mb-4 md:grid-cols-2">
+          <CommonForm onSubmit={handleSubmit(onSubmit)}>
+            <div className="p-4 pb-0 flex justify-between items-end">
+              <div className="flex flex-col space-y-2">
+                <div className="flex space-x-4 items-center text-gray-600">
+                  <HiBanknotes className="w-10 h-10" />
+                  <h1 className="font-bold text-2xl">{watch("name")}</h1>
+                </div>
+                <h1 className="font-light text-xs text-gray-400">
+                  {data?.data?.bankId}
+                </h1>
+              </div>
+              <div className="flex flex-col">
+                <h1 className="text-sm font-light">
+                  생성:{" "}
+                  <span className="text-gray-500">{data?.data?.createdAt}</span>
+                </h1>
+                <h1 className="text-sm font-light">
+                  수정:{" "}
+                  <span className="text-gray-500">{data?.data?.updatedAt}</span>
+                </h1>
+              </div>
+            </div>
+            <Divider />
+            <div className="p-4 flex flex-col space-y-8">
               <div>
                 <Label htmlFor="name">은행명</Label>
                 <InputContainer>
-                  <Input
+                  <CommonInput
+                    className="w-80"
                     {...register("name", {
                       required: "은행명을 입력해주세요.",
                     })}
@@ -107,7 +135,8 @@ export default function BankDetail({ params: { bankId } }: IProps) {
               <div>
                 <Label htmlFor="description">은행 설명</Label>
                 <InputContainer>
-                  <Input
+                  <CommonInput
+                    className="w-full"
                     {...register("description", {
                       required: "은행 설명을 입력해주세요.",
                     })}
@@ -117,22 +146,13 @@ export default function BankDetail({ params: { bankId } }: IProps) {
               <div>
                 <Label htmlFor="uri">은행 로고 uri</Label>
                 <InputContainer>
-                  <Input {...register("uri")} />
+                  <CommonInput className="w-80" {...register("uri")} />
                 </InputContainer>
               </div>
             </div>
-            <div>
-              <h1>은행코드: {data?.data?.bankId}</h1>
-              <h1>생성시각: {data?.data?.createdAt}</h1>
-              <h1>수정시각: {data?.data?.updatedAt}</h1>
-            </div>
+            <Divider />
             <div className="flex gap-6 justify-end">
-              <Button
-                id={"edit"}
-                name={"수정"}
-                onClick={handleSubmit(onSubmit)}
-                type="submit"
-              ></Button>
+              <Button id={"edit"} name={"수정"} type="submit"></Button>
               <Button
                 id={"delete"}
                 name={"삭제"}
@@ -140,7 +160,7 @@ export default function BankDetail({ params: { bankId } }: IProps) {
                 type="button"
               ></Button>
             </div>
-          </Form>
+          </CommonForm>
         </>
       )}
     </>

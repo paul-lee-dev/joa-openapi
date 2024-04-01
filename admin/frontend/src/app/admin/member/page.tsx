@@ -8,8 +8,8 @@ import BankSelect from "@/components/select/bankNoLabel";
 import MemberTable from "@/components/table/memberTable";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-const CustomerList = () => {
+import { useEffect, useState } from "react";
+const MemberList = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState<string>("");
   const [searchWord, setSearchWord] = useState<string>("");
@@ -19,6 +19,11 @@ const CustomerList = () => {
       return searchMemberList({ memberName: searchWord });
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   return (
     <>
       {isLoading ? (
@@ -57,4 +62,4 @@ const CustomerList = () => {
   );
 };
 
-export default CustomerList;
+export default MemberList;

@@ -35,7 +35,7 @@ const BankList = () => {
       alert("은행 생성에 성공했습니다.");
       refetch();
     },
-    onError: (err) => console.log(err),
+    onError: (err) => alert(err.message),
   });
   const {
     register,
@@ -92,7 +92,11 @@ const BankList = () => {
                 placeholder="은행 명"
               />
             </div>
-            <Button id={"submit"} name={"검색"} onClick={() => setSearchWord(keyword)} />
+            <Button
+              id={"submit"}
+              name={"검색"}
+              onClick={() => setSearchWord(keyword)}
+            />
           </form>
           <BankTable bankList={data.data ?? []} />
           <div className="flex mt-5 justify-between gap-5">

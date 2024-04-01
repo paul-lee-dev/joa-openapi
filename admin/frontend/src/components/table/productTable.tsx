@@ -102,12 +102,14 @@ export default function ProductTable({ productList }: IProps) {
                 </div>
               </TableData>
               <TableData className="cursor-pointer">
-                <a
-                  onClick={() => handleProductDetail(product.productId)}
-                  className="font-medium text-pink-400 hover:text-pink-500"
-                >
-                  자세히
-                </a>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  <a
+                    onClick={() => handleProductDetail(product.productId)}
+                    className="font-medium text-pink-400 hover:text-pink-500"
+                  >
+                    자세히
+                  </a>
+                </div>
               </TableData>
             </tr>
           ))}

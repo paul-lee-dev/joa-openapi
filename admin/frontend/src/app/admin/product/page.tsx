@@ -11,7 +11,7 @@ import ProductTypeMultiSearchSelect from "@/components/select/productTypeMultiSe
 import ProductTable from "@/components/table/productTable";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProductList = () => {
   const router = useRouter();
@@ -24,6 +24,11 @@ const ProductList = () => {
       return searchProductList({});
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   return (
     <>
       {isLoading ? (

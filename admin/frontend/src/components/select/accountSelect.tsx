@@ -1,5 +1,5 @@
 import { searchAccountList } from "@/api/Account";
-import { IAccount } from "@/models/Account.interface";
+import { IAccountSearch } from "@/models/Account.interface";
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEventHandler } from "react";
 import tw from "tailwind-styled-components";
@@ -11,7 +11,12 @@ interface IProps {
   accountId: string;
 }
 
-export default function AccountSelect({ label, bankId, setAccountId, accountId }: IProps) {
+export default function AccountSelect({
+  label,
+  bankId,
+  setAccountId,
+  accountId,
+}: IProps) {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["MemberList", [bankId]],
     queryFn: () => {
@@ -31,7 +36,7 @@ export default function AccountSelect({ label, bankId, setAccountId, accountId }
           <option key={"none"} value={""}>
             계좌 선택
           </option>
-          {data?.page?.content?.map((account: IAccount) => (
+          {data?.page?.content?.map((account: IAccountSearch) => (
             <option key={account.accountId} value={account.accountId}>
               {account.accountName}
             </option>

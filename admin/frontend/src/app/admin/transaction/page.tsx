@@ -67,14 +67,7 @@ const Dashboard = () => {
                 }}
                 id={"create"}
                 name={"생성"}
-              ></Button>
-              <Button
-                onClick={() => {
-                  console.log("delete transaction");
-                }}
-                id={"delete"}
-                name={"삭제"}
-              ></Button>
+              />
             </div>
           </div>
         </>

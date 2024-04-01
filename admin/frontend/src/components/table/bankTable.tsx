@@ -74,12 +74,14 @@ export default function BankTable({ bankList }: BankTableProps) {
               {/* <TableData>{bank.customers}</TableData> */}
 
               <TableData>
-                <a
-                  onClick={() => handleBankDetail(bank.bankId)}
-                  className="font-medium text-pink-400 hover:text-pink-500 cursor-pointer"
-                >
-                  자세히
-                </a>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  <a
+                    onClick={() => handleBankDetail(bank.bankId)}
+                    className="font-medium text-pink-400 hover:text-pink-500 cursor-pointer"
+                  >
+                    자세히
+                  </a>
+                </div>
               </TableData>
             </tr>
           ))}

@@ -1,4 +1,5 @@
 import { ITransaction } from "@/models/Transaction.interface";
+import { formatAmount } from "@/util";
 import tw from "tailwind-styled-components";
 
 interface IProps {
@@ -11,14 +12,24 @@ export default function transactionTable({ transactionList }: IProps) {
       <table className="w-full text-sm text-left text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <TableHeader scope="col">입금주명</TableHeader>
-            <TableHeader scope="col">출금계좌</TableHeader>
-            <TableHeader scope="col">입금계좌</TableHeader>
-            <TableHeader scope="col">거래일자</TableHeader>
-            <TableHeader scope="col">거래금액</TableHeader>
-            <TableHeader scope="col" className="relative">
+            <th scope="col" className="px-6 py-3 w-2/12">
+              입금주명
+            </th>
+            <th scope="col" className="px-6 py-3 w-2/12">
+              출금계좌
+            </th>
+            <th scope="col" className="px-6 py-3 w-2/12">
+              입금계좌
+            </th>
+            <th scope="col" className="px-6 py-3 w-2/12">
+              거래일자
+            </th>
+            <th scope="col" className="px-6 py-3 w-2/12">
+              거래금액
+            </th>
+            <th scope="col" className="relative px-6 py-3 w-1/12">
               <span className="sr-only"> </span>
-            </TableHeader>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -28,19 +39,39 @@ export default function transactionTable({ transactionList }: IProps) {
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
               <TableData className="font-medium text-gray-900 whitespace-nowrap">
-                {transaction.depositorName}
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {transaction.depositorName}
+                </div>
               </TableData>
-              <TableData>{transaction.fromAccount}</TableData>
-              <TableData>{transaction.toAccount}</TableData>
-              <TableData>{transaction.createdAt}</TableData>
-              <TableData>{transaction.amount}</TableData>
               <TableData>
-                <a
-                  href="/admin/transaction/detail"
-                  className="font-medium text-pink-400 hover:text-pink-500"
-                >
-                  자세히
-                </a>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {transaction.fromAccount}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {transaction.toAccount}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {transaction.createdAt}
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  {formatAmount(transaction.amount)}원
+                </div>
+              </TableData>
+              <TableData>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  <a
+                    href="/admin/transaction/detail"
+                    className="font-medium text-pink-400 hover:text-pink-500"
+                  >
+                    자세히
+                  </a>
+                </div>
               </TableData>
             </tr>
           ))}

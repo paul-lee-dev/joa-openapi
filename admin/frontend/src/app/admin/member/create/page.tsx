@@ -9,7 +9,7 @@ import BankSelect from "@/components/select/bankSelect";
 import MyAsyncSelect from "@/components/select/customerMultiSearchSelect";
 import { useState } from "react";
 import tw from "tailwind-styled-components";
-import { CommonForm } from "../../product/create/page";
+import { CommonForm, Divider } from "../../product/create/page";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { createMember } from "@/api/Membr";
@@ -30,10 +30,10 @@ export default function MemberCreate() {
     mutationFn: createMember,
     onSuccess: (data) => {
       console.log(data);
-      alert("계좌가 개설되었습니다.");
-      router.replace(`/admin/account/${data.data.accountId}`);
+      alert("고객이 생성되었습니다.");
+      router.replace(`/admin/member/${data.data.id}`);
     },
-    onError: (err) => console.log(err),
+    onError: (err) => alert(err.message),
   });
   const {
     register,
@@ -139,11 +139,17 @@ export default function MemberCreate() {
             />
           </InputText>
         </div>
+        <Divider />
+        <div className="flex gap-6 justify-end">
+          <Button
+            type="button"
+            onClick={() => router.back()}
+            id={"create"}
+            name={"취소"}
+          />
+          <Button type="submit" id={"create"} name={"등록"} />
+        </div>
       </div>
     </CommonForm>
   );
 }
-
-const Form = tw.form`
-
-`;

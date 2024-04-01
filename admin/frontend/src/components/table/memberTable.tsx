@@ -17,10 +17,10 @@ export default function MemberTable({ memberList }: IProps) {
             <th scope="col" className="px-6 py-3 w-2/12">
               고객 아이디
             </th>
-            <th scope="col" className="px-6 py-3 w-2/12">
+            <th scope="col" className="px-6 py-3 w-1/12">
               은행명
             </th>
-            <th scope="col" className="px-6 py-3 w-1/12">
+            <th scope="col" className="px-6 py-3 w-2/12">
               고객명
             </th>
             <th scope="col" className="px-6 py-3 w-2/12">
@@ -32,8 +32,7 @@ export default function MemberTable({ memberList }: IProps) {
             <th scope="col" className="px-6 py-3 w-1/12">
               가입일자
             </th>
-
-            <th scope="col" className="relative px-6 py-3 w-">
+            <th scope="col" className="relative px-6 py-3 w-1">
               <span className="sr-only"> </span>
             </th>
           </tr>
@@ -61,12 +60,12 @@ export default function MemberTable({ memberList }: IProps) {
               </TableData>
               <TableData>
                 <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
-                  {member.email}
+                  {member.email ?? "없음"}
                 </div>
               </TableData>
               <TableData>
                 <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
-                  {member.phone}
+                  {member.phone ?? "없음"}
                 </div>
               </TableData>
               <TableData>
@@ -77,13 +76,15 @@ export default function MemberTable({ memberList }: IProps) {
 
               <TableData
                 onClick={() => {
-                  router.push("member/detail");
+                  router.push(`member/${member.memberId}`);
                 }}
                 className="cursor-pointer"
               >
-                <a className="font-medium text-pink-400 hover:text-pink-500">
-                  자세히
-                </a>
+                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  <a className="font-medium text-pink-400 hover:text-pink-500">
+                    자세히
+                  </a>
+                </div>
               </TableData>
             </tr>
           ))}

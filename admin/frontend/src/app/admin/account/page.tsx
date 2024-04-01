@@ -12,7 +12,7 @@ import ProductTypeMultiSearchSelect from "@/components/select/productTypeMultiSe
 import AccountTable from "@/components/table/accountTable";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const AccountList = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState<string>("");
@@ -23,6 +23,10 @@ const AccountList = () => {
       return searchAccountList({ searchKeyword: searchWord });
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   return (
     <>
