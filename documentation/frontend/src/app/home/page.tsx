@@ -58,7 +58,7 @@ const Home = () => {
           <ButtonContainer>
             <PurpleButtonItem>Demo</PurpleButtonItem>
           </ButtonContainer>
-          <SubTitleItem>샘플 앱을 다운받아 사용해 보세요</SubTitleItem>
+          <SubTitleItem>샘플 앱을 다운받아<br/>사용해 보세요</SubTitleItem>
         </SubWrapper2>
         <MainContainer>
           <a href='#'><ImageItem2 src='/joabank1.png' /></a>
@@ -92,7 +92,7 @@ const Home = () => {
           </ButtonContainer>
 
           <SubTitleItem>
-            샘플 서비스에 쓰인 코드를 눈으로 확인하고<br />
+            코드를 눈으로 확인하고<br />
             직접 커스텀해서 활용하세요
           </SubTitleItem>
 
@@ -278,7 +278,7 @@ my-4 text-sm leading-6
 `;
 
 const PostLink = tw.a`
-text-sm leading-6
+text-xs font-bold leading-6
 `;
 
 const QnaWrapper = tw.div`

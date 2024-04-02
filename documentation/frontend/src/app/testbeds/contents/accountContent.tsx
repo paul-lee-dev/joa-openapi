@@ -107,8 +107,8 @@ export const accountCreateContent = {
         "password": "1234",
         "balance" : 3000,
         "term" : 30,
-        "bankId": "ef67408b-3107-45b8-9ff5-ac1305a34b47",
-        "productId" : "64f8f3ce-103a-4815-a388-eddaf2333cfb",
+        "bankId": "3cf6f866-3fbd-46c8-85a1-96ab39551a35",
+        "productId" : "1026d98a-b6be-4cf5-9dc0-c96c310a5e1e",
         "taxType": "NO_TAX"
     }
     `,
@@ -468,7 +468,7 @@ export const accountRemainReadContent = {
     ],
     requestExample: `
     {
-        "accountId":"5781660823306134"
+        "accountId":"424442390202548348"
     }
     `,
     responseParam: [
@@ -559,7 +559,7 @@ export const accountUpdateContent = {
     ],
     requestExample: `
     {
-        "accountId": "8363553868882094",
+        "accountId": "424442390202548348",
         "nickname": "수정된 계좌 이름"
     }
     `,
@@ -718,7 +718,7 @@ export const accountLimitUpdateContent = {
     ],
     requestExample: `
     {
-        "accountId": "8363553868882094",
+        "accountId": "424442390202548348",
         "transferLimit": "200"
     }
     `,
@@ -763,7 +763,7 @@ export const accountPasswordUpdateContent = {
     ],
     requestExample: `
     {
-        "accountId": "8363553868882094",
+        "accountId": "424442390202548348",
         "password": "5555"
     }
     `,
@@ -954,7 +954,7 @@ export const accountDeleteContent = {
     ],
     requestExample: `
     {
-        "accountId": "0.8363553868882094",
+        "accountId": "424442390202548348",
         "password": 5555
     }
     `,
@@ -963,7 +963,7 @@ export const accountDeleteContent = {
     {
         "status": "SUCCESS",
         "message": "계좌 해지에 성공했습니다.",
-        "data": "0.8363553868882094",
+        "data": "424442390202548348",
         "page": null
     }
     `,
