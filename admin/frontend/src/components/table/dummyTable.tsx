@@ -12,34 +12,25 @@ export default function DummyTable({ dummyList }: IProps) {
       <table className="w-full text-sm text-left text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" className="relative px-6 py-3 sr">
-              <input
-                id="bordered-checkbox-1"
-                type="checkbox"
-                value=""
-                name="bordered-checkbox"
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2"
-              />
+            <th scope="col" className="px-6 py-3 w-2/12">
+              더미 생성내역 ID
             </th>
-            <th scope="col" className="px-6 py-3">
-              DummyID
+            <th scope="col" className="px-6 py-3 w-2/12">
+              더미 생성내역 이름
             </th>
-            <th scope="col" className="px-6 py-3">
-              더미생성내역이름
+            <th scope="col" className="px-6 py-3 w-1/12">
+              고객 수
             </th>
-            <th scope="col" className="px-6 py-3">
-              생성 유저 수
+            <th scope="col" className="px-6 py-3 w-1/12">
+              계좌 수
             </th>
-            <th scope="col" className="px-6 py-3">
-              생성 계좌 수
+            <th scope="col" className="px-6 py-3 w-1/12">
+              거래내역 수
             </th>
-            <th scope="col" className="px-6 py-3">
-              생성 거래내역 수
+            <th scope="col" className="px-6 py-3 w-2/12">
+              생성 일자
             </th>
-            <th scope="col" className="px-6 py-3">
-              가입일자
-            </th>
-            <th scope="col" className="relative px-6 py-3">
+            <th scope="col" className="relative px-6 py-3 w-1/12">
               <span className="sr-only"> </span>
             </th>
           </tr>
@@ -50,15 +41,6 @@ export default function DummyTable({ dummyList }: IProps) {
               key={dummy.dummyId}
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
-              <td className="px-6 py-4">
-                <input
-                  id="bordered-checkbox-1"
-                  type="checkbox"
-                  value=""
-                  name="bordered-checkbox"
-                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 "
-                />
-              </td>
               <td className="px-6 py-4">
                 <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {dummy.dummyId}

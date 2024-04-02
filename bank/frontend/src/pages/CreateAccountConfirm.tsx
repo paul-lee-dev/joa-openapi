@@ -80,7 +80,7 @@ function CreateAccountConfirm({
   } = useForm<CreateAccountForm>({
     defaultValues: {
       withdrawAccount: '',
-      amount: '',
+      amount: '0',
       term: 6,
       password: '',
       password2: '',
@@ -95,8 +95,7 @@ function CreateAccountConfirm({
   });
 
   useEffect(() => {
-    const subscirbe = watch((data, {name}) => {
-      console.log(data, name);
+    const subscirbe = watch(() => {
       setCalcValue(
         calculateRate(
           product,
@@ -110,12 +109,22 @@ function CreateAccountConfirm({
     return () => subscirbe.unsubscribe();
   }, [watch, getValues, product]);
 
-  const onSubmit = async (formData: CreateAccountForm) => {
-    mutation.mutate({
-      amount: formData.amount || undefined,
+  const onSubmit = (formData: CreateAccountForm) => {
+    console.log({
+      amount: Number(formData.amount),
       taxType: formData.taxType,
       term: formData.term,
-      withdrawAccount: formData.withdrawAccount || undefined,
+      withdrawAccount: formData.withdrawAccount || null,
+      nickname: product.name,
+      password: formData.password,
+      bankId: bankData.bankId,
+      productId: product.productId,
+    });
+    mutation.mutate({
+      amount: Number(formData.amount),
+      taxType: formData.taxType,
+      term: formData.term,
+      withdrawAccount: formData.withdrawAccount || null,
       nickname: product.name,
       password: formData.password,
       bankId: bankData.bankId,

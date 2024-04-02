@@ -41,10 +41,12 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
     onSuccess: data => {
       console.log(data);
       const member: IMember = data.data;
+      axiosInstance.interceptors.request.clear();
       axiosInstance.interceptors.request.use(
         config => {
           config.headers.memberId = member.id;
           config.headers.apiKey = bankData.apiKey;
+          console.log(config.headers);
           return config;
         },
         error => {
@@ -100,7 +102,7 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
       <View className="w-full h-80 flex-grow bg-gray-100 pt-36 px-6 pb-24 flex justify-between">
         <View className="w-full flex px-4 space-y-2">
           <Text className="w-full font-semibold text-xl text-gray-700">
-            조아은행에
+            {bankData.bankName}에
           </Text>
           <Text className="w-full font-semibold text-xl text-gray-700">
             오신 것을 환영합니다.
@@ -123,7 +125,7 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
             <View className="flex space-y-2">
               <Text className="font-bold text-lg text-gray-700">회원가입</Text>
               <Text className="font-semibold text-xs text-gray-700">
-                조아은행이 처음이신가요?
+                {bankData.bankName}이 처음이신가요?
               </Text>
             </View>
           </TouchableOpacity>
@@ -136,7 +138,7 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
             <View className="flex space-y-2">
               <Text className="font-bold text-lg text-gray-700">로그인</Text>
               <Text className="font-semibold text-xs text-gray-700">
-                이미 조아은행을 사용하고 계신가요?
+                이미 {bankData.bankName}을 사용하고 계신가요?
               </Text>
             </View>
           </TouchableOpacity>
