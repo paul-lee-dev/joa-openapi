@@ -11,7 +11,6 @@ const Home = () => {
         <MainContainer>
           <SubContainer>
             <img className='w-[19rem]' src='/logo2.png'/>
-            {/* <MainTitleItem>Joa Open API</MainTitleItem> */}
             <MainTextItem>은행 업무와 관련된 다양한 금융 API를 제공하여 핀테크 프로젝트를 간편하고 효율적으로 개발할 수 있도록 실시간으로 지원합니다. </MainTextItem>
             <ButtonContainer>
               <PurpleButtonItem href="/docs">시작하기</PurpleButtonItem>
