@@ -151,6 +151,8 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             query = query.orderBy(orderSpecifier);
         }
 
+        long total = query.fetchCount();
+
         // 페이지네이션 적용
         List<Transaction> transactions = query
             .offset(pageable.getOffset())   // 반환되는 행의 시작점
@@ -162,7 +164,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             .map(TransactionSearchResponseDto::toDto)
             .collect(Collectors.toList());
 
-        return new PageImpl<>(res, pageable, transactions.size());
+        return new PageImpl<>(res, pageable, total);
     }
 
     @Override
