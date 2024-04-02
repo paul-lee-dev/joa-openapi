@@ -10,9 +10,7 @@ interface MultiSearchProps {
 }
 
 const filterCustomers = (inputValue: string) => {
-  return customerOptions.filter((i) =>
-    i.label.toLowerCase().includes(inputValue.toLowerCase())
-  );
+  return customerOptions.filter((i) => i.label.toLowerCase().includes(inputValue.toLowerCase()));
 };
 
 const promiseOptions = (inputValue: string) =>
@@ -43,10 +41,7 @@ const MyAsyncSelect = () => (
   />
 );
 
-export default function CustomerMultiSearchSelect({
-  label,
-  htmlFor,
-}: MultiSearchProps) {
+export default function MemberMultiSearch({ label, htmlFor }: MultiSearchProps) {
   return (
     <div>
       <Label htmlFor={htmlFor}>{label}</Label>

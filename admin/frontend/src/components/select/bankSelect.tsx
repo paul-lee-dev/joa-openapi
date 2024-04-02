@@ -28,7 +28,7 @@ export default function BankSelect({ setBankId, bankId }: IProps) {
           <option key={"none"} value={""}>
             은행 선택
           </option>
-          {data?.data?.map((bank: IBank) => (
+          {data?.page?.content.map((bank: IBank) => (
             <option key={bank.bankId} value={bank.bankId}>
               {bank.name}
             </option>

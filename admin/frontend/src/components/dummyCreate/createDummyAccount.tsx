@@ -3,11 +3,16 @@
 import Button from "@/components/button/button";
 import InputText, { CommonErrorMsg, CommonInput } from "@/components/input/inputText";
 import BankSelect from "@/components/select/bankSelect";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 import { depositTransaction, sendTransaction, withdrawTransaction } from "@/api/Transaction";
+import MemberSelect from "../select/memberSelect";
+import { useEffect, useState } from "react";
+import { searchMemberList } from "@/api/Membr";
+import CommonLabel from "../commonLabel";
+import { IMember } from "@/models/Member.interface";
 
 interface CreateDummyAccountForm {
   name: string;
@@ -34,6 +39,7 @@ export default function CreateDummyAccount() {
     formState: { errors },
     setError,
     setValue,
+    getValues,
     watch,
   } = useForm<CreateDummyAccountForm>({
     defaultValues: {
@@ -44,22 +50,72 @@ export default function CreateDummyAccount() {
       users: [],
     },
   });
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["MemberList", watch("bankId")],
+    queryFn: () => {
+      if (watch("bankId") === "") return;
+      return searchMemberList({ bankId: watch("bankId") });
+    },
+  });
 
-  const onSubmit = (data: CreateDummyAccountForm) => {
-    console.log(data);
-    return;
-    mutation.mutate({});
+  const onSubmit = (formData: CreateDummyAccountForm) => {
+    mutation.mutate({
+      name: formData.name,
+      count: formData.count,
+      bankId: formData.bankId,
+      users: data.page.content
+        .filter(
+          (member: IMember) =>
+            getValues("users").findIndex((user) => user === member.memberName) !== -1
+        )
+        .map((member: IMember) => member.memberId),
+    });
+  };
+
+  const addMember = (newName: string) => {
+    if (newName === "#ALL") {
+      setValue(
+        "users",
+        data.page.content.map((member: IMember) => member.memberName)
+      );
+    } else {
+      const old = getValues("users");
+      if (old.findIndex((user) => user === newName) === -1) {
+        setValue("users", [...old, newName]);
+      }
+    }
+  };
+
+  const removeMember = (targetName: string) => {
+    const old = getValues("users");
+    if (old.findIndex((user) => user === targetName) !== -1) {
+      setValue(
+        "users",
+        old.filter((user) => user !== targetName)
+      );
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="p-4 flex flex-col space-y-8">
         <BankSelect setBankId={(value) => setValue("bankId", value)} bankId={watch("bankId")} />
-        <MemberSelect
-          bankId={watch("bankId")}
-          setMemberId={(value: string) => setValue("memberId", value)}
-          memberId={watch("memberId")}
-        />
+        <MemberSelect bankId={watch("bankId")} setMemberId={addMember} memberId={""} name all />
+
+        <div className="flex w-full space-x-2 items-center flex-wrap">
+          {watch("users").map((name) => (
+            <CommonLabel key={name} title={name} onClick={() => removeMember(name)} />
+          ))}
+          {watch("users").length > 0 && (
+            <h1
+              onClick={() => setValue("users", [])}
+              className="text-sm text-gray-400 cursor-pointer px-4"
+            >
+              초기화
+            </h1>
+          )}
+        </div>
+
         <InputText label={"생성내역 이름"}>
           <CommonInput
             className="w-80"
@@ -69,12 +125,12 @@ export default function CreateDummyAccount() {
           />
           <CommonErrorMsg>{errors.name?.message}</CommonErrorMsg>
         </InputText>
-        <InputText label={"생성 고객 수"}>
+        <InputText label={"생성 계좌 수"}>
           <CommonInput
             className="w-80"
             type="number"
             {...register("count", {
-              required: "생성할 더미 고객 수을 입력해주세요.",
+              required: "생성할 더미 계좌 수을 입력해주세요.",
             })}
           />
           <CommonErrorMsg>{errors.count?.message}</CommonErrorMsg>

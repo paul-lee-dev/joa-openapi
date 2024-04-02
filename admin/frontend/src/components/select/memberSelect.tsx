@@ -9,9 +9,11 @@ interface IProps {
   bankId: string;
   setMemberId: (value: string) => void;
   memberId: string;
+  name?: boolean;
+  all?: boolean;
 }
 
-export default function MemberSelect({ bankId, setMemberId, memberId }: IProps) {
+export default function MemberSelect({ bankId, setMemberId, memberId, name, all }: IProps) {
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["MemberList", bankId],
     queryFn: () => {
@@ -31,8 +33,13 @@ export default function MemberSelect({ bankId, setMemberId, memberId }: IProps) 
           <option key={"none"} value={""}>
             고객 선택
           </option>
+          {all && (
+            <option key={"all"} value={"#ALL"}>
+              -- 전체 --
+            </option>
+          )}
           {data?.page?.content?.map((member: IMember) => (
-            <option key={member.memberId} value={member.memberId}>
+            <option key={member.memberId} value={name ? member.memberName : member.memberId}>
               {member.memberName}
             </option>
           ))}
