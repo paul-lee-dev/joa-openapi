@@ -32,7 +32,7 @@ function ChangeBankId({
     onSuccess: res => {
       setBankData({
         bankId: res.data.bankId,
-        bankName: 'JOA BANK',
+        bankName: res.data.name,
         apiKey: getValues('apiKey'),
       });
       logoutMutation.mutate();

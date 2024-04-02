@@ -28,6 +28,7 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
   const mutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
+      axiosInstance.interceptors.request.clear();
       axiosInstance.interceptors.request.use(
         config => {
           config.headers.memberId = '';

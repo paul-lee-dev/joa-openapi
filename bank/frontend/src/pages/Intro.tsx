@@ -41,6 +41,7 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
     onSuccess: data => {
       console.log(data);
       const member: IMember = data.data;
+      axiosInstance.interceptors.request.clear();
       axiosInstance.interceptors.request.use(
         config => {
           config.headers.memberId = member.id;
@@ -137,7 +138,7 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
             <View className="flex space-y-2">
               <Text className="font-bold text-lg text-gray-700">로그인</Text>
               <Text className="font-semibold text-xs text-gray-700">
-                이미 조아은행을 사용하고 계신가요?
+                이미 {bankData.bankName}을 사용하고 계신가요?
               </Text>
             </View>
           </TouchableOpacity>

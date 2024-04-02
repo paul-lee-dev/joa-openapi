@@ -110,6 +110,16 @@ function CreateAccountConfirm({
   }, [watch, getValues, product]);
 
   const onSubmit = (formData: CreateAccountForm) => {
+    console.log({
+      amount: Number(formData.amount),
+      taxType: formData.taxType,
+      term: formData.term,
+      withdrawAccount: formData.withdrawAccount || null,
+      nickname: product.name,
+      password: formData.password,
+      bankId: bankData.bankId,
+      productId: product.productId,
+    });
     mutation.mutate({
       amount: Number(formData.amount),
       taxType: formData.taxType,
