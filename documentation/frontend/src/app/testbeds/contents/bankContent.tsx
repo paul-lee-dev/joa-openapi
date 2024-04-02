@@ -297,7 +297,7 @@ export const BankListContent = {
   title: "은행 목록 조회/검색",
   desc: "관리자가 은행을 은행 명으로 검색하여 은행 목록을 보는 API입니다.",
   method: "GET",
-  uri: "bank/search?name={string}",
+  uri: "bank/search",
   requestParam: [],
   requestExample: "",
   responseParam: [
