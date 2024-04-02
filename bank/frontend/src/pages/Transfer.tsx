@@ -70,6 +70,7 @@ function Transfer({route, navigation}: TransferScreenProps): React.JSX.Element {
             className="flex-grow text-xl px-4 text-gray-700 placeholder:text-gray-700"
             onChangeText={setToAccountId}
             value={toAccountId}
+            keyboardType="numeric"
           />
           <Icon
             name={'camera-outline'}

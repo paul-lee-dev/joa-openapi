@@ -50,13 +50,9 @@ const BankList = () => {
                 placeholder="은행 명"
               />
             </div>
-            <Button
-              id={"submit"}
-              name={"검색"}
-              onClick={() => setSearchWord(keyword)}
-            />
+            <Button id={"submit"} name={"검색"} onClick={() => setSearchWord(keyword)} />
           </form>
-          <BankTable bankList={data.data ?? []} />
+          <BankTable bankList={data.page.content ?? []} />
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
               {/* <Pagination

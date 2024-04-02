@@ -101,7 +101,7 @@ export default function LoginPage() {
           계정이 없으십니까?{" "}
           <Link
             href={{
-              pathname: "/",
+              pathname: "/signup",
             }}
           >
             <SignUpAnchor>회원가입</SignUpAnchor>

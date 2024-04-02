@@ -12,7 +12,7 @@ import BottomPopup from '@/components/BottomPopup';
 import CommonMenuItem from '@/components/CommonMenuItem';
 import {RootStackParamList} from '@/Router';
 import {useRecoilValue} from 'recoil';
-import {memberDataAtom} from '@/store/atoms';
+import {bankDataAtom, memberDataAtom} from '@/store/atoms';
 import {useQuery} from '@tanstack/react-query';
 import {getAccountList} from '@/api/account';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
@@ -45,6 +45,7 @@ const popupStyle = {
 
 function Main({navigation}: MainScreenProps): React.JSX.Element {
   const memberData = useRecoilValue(memberDataAtom);
+  const bankData = useRecoilValue(bankDataAtom);
   const {data, refetch} = useQuery({
     queryKey: ['accountList'],
     queryFn: () => getAccountList(memberData?.member?.id || ''),
@@ -65,8 +66,6 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
     }, [refetch]),
   );
 
-  console.log(data);
-
   return (
     <View className="w-full h-full bg-gray-100">
       <Header
@@ -82,7 +81,7 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
               {`${memberData.member?.name}님`},
             </Text>
             <Text className="text-lg font-semibold text-gray-700">
-              조아은행에 오신 것을 환영합니다.
+              {bankData.bankName}에 오신 것을 환영합니다.
             </Text>
           </View>
         ) : (
