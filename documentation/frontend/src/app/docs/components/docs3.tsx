@@ -114,7 +114,7 @@ export default function docs() {
         </TableItem>
         <Subtitle>테스트베드</Subtitle>
           <RequestItem>각 API 명세 문서에서 요청 보내기 버튼을 누르면 여기에 있는 데이터를 담은 요청이 서버의 해당 엔드포인트로 전송됩니다.</RequestItem>
-          <ButtonItem>실행하기</ButtonItem>
+          <ButtonItem>요청 보내기</ButtonItem>
         <Subtitle>응답 status</Subtitle>
         <ResponseItem>전송한 요청에 대한 응답 status가 표시됩니다.</ResponseItem>
         <Subtitle>응답 message</Subtitle>
