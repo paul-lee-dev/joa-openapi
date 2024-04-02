@@ -20,6 +20,9 @@ public interface AccountRepository extends JpaRepository<Account, String>, Accou
     List<Account> findByHolderId(UUID memberId);
     List<Account> findAllByEndDate(String endDate);
 
+    @Query("SELECT bankId FROM Account WHERE id = :accountId")
+    UUID getBankIdByAccountId(String accountId);
+
 //    @Query("SELECT a FROM Account a JOIN Bank b ON a.bankId = b.id WHERE a.holderId = :memberId AND b.adminId = :adminId")
 //    Page<Account> findByHolderIdAndBankAdminId(UUID memberId, UUID adminId, Pageable pageable);
 }
