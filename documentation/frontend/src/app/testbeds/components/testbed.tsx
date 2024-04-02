@@ -363,18 +363,31 @@ export default function Testbed() {
               ...responseContent,
               status: response.data.status,
               message: response.data.message,
-              data: JSON.stringify(response.data.data)
+              data: JSON.stringify(response.data.data, null, 2)
             });
             return response.data;
           };
           const getFunc = async (params: string) => {
-            const response = await getAxios(uri, JSON.parse(params));
+
+            const jsonParam = (function () {
+              if (params.length===0) {return null;} 
+              else {return JSON.parse(params);}
+            })();
+            const response = await getAxios(uri, jsonParam);
             setResponseContent({
               ...responseContent,
               status: response.data.status,
               message: response.data.message,
               data: JSON.stringify(response.data.data)
             });
+            if (response.data.data===null && response.data.page!=null) {
+              setResponseContent({
+                ...responseContent,
+                message:response.data.message,
+                status:response.data.status,
+                data: JSON.stringify(response.data.page)
+              })
+            }
             return response.data;
           };
           const patchFunc = async (params: string) => {
@@ -453,17 +466,21 @@ leading-7
 `;
 
 const RequestItem = tw.div`
+text-xs
 bg-blue-200 
 hover:bg-blue-300
 rounded-lg
 p-8
+leading-6
 `;
 
 const ResponseItem = tw.div`
+text-xs
 bg-purple-200 
 hover:bg-purple-300
 rounded-lg
 p-8
+leading-6
 `;
 
 const TableItem = tw.table`

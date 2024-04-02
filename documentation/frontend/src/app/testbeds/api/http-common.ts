@@ -16,43 +16,52 @@ export const useAxios: AxiosInstance = axios.create({
   timeout: 10000
 })
 
-export const getAxios =  async ( url: string, params?: any )  => {
+export const getAxios = async (url: string, params?: any) => {
   try {
-    const response = await useAxios.get( url, { params } )
-    return response?.data
-  } catch( error ){
+    const response = await useAxios.get(url, { params })
+    console.log(response)
+    return response
+  }
+  catch (error) {
+    console.log(error);
     return Promise.reject(error)
   }
-} 
+}
 
-export const postAxios =  async( url: string, params?: any )  =>{
-  try{
-    const response = await useAxios.post( url, params )
+export const postAxios = async (url: string, params?: any) => {
+  try {
+    const response = await useAxios.post(url, params)
     console.log(response)
     return response
-  } 
-  catch( error ){
+  }
+  catch (error) {
     console.log(error);
-    return Promise.reject( error )
+    return Promise.reject(error)
   }
 }
 
-export const deleteAxios = async( url: string, params?: any ) => {
-  try{
-    const response = await useAxios.delete( url, { params } )
-    return response
-  } catch( error ){
-    return Promise.reject( error )
-  }
-}
-
-export const patchAxios = async(url: string, params?: any ) =>{
-  try{
-    const response = await useAxios.patch( url, params )
+export const deleteAxios = async (url: string, params?: any) => {
+  try {
+    // const response = await useAxios.delete( url, { params } )
+    const response = await useAxios.delete(url, {data:params})
     console.log(response)
     return response
-  } catch( error ){
-    return Promise.reject( error )
+  }
+  catch (error) {
+    console.log(error);
+    return Promise.reject(error)
+  }
+}
+
+export const patchAxios = async (url: string, params?: any) => {
+  try {
+    const response = await useAxios.patch(url, params)
+    console.log(response)
+    return response
+  }
+  catch (error) {
+    console.log(error);
+    return Promise.reject(error)
   }
 }
 
