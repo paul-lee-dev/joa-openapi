@@ -19,10 +19,12 @@ function ProductListItem({product, link}: IProps): React.JSX.Element {
           </View>
         </View>
         <View className="w-full flex space-y-2">
-          <Text className="text-xl font-bold">{product.name}</Text>
+          <Text className="text-xl font-bold text-gray-700">
+            {product.name}
+          </Text>
           <Text
             numberOfLines={1}
-            className="text-md font-medium w-52 overflow-clip overflow-ellipsis break-words">
+            className="text-md font-medium w-52 overflow-clip overflow-ellipsis break-words text-gray-700">
             {product.description}
           </Text>
         </View>

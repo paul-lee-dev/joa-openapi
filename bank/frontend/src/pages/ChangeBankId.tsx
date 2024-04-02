@@ -55,6 +55,7 @@ function ChangeBankId({
       axiosInstance.interceptors.request.use(
         config => {
           config.headers.memberId = '';
+          config.headers.apiKey = getValues('apiKey');
           return config;
         },
         error => {

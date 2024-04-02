@@ -7,8 +7,8 @@ export const getBankDetail = async ({
   bankId: string;
   apiKey: string;
 }): Promise<any> => {
-  const response = await axiosInstance.post(`/bank/${bankId}`, {
-    Headers: {apiKey},
+  const response = await axiosInstance.get(`/bank/${bankId}`, {
+    headers: {apiKey},
   });
   return response.data;
 };

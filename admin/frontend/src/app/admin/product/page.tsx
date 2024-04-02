@@ -3,6 +3,7 @@
 import { searchBankList } from "@/api/Bank";
 import { searchProductList } from "@/api/Product";
 import Button from "@/components/button/button";
+import { LoadingSpinner } from "@/components/loadingSpinner";
 import Pagination from "@/components/pagination";
 import ProductGroupSearch from "@/components/search/productGroupSearch";
 import BankSelect from "@/components/select/bankNoLabel";
@@ -10,7 +11,7 @@ import ProductTypeMultiSearchSelect from "@/components/select/productTypeMultiSe
 import ProductTable from "@/components/table/productTable";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProductList = () => {
   const router = useRouter();
@@ -23,10 +24,15 @@ const ProductList = () => {
       return searchProductList({});
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   return (
     <>
       {isLoading ? (
-        <h1>로딩중...</h1>
+        <LoadingSpinner />
       ) : (
         <>
           <form>
