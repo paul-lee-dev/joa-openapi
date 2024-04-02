@@ -5,7 +5,7 @@ interface IProps {
 
 export default function CommonLabel({ title, onClick }: IProps) {
   return (
-    <div className="relative w-20 h-8 bg-gray-300 rounded-xl flex justify-center items-center">
+    <div className="relative mr-2 mb-2 w-20 h-8 bg-gray-300 rounded-xl flex justify-center items-center">
       <h1 className="mr-3 text-center w-14 overflow-clip overflow-ellipsis break-words line-clamp-1 text-sm font-semibold">
         {title}
       </h1>

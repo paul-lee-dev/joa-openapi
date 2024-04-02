@@ -1,18 +1,21 @@
 "use client";
 
 import Button from "@/components/button/button";
-import InputText, { CommonErrorMsg, CommonInput } from "@/components/input/inputText";
+import InputText, {
+  CommonErrorMsg,
+  CommonInput,
+} from "@/components/input/inputText";
 import BankSelect from "@/components/select/bankSelect";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
-import { depositTransaction, sendTransaction, withdrawTransaction } from "@/api/Transaction";
+import { sendTransaction } from "@/api/Transaction";
 import MemberSelect from "../select/memberSelect";
-import { useEffect, useState } from "react";
 import { searchMemberList } from "@/api/Membr";
 import CommonLabel from "../commonLabel";
 import { IMember } from "@/models/Member.interface";
+import { createDummyAccount } from "@/api/Dummy";
 
 interface CreateDummyAccountForm {
   name: string;
@@ -25,7 +28,7 @@ interface CreateDummyAccountForm {
 export default function CreateDummyAccount() {
   const router = useRouter();
   const mutation = useMutation({
-    mutationFn: sendTransaction,
+    mutationFn: createDummyAccount,
     onSuccess: (data) => {
       console.log(data);
       alert("더미 계좌가 생성되었습니다.");
@@ -40,6 +43,7 @@ export default function CreateDummyAccount() {
     setError,
     setValue,
     getValues,
+    clearErrors,
     watch,
   } = useForm<CreateDummyAccountForm>({
     defaultValues: {
@@ -59,20 +63,32 @@ export default function CreateDummyAccount() {
   });
 
   const onSubmit = (formData: CreateDummyAccountForm) => {
+    console.log(formData);
+    if (formData.bankId === "") {
+      setError("bankId", { type: "empty", message: "은행을 선택해주세요." });
+      return;
+    }
+    if (formData.users.length === 0) {
+      setError("users", { type: "empty", message: "고객을 선택해주세요." });
+      return;
+    }
     mutation.mutate({
-      name: formData.name,
+      name: formData.name || null,
       count: formData.count,
       bankId: formData.bankId,
       users: data.page.content
         .filter(
           (member: IMember) =>
-            getValues("users").findIndex((user) => user === member.memberName) !== -1
+            getValues("users").findIndex(
+              (user) => user === member.memberName
+            ) !== -1
         )
         .map((member: IMember) => member.memberId),
     });
   };
 
   const addMember = (newName: string) => {
+    clearErrors();
     if (newName === "#ALL") {
       setValue(
         "users",
@@ -87,6 +103,7 @@ export default function CreateDummyAccount() {
   };
 
   const removeMember = (targetName: string) => {
+    clearErrors();
     const old = getValues("users");
     if (old.findIndex((user) => user === targetName) !== -1) {
       setValue(
@@ -97,40 +114,58 @@ export default function CreateDummyAccount() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <div className="p-4 flex flex-col space-y-8">
-        <BankSelect setBankId={(value) => setValue("bankId", value)} bankId={watch("bankId")} />
-        <MemberSelect bankId={watch("bankId")} setMemberId={addMember} memberId={""} name all />
+        <div className="relative">
+          <BankSelect
+            setBankId={(value) => {
+              clearErrors();
+              setValue("bankId", value);
+            }}
+            bankId={watch("bankId")}
+          />
+          <CommonErrorMsg>{errors.bankId?.message}</CommonErrorMsg>
+        </div>
+        <MemberSelect
+          bankId={watch("bankId")}
+          setMemberId={addMember}
+          memberId={""}
+          name
+          all
+        />
 
-        <div className="flex w-full space-x-2 items-center flex-wrap">
+        <div className="flex w-full items-center flex-wrap">
           {watch("users").map((name) => (
-            <CommonLabel key={name} title={name} onClick={() => removeMember(name)} />
+            <CommonLabel
+              key={name}
+              title={name}
+              onClick={() => removeMember(name)}
+            />
           ))}
           {watch("users").length > 0 && (
             <h1
               onClick={() => setValue("users", [])}
-              className="text-sm text-gray-400 cursor-pointer px-4"
+              className="text-sm text-gray-400 w-20 h-8 cursor-pointer px-4"
             >
               초기화
             </h1>
           )}
         </div>
 
-        <InputText label={"생성내역 이름"}>
-          <CommonInput
-            className="w-80"
-            {...register("name", {
-              required: "더미 생성내역 이름을 입력해주세요.",
-            })}
-          />
+        <InputText label={"생성내역 이름 (선택)"}>
+          <CommonInput className="w-80" {...register("name")} />
           <CommonErrorMsg>{errors.name?.message}</CommonErrorMsg>
         </InputText>
-        <InputText label={"생성 계좌 수"}>
+        <InputText label={"생성할 더미 계좌 수"}>
           <CommonInput
             className="w-80"
             type="number"
             {...register("count", {
               required: "생성할 더미 계좌 수을 입력해주세요.",
+              validate: {
+                minimum: (value) =>
+                  value > 0 ? true : "생성할 더미 고객 수를 입력해주세요",
+              },
             })}
           />
           <CommonErrorMsg>{errors.count?.message}</CommonErrorMsg>
@@ -139,8 +174,18 @@ export default function CreateDummyAccount() {
       </div>
 
       <div className="flex gap-6 justify-end">
-        <Button type="button" onClick={() => router.back()} id={"create"} name={"취소"} />
-        <Button type="submit" id={"create"} name={"등록"} />
+        <Button
+          type="button"
+          onClick={() => router.back()}
+          id={"create"}
+          name={"취소"}
+        />
+        <Button
+          type="submit"
+          id={"create"}
+          name={"등록"}
+          onClick={handleSubmit(onSubmit)}
+        />
       </div>
     </form>
   );

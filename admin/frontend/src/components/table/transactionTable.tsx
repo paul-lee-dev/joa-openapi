@@ -1,12 +1,14 @@
 import { ITransaction } from "@/models/Transaction.interface";
 import { formatAmount } from "@/util";
+import { useRouter } from "next/navigation";
 import tw from "tailwind-styled-components";
 
 interface IProps {
   transactionList: ITransaction[];
 }
 
-export default function transactionTable({ transactionList }: IProps) {
+export default function TransactionTable({ transactionList }: IProps) {
+  const router = useRouter();
   return (
     <div className="relative overflow-x-auto shadow-sm sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 ">
@@ -64,13 +66,15 @@ export default function transactionTable({ transactionList }: IProps) {
                 </div>
               </TableData>
               <TableData>
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
-                  {/* <a
-                    href="/admin/transaction/detail"
+                <div className="cursor-pointer overflow-clip overflow-ellipsis break-words line-clamp-1">
+                  <a
+                    onClick={() => {
+                      router.push(`transaction/${transaction.transactionId}`);
+                    }}
                     className="font-medium text-pink-400 hover:text-pink-500"
                   >
                     자세히
-                  </a> */}
+                  </a>
                 </div>
               </TableData>
             </tr>

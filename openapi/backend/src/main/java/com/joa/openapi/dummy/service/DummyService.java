@@ -291,10 +291,7 @@ public class DummyService {
         } else if (dummy.getTransactionCount() != null) {
             List<Transaction> transactionsList = transactionRepository.findByDummyId(dummyId);
             for (Transaction transaction: transactionsList) {
-                TransactionDeleteRequestDto dto = TransactionDeleteRequestDto.builder()
-                        .transactionId(transaction.getId())
-                        .build();
-                transactionService.delete(dto);
+                transactionService.delete(apiKey, transaction.getId());
             }
         }
         dummy.deleteSoftly();

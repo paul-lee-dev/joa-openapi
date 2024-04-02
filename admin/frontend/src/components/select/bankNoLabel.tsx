@@ -9,15 +9,15 @@ interface IProps {
 
 export default function BankSelect({ bankList }: IProps) {
   const { data: bankData } = useQuery({
-    queryKey: ["BankList", ""],
+    queryKey: ["BankList"],
     queryFn: () => {
-      return searchBankList({ name: "" });
+      return searchBankList({});
     },
   });
   return (
     <InputContainer>
       <Select id="banks" defaultValue={"all"}>
-        <option selected key={"all"}>
+        <option key={"all"} value={"all"}>
           전체
         </option>
         {bankData?.page.content.map((bank: IBank) => (

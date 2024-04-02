@@ -13,11 +13,17 @@ interface IProps {
   all?: boolean;
 }
 
-export default function MemberSelect({ bankId, setMemberId, memberId, name, all }: IProps) {
+export default function MemberSelect({
+  bankId,
+  setMemberId,
+  memberId,
+  name,
+  all,
+}: IProps) {
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["MemberList", bankId],
+    queryKey: ["MemberList", bankId || "none"],
     queryFn: () => {
-      if (bankId === "") return;
+      if (bankId === "") return [];
       return searchMemberList({ bankId });
     },
   });
@@ -33,13 +39,16 @@ export default function MemberSelect({ bankId, setMemberId, memberId, name, all 
           <option key={"none"} value={""}>
             고객 선택
           </option>
-          {all && (
+          {all && data?.page?.content && (
             <option key={"all"} value={"#ALL"}>
               -- 전체 --
             </option>
           )}
           {data?.page?.content?.map((member: IMember) => (
-            <option key={member.memberId} value={name ? member.memberName : member.memberId}>
+            <option
+              key={member.memberId}
+              value={name ? member.memberName : member.memberId}
+            >
               {member.memberName}
             </option>
           ))}

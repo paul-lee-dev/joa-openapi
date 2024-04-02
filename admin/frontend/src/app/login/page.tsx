@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import tw from "tailwind-styled-components";
+import NavbarImg from "@/asset/img/navbar.png";
+import Image from "next/image";
 
 interface ILoginForm {
   email: string;
@@ -53,7 +55,9 @@ export default function LoginPage() {
   return (
     <Wrapper>
       <TitleContainer>
-        <TitleText>Admin</TitleText>
+        <div className="w-full flex justify-center items-center">
+          <Image src={NavbarImg} alt="Admin" draggable={false} />
+        </div>
       </TitleContainer>
       <MainContainer>
         <LoginFormContainer onSubmit={handleSubmit(onSubmit)}>
@@ -77,9 +81,6 @@ export default function LoginPage() {
           <InputFormWrapper>
             <PasswordAlign>
               <LoginLabel htmlFor="password">비밀번호</LoginLabel>
-              <FindPWContainer>
-                <FindPW href="#">비밀번호 찾기</FindPW>
-              </FindPWContainer>
             </PasswordAlign>
             <InputContainer>
               <Input
@@ -97,16 +98,28 @@ export default function LoginPage() {
           </InputFormWrapper>
         </LoginFormContainer>
 
-        <SignUpParagraph>
-          계정이 없으십니까?{" "}
-          <Link
-            href={{
-              pathname: "/signup",
-            }}
-          >
-            <SignUpAnchor>회원가입</SignUpAnchor>
-          </Link>
-        </SignUpParagraph>
+        <div className="pt-10 flex flex-col space-y-2">
+          <SignUpParagraph>
+            계정이 없으십니까?{" "}
+            <Link
+              href={{
+                pathname: "/signup",
+              }}
+            >
+              <SignUpAnchor>회원가입</SignUpAnchor>
+            </Link>
+          </SignUpParagraph>
+          <SignUpParagraph>
+            비밀번호를 잊어버리셨나요?{" "}
+            <Link
+              href={{
+                pathname: "/findPassword",
+              }}
+            >
+              <SignUpAnchor>비밀번호 찾기</SignUpAnchor>
+            </Link>
+          </SignUpParagraph>
+        </div>
       </MainContainer>
     </Wrapper>
   );
@@ -182,16 +195,16 @@ justify-between
 `;
 
 const SignUpParagraph = tw.p`
-mt-10 
 text-center 
 text-sm 
-text-gray-light
+text-gray-500
 `;
 const SignUpAnchor = tw.span`
 font-semibold 
 leading-6 
 text-gray-500 
 hover:text-primary
+hover:underline
 `;
 
 const Input = tw.input`
