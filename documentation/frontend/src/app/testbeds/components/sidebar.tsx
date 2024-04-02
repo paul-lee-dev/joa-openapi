@@ -5,6 +5,13 @@ import { useState } from "react";
 
 export const components = [
   {
+    name: "공통부(Commons)",
+    anchor: "#",
+    sub: [
+      { id: 0, title: "API 명세 설명", to: "" },
+    ],
+  },
+  {
     name: "은행(Bank)",
     anchor: "#",
     sub: [
