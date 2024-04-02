@@ -1,15 +1,12 @@
 "use client";
 
 import Button from "@/components/button/button";
-import InputText, {
-  CommonErrorMsg,
-  CommonInput,
-} from "@/components/input/inputText";
-import { CommonForm, Divider } from "../../product/create/page";
+import InputText, { CommonErrorMsg, CommonInput } from "@/components/input/inputText";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { createBank } from "@/api/Bank";
+import tw from "tailwind-styled-components";
 
 interface CreateBankForm {
   name: string;
@@ -80,14 +77,23 @@ export default function MemberCreate() {
       </div>
       <Divider />
       <div className="flex gap-6 justify-end">
-        <Button
-          type="button"
-          onClick={() => router.back()}
-          id={"create"}
-          name={"취소"}
-        />
+        <Button type="button" onClick={() => router.back()} id={"create"} name={"취소"} />
         <Button type="submit" id={"create"} name={"등록"} />
       </div>
     </CommonForm>
   );
 }
+const CommonForm = tw.form`
+p-14
+w-full
+flex
+flex-col
+space-y-8
+`;
+
+const Divider = tw.div`
+w-full
+h-[1px]
+bg-slate-300
+my-4
+`;

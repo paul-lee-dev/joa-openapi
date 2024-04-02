@@ -49,7 +49,7 @@ export default function Profile() {
   );
 }
 
-export const Container = tw.div`
+const Container = tw.div`
 p-14
 w-full
 flex

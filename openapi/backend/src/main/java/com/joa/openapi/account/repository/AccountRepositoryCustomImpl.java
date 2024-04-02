@@ -1,5 +1,6 @@
 package com.joa.openapi.account.repository;
 
+import com.joa.openapi.account.dto.AccountGetAccountsResponseDto;
 import com.joa.openapi.account.dto.AccountSearchRequestDto;
 import com.joa.openapi.account.dto.AccountSearchResponseDto;
 import com.joa.openapi.account.entity.Account;
@@ -26,6 +27,31 @@ import static com.joa.openapi.account.entity.QAccount.account;
 public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
 
     private final JPAQueryFactory jpaQueryFactory; // JPA 쿼리를 생성하고 실행하는데 사용
+
+    @Override
+    public Page<AccountGetAccountsResponseDto> searchAccountByMemberCustom(List<UUID> bankIds, UUID memberId, Pageable pageable) {
+        // 쿼리 설정
+        JPAQuery<Account> query = jpaQueryFactory
+                .selectFrom(account)
+                .leftJoin(account.holder)
+                .fetchJoin()
+                .where(eqBankIds(bankIds), eqMemberId(memberId));
+
+        long total = query.fetchCount(); // 전체 계좌 수
+
+        // 페이징된 계좌 조회
+        List<Account> accounts = query
+                .offset(pageable.getOffset()) //반환되는 행의 시작점
+                .limit(pageable.getPageSize())	//반환되는 행의 수
+                .fetch();
+
+        //Dto 변환
+        List<AccountGetAccountsResponseDto> res = accounts.stream().map(AccountGetAccountsResponseDto::toDto)
+                .collect(Collectors.toList());
+
+        //페이지 객체 반환
+        return new PageImpl<>(res, pageable, total);
+    }
 
     @Override
     public Page<AccountSearchResponseDto> searchAccountCustom(List<UUID> bankIds, AccountSearchRequestDto req, Pageable pageable) {
@@ -58,6 +84,9 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
 
     private BooleanExpression eqBankIds(List<UUID> bankIds) {
         return account.bankId.in(bankIds);
+    }
+    private BooleanExpression eqMemberId(UUID memberId) {
+        return account.holder.id.eq(memberId);
     }
 
     private BooleanExpression eqDormant(Boolean type) {
