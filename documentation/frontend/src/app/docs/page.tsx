@@ -45,7 +45,7 @@ const Docs: React.FC = () => {
           <BarItem onClick={() => handleItemClick(2)}>프로젝트 구조</BarItem>
 
           <BarSubTitle>Getting Started</BarSubTitle>
-          <BarItem onClick={() => handleItemClick(3)}>API 명세 & 테스트베드</BarItem>
+          <BarItem onClick={() => handleItemClick(3)}>API 명세 및 테스트베드</BarItem>
           <BarItem onClick={() => handleItemClick(4)}>관리자 대시보드 이용법</BarItem>
           <BarItem onClick={() => handleItemClick(5)}>샘플 앱 이용법</BarItem>
           <BarItem onClick={() => handleItemClick(6)}>커스텀 방법</BarItem>
