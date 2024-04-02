@@ -10,7 +10,7 @@ const Home = () => {
       <Wrapper>
         <MainContainer>
           <SubContainer>
-            <MainTitleItem>Joa Open API</MainTitleItem>
+            <img className='w-[19rem]' src='/logo2.png'/>
             <MainTextItem>은행 업무와 관련된 다양한 금융 API를 제공하여 핀테크 프로젝트를 간편하고 효율적으로 개발할 수 있도록 실시간으로 지원합니다. </MainTextItem>
             <ButtonContainer>
               <PurpleButtonItem href="/docs">시작하기</PurpleButtonItem>
@@ -61,7 +61,7 @@ const Home = () => {
           <SubTitleItem>샘플 앱을 다운받아<br/>사용해 보세요</SubTitleItem>
         </SubWrapper2>
         <MainContainer>
-          <a href='#'><ImageItem2 src='/joabank1.png' /></a>
+          <a href='#'><ImageItem2 src='/bank.png' /></a>
           <SubContainer2>
             <MainTitleItem>Joa Bank</MainTitleItem>
             <MainTextItem>
@@ -159,7 +159,7 @@ mt-2 text-3xl font-bold tracking-tight sm:text-4xl
 `;
 
 const MainTextItem = tw.div`
-mt-6 leading-7 break-keep
+mt-4 leading-7 break-keep
 `;
 
 const ButtonContainer = tw.div`

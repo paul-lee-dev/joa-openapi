@@ -20,7 +20,7 @@ export default function BankSelect({ bankList }: IProps) {
         <option selected key={"all"}>
           전체
         </option>
-        {bankData?.data.map((bank: IBank) => (
+        {bankData?.page.content.map((bank: IBank) => (
           <option key={bank.bankId} value={bank.bankId}>
             {bank.name}
           </option>

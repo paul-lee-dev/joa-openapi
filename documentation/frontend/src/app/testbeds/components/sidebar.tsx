@@ -5,11 +5,6 @@ import { useState } from "react";
 
 export const components = [
   {
-    name: "공통부(Commons)",
-    anchor: "#",
-    sub: null,
-  },
-  {
     name: "은행(Bank)",
     anchor: "#",
     sub: [

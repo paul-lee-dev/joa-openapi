@@ -6,6 +6,8 @@ import {useQuery} from '@tanstack/react-query';
 import {getAccountList} from '@/api/account';
 import {RootStackParamList} from '@/Router';
 import {IAccount} from '@/models';
+import {useRecoilValue} from 'recoil';
+import {memberDataAtom} from '@/store/atoms';
 
 type AccountListScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -13,7 +15,11 @@ type AccountListScreenProps = NativeStackScreenProps<
 >;
 
 function AccountList({navigation}: AccountListScreenProps): React.JSX.Element {
-  const {data} = useQuery({queryKey: ['accountList'], queryFn: getAccountList});
+  const memberData = useRecoilValue(memberDataAtom);
+  const {data} = useQuery({
+    queryKey: ['accountList'],
+    queryFn: () => getAccountList(memberData.member?.id ?? ''),
+  });
 
   return (
     <View className="w-full h-full bg-gray-100 flex">

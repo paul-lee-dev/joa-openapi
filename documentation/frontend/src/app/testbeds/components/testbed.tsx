@@ -236,10 +236,10 @@ export default function Testbed() {
         setContent(dummyReadContent);
         break;
       case 55:
-        setContent(dummyListContent);
+        setContent(dummyUpdateContent);
         break;
       case 56:
-        setContent(dummyUpdateContent);
+        setContent(dummyListContent);
         break;
       case 57:
         setContent(dummyDeleteContent);
@@ -378,14 +378,14 @@ export default function Testbed() {
               ...responseContent,
               status: response.data.status,
               message: response.data.message,
-              data: JSON.stringify(response.data.data)
+              data: JSON.stringify(response.data.data,null,2)
             });
             if (response.data.data===null && response.data.page!=null) {
               setResponseContent({
                 ...responseContent,
                 message:response.data.message,
                 status:response.data.status,
-                data: JSON.stringify(response.data.page)
+                data: JSON.stringify(response.data.page,null,2)
               })
             }
             return response.data;
@@ -396,7 +396,7 @@ export default function Testbed() {
               ...responseContent,
               status: response.data.status,
               message: response.data.message,
-              data: JSON.stringify(response.data.data)
+              data: JSON.stringify(response.data.data,null,2)
             });
             return response.data;
           };
@@ -406,7 +406,7 @@ export default function Testbed() {
               ...responseContent,
               status: response.data.status,
               message: response.data.message,
-              data: JSON.stringify(response.data.data)
+              data: JSON.stringify(response.data.data,null,2)
             });
             return response.data;
           };
@@ -430,9 +430,9 @@ export default function Testbed() {
           // postFunc(content.requestExample);
         }
         }>
-          <Subtitle>아래의 데이터로 요청 보내기</Subtitle>
+          <Subtitle>테스트베드</Subtitle>
           <RequestItem>{content.requestExample}</RequestItem>
-          <ButtonItem type='submit'>실행하기</ButtonItem>
+          <ButtonItem type='submit'>요청 보내기</ButtonItem>
         </form>
         <Subtitle>응답 status</Subtitle>
         <ResponseItem>{responseContent.status}</ResponseItem>

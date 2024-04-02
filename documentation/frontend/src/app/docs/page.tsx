@@ -10,9 +10,7 @@ const DocComponents: ComponentType<{}>[] = [
   dynamic(() => import("@/app/docs/components/docs1")),
   dynamic(() => import("@/app/docs/components/docs2")),
   dynamic(() => import("@/app/docs/components/docs3")),
-  dynamic(() => import("@/app/docs/components/docs4")),
   dynamic(() => import("@/app/docs/components/docs5")),
-  dynamic(() => import("@/app/docs/components/docs6")),
   dynamic(() => import("@/app/docs/components/docs7")),
   dynamic(() => import("@/app/docs/components/docs8")),
   dynamic(() => import("@/app/docs/components/docs9")),
@@ -47,13 +45,11 @@ const Docs: React.FC = () => {
           <BarItem onClick={() => handleItemClick(2)}>프로젝트 구조</BarItem>
 
           <BarSubTitle>Getting Started</BarSubTitle>
-          <BarItem onClick={() => handleItemClick(3)}>API 명세 설명</BarItem>
-          <BarItem onClick={() => handleItemClick(4)}>테스트베드 이용법</BarItem>
-          <BarItem onClick={() => handleItemClick(5)}>관리자 대시보드</BarItem>
-          <BarItem onClick={() => handleItemClick(6)}>관리자 페이지 이용법</BarItem>
-          <BarItem onClick={() => handleItemClick(7)}>샘플 앱 이용법</BarItem>
-          <BarItem onClick={() => handleItemClick(8)}>커스텀 방법</BarItem>
-          <BarItem onClick={() => handleItemClick(9)}>버전 정보</BarItem>
+          <BarItem onClick={() => handleItemClick(3)}>API 명세 및 테스트베드</BarItem>
+          <BarItem onClick={() => handleItemClick(4)}>관리자 대시보드 이용법</BarItem>
+          <BarItem onClick={() => handleItemClick(5)}>샘플 앱 이용법</BarItem>
+          <BarItem onClick={() => handleItemClick(6)}>커스텀 방법</BarItem>
+          <BarItem onClick={() => handleItemClick(7)}>버전 정보</BarItem>
         </SidebarWrapper>
       </SidebarContainer>
       <MainContainer>

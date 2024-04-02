@@ -546,15 +546,66 @@ export const dummyUpdateContent = {
 
 
 export const dummyListContent = {
-  title: '',
-  desc: '',
-  method: '',
-  uri: '',
+  title: '더미 생성내역 목록 조회/검색',
+  desc: '데미데이터 생성내역 목록을 조회/검색하는 API입니다. 더미 고객, 더미 계좌, 더미 거래내역 중 어떤 더미데이터를 만든 내역인지 확인할 수 있고, 생성내역 이름으로 검색이 가능합니다.',
+  method: 'GET',
+  uri: 'dummy/search',
   requestParam: [],
   requestExample: '',
-  responseParam: [],
-  responseExample: '',
-  errorCode: [],
+  responseParam: [
+    {
+      name: 'dummyId',
+      desc: '더미의 ID',
+      type: 'String',
+      required: 'Y',
+      etc: 'UUID',
+    },
+    {
+      name: 'adminId',
+      desc: '생성한 관리자의 ID',
+      type: 'String',
+      required: 'Y',
+      etc: 'UUID',
+    },
+    {
+      name: 'name',
+      desc: '더미의 이름 또는 설명',
+      type: 'String',
+      required: 'Y',
+      etc: '',
+    },
+    {
+      name: 'memberCount',
+      desc: '더미멤버 수',
+      type: 'Integer',
+      required: 'N',
+      etc: '',
+    },
+    {
+      name: 'accountCount',
+      desc: '더미계좌 수',
+      type: 'Integer',
+      required: 'N',
+      etc: '',
+    },
+    {
+      name: 'transctionCount',
+      desc: '더미 거래내역 수',
+      type: 'Integer',
+      required: 'N',
+      etc: '',
+    }
+  ],
+  responseExample: `
+  {"content":[{"dummyId":"7aaf4873-e9cd-46a0-966e-235c854ac5a0","adminId":"7354e642-9472-4dd5-8455-742503378beb","name":"멤버3명 만들기","memberCount":3,"accountCount":null,"transactionCount":null,"createdAt":"2024-04-02 01:59","updatedAt":"2024-04-02 01:59"},{"dummyId":"8c29e6b7-673c-42e4-a859-5641fed81e85","adminId":"7354e642-9472-4dd5-8455-742503378beb","name":"멤버3명 만들기","memberCount":3,"accountCount":null,"transactionCount":null,"createdAt":"2024-04-02 09:33","updatedAt":"2024-04-02 09:33"}],"page":0,"size":10,"totalElements":24,"totalPages":3,"last":false}
+  `,
+  errorCode: [
+    {
+      name: 'NO_DUMMY',
+      httpstatus: 'BAD_REQUEST',
+      desc: '해당하는 더미가 없습니다.',
+    },
+  ],
 }
 
 export const dummyDeleteContent = {

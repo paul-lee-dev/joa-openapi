@@ -1,8 +1,3 @@
-import { postAxios, getAxios, deleteAxios, patchAxios } from "../api/http-common";
-import { TransactionDepositParams, TransactionDepositResponse } from "../api/transaction.api"
-
-//목록 조회/검색 제외 완료 
-
 //transactionDepositContent 입금
 //transactionWithdrawContent 출금 
 //transactionSendContent 이체
@@ -12,16 +7,13 @@ import { TransactionDepositParams, TransactionDepositResponse } from "../api/tra
 //transactionListContent 거래내역 목록 조회/검색
 //transactionDeleteContent 거래내역 삭제
 
-
-export const deposit = async (params: TransactionDepositParams): Promise<TransactionDepositResponse> => {
-    const url = "transaction/deposit";
-    const response = await postAxios(url, params);
-    return response.data;
-};
+// export const deposit = async (params: TransactionDepositParams): Promise<TransactionDepositResponse> => {
+//     const url = "transaction/deposit";
+//     const response = await postAxios(url, params);
+//     return response.data;
+// };
 
 export const transactionDepositContent = {
-    params: Promise<TransactionDepositParams>,
-    response: Promise<TransactionDepositResponse>,
     title: '입금',
     desc: '계좌에 돈을 입금할 때 사용되는 API입니다.',
     method: 'POST',
