@@ -612,7 +612,7 @@ export const dummyDeleteContent = {
   title: '더미 생성내역 삭제',
   desc: '특정 더미데이터 생성내역을 삭제하는 API입니다. 삭제 시 해당 생성내역으로 생성한 더미데이터가 함께 삭제됩니다. 거래내역이 삭제되어도 기존의 계좌 잔액은 그대로 유지됩니다.',
   method: 'DELETE',
-  uri: 'dummy/{DummyId}',
+  uri: 'dummy/{dummyId}',
   requestParam: [],
   requestExample: '',
   responseParam: [

@@ -360,6 +360,15 @@ export default function Testbed() {
           e.preventDefault();
           var uri = content.uri;
           const postFunc = async (params: string) => {
+
+            switch (content.uri) {
+              case "account/{bankId}":
+                uri = "bank/" + "26181252-036d-4edb-8729-204e15b0215b";
+                break;
+              default:
+                break;
+            }
+
             const response = await postAxios(uri, JSON.parse(params));
             setResponseContent({
               ...responseContent,
@@ -377,6 +386,12 @@ export default function Testbed() {
                 break;
               case "member/{memberId}":
                 uri = "member/" + "4318993d-94f7-41a2-8d6b-1ec9dfe41005";
+                break;
+              case "member/email/{keyword}/{bankId}":
+                uri = "member/email/" + "tetetest@testt.com" + "/" + "3cf6f866-3fbd-46c8-85a1-96ab39551a35";
+                break;
+              case "member/phone/{keyword}":
+                uri = "member/phone/" + "01015885588";
                 break;
               case "product/{productId}":
                 uri = "product/" + "fae4998a-bbb1-47dc-b6f5-6030b1df77d9";
@@ -449,7 +464,30 @@ export default function Testbed() {
             return response.data;
           };
           const deleteFunc = async (params: string) => {
-            const response = await deleteAxios(uri, JSON.parse(params));
+
+            switch (content.uri) {
+              case "bank/{bankId}":
+                uri = "bank/" + "7032c6bf-9eea-48de-94eb-50498cf897b2";
+                break;
+              case "member/{memberId}":
+                uri = "member/" + "4318993d-94f7-41a2-8d6b-1ec9dfe41005";
+                break;
+              case "product/{productId}":
+                uri = "product/" + "fae4998a-bbb1-47dc-b6f5-6030b1df77d9";
+                break;
+              case "dummy/{dummyId}":
+                uri = "dummy/" + "e9779481-b016-42af-b81d-36109a06d823";
+                break;
+              default:
+                break;
+            }
+
+            const jsonParam = (function () {
+              if (params.length === 0) { return null; }
+              else { return JSON.parse(params); }
+            })();
+
+            const response = await deleteAxios(uri, jsonParam);
             setResponseContent({
               ...responseContent,
               status: response.data.status,

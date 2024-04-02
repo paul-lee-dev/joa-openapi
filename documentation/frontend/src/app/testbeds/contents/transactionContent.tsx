@@ -694,9 +694,9 @@ export const transactionUpdateContent = {
     ],
     requestExample: `
     {
-        "transactionId" : "c4dadcf5-a8b0-42cc-bc9d-103d00d1637b",
+        "transactionId" : "35b17f49-606a-42ad-be6b-d751b8e8a997",
         "amount" : 3333,
-        "depositorName" : "거래내역 수정(입금)",
+        "depositorName" : "거래내역 수정",
         "fromAccount": "0.22887087866260403",
         "toAccount" : "0.44020096888170424"
       }
