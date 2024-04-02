@@ -28,9 +28,9 @@ public class MemberController {
     }
 
     //이메일 중복 검사
-    @GetMapping("email/{keyword}")
-    public ResponseEntity<?> confirmEmail(@RequestHeader("apiKey") UUID apiKey, @PathVariable String keyword) {
-        memberService.confirmEmail(apiKey, keyword);
+    @GetMapping("email/{keyword}/{bankId}")
+    public ResponseEntity<?> confirmEmail(@RequestHeader("apiKey") UUID apiKey, @PathVariable String keyword, @PathVariable UUID bankId) {
+        memberService.confirmEmail(apiKey, keyword, bankId);
         return ResponseEntity.ok(ApiResponse.success("사용 가능한 이메일입니다."));
     }
 
