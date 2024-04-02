@@ -13,7 +13,12 @@ export default function docs() {
 
         <Subtitle>업데이트 내역</Subtitle>
         <TextItem>
-          V 1.0 프로젝트 배포 (2024. 4. 3.)
+          V 1.0 프로젝트 정식 배포 (2024. 4. 3.)
+        </TextItem>
+
+        <Subtitle>문의 및 지원</Subtitle>
+        <TextItem>
+          API 사용에 관해 지원이 필요한 경우, 웹사이트 하단의 이메일로 문의하시기 바랍니다.
         </TextItem>
       </Wrapper>
 

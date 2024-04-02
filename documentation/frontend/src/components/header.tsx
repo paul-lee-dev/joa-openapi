@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <>
       <Wrapper>
-        <Title><Link href="/">joa-openapi</Link></Title>
+        <Title><Link href="/"><img className='w-[16rem]' src='/logo1.png' alt='joa-openapi'/></Link></Title>
         <MenuContainer>
         <NavContainer>
           <NavItem><Link href="/">Home</Link></NavItem>

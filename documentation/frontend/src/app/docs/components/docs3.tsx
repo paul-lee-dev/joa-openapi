@@ -45,7 +45,7 @@ export default function docs() {
           </TbodyItem>
         </TableItem>
 
-        <Subtitle>요청 메시지 형태 예시</Subtitle>
+        <Subtitle>요청 예시</Subtitle>
         <TextItem>
           요청 메시지(Request Body)는 해당 API의 엔드포인트로 요청을 전송할 때 포함되어야 하는 항목을 나타냅니다. Json 형식을 강력히 권장합니다.
         </TextItem>
@@ -86,9 +86,9 @@ export default function docs() {
           </TbodyItem>
         </TableItem>
 
-        <Subtitle>응답 메시지 형태 예시</Subtitle>
+        <Subtitle>응답 예시</Subtitle>
         <TextItem>
-          응답 메시지(Response Body)는 Json 형태로 주어집니다. 응답 메시지에는 기본적으로 status, message, data가 포함되며, 해당 API가 제공하는 핵심 정보는 data 안에 반환됩니다.
+          응답 메시지(Response Body)는 Json 형태로 주어집니다. 응답 메시지에는 기본적으로 status, message, data가 포함되며, 해당 API가 제공하는 핵심 정보는 data (또는 page) 안에 반환됩니다.
         </TextItem>
         <ResponseItem>응답 메시지 형태 예시</ResponseItem>
 
@@ -112,7 +112,15 @@ export default function docs() {
             </TrItem>
           </TbodyItem>
         </TableItem>
-
+        <Subtitle>테스트베드 (아래의 데이터로 요청 보내기)</Subtitle>
+          <RequestItem>각 API 명세 문서에서 실행하기 버튼을 누르면 여기에 있는 데이터를 담은 요청이 서버의 해당 엔드포인트로 전송됩니다.</RequestItem>
+          <ButtonItem>실행하기</ButtonItem>
+        <Subtitle>응답 status</Subtitle>
+        <ResponseItem>전송한 요청에 대한 응답 status가 표시됩니다.</ResponseItem>
+        <Subtitle>응답 message</Subtitle>
+        <ResponseItem>전송한 요청에 대한 응답 message가 표시됩니다.</ResponseItem>
+        <Subtitle>응답 data</Subtitle>
+        <ResponseItem>전송한 요청에 대한 응답 data(또는 page)가 표시됩니다.</ResponseItem>
       </Wrapper >
     </>
   );
@@ -134,27 +142,31 @@ const TextItem = tw.div`
 leading-7 break-keep
 `
 const RequestItem = tw.div`
+text-xs
 bg-blue-200 
 hover:bg-blue-300
 rounded-lg
 p-8
+leading-6
 `;
 
 const ResponseItem = tw.div`
+text-xs
 bg-purple-200 
 hover:bg-purple-300
 rounded-lg
 p-8
-`
+leading-6
+`;
 
 const TableItem = tw.table`
 w-full 
 text-xs
 text-left 
+break-keep
 `;
 
 const TheadItem = tw.thead`
-uppercase 
 bg-gray-100
 `;
 
@@ -170,7 +182,7 @@ px-4 py-3
 `
 
 const TdItem = tw.td`
-px-4 py-3 break-keep
+px-4 py-3 
 `;
 
 const ButtonItem = tw.button`

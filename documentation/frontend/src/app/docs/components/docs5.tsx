@@ -4,8 +4,9 @@ export default function docs() {
   return (
     <>
       <Wrapper>
-        <Title>관리자 대시보드 이용법(작성중)</Title>
-        <Subtitle>소제목</Subtitle>
+        <Title>관리자 대시보드 이용법</Title>
+        <Subtitle>개요</Subtitle>
+        <NumberTitle>대시보드를 통해 은행 고객과 거래 내역 등에 대한 다양한 통계를 한눈에 살펴보세요.</NumberTitle>
         <TextItem>내용</TextItem>
       </Wrapper>
     </>
@@ -23,6 +24,10 @@ text-3xl font-bold mt-24
 const Subtitle = tw.h3`
 text-xl font-bold
 `;
+
+const NumberTitle = tw.h4`
+font-bold
+`
 
 const TextItem = tw.div`
 leading-7 break-keep
