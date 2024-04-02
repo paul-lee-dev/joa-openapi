@@ -75,15 +75,15 @@ public class TransactionController {
         return ResponseEntity.ok(ApiResponse.success("1원 인증 4글자 확인에 성공했습니다."));
     }
 
-    @PatchMapping
-    public ResponseEntity<?> update(@RequestHeader("apiKey") UUID apiKey, @RequestBody TransactionUpdateRequestDto req) {
-        TransactionUpdateResponseDto response = transactionService.update(apiKey, req);
+    @PatchMapping("/{transactionId}")
+    public ResponseEntity<?> update(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "transactionId") UUID transactionId, @RequestBody TransactionUpdateRequestDto req) {
+        TransactionUpdateResponseDto response = transactionService.update(apiKey, transactionId, req);
         return ResponseEntity.ok(ApiResponse.success("거래내역 수정에 성공했습니다.", response));
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody TransactionDeleteRequestDto req) {
-        transactionService.delete(req);
+    @DeleteMapping("/{transactionId}")
+    public ResponseEntity<?> delete(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "transactionId") UUID transactionId) {
+        transactionService.delete(apiKey, transactionId);
         return ResponseEntity.ok(ApiResponse.success("거래내역 삭제에 성공했습니다."));
     }
 

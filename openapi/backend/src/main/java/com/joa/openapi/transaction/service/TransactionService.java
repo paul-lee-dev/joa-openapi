@@ -157,8 +157,8 @@ public class TransactionService {
     }
 
     @Transactional
-    public TransactionUpdateResponseDto update(UUID apiKey, TransactionUpdateRequestDto req) {
-        Transaction transaction = transactionRepository.findById(req.getTransactionId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+    public TransactionUpdateResponseDto update(UUID apiKey, UUID transactionId, TransactionUpdateRequestDto req) {
+        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         Long fromPrevBalance = 0L;
         Long fromBalance = 0L;
@@ -278,8 +278,8 @@ public class TransactionService {
     }
 
     @Transactional
-    public void refund(TransactionUpdateRequestDto req) {
-        Transaction transaction = transactionRepository.findById(req.getTransactionId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+    public void refund(UUID transactionId, TransactionUpdateRequestDto req) {
+        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
         Account fromAccount = accountRepository.findById(req.getFromAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
         Account toAccount = accountRepository.findById(req.getToAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
@@ -305,8 +305,8 @@ public class TransactionService {
     }
 
     @Transactional
-    public void delete(TransactionDeleteRequestDto req) {
-        Transaction transaction = transactionRepository.findById(req.getTransactionId()).orElseThrow(() -> new RestApiException(TransactionErrorCode.NO_TRANSACTION));
+    public void delete(UUID apiKey, UUID transactionId) {
+        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow(() -> new RestApiException(TransactionErrorCode.NO_TRANSACTION));
         transaction.deleteSoftly();
     }
 
