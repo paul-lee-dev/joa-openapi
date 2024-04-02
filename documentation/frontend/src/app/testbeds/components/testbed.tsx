@@ -356,7 +356,7 @@ export default function Testbed() {
 
         <form className="space-y-6" onSubmit={(e) => {
           e.preventDefault();
-          const uri = content.uri;
+          var uri = content.uri;
           const postFunc = async (params: string) => {
             const response = await postAxios(uri, JSON.parse(params));
             setResponseContent({
@@ -369,23 +369,43 @@ export default function Testbed() {
           };
           const getFunc = async (params: string) => {
 
+            switch (content.uri) {
+              case "bank/{bankId}":
+                uri = "bank/" + "26181252-036d-4edb-8729-204e15b0215b";
+                break;
+              case "member/{memberId}":
+                uri = "member/" + "4318993d-94f7-41a2-8d6b-1ec9dfe41005";
+                break;
+              case "product/{productId}":
+                uri = "product/" + "fae4998a-bbb1-47dc-b6f5-6030b1df77d9";
+                break;
+              case "transaction/{transactionId}":
+                uri = "transaction/" + "35b17f49-606a-42ad-be6b-d751b8e8a997";
+                break;
+              case "dummy/{dummyId}":
+                uri = "dummy/" + "7aaf4873-e9cd-46a0-966e-235c854ac5a0";
+                break;
+              default:
+                break;
+            }
+
             const jsonParam = (function () {
-              if (params.length===0) {return null;} 
-              else {return JSON.parse(params);}
+              if (params.length === 0) { return null; }
+              else { return JSON.parse(params); }
             })();
             const response = await getAxios(uri, jsonParam);
             setResponseContent({
               ...responseContent,
               status: response.data.status,
               message: response.data.message,
-              data: JSON.stringify(response.data.data,null,2)
+              data: JSON.stringify(response.data.data, null, 2)
             });
-            if (response.data.data===null && response.data.page!=null) {
+            if (response.data.data === null && response.data.page != null) {
               setResponseContent({
                 ...responseContent,
-                message:response.data.message,
-                status:response.data.status,
-                data: JSON.stringify(response.data.page,null,2)
+                message: response.data.message,
+                status: response.data.status,
+                data: JSON.stringify(response.data.page, null, 2)
               })
             }
             return response.data;
@@ -396,7 +416,7 @@ export default function Testbed() {
               ...responseContent,
               status: response.data.status,
               message: response.data.message,
-              data: JSON.stringify(response.data.data,null,2)
+              data: JSON.stringify(response.data.data, null, 2)
             });
             return response.data;
           };
@@ -406,7 +426,7 @@ export default function Testbed() {
               ...responseContent,
               status: response.data.status,
               message: response.data.message,
-              data: JSON.stringify(response.data.data,null,2)
+              data: JSON.stringify(response.data.data, null, 2)
             });
             return response.data;
           };
