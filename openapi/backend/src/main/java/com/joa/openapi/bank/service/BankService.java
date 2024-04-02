@@ -21,6 +21,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,16 +92,10 @@ public class BankService {
         return BankResponseDto.toDto(bank);
     }
 
-    public List<BankResponseDto> searchAll(UUID apiKey, String name) {
+    public Page<BankResponseDto> searchAll(UUID apiKey, String name, Pageable pageable) {
         if (name == null) name = "";
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
-        List<Bank> bankList = bankRepository.findByAdminIdAndNameContaining(adminId, name);
-        List<BankResponseDto> bankResponseDtoList = new ArrayList<>();
-        for (Bank bank:bankList) {
-            bankResponseDtoList.add(BankResponseDto.toDto(bank));
-        }
-
-        return bankResponseDtoList;
+        return bankRepository.findByAdminIdAndNameContaining(adminId, name, pageable);
     }
 
     public BankResponseDto searchBank(UUID apiKey, UUID bankId) {

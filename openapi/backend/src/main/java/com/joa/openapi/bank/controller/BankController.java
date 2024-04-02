@@ -4,6 +4,9 @@ import com.joa.openapi.bank.dto.*;
 import com.joa.openapi.bank.service.BankService;
 import com.joa.openapi.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,8 +39,8 @@ public class BankController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> searchAll(@RequestHeader("apiKey") UUID apiKey, @RequestParam(value = "name", required = false) String name) {
-        List<BankResponseDto> bankResponseDtoList = bankService.searchAll(apiKey, name);
+    public ResponseEntity<?> searchAll(@RequestHeader("apiKey") UUID apiKey, @RequestParam(value = "name", required = false) String name, @PageableDefault Pageable pageable) {
+        Page<BankResponseDto> bankResponseDtoList = bankService.searchAll(apiKey, name, pageable);
         return ResponseEntity.ok(ApiResponse.success("은행목록검색에 성공했습니다.", bankResponseDtoList));
     }
 
