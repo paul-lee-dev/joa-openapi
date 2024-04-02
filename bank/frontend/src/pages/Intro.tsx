@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   ScrollView,
   Text,
@@ -41,12 +42,12 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
     onSuccess: data => {
       console.log(data);
       const member: IMember = data.data;
+      Alert.alert(`환영합니다. ${member.name}님`);
       axiosInstance.interceptors.request.clear();
       axiosInstance.interceptors.request.use(
         config => {
           config.headers.memberId = member.id;
           config.headers.apiKey = bankData.apiKey;
-          console.log(config.headers);
           return config;
         },
         error => {

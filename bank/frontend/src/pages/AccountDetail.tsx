@@ -29,7 +29,9 @@ function AccountDetail({
             {account.accountId}
           </Text>
           <View className="flex flex-row items-center space-x-4">
-            <Text className="text-2xl font-bold">{account.nickname}</Text>
+            <Text className="text-2xl font-bold text-gray-700">
+              {account.nickname}
+            </Text>
             <Icon
               name={'pencil-outline'}
               color={'#888'}
@@ -44,18 +46,32 @@ function AccountDetail({
           </View>
           <View className="w-full flex flex-row pt-4">
             <View className="w-1/2 flex space-y-1">
-              <Text className="text-sm font-semibold">상품명</Text>
-              <Text className="text-sm font-semibold">개설일</Text>
-              <Text className="text-sm font-semibold">출금가능금액</Text>
-              <Text className="text-sm font-semibold">적용금리</Text>
+              <Text className="text-sm font-semibold text-gray-700">
+                상품명
+              </Text>
+              <Text className="text-sm font-semibold text-gray-700">
+                개설일
+              </Text>
+              <Text className="text-sm font-semibold text-gray-700">
+                출금가능금액
+              </Text>
+              <Text className="text-sm font-semibold text-gray-700">
+                적용금리
+              </Text>
             </View>
             <View className="w-1/2 flex space-y-1">
-              <Text className="text-sm font-semibold">입출금통장</Text>
-              <Text className="text-sm font-semibold">{account.startDate}</Text>
-              <Text className="text-sm font-semibold">{`${formatAmount(
+              <Text className="text-sm font-semibold text-gray-500">
+                입출금통장
+              </Text>
+              <Text className="text-sm font-semibold text-gray-500">
+                {account.startDate}
+              </Text>
+              <Text className="text-sm font-semibold text-gray-500">{`${formatAmount(
                 account.balance,
               )}원`}</Text>
-              <Text className="text-sm font-semibold">연 0.10%</Text>
+              <Text className="text-sm font-semibold text-gray-500">
+                연 0.10%
+              </Text>
             </View>
           </View>
         </View>
@@ -81,7 +97,7 @@ function AccountDetail({
             계좌를 해지하시려면{' '}
             <TouchableOpacity
               onPress={() => navigation.navigate('DeleteAccount', {account})}>
-              <Text className="underline">여기</Text>
+              <Text className="underline text-gray-700">여기</Text>
             </TouchableOpacity>
             를 눌러주세요.
           </Text>

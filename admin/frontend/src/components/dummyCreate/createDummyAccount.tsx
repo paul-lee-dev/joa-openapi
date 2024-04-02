@@ -9,11 +9,12 @@ import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 import { depositTransaction, sendTransaction, withdrawTransaction } from "@/api/Transaction";
 
-interface CreateDummyMemberForm {
+interface CreateDummyAccountForm {
   name: string;
   count: number;
   bankId: string;
-  product: string;
+  productId: string;
+  users: string[];
 }
 
 export default function CreateDummyAccount() {
@@ -22,7 +23,7 @@ export default function CreateDummyAccount() {
     mutationFn: sendTransaction,
     onSuccess: (data) => {
       console.log(data);
-      alert("더미 고객이 생성되었습니다.");
+      alert("더미 계좌가 생성되었습니다.");
       router.replace("/admin/dummy");
     },
     onError: (err) => alert(err.message),
@@ -34,15 +35,17 @@ export default function CreateDummyAccount() {
     setError,
     setValue,
     watch,
-  } = useForm<CreateDummyMemberForm>({
+  } = useForm<CreateDummyAccountForm>({
     defaultValues: {
       name: "",
       count: 0,
       bankId: "",
+      productId: "",
+      users: [],
     },
   });
 
-  const onSubmit = (data: CreateDummyMemberForm) => {
+  const onSubmit = (data: CreateDummyAccountForm) => {
     console.log(data);
     return;
     mutation.mutate({});
@@ -52,6 +55,11 @@ export default function CreateDummyAccount() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="p-4 flex flex-col space-y-8">
         <BankSelect setBankId={(value) => setValue("bankId", value)} bankId={watch("bankId")} />
+        <MemberSelect
+          bankId={watch("bankId")}
+          setMemberId={(value: string) => setValue("memberId", value)}
+          memberId={watch("memberId")}
+        />
         <InputText label={"생성내역 이름"}>
           <CommonInput
             className="w-80"

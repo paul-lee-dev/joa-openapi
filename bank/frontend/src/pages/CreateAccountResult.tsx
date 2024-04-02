@@ -31,10 +31,12 @@ function CreateAccountResult({
             />
           </View>
           <View className="flex flex-row">
-            <Text className="text-2xl font-bold">{`내 ${account.nickname}`}</Text>
-            <Text className="text-2xl font-medium">을</Text>
+            <Text className="text-2xl font-bold text-gray-700">{`내 ${account.nickname}`}</Text>
+            <Text className="text-2xl font-medium text-gray-700">을</Text>
           </View>
-          <Text className="text-2xl font-medium">성공적으로 개설했어요</Text>
+          <Text className="text-2xl font-medium text-gray-700">
+            성공적으로 개설했어요
+          </Text>
         </View>
         <View className="h-32 flex justify-evenly">
           <View className="flex flex-row justify-between px-6">
