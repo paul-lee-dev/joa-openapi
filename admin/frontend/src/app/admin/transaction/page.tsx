@@ -6,7 +6,7 @@ import { LoadingSpinner } from "@/components/loadingSpinner";
 import Pagination from "@/components/pagination";
 import AccountMultiSearchSelect from "@/components/select/accountMultiSearchSelect";
 import BankMultiSearchSelect from "@/components/select/bankMultiSearchSelect";
-import MultiSearchSelect from "@/components/select/customerMultiSearchSelect";
+import MemberMultiSearch from "@/components/select/memberMultiSearch";
 import TransactionTable from "@/components/table/transactionTable";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -40,11 +40,11 @@ const Dashboard = () => {
                 label={""}
                 htmlFor={""}
               ></BankMultiSearchSelect>
-              <MultiSearchSelect
+              <MemberMultiSearch
                 placeholder={"고객 검색"}
                 label={""}
                 htmlFor={""}
-              ></MultiSearchSelect>
+              ></MemberMultiSearch>
               <AccountMultiSearchSelect
                 placeholder={""}
                 label={""}

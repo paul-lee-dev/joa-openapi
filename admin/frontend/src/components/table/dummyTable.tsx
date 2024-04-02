@@ -71,10 +71,10 @@ export default function DummyTable({ dummyList }: IProps) {
                   {dummy.createdAt}
                 </div>
               </td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 cursor-pointer">
                 <a
                   onClick={() => {
-                    router.push("dummy/detail");
+                    router.push(`dummy/${dummy.dummyId}`);
                   }}
                   className="font-medium text-pink-400 hover:text-pink-500"
                 >

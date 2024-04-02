@@ -35,7 +35,7 @@ const DummyList = () => {
         <>
           <form>
             <div className="flex gap-6 justify-end mt-3 mb-5">
-              <BankSelect></BankSelect>
+              <BankSelect />
               <Button id={"search"} name={"검색"} onClick={() => {}}></Button>
             </div>
           </form>

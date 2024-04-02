@@ -13,6 +13,7 @@ import {
   ProductType,
   ProductTypeName,
 } from "@/models/Product.interface";
+import { useEffect } from "react";
 
 interface IProps {
   params: {
@@ -48,6 +49,10 @@ export default function ProductDetail({ params: { productId } }: IProps) {
     onError: (err) => alert(err.message),
   });
 
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   const productDone = () => {
     let result = confirm("정말로 상품을 종료하시겠습니까?");
     if (result) {
@@ -75,7 +80,9 @@ export default function ProductDetail({ params: { productId } }: IProps) {
                   <HiCurrencyDollar className="w-10 h-10" />
                   <h1 className="font-bold text-2xl">{data?.data.name}</h1>
                 </div>
-                <h1 className="font-light text-xs text-gray-400">{data?.data.productId}</h1>
+                <h1 className="font-light text-xs text-gray-400">
+                  {data?.data.productId}
+                </h1>
               </div>
               {/* <div className="flex flex-col">
                 <h1 className="text-sm font-light">
@@ -107,16 +114,23 @@ export default function ProductDetail({ params: { productId } }: IProps) {
               </h1>
               <h1>
                 상품 종류:{" "}
-                <DetailSpan>{ProductTypeName[data?.data.productType as ProductType]}</DetailSpan>
+                <DetailSpan>
+                  {ProductTypeName[data?.data.productType as ProductType]}
+                </DetailSpan>
               </h1>
               <h1>
                 지급방식:{" "}
                 <DetailSpan>
-                  {ProductPaymentTypeName[data?.data.paymentType as ProductPaymentType]}
+                  {
+                    ProductPaymentTypeName[
+                      data?.data.paymentType as ProductPaymentType
+                    ]
+                  }
                 </DetailSpan>
               </h1>
               <h1>
-                종료 여부: <DetailSpan>{data?.data.isDone ? "Y" : "N"}</DetailSpan>
+                종료 여부:{" "}
+                <DetailSpan>{data?.data.isDone ? "Y" : "N"}</DetailSpan>
               </h1>
             </div>
             {data?.data.isDone ? (
@@ -130,7 +144,12 @@ export default function ProductDetail({ params: { productId } }: IProps) {
               </div>
             ) : (
               <div className="flex gap-6 justify-end">
-                <Button onClick={productDone} id={"done"} name={"종료"} type="button"></Button>
+                <Button
+                  onClick={productDone}
+                  id={"done"}
+                  name={"종료"}
+                  type="button"
+                ></Button>
               </div>
             )}
           </CommonForm>

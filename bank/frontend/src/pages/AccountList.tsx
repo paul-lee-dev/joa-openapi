@@ -6,8 +6,6 @@ import {useQuery} from '@tanstack/react-query';
 import {getAccountList} from '@/api/account';
 import {RootStackParamList} from '@/Router';
 import {IAccount} from '@/models';
-import {useRecoilValue} from 'recoil';
-import {memberDataAtom} from '@/store/atoms';
 
 type AccountListScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -15,10 +13,9 @@ type AccountListScreenProps = NativeStackScreenProps<
 >;
 
 function AccountList({navigation}: AccountListScreenProps): React.JSX.Element {
-  const memberData = useRecoilValue(memberDataAtom);
   const {data} = useQuery({
     queryKey: ['accountList'],
-    queryFn: () => getAccountList(memberData.member?.id ?? ''),
+    queryFn: getAccountList,
   });
 
   return (
@@ -32,7 +29,7 @@ function AccountList({navigation}: AccountListScreenProps): React.JSX.Element {
         {data && (
           <View className="w-full flex py-12 px-6 space-y-4">
             <View className="w-full h-10 bg-pink-200 rounded-xl flex justify-center px-6 shadow-sm shadow-black">
-              <Text className="text-base font-semibold">{`계좌 ${data?.page?.totalElements}개`}</Text>
+              <Text className="text-base font-semibold text-gray-700">{`계좌 ${data?.page?.totalElements}개`}</Text>
             </View>
             {data.page?.content?.map((account: IAccount) => (
               <View className="w-full h-36" key={account.accountId}>

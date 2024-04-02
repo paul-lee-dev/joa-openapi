@@ -87,32 +87,56 @@ function CreateAccount({
         <BottomPopup close={() => setDetailModalOpen(false)}>
           <View className="w-full p-6 flex space-y-2">
             <View className="w-full flex flex-row justify-between">
-              <Text className="text-base font-semibold">상품분류</Text>
-              <Text>{getProductTypeName(product.productType)!.title}</Text>
+              <Text className="text-base font-semibold text-gray-700">
+                상품분류
+              </Text>
+              <Text className="text-gray-700">
+                {getProductTypeName(product.productType)!.title}
+              </Text>
             </View>
             <View className="w-full flex flex-row justify-between">
-              <Text className="text-base font-semibold">상품명</Text>
-              <Text>{product.name}</Text>
+              <Text className="text-base font-semibold text-gray-700">
+                상품명
+              </Text>
+              <Text className="text-gray-700">{product.name}</Text>
             </View>
             <View className="w-full flex flex-row justify-between">
-              <Text className="text-base font-semibold">종료여부</Text>
-              <Text>{product.isDone ? 'Y' : 'N'}</Text>
+              <Text className="text-base font-semibold text-gray-700">
+                종료여부
+              </Text>
+              <Text className="text-gray-700">
+                {product.isDone ? 'Y' : 'N'}
+              </Text>
             </View>
             <View className="w-full flex flex-row justify-between">
-              <Text className="text-base font-semibold">저축 최소한도</Text>
-              <Text>{`${formatAmount(product.minAmount)}원`}</Text>
+              <Text className="text-base font-semibold text-gray-700">
+                저축 최소한도
+              </Text>
+              <Text className="text-gray-700">{`${formatAmount(
+                product.minAmount,
+              )}원`}</Text>
             </View>
             <View className="w-full flex flex-row justify-between">
-              <Text className="text-base font-semibold">저축 최대한도</Text>
-              <Text>{`${formatAmount(product.maxAmount)}원`}</Text>
+              <Text className="text-base font-semibold text-gray-700">
+                저축 최대한도
+              </Text>
+              <Text className="text-gray-700">{`${formatAmount(
+                product.maxAmount,
+              )}원`}</Text>
             </View>
             <View className="w-full flex flex-row justify-between">
-              <Text className="text-base font-semibold">이자율</Text>
-              <Text>{`연 ${product.rate}%`}</Text>
+              <Text className="text-base font-semibold text-gray-700">
+                이자율
+              </Text>
+              <Text className="text-gray-700">{`연 ${product.rate}%`}</Text>
             </View>
             <View className="w-full flex flex-row justify-between">
-              <Text className="text-base font-semibold">지급방식</Text>
-              <Text>{ProductPaymentTypeName[product.paymentType]}</Text>
+              <Text className="text-base font-semibold text-gray-700">
+                지급방식
+              </Text>
+              <Text className="text-gray-700">
+                {ProductPaymentTypeName[product.paymentType]}
+              </Text>
             </View>
           </View>
           <BottomButton

@@ -31,7 +31,9 @@ function OptionInput({
               'h-full flex-grow flex justify-center items-center border border-gray-400',
               option.value === value && 'bg-gray-50',
             )}>
-            <Text className="text-lg font-semibold">{option.label}</Text>
+            <Text className="text-lg font-semibold text-gray-700">
+              {option.label}
+            </Text>
           </Pressable>
         ))}
       </View>

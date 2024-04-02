@@ -6,7 +6,7 @@ import { LoadingSpinner } from "@/components/loadingSpinner";
 import Pagination from "@/components/pagination";
 import AccountGroupSearch from "@/components/search/accountGroupSearch";
 import BankSelect from "@/components/select/bankNoLabel";
-import MultiSearchSelect from "@/components/select/customerMultiSearchSelect";
+import MemberMultiSearch from "@/components/select/memberMultiSearch";
 import ProductMultiSearchSelect from "@/components/select/productMultiSearchSelect";
 import ProductTypeMultiSearchSelect from "@/components/select/productTypeMultiSearchSelect";
 import AccountTable from "@/components/table/accountTable";
@@ -37,11 +37,11 @@ const AccountList = () => {
           <form className="flex justify-end m-2">
             <div className="flex gap-8 ">
               <BankSelect></BankSelect>
-              <MultiSearchSelect
+              <MemberMultiSearch
                 placeholder={"고객 검색"}
                 label={""}
                 htmlFor={""}
-              ></MultiSearchSelect>
+              ></MemberMultiSearch>
               <ProductMultiSearchSelect
                 placeholder={""}
                 label={""}

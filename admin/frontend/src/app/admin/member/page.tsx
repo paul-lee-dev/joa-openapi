@@ -14,7 +14,7 @@ const MemberList = () => {
   const [keyword, setKeyword] = useState<string>("");
   const [searchWord, setSearchWord] = useState<string>("");
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["MemberList", searchWord],
+    queryKey: ["MemberList", "all", searchWord || "all"],
     queryFn: () => {
       return searchMemberList({ memberName: searchWord });
     },

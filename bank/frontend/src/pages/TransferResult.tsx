@@ -5,6 +5,8 @@ import Header from '@/components/Header';
 import BottomButton from '@/components/BottomButton';
 import {formatAmount} from '@/utils';
 import {RootStackParamList} from '@/Router';
+import {useRecoilValue} from 'recoil';
+import {bankDataAtom} from '@/store/atoms';
 
 type TransferResultScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -15,7 +17,9 @@ function TransferResult({
   route,
   navigation,
 }: TransferResultScreenProps): React.JSX.Element {
-  const {amount, depositorName, accountNickname, toAccountId} = route.params;
+  const {amount, depositorName, accountNickname, toAccountId, toAccountName} =
+    route.params;
+  const bankData = useRecoilValue(bankDataAtom);
   return (
     <View className="w-full h-full bg-gray-100 flex">
       <Header
@@ -30,7 +34,7 @@ function TransferResult({
           </View>
           <View className="flex flex-row">
             <Text className="text-2xl font-bold text-gray-700">
-              내 입출금통장
+              {toAccountName}
             </Text>
             <Text className="text-2xl font-medium text-gray-700">으로</Text>
           </View>
@@ -57,7 +61,7 @@ function TransferResult({
           <View className="flex flex-row justify-between px-6">
             <Text className="font-bold text-sm text-gray-700">입금 계좌</Text>
             <Text className="font-semibold text-sm text-gray-700">
-              {`조아은행 ${toAccountId}`}
+              {`${bankData.bankName} ${toAccountId}`}
             </Text>
           </View>
         </View>

@@ -1,44 +1,61 @@
-import { HiUser } from "react-icons/hi";
-import { useState } from "react";
 import tw from "tailwind-styled-components";
-import { usePathname } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import Image from "next/image";
+import NavbarImg from "@/asset/img/navbar.png";
+import UserImg from "@/asset/img/user.png";
+import { useEffect, useState } from "react";
+import { IAdminData } from "@/models/Admin.interface";
+import { useRecoilState } from "recoil";
+import { adminDataAtom } from "@/store/atom";
 
 export default function Header() {
-  const [title, setTitle] = useState("");
-  const handleTitle = (event: { target: { value: string | ((currVal: string) => string) } }) => {
-    setTitle(event.target.value);
-  };
-  const currentRoute = usePathname();
+  const router = useRouter();
+  const [adminData, setClientAdminData] = useState<IAdminData | null>(null);
+  const [recoilAdminData, setAdminData] = useRecoilState(adminDataAtom);
+
+  useEffect(() => {
+    setClientAdminData(recoilAdminData);
+  }, [recoilAdminData]);
+
+  useEffect(() => {
+    if (adminData) {
+      if (!adminData.isLogin) {
+        redirect("/login");
+      }
+    }
+  }, [adminData]);
+
   return (
     <Wrapper>
-      <Title>Admin</Title>
+      <div
+        onClick={() => router.push("/")}
+        className="w-52 flex justify-center items-center pb-2 cursor-pointer"
+      >
+        <Image src={NavbarImg} alt="Admin" draggable={false} />
+      </div>
       <UserContainer>
-        <UserName>Username</UserName>
-        <HiUser></HiUser>
+        <div
+          onClick={() => router.push("/admin/profile")}
+          className="w-16 flex justify-center items-center mr-8 cursor-pointer"
+        >
+          <Image src={UserImg} alt="Admin" draggable={false} />
+        </div>
       </UserContainer>
     </Wrapper>
   );
 }
 
 const Wrapper = tw.nav`
-bg-pink-200
+bg-pink-100
 text-gray-800 
 py-4 
 px-6 
+h-20
 flex 
 justify-between 
 items-center
 `;
 
-const Title = tw.h1`
-text-xl 
-font-semibold
-`;
-
 const UserContainer = tw.div`
 flex items-center
-`;
-
-const UserName = tw.span`
-mr-2
 `;

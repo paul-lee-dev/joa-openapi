@@ -1,4 +1,5 @@
 import {
+  Alert,
   Pressable,
   ScrollView,
   Text,
@@ -14,8 +15,8 @@ import AccountSelectItem from '@/components/AccountSelectItem';
 import BottomButton from '@/components/BottomButton';
 import {formatAmount} from '@/utils';
 import {RootStackParamList} from '@/Router';
-import {getAccountList} from '@/api/account';
-import {useQuery} from '@tanstack/react-query';
+import {getAccountDetail, getAccountList} from '@/api/account';
+import {useMutation, useQuery} from '@tanstack/react-query';
 import {IAccount} from '@/models';
 
 type TransferScreenProps = NativeStackScreenProps<
@@ -29,6 +30,21 @@ function Transfer({route, navigation}: TransferScreenProps): React.JSX.Element {
   const [toAccountId, setToAccountId] = useState<string>('');
   const [myAccountOpen, setMyAccountOpen] = useState<boolean>(false);
   const [myRecentOpen, setMyRecentOpen] = useState<boolean>(false);
+  const mutation = useMutation({
+    mutationFn: getAccountDetail,
+    onSuccess: res => {
+      console.log(res);
+      navigation.navigate('TransferAmount', {
+        account,
+        toAccountId,
+        toAccountName: res.data.nickname,
+      });
+    },
+    onError: (err: any) => {
+      Alert.alert('계좌를 찾을 수 없습니다.');
+      console.log(err);
+    },
+  });
 
   return (
     <View className="w-full h-full bg-gray-100">
@@ -40,7 +56,7 @@ function Transfer({route, navigation}: TransferScreenProps): React.JSX.Element {
       <View className="w-full h-36 border-t border-b border-gray-300 my-6 flex justify-evenly py-2 px-6">
         <View className="w-full">
           <Text className="font-semibold text-base text-gray-700">
-            저축예금[입출금]
+            {account.nickname}
           </Text>
         </View>
         <View className="w-full flex flex-row items-center space-x-2">
@@ -123,7 +139,7 @@ function Transfer({route, navigation}: TransferScreenProps): React.JSX.Element {
               />
             </Pressable>
             {myRecentOpen &&
-              [1, 2].map((item: any) => (
+              [].map((item: any) => (
                 <AccountSelectItem key={item} account={account} />
               ))}
           </View>
@@ -131,12 +147,7 @@ function Transfer({route, navigation}: TransferScreenProps): React.JSX.Element {
       </ScrollView>
       <BottomButton
         title="확인"
-        onPress={() =>
-          navigation.navigate('TransferAmount', {
-            account,
-            toAccountId,
-          })
-        }
+        onPress={() => mutation.mutate({accountId: toAccountId})}
       />
     </View>
   );

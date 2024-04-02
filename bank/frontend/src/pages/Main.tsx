@@ -48,7 +48,7 @@ function Main({navigation}: MainScreenProps): React.JSX.Element {
   const bankData = useRecoilValue(bankDataAtom);
   const {data, refetch} = useQuery({
     queryKey: ['accountList'],
-    queryFn: () => getAccountList(memberData?.member?.id || ''),
+    queryFn: getAccountList,
     retry: true,
   });
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
