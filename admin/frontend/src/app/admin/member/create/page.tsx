@@ -1,15 +1,9 @@
 "use client";
 
 import Button from "@/components/button/button";
-import InputText, {
-  CommonErrorMsg,
-  CommonInput,
-} from "@/components/input/inputText";
+import InputText, { CommonErrorMsg, CommonInput } from "@/components/input/inputText";
 import BankSelect from "@/components/select/bankSelect";
-import MyAsyncSelect from "@/components/select/customerMultiSearchSelect";
-import { useState } from "react";
 import tw from "tailwind-styled-components";
-import { CommonForm, Divider } from "../../product/create/page";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { createMember } from "@/api/Membr";
@@ -105,8 +99,7 @@ export default function MemberCreate() {
             {...register("phone", {
               required: "전화번호를 입력해주세요.",
               pattern: {
-                value:
-                  /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
+                value: /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
                 message: "올바른 전화번호 형식이 아닙니다.",
               },
             })}
@@ -131,9 +124,7 @@ export default function MemberCreate() {
                 required: "비밀번호를 한번 더 입력해주세요.",
                 validate: {
                   correct: (value) =>
-                    value === getValues("password")
-                      ? true
-                      : "비밀번호가 일치하지 않습니다.",
+                    value === getValues("password") ? true : "비밀번호가 일치하지 않습니다.",
                 },
               })}
             />
@@ -141,15 +132,24 @@ export default function MemberCreate() {
         </div>
         <Divider />
         <div className="flex gap-6 justify-end">
-          <Button
-            type="button"
-            onClick={() => router.back()}
-            id={"create"}
-            name={"취소"}
-          />
+          <Button type="button" onClick={() => router.back()} id={"create"} name={"취소"} />
           <Button type="submit" id={"create"} name={"등록"} />
         </div>
       </div>
     </CommonForm>
   );
 }
+const CommonForm = tw.form`
+p-14
+w-full
+flex
+flex-col
+space-y-8
+`;
+
+const Divider = tw.div`
+w-full
+h-[1px]
+bg-slate-300
+my-4
+`;

@@ -2,7 +2,6 @@
 
 import Button from "@/components/button/button";
 import tw from "tailwind-styled-components";
-import { CommonForm } from "../product/create/page";
 import InputText, { CommonInput } from "@/components/input/inputText";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { adminDataAtom } from "@/store/atom";
@@ -42,17 +41,8 @@ export default function Profile() {
     <Container>
       <InputText label={"API 키"}>
         <div className="flex space-x-2">
-          <CommonInput
-            disabled
-            className="w-80"
-            value={adminData.apiKey ?? "API키 없음"}
-          />
-          <Button
-            type="button"
-            id={"create"}
-            name={"발급"}
-            onClick={getApiKey}
-          />
+          <CommonInput disabled className="w-80" value={adminData.apiKey ?? "API키 없음"} />
+          <Button type="button" id={"create"} name={"발급"} onClick={getApiKey} />
         </div>
       </InputText>
     </Container>
@@ -65,4 +55,18 @@ w-full
 flex
 flex-col
 space-y-8
+`;
+const CommonForm = tw.form`
+p-14
+w-full
+flex
+flex-col
+space-y-8
+`;
+
+const Divider = tw.div`
+w-full
+h-[1px]
+bg-slate-300
+my-4
 `;

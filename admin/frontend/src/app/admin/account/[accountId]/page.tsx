@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
 import { MdAccountBalanceWallet } from "react-icons/md";
-import { CommonForm, Divider } from "../../product/create/page";
 import { formatAmount } from "@/util";
 
 interface IProps {
@@ -185,4 +184,18 @@ text-red-400
 const DetailSpan = tw.span`
   text-gray-500
   font-light
+`;
+const CommonForm = tw.form`
+p-14
+w-full
+flex
+flex-col
+space-y-8
+`;
+
+const Divider = tw.div`
+w-full
+h-[1px]
+bg-slate-300
+my-4
 `;

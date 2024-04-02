@@ -6,7 +6,6 @@ import { LoadingSpinner } from "@/components/loadingSpinner";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import tw from "tailwind-styled-components";
-import { CommonForm, Divider } from "../create/page";
 import { HiCurrencyDollar } from "react-icons/hi";
 import {
   ProductPaymentType,
@@ -143,4 +142,19 @@ export default function ProductDetail({ params: { productId } }: IProps) {
 const DetailSpan = tw.span`
   text-gray-500
   font-light
+`;
+
+const CommonForm = tw.form`
+p-14
+w-full
+flex
+flex-col
+space-y-8
+`;
+
+const Divider = tw.div`
+w-full
+h-[1px]
+bg-slate-300
+my-4
 `;

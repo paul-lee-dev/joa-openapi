@@ -2,22 +2,13 @@
 
 import { createProduct } from "@/api/Product";
 import Button from "@/components/button/button";
-import InputText, {
-  CommonErrorMsg,
-  CommonInput,
-} from "@/components/input/inputText";
+import InputText, { CommonErrorMsg, CommonInput } from "@/components/input/inputText";
 import BankSelect from "@/components/select/bankSelect";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
-import {
-  HiCreditCard,
-  HiChartBar,
-  HiFlag,
-  HiCurrencyDollar,
-  HiCalculator,
-} from "react-icons/hi";
+import { HiCreditCard, HiChartBar, HiFlag, HiCurrencyDollar, HiCalculator } from "react-icons/hi";
 import { ProductPaymentType, ProductType } from "@/models/Product.interface";
 
 interface CreateProductForm {
@@ -89,9 +80,7 @@ export default function ProductCreate() {
       <Divider />
       <div className="p-4 flex flex-col space-y-4">
         <RadioSelect>
-          <RadioContainer
-            onClick={() => setValue("productType", "ORDINARY_DEPOSIT")}
-          >
+          <RadioContainer onClick={() => setValue("productType", "ORDINARY_DEPOSIT")}>
             <RadioInput
               name="productType"
               type="radio"
@@ -101,14 +90,10 @@ export default function ProductCreate() {
             <HiCreditCard className="w-10 h-10" />
             <RadioTitleContainer>
               <RadioTitle>입출금통장</RadioTitle>
-              <RadioDescription>
-                아무때나 돈을 넣고 뺼 수 있는 통장입니다.
-              </RadioDescription>
+              <RadioDescription>아무때나 돈을 넣고 뺼 수 있는 통장입니다.</RadioDescription>
             </RadioTitleContainer>
           </RadioContainer>
-          <RadioContainer
-            onClick={() => setValue("productType", "TERM_DEPOSIT")}
-          >
+          <RadioContainer onClick={() => setValue("productType", "TERM_DEPOSIT")}>
             <RadioInput
               name="productType"
               type="radio"
@@ -119,14 +104,12 @@ export default function ProductCreate() {
             <RadioTitleContainer>
               <RadioTitle>정기 예금</RadioTitle>
               <RadioDescription>
-                일정금액을 계약기간동안 1년에 1번 납입하여 한번 입금 후에는 그
-                기간동안에 찾지않는 조건으로 이루어지는 예금입니다.
+                일정금액을 계약기간동안 1년에 1번 납입하여 한번 입금 후에는 그 기간동안에 찾지않는
+                조건으로 이루어지는 예금입니다.
               </RadioDescription>
             </RadioTitleContainer>
           </RadioContainer>
-          <RadioContainer
-            onClick={() => setValue("productType", "FIXED_DEPOSIT")}
-          >
+          <RadioContainer onClick={() => setValue("productType", "FIXED_DEPOSIT")}>
             <RadioInput
               name="productType"
               type="radio"
@@ -137,9 +120,8 @@ export default function ProductCreate() {
             <RadioTitleContainer>
               <RadioTitle>정기 적금</RadioTitle>
               <RadioDescription>
-                매월 일정금액을 정기적으로 납입하고 만기일에 원리금을 지급받는
-                상품으로 푼돈을 모아 목돈을 마련하는데 가장 보편적인 장기저축
-                상품입니다.
+                매월 일정금액을 정기적으로 납입하고 만기일에 원리금을 지급받는 상품으로 푼돈을 모아
+                목돈을 마련하는데 가장 보편적인 장기저축 상품입니다.
               </RadioDescription>
             </RadioTitleContainer>
           </RadioContainer>
@@ -183,11 +165,7 @@ export default function ProductCreate() {
         <div className="p-4 flex flex-col space-y-4">
           <RadioSelect>
             <RadioContainer onClick={() => setValue("paymentType", "SIMPLE")}>
-              <RadioInput
-                type="radio"
-                checked={watch("paymentType") === "SIMPLE"}
-                readOnly
-              />
+              <RadioInput type="radio" checked={watch("paymentType") === "SIMPLE"} readOnly />
               <HiCurrencyDollar className="w-10 h-10" />
               <RadioTitleContainer>
                 <RadioTitle>단리</RadioTitle>
@@ -197,17 +175,12 @@ export default function ProductCreate() {
               </RadioTitleContainer>
             </RadioContainer>
             <RadioContainer onClick={() => setValue("paymentType", "COMPOUND")}>
-              <RadioInput
-                type="radio"
-                checked={watch("paymentType") === "COMPOUND"}
-                readOnly
-              />
+              <RadioInput type="radio" checked={watch("paymentType") === "COMPOUND"} readOnly />
               <HiCalculator className="w-10 h-10" />
               <RadioTitleContainer>
                 <RadioTitle>복리</RadioTitle>
                 <RadioDescription>
-                  또 주는 이자라는 뜻으로, 원금에 붙은 이자의 이자까지
-                  계산합니다.
+                  또 주는 이자라는 뜻으로, 원금에 붙은 이자의 이자까지 계산합니다.
                 </RadioDescription>
               </RadioTitleContainer>
             </RadioContainer>
@@ -217,18 +190,13 @@ export default function ProductCreate() {
       </div>
 
       <div className="flex gap-6 justify-end">
-        <Button
-          type="button"
-          onClick={() => router.back()}
-          id={"create"}
-          name={"취소"}
-        />
+        <Button type="button" onClick={() => router.back()} id={"create"} name={"취소"} />
         <Button type="submit" id={"create"} name={"등록"} />
       </div>
     </CommonForm>
   );
 }
-export const CommonForm = tw.form`
+const CommonForm = tw.form`
 p-14
 w-full
 flex
@@ -236,7 +204,7 @@ flex-col
 space-y-8
 `;
 
-export const Divider = tw.div`
+const Divider = tw.div`
 w-full
 h-[1px]
 bg-slate-300

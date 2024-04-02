@@ -1,17 +1,12 @@
 "use client";
 
 import Button from "@/components/button/button";
-import InputText, {
-  CommonErrorMsg,
-  CommonInput,
-} from "@/components/input/inputText";
+import InputText, { CommonErrorMsg, CommonInput } from "@/components/input/inputText";
 import { LoadingSpinner } from "@/components/loadingSpinner";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
-import { MdAccountBalanceWallet } from "react-icons/md";
-import { CommonForm, Divider } from "../../product/create/page";
 import { deleteMember, getMemberDetail, updateMember } from "@/api/Membr";
 import { FaUserFriends } from "react-icons/fa";
 
@@ -110,18 +105,14 @@ export default function MemberDetail({ params: { memberId } }: IProps) {
                   <FaUserFriends className="w-10 h-10" />
                   <h1 className="font-bold text-2xl">{watch("name")}</h1>
                 </div>
-                <h1 className="font-light text-xs text-gray-400">
-                  {data?.data?.memberId}
-                </h1>
+                <h1 className="font-light text-xs text-gray-400">{data?.data?.memberId}</h1>
               </div>
               <div className="flex flex-col">
                 <h1 className="text-sm font-light">
-                  생성:{" "}
-                  <span className="text-gray-500">{data?.data?.createdAt}</span>
+                  생성: <span className="text-gray-500">{data?.data?.createdAt}</span>
                 </h1>
                 <h1 className="text-sm font-light">
-                  수정:{" "}
-                  <span className="text-gray-500">{data?.data?.updatedAt}</span>
+                  수정: <span className="text-gray-500">{data?.data?.updatedAt}</span>
                 </h1>
               </div>
             </div>
@@ -160,8 +151,7 @@ export default function MemberDetail({ params: { memberId } }: IProps) {
                   {...register("phone", {
                     required: "전화번호를 입력해주세요.",
                     pattern: {
-                      value:
-                        /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
+                      value: /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
                       message: "올바른 전화번호 형식이 아닙니다.",
                     },
                   })}
@@ -197,4 +187,18 @@ block text-sm font-medium leading-6 text-gray-500
 const ErrorMsg = tw.span`
 text-sm
 text-red-400
+`;
+const CommonForm = tw.form`
+p-14
+w-full
+flex
+flex-col
+space-y-8
+`;
+
+const Divider = tw.div`
+w-full
+h-[1px]
+bg-slate-300
+my-4
 `;

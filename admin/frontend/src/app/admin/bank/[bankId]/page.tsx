@@ -7,7 +7,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteBank, getBankDetail, updateBank } from "@/api/Bank";
 import { useForm } from "react-hook-form";
 import { LoadingSpinner } from "@/components/loadingSpinner";
-import { CommonForm, Divider } from "../../product/create/page";
 import { CommonInput } from "@/components/input/inputText";
 import { HiBanknotes } from "react-icons/hi2";
 
@@ -106,18 +105,14 @@ export default function BankDetail({ params: { bankId } }: IProps) {
                   <HiBanknotes className="w-10 h-10" />
                   <h1 className="font-bold text-2xl">{watch("name")}</h1>
                 </div>
-                <h1 className="font-light text-xs text-gray-400">
-                  {data?.data?.bankId}
-                </h1>
+                <h1 className="font-light text-xs text-gray-400">{data?.data?.bankId}</h1>
               </div>
               <div className="flex flex-col">
                 <h1 className="text-sm font-light">
-                  생성:{" "}
-                  <span className="text-gray-500">{data?.data?.createdAt}</span>
+                  생성: <span className="text-gray-500">{data?.data?.createdAt}</span>
                 </h1>
                 <h1 className="text-sm font-light">
-                  수정:{" "}
-                  <span className="text-gray-500">{data?.data?.updatedAt}</span>
+                  수정: <span className="text-gray-500">{data?.data?.updatedAt}</span>
                 </h1>
               </div>
             </div>
@@ -205,4 +200,18 @@ focus:ring-inset
 focus:ring-pink-500 
 sm:text-sm 
 sm:leading-6
+`;
+const CommonForm = tw.form`
+p-14
+w-full
+flex
+flex-col
+space-y-8
+`;
+
+const Divider = tw.div`
+w-full
+h-[1px]
+bg-slate-300
+my-4
 `;
