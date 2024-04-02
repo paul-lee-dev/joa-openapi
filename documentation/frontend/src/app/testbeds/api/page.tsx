@@ -1,7 +1,7 @@
 "use client";
 import tw from "tailwind-styled-components";
 import { useState } from "react";
-import { memberCreateParams, memberCreateResponse } from "./member.api";
+import { memberCreateParams, memberCreateResponse } from "../params/member.api";
 import { postAxios, useAxios } from "./http-common";
 
 const Home = () => {

@@ -1,5 +1,4 @@
 //목록 조회/검색 제외 완료 
-//export 붙이기 
 
 //productCreateContent
 //productreadContent
