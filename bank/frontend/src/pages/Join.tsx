@@ -13,13 +13,7 @@ import {useRef, useState} from 'react';
 import Header from '@/components/Header';
 import CommonInput from '@/components/CommonInput';
 import BottomButton from '@/components/BottomButton';
-import {
-  checkEmailCode,
-  emailConfirm,
-  emailSend,
-  join,
-  phoneConfirm,
-} from '@/api/member';
+import {checkEmailCode, emailConfirm, emailSend, join} from '@/api/member';
 import {useMutation} from '@tanstack/react-query';
 import {useRecoilValue} from 'recoil';
 import {bankDataAtom} from '@/store/atoms';
@@ -49,7 +43,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
     onError: err => console.log(err),
   });
   const emailMutation = useMutation({
-    mutationFn: emailConfirm,
+    mutationFn: (param: any[]) => emailConfirm(param[0], param[1]),
     onSuccess: data => {
       console.log(data);
       clearErrors('email');
@@ -59,17 +53,6 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
     onError: err => {
       console.log(err);
       setError('email', {type: 'conflict', message: '중복된 이메일입니다.'});
-    },
-  });
-  const phoneMutation = useMutation({
-    mutationFn: phoneConfirm,
-    onSuccess: data => {
-      console.log(data);
-      clearErrors('phone');
-    },
-    onError: err => {
-      console.log(err);
-      setError('phone', {type: 'conflict', message: '중복된 전화번호입니다.'});
     },
   });
 
@@ -106,7 +89,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
       setError('email', {type: 'required', message: '이메일을 입력해주세요.'});
       return;
     }
-    emailMutation.mutate(emailValue);
+    emailMutation.mutate([emailValue, bankData.bankId]);
   };
 
   const sendEmailCode = () => {
@@ -296,14 +279,6 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                   onBlur={onBlur}
                   onChangeText={t => {
                     const newT = t.replace(/[^0-9]/g, '');
-                    if (newT.length === 11) {
-                      phoneMutation.mutate(newT);
-                    } else {
-                      setError('phone', {
-                        type: 'required',
-                        message: '전화번호를 입력해주세요.',
-                      });
-                    }
                     onChange(newT);
                   }}
                   value={value}

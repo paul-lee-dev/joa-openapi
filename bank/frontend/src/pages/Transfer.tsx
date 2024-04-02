@@ -46,6 +46,15 @@ function Transfer({route, navigation}: TransferScreenProps): React.JSX.Element {
     },
   });
 
+  const onSubmit = () => {
+    if (account.accountId === toAccountId) {
+      Alert.alert('동일한 계좌로는 이체할 수 없습니다.');
+      return;
+    }
+
+    mutation.mutate({accountId: toAccountId});
+  };
+
   return (
     <View className="w-full h-full bg-gray-100">
       <Header
@@ -145,10 +154,7 @@ function Transfer({route, navigation}: TransferScreenProps): React.JSX.Element {
           </View>
         </View>
       </ScrollView>
-      <BottomButton
-        title="확인"
-        onPress={() => mutation.mutate({accountId: toAccountId})}
-      />
+      <BottomButton title="확인" onPress={onSubmit} />
     </View>
   );
 }
