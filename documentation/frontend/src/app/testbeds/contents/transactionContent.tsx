@@ -233,8 +233,8 @@ export const transactionWithdrawContent = {
     requestExample: `
     {
         "password": "1234",
-        "amount" : 1500,
-        "fromAccount" : "07519673423949533"
+        "amount" : "1500",
+        "fromAccount" : "424442390202548348"
     }
     `,
     responseParam: [
@@ -406,9 +406,9 @@ export const transactionSendContent = {
     requestExample: `
     {
         "password": "1234",
-        "amount" : 1500,
-        "fromAccount" : "07519673423949533"
-        "toAccount" : "06588471019380"
+        "amount" : "1500",
+        "fromAccount" : "424442390202548348",
+        "toAccount" : "424442390202548348"
     }
     `,
     responseParam: [
@@ -544,7 +544,7 @@ export const transaction1wonSendContent = {
     ],
     requestExample: `
     {
-        "accountId" : "07519673423949533"
+        "accountId" : "424442390202548348"
     }
     `,
     responseParam: [
@@ -606,8 +606,8 @@ export const transaction1wonConfirmContent = {
     ],
     requestExample: `
     {
-        "word" : "노란우산",
-        "transactionId" : "1d20aba9-ee39-4444-92e4-c542a6aa417d"
+        "word" : "부정행위",
+        "transactionId" : "d8d08829-152a-41ec-83f9-078baf9e23b0"
     }
     `,
     responseParam: [],
@@ -715,13 +715,79 @@ export const transactionUpdateContent = {
 
 export const transactionListContent = {
     title: '거래내역 목록 조회/검색',
-    desc: '',
-    method: '',
-    uri: '',
+    desc: '거래 내역을 검색하고, 조회하는 API입니다. 은행 고객 본인의 거래 내역을 조회할 수 있으며, 관리자는 본인의 은행에 한해 고객의 거래 내역을 조회할 수 있습니다.',
+    method: 'GET',
+    uri: 'transaction/search',
     requestParam: [],
     requestExample: '',
-    responseParam: [],
-    responseExample: '',
+    responseParam: [
+        {
+            name: 'transactionId',
+            desc: '거래내역 아이디',
+            type: 'String',
+            required: 'Y',
+            etc: '',
+        },
+        {
+            name: 'amount',
+            desc: '금액',
+            type: 'String',
+            required: 'Y',
+            etc: '',
+        },
+        {
+            name: 'depositorName',
+            desc: '입금주명',
+            type: 'String',
+            required: 'Y',
+            etc: '',
+        },
+        {
+            name: 'fromAccount',
+            desc: '보내는 계좌번호',
+            type: 'String',
+            required: 'Y',
+            etc: '',
+        },
+        {
+            name: 'toAccount',
+            desc: '받는 계좌번호',
+            type: 'String',
+            required: 'Y',
+            etc: '',
+        },
+        {
+            name: 'createdAt',
+            desc: '거래내역 발생일',
+            type: 'String',
+            required: 'Y',
+            etc: '',
+        },
+    ],
+    responseExample: `
+    {
+        "status": "SUCCESS",
+        "message": "거래내역 조회에 성공했습니다."
+        "data": null,
+        "page": {
+            "content": [
+                {
+                    "transactionId": "c4dadcf5-a8b0-42cc-bc9d-103d00d1637b",
+                    "amount": 1000,
+                    "depositorName": "수림1to수림2",
+                    "fromAccount": "0.22887087866260403",
+                    "toAccount": "0.44020096888170424",
+                    "createdAt": "2024-03-29 15:42"
+                }
+            ],
+            "page": 0,
+            "size": 10,
+            "totalElements": 1,
+            "totalPages": 1,
+            "last": true
+        }
+    }
+    `,
     errorCode: [],
 }
 
@@ -741,7 +807,7 @@ export const transactionDeleteContent = {
     ],
     requestExample: `
     {
-        "transactionId" : "1d20aba9-ee39-4444-92e4-c542a6aa417d"
+        "transactionId": "48b5712f-82d4-475d-9be8-0e59ecfe05c9"
     }
     `,
     responseParam: [],

@@ -1,6 +1,5 @@
 "use client";
 import { localAxios } from "@/api/http-common";
-// import { WeekTransactionGraph } from "@/components/graph/Graph";
 import {
   FaExchangeAlt,
   FaUsers,
@@ -23,11 +22,15 @@ interface Bank {
   updatedAt: string;
 }
 
-interface totalTransactionList {
-  time: string;
-  deposit: number;
-  withdraw: number;
+interface BankPage {
+  content: Bank[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
 }
+
 export interface BankStat {
   totalTransactionCnt: number;
   totalMemberCnt: number;
@@ -61,10 +64,11 @@ const Dashboard = () => {
         const response: AxiosResponse<{
           status: string;
           message: string;
-          data: Bank[];
-          page: null;
+          data: null;
+          page: BankPage;
         }> = await localAxios.get("/bank/search");
-        setBankList(response.data.data);
+        setBankList(response.data.page.content);
+        console.log("bankList: ", response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -145,7 +149,7 @@ const Dashboard = () => {
           </div>
         </StatCard>
       </StatCardContainer>
-      <div className="flex gap-10 py-9">
+      <div className="flex gap-16 py-9">
         <div>{bankStat && <WeekTransactionGraph bankStat={bankStat} />}</div>
         <div>
           {bankStat && <WeekTransactionLineGraph bankStat={bankStat} />}
