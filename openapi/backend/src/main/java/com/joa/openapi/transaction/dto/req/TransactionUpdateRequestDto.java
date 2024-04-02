@@ -13,7 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class TransactionUpdateRequestDto {
 
-    private UUID transactionId;
     private Long amount;
     private String depositorName;   //입금자명
     private String fromAccount;     //입금계좌

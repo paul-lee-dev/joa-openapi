@@ -17,6 +17,7 @@ import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.member.errorcode.MemberErrorCode;
 import com.joa.openapi.member.repository.MemberRepository;
 import com.joa.openapi.product.entity.Product;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -88,11 +89,13 @@ public class MemberService {
 
     //이메일 중복 검증
     @Transactional
-    public void confirmEmail(UUID apiKey, String email) {
+    public void confirmEmail(UUID apiKey, String email, UUID bankId) {
         Api api = apiRepository.findByApiKey(apiKey).orElseThrow(()->new RestApiException(CommonErrorCode.NO_AUTHORIZATION));
-        System.out.println(api.getAdminId());
-        Member member = memberRepository.findByEmail(email);
-        if (member!=null) throw new RestApiException(MemberErrorCode.EMAIL_CONFLICT);
+        // 은행에 이미 존재하는 이메일인지 확인
+        Member member = memberRepository.findByBankIdAndEmail(bankId, email);
+        if(member!= null && member.getBank().getId().equals(bankId)) {
+            throw new RestApiException(MemberErrorCode.EMAIL_CONFLICT);
+        }
     }
 
     //전화번호 중복 검증

@@ -3,6 +3,7 @@ package com.joa.openapi.member.repository;
 import com.joa.openapi.dummy.entity.Dummy;
 import com.joa.openapi.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface MemberRepository extends JpaRepository<Member, UUID>, MemberRep
     List<Member> findByDummy(Dummy dummy);
     List<Member> findByDummyId(UUID dummyId);
     List<Member> findByBankId(UUID bankId);
+
+    @Query(value = "SELECT * FROM member WHERE bank_id = :bankId and email = :email", nativeQuery = true)
+    Member findByBankIdAndEmail(UUID bankId, String email);
 }
