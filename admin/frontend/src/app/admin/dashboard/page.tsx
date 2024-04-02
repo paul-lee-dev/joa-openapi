@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import { WeekTransactionLineGraph } from "@/components/graph/lineGraph";
 import { WeekTransactionGraph } from "@/components/graph/barGraph";
+import BankList from "../bank/page";
 
 interface Bank {
   bankId: string;
@@ -69,6 +70,10 @@ const Dashboard = () => {
         }> = await localAxios.get("/bank/search");
         setBankList(response.data.page.content);
         console.log("bankList: ", response.data.data);
+        const nextResponse: AxiosResponse<any> = await localAxios.get(
+          "/bank/dashboard/" + response.data.page.content[0].bankId
+        );
+        setBankStat(nextResponse.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -87,7 +92,6 @@ const Dashboard = () => {
       console.error("Error fetching bank statistics:", error);
     }
   };
-
   return (
     <div>
       <div className="flex-end">
