@@ -138,7 +138,7 @@ export default function TransactionCreate() {
     </CommonForm>
   );
 }
-export const CommonForm = tw.form`
+const CommonForm = tw.form`
 p-14
 w-full
 flex
@@ -146,7 +146,7 @@ flex-col
 space-y-8
 `;
 
-export const Divider = tw.div`
+const Divider = tw.div`
 w-full
 h-[1px]
 bg-slate-300
