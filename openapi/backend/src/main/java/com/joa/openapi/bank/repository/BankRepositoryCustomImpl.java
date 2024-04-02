@@ -26,12 +26,19 @@ public class BankRepositoryCustomImpl implements BankRepositoryCustom {
 
     @Override
     public Page<BankResponseDto> findByAdminIdAndNameContaining (UUID adminId, String name, Pageable pageable) {
-        List<Bank> banks = jpaQueryFactory
+        JPAQuery<Bank> query = jpaQueryFactory
                 .selectFrom(bank)
-                .where(bank.adminId.eq(adminId), bank.name.likeIgnoreCase("%" + name + "%"))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .where(bank.adminId.eq(adminId), bank.name.likeIgnoreCase("%" + name + "%"));
+
+        long total = query.fetchCount();
+
+        List<Bank> banks = query
+                .offset(pageable.getOffset()) //반환되는 행의 시작점
+                .limit(pageable.getPageSize())	//반환되는 행의 수
                 .fetch();
-        return new PageImpl<>(banks.stream().map(BankResponseDto::toDto).collect(Collectors.toList()), pageable, banks.size());
+
+        List<BankResponseDto> res = banks.stream().map(BankResponseDto::toDto).collect(Collectors.toList());
+
+        return new PageImpl<>(res, pageable, total);
     }
 }
