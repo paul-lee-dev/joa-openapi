@@ -183,6 +183,7 @@ public class AccountService {
     public Page<AccountGetAccountsResponseDto> getAccounts(UUID apiKey, UUID memberId, Pageable pageable) {
         // apiKey로부터 adminId 조회
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        List<UUID> bankIds =  bankRepository.findByAdminId(adminId).stream().map(Bank::getId).toList();
 
         // memberId에 해당하는 계좌 조회
         Page<Account> accountsPage = accountRepository.findByHolderId(memberId, pageable);
