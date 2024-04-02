@@ -38,7 +38,6 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
         "03-09",
       ],
     },
-   
   };
 
   const configSeries = [
@@ -66,7 +65,7 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
   const [option, setOption] = useState<{
     chart: { id: string };
     xaxis: {
-      categories: string[],
+      categories: string[];
     };
   }>(configOption);
 
@@ -82,19 +81,43 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
     const timeData = bankStat.totalTransactionList.map((transaction) =>
       transaction.time.slice(5, 10)
     );
-    setSeries([
-      { name: "입금", data: depositData, color: "#FF82AC" },
-      { name: "출금", data: withdrawData, color: "#16DBCC" },
-    ]);
 
-    setOption((prevOptions) => ({
-      chart: prevOptions.chart,
-      xaxis: { categories: timeData },
-    }));
+    if (timeData.length < 7) {
+      let tmpDate: string[] = [];
+      let tmpDeposit: number[] = [];
+      let tmpWithdraw: number[] = [];
+      for (let i = 0; i < 7 - timeData.length; i++) {
+        tmpDate.push("");
+        tmpDeposit.push(0);
+        tmpWithdraw.push(0);
+      }
+      tmpDate = tmpDate.concat(timeData);
+      tmpDeposit = tmpDeposit.concat(depositData);
+      tmpWithdraw = tmpWithdraw.concat(withdrawData);
+      // console.log("tmp: ", tmp);
+      setOption((prevOptions) => ({
+        chart: prevOptions.chart,
+        xaxis: { categories: tmpDate },
+      }));
+      setSeries([
+        { name: "입금", data: tmpDeposit, color: "#FF82AC" },
+        { name: "출금", data: tmpWithdraw, color: "#16DBCC" },
+      ]);
+    } else {
+      setSeries([
+        { name: "입금", data: depositData, color: "#FF82AC" },
+        { name: "출금", data: withdrawData, color: "#16DBCC" },
+      ]);
+
+      setOption((prevOptions) => ({
+        chart: prevOptions.chart,
+        xaxis: { categories: timeData },
+      }));
+    }
   }, [bankStat.totalTransactionList]);
 
   return (
-    <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+    <div className="max-w w-full bg-warmGray-50 rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <div className="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center">
           <div className="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">
@@ -114,7 +137,7 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
               {bankStat.totalMemberCnt / 1000}K
             </h5>
             <p className="text-sm font-normal text-gray-500 dark:text-gray-400">
-              고객 수 증가
+              고객 수
             </p>
           </div>
         </div>
@@ -171,14 +194,14 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
           options={option}
           series={series}
           height={320}
-          width={300}
+          width="160%"
         />{" "}
       </div>
-      <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+      <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
         <div className="flex justify-between items-center pt-5">
           {/* Button */}
           <button className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white">
-            지난 {bankStat.totalTransactionList.length} 일
+            지난 7일
           </button>
         </div>
       </div>
