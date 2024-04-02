@@ -80,7 +80,7 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
   }, [bankStat.totalTransactionList]);
 
   return (
-    <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+    <div className="max-w w-full bg-warmGray-50 rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
       <div className="flex justify-between mb-5">
         <div>
           <h5 className="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
@@ -115,13 +115,28 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
           </svg>
         </div>
       </div>
-      <div id="column-chart-2">
+      <div className="grid grid-cols-2">
+        <dl className="flex items-center">
+          <dt className="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">
+            {" '"}
+          </dt>{" "}
+        </dl>
+        <dl className="flex items-center justify-end">
+          <dt className="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">
+            {" "}
+          </dt>
+          <dd className="text-gray-900 text-sm dark:text-white font-semibold">
+            {" "}
+          </dd>
+        </dl>
+      </div>
+      <div>
         <ApexCharts
           type="line"
           options={option}
           series={series}
-          height={300}
-          width={300}
+          height={320}
+          width={400}
         />
       </div>
       <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
@@ -134,11 +149,11 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
             className="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
             type="button"
           >
-            지난 {bankStat.totalTransactionList.length} 일
+            지난 7 일
           </button>
           <a
             href="#"
-            className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2"
+            className="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 px-3"
           >
             실적 보고서
             <svg
