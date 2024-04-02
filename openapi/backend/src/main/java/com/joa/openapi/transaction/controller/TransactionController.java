@@ -29,6 +29,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -165,8 +166,22 @@ public class TransactionController {
             .orderBy(orderBy)
             .build();
 
-        Page<TransactionSearchResponseDto> transactionsPage = transactionService.search(req,
-            pageable);
+        Page<TransactionSearchResponseDto> transactionsPage = transactionService.search(req, pageable);
         return ResponseEntity.ok(ApiResponse.success("거래내역 조회에 성공했습니다.", transactionsPage));
+    }
+
+    // 거래내역 상세 조회
+    @GetMapping("/{transactionId}")
+    public ResponseEntity<?> search(@RequestHeader(value="apiKey", required=false) UUID apiKey,
+        @PathVariable(value="transactionId") UUID transactionId) {
+
+        if(apiKey == null || apiKey.toString().isEmpty()) {
+            throw new RestApiException(TransactionErrorCode.NO_APIKEY);
+        } else if(apiRepository.getByApiKey(apiKey) == null) {
+            throw new RestApiException(TransactionErrorCode.INVALID_API_KEY);
+        }
+
+        TransactionSearchResponseDto response = transactionService.getDetail(apiKey, transactionId);
+        return ResponseEntity.ok(ApiResponse.success("거래내역 상세 조회에 성공했습니다.", response));
     }
 }

@@ -28,6 +28,7 @@ import com.joa.openapi.transaction.entity.Fourwords;
 import com.joa.openapi.transaction.entity.Transaction;
 import com.joa.openapi.transaction.errorcode.TransactionErrorCode;
 import com.joa.openapi.transaction.repository.TransactionRepository;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -356,5 +357,28 @@ public class TransactionService {
         Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         if (!bank.getAdminId().equals(adminId))
             throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+    }
+
+    public void transactionAuthorityValidation(UUID apiKey, UUID transactionId) {
+        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow(() -> new RestApiException(TransactionErrorCode.NO_TRANSACTION));
+
+        // apiKey로 소유 bankId 찾아오고, 권한 있는지 확인
+        UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        List<Bank> bankList =  bankRepository.findByAdminId(adminId);
+        UUID fromBankId = accountRepository.getBankIdByAccountId(transaction.getFromAccount());
+        UUID toBankId = accountRepository.getBankIdByAccountId(transaction.getToAccount());
+
+        for (int i=0; i<bankList.size(); i++){
+            if(bankList.get(i).getId().equals(fromBankId) || bankList.get(i).getId().equals(toBankId)) {
+                return;
+            }
+        }
+        throw new RestApiException(CommonErrorCode.NO_AUTHORIZATION);
+    }
+
+    public TransactionSearchResponseDto getDetail(UUID apiKey, UUID transactionId) {
+        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow(() -> new RestApiException(TransactionErrorCode.NO_TRANSACTION));
+        transactionAuthorityValidation(apiKey, transactionId);
+        return TransactionSearchResponseDto.toDto(transaction);
     }
 }
