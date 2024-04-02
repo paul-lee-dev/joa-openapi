@@ -382,7 +382,7 @@ export const dummyReadContent = {
   title: '더미 생성내역 상세',
   desc: '특정 더미데이터 생성내역 정보를 조회하는 API입니다.',
   method: 'GET',
-  uri: 'dummy/{DummyId}',
+  uri: 'dummy/{dummyId}',
   requestParam: [],
   requestExample: '',
   responseParam: [
@@ -459,7 +459,7 @@ export const dummyUpdateContent = {
   title: '더미 생성내역 수정',
   desc: '특정 더미데이터 생성내역 정보 중 생성내역의 이름을 수정하는 API입니다.',
   method: 'PATCH',
-  uri: 'dummy/{DummyId}',
+  uri: 'dummy/{dummyId}',
   requestParam: [
     {
       name: 'name',

@@ -302,15 +302,7 @@ export const productUpdateContent = {
     desc: '예적금 상품을 종료하는 API입니다. 예적금상품이 종료된 후에는 해당 상품에 가입할 수 없습니다.',
     method: 'PATCH',
     uri: 'product/{productId}',
-    requestParam: [
-        {
-            name: 'productId',
-            desc: '상품 아이디',
-            type: 'String',
-            required: 'Y',
-            etc: 'PathVariable',
-        },
-    ],
+    requestParam: [],
     requestExample: '',
     responseParam: [
         {

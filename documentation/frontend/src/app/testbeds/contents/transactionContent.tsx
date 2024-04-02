@@ -3,6 +3,7 @@
 //transactionSendContent 이체
 //transaction1wonSendContent 1원이체
 //transaction1wonConfirmContent 1원인증 확인
+//transactionReadContent 거래내역 조회 
 //transactionUpdateContent 거래내역 수정
 //transactionListContent 거래내역 목록 조회/검색
 //transactionDeleteContent 거래내역 삭제
@@ -628,6 +629,25 @@ export const transaction1wonConfirmContent = {
             desc: '해당 거래내역은 존재하지 않습니다.',
         },
     ],
+}
+
+export const transactionReadContent = {
+    title: '거래내역 조회',
+    desc: '거래 내역 상세 정보를 조회하는 API입니다. 은행 고객이 본인의 거래 내역을 조회할 수 있으며, 관리자는 자신의 은행에 한해 고객의 거래 내역을 조회할 수 있습니다.',
+    method: 'GET',
+    uri: 'transaction/{transactionId}',
+    requestParam: [],
+    requestExample: '',
+    responseParam: [],
+    responseExample: `
+    {
+        "status": "SUCCESS",
+        "message": "거래내역 상세 조회에 성공했습니다."
+        "data": { "transactionId": "35b17f49-606a-42ad-be6b-d751b8e8a997", "amount": 32812, "depositorName": "쉥밑활", "fromAccount": "424442450159465506", "toAccount": "424442390159463251", "createdAt": "2024-04-02 12:28" },
+        "page": null
+    }
+    `,
+    errorCode: [],
 }
 
 export const transactionUpdateContent = {
