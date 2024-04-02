@@ -78,7 +78,8 @@ export const productCreateContent = {
         "maxAmount" : "1000000",
         "rate" : "5",
         "productType" : "ORDINARY_DEPOSIT",
-        "paymentType" : "SIMPLE"
+        "paymentType" : "SIMPLE",
+        "bankId" : "3cf6f866-3fbd-46c8-85a1-96ab39551a35"
     }
     `,
     responseParam: [
@@ -374,7 +375,7 @@ export const productListContent = {
     title: '예적금상품 목록 조회/검색',
     desc: '예적금상품을 조회할 수 있는 API입니다. 특정 조건이 없으면 전체 조회가 되고, 특정 조건으로 원하는 상품 조회도 가능합니다.',
     method: 'GET',
-    uri: '',
+    uri: 'product/search',
     requestParam: [],
     requestExample: '',
     responseParam: [],

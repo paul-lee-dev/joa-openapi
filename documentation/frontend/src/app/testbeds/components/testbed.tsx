@@ -236,10 +236,10 @@ export default function Testbed() {
         setContent(dummyReadContent);
         break;
       case 55:
-        setContent(dummyListContent);
+        setContent(dummyUpdateContent);
         break;
       case 56:
-        setContent(dummyUpdateContent);
+        setContent(dummyListContent);
         break;
       case 57:
         setContent(dummyDeleteContent);
@@ -430,7 +430,7 @@ export default function Testbed() {
           // postFunc(content.requestExample);
         }
         }>
-          <Subtitle>아래의 데이터로 요청 보내기</Subtitle>
+          <Subtitle>테스트베드 (아래의 데이터로 요청 보내기)</Subtitle>
           <RequestItem>{content.requestExample}</RequestItem>
           <ButtonItem type='submit'>실행하기</ButtonItem>
         </form>

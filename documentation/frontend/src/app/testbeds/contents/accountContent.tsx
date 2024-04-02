@@ -286,7 +286,7 @@ export const accountReadContent = {
     ],
     requestExample: `
     {
-        "accountId":"5781660823306134"
+        "accountId":"424442390225045537"
     }
     `,
     responseParam: [
