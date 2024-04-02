@@ -134,7 +134,7 @@ function History({route, navigation}: HistoryScreenProps): React.JSX.Element {
       <View className="bg-pink-100 w-full h-48">
         <View className="w-full flex flex-row justify-between p-6">
           <View className="flex space-y-2">
-            <Text className="font-semibold text-lg">
+            <Text className="font-semibold text-lg text-gray-700">
               {selectedAccount.nickname}
             </Text>
             <Text className="font-medium text-base underline text-gray-500">
@@ -161,10 +161,10 @@ function History({route, navigation}: HistoryScreenProps): React.JSX.Element {
           </View>
         </View>
         <View className="w-full flex flex-row justify-center items-center space-x-2">
-          <Text className="text-2xl font-bold">
+          <Text className="text-2xl font-bold text-gray-700">
             {formatAmount(selectedAccount.balance)}
           </Text>
-          <Text className="text-sm font-semibold">원</Text>
+          <Text className="text-sm font-semibold text-gray-700">원</Text>
         </View>
       </View>
       <ScrollView className="w-full">
@@ -177,7 +177,7 @@ function History({route, navigation}: HistoryScreenProps): React.JSX.Element {
               size={25}
             />
             <TextInput
-              className="flex-grow"
+              className="flex-grow text-gray-700"
               onChangeText={setKeyword}
               value={keyword}
             />
@@ -186,7 +186,7 @@ function History({route, navigation}: HistoryScreenProps): React.JSX.Element {
                 setFilterModalOpen(true);
               }}>
               <View className="flex flex-row items-center">
-                <Text className="text-sm font-light">{`${term}개월·${
+                <Text className="text-sm font-light text-gray-700">{`${term}개월·${
                   typeName[type].label
                 }·${latest ? '최신순' : '과거순'}`}</Text>
                 <Icon name={'chevron-down'} color={'#777'} size={25} />

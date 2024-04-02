@@ -7,9 +7,9 @@ import tw from "tailwind-styled-components";
 export default function Admin({ children }: { children: React.ReactNode }) {
   return (
     <Wrapper>
-      <Sidebar />
+      <Header />
       <MainContainer>
-        <Header />
+        <Sidebar />
         <AdminContainer>
           <Children>{children}</Children>
         </AdminContainer>
@@ -20,6 +20,7 @@ export default function Admin({ children }: { children: React.ReactNode }) {
 
 const Wrapper = tw.div`
 flex
+flex-col
 h-screen
 max-h-screen
 w-full
@@ -27,11 +28,10 @@ w-full
 
 const MainContainer = tw.div`
 flex
-flex-col
 flex-grow
+w-full
 transition-all
-h-screen
-max-h-screen
+overflow-hidden
 `;
 
 const AdminContainer = tw.div`
@@ -44,4 +44,5 @@ overflow-y-scroll
 
 const Children = tw.div`
 flex-grow
+p-14
 `;

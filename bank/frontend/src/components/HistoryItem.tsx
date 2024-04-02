@@ -17,12 +17,12 @@ function HistoryItem({
   return (
     <View className="w-full h-28 border-b border-gray-300 p-4 flex flex-row items-center justify-between">
       <View className="flex flex-row space-x-6 items-center">
-        <Text className="text-sm font-light">
+        <Text className="text-sm font-light text-gray-500">
           {date.startsWith(String(new Date().getFullYear()).slice(2, 4))
             ? date.slice(3)
             : date}
         </Text>
-        <Text className="text-lg font-semibold">{title}</Text>
+        <Text className="text-lg font-semibold text-gray-700">{title}</Text>
       </View>
       <View className="flex items-end">
         {amount > 0 ? (
@@ -35,7 +35,7 @@ function HistoryItem({
           )}원`}</Text>
         )}
         {balance && (
-          <Text className="text-sm font-light">{`${formatAmount(
+          <Text className="text-sm font-light text-gray-500">{`${formatAmount(
             balance,
           )}원`}</Text>
         )}

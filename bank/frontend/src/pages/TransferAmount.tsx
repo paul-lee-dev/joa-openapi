@@ -15,15 +15,15 @@ function TransferAmount({
   route,
   navigation,
 }: TransferAmountScreenProps): React.JSX.Element {
-  const {account, toAccountId} = route.params;
+  const {account, toAccountId, toAccountName} = route.params;
   const [amount, setAmount] = useState<string>('');
 
   const changeAmount = (char: string) => {
     return () => {
       setAmount(prev => {
         const newValue = prev + char;
-        if (+newValue > 1001220) {
-          return '1001220';
+        if (+newValue > account.balance) {
+          return String(account.balance);
         }
         return newValue;
       });
@@ -52,7 +52,7 @@ function TransferAmount({
         <View className="flex space-y-2">
           <View className="flex flex-row">
             <Text className="text-xl font-bold text-gray-700">
-              내 입출금통장
+              {toAccountName}
             </Text>
             <Text className="text-xl font-medium text-gray-700">으로</Text>
           </View>
@@ -80,6 +80,7 @@ function TransferAmount({
               navigation.navigate('TransferConfirm', {
                 account,
                 toAccountId,
+                toAccountName,
                 amount: +amount,
               })
             }

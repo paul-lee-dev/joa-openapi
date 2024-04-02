@@ -15,7 +15,7 @@ import {useMutation, useQuery} from '@tanstack/react-query';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {createAccount, getAccountList} from '@/api/account';
 import {useEffect, useState} from 'react';
-import {bankDataAtom, memberDataAtom} from '@/store/atoms';
+import {bankDataAtom} from '@/store/atoms';
 import {useRecoilValue} from 'recoil';
 import {RootStackParamList} from '@/Router';
 import LoadingScreen from '@/components/LoadingScreen';
@@ -52,13 +52,10 @@ function CreateAccountConfirm({
   const {product} = route.params;
   const {data} = useQuery({
     queryKey: ['accountList'],
-    queryFn: () => {
-      return getAccountList(memberData.member?.id ?? '');
-    },
+    queryFn: getAccountList,
     retry: true,
   });
   const bankData = useRecoilValue(bankDataAtom);
-  const memberData = useRecoilValue(memberDataAtom);
   const mutation = useMutation({
     mutationFn: createAccount,
     onSuccess: res => {
@@ -145,10 +142,12 @@ function CreateAccountConfirm({
       <ScrollView className="w-full flex-grow flex mb-16">
         <View className="flex h-52 justify-center items-center space-y-2">
           <View className="flex flex-row">
-            <Text className="text-2xl font-bold">{`내 ${product.name}`}</Text>
-            <Text className="text-2xl font-medium">의</Text>
+            <Text className="text-2xl font-bold text-gray-700">{`내 ${product.name}`}</Text>
+            <Text className="text-2xl font-medium text-gray-700">의</Text>
           </View>
-          <Text className="text-2xl font-medium">필수 정보를 입력해주세요</Text>
+          <Text className="text-2xl font-medium text-gray-700">
+            필수 정보를 입력해주세요
+          </Text>
         </View>
         <View className="flex justify-evenly">
           {product.productType !== 'ORDINARY_DEPOSIT' && (
