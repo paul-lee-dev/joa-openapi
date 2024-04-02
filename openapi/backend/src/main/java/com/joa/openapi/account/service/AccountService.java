@@ -54,7 +54,6 @@ public class AccountService {
 
         bankAuthorityValidation(apiKey, req.getBankId());
 
-        // 계좌번호 임시 랜덤 생성
         String accountId = createAccountId(memberId, req);
 
         System.out.println("멤버아이디 : " + memberId.toString());
@@ -183,7 +182,7 @@ public class AccountService {
     public Page<AccountGetAccountsResponseDto> getAccounts(UUID apiKey, UUID memberId, Pageable pageable) {
         // apiKey로부터 adminId 조회
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
-        List<UUID> bankIds =  bankRepository.findByAdminId(adminId).stream().map(Bank::getId).toList();
+        List<UUID> bankIds =  bankRepository.findByAdminId(adminId, pageable).stream().map(Bank::getId).toList();
 
         // memberId에 해당하는 계좌 조회
         Page<Account> accountsPage = accountRepository.findByHolderId(memberId, pageable);
@@ -206,7 +205,7 @@ public class AccountService {
 
     public Page<AccountSearchResponseDto> search(UUID apiKey, AccountSearchRequestDto req, Pageable pageable) {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
-        List<UUID> bankIds =  bankRepository.findByAdminId(adminId).stream().map(Bank::getId).toList();
+        List<UUID> bankIds =  bankRepository.findByAdminId(adminId, pageable).stream().map(Bank::getId).toList();
 
         return accountRepository.searchAccountCustom(bankIds, req, pageable);
     }
@@ -229,18 +228,29 @@ public class AccountService {
      */
     public String createAccountId(UUID memberId, AccountCreateRequestDto req) {
         String accountId = "";
-        int bankA = req.getBankId().toString().charAt(14)-10; //은행 아이디 뒤 2자리 아스키 코드
-        int bankB = req.getBankId().toString().charAt(15)-10; //은행 아이디 뒤 1자리 아스키 코드
-        int memberA = memberId.toString().charAt(14)-10; //고객 아이디 뒤 2자리 아스키 코드
-        int memberB = memberId.toString().charAt(15)-10; //고객 아이디 뒤 1자리 아스키 코드
+        int bankA = convertNum(req.getBankId().toString().charAt(14)); //은행 아이디 뒤 2자리 아스키 코드
+        int bankB = convertNum(req.getBankId().toString().charAt(15)); //은행 아이디 뒤 1자리 아스키 코드
+        int memberA = convertNum(memberId.toString().charAt(14)); //고객 아이디 뒤 2자리 아스키 코드
+        int memberB = convertNum(memberId.toString().charAt(15)); //고객 아이디 뒤 1자리 아스키 코드
         accountId = accountId + bankA + bankB + memberA + memberB;
         System.out.println(accountId);
         LocalTime now = LocalTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss"); //시 분 초
         accountId += now.format(formatter);
-        accountId += String.valueOf(Math.random()*10000).substring(0,3); //랜덤 숫자 3자리
-        accountId += calculateCheckDigit(accountId);                        //유효성검사 1자리
+        int randomNum = (int)(Math.random() * 900) + 100; // 랜덤 3자리
+        accountId += randomNum;
+        accountId += calculateCheckDigit(accountId);//유효성검사 1자리
         return accountId;
+    }
+
+    private int convertNum(char num){
+        int numericValue;
+        if (Character.isDigit(num)) {
+            numericValue = Character.getNumericValue(num);
+        } else {
+            numericValue = num - 'a';
+        }
+        return numericValue;
     }
 
     private int calculateCheckDigit(String accountIdWithoutCheckDigit) {

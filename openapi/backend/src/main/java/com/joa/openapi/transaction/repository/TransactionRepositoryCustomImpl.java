@@ -151,6 +151,8 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             query = query.orderBy(orderSpecifier);
         }
 
+        long total = query.fetchCount();
+
         // 페이지네이션 적용
         List<Transaction> transactions = query
             .offset(pageable.getOffset())   // 반환되는 행의 시작점
@@ -162,7 +164,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
             .map(TransactionSearchResponseDto::toDto)
             .collect(Collectors.toList());
 
-        return new PageImpl<>(res, pageable, transactions.size());
+        return new PageImpl<>(res, pageable, total);
     }
 
     @Override
@@ -177,24 +179,26 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
 
     @Override
     public Long searchBanksTotalWithdrawCustom(UUID bankId) {
-        return jpaQueryFactory
+        Long query = jpaQueryFactory
                 .select(transaction.amount.sum())
                 .from(transaction)
                 .distinct()
                 .innerJoin(account).on(transaction.fromAccount.eq(account.id))
                 .where(account.bankId.eq(bankId))
                 .fetchOne();
+        return query == null ? 0 : query;
     }
 
     @Override
     public Long searchBanksTotalDepositCustom(UUID bankId) {
-        return jpaQueryFactory
+        Long query = jpaQueryFactory
                 .select(transaction.amount.sum())
                 .from(transaction)
                 .distinct()
                 .innerJoin(account).on(transaction.toAccount.eq(account.id))
                 .where(account.bankId.eq(bankId))
                 .fetchOne();
+        return query == null ? 0 : query;
     }
 
     @Override

@@ -68,6 +68,8 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
             query.orderBy(orderBySpecifier);
         }
 
+        long total = query.fetchCount();
+
         // 페이징된 상품 조회
         List<Product> products = query
             .offset(pageable.getOffset())
@@ -79,7 +81,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
             .collect(java.util.stream.Collectors.toList());
 
         // 페이지 객체 반환
-        return new PageImpl<>(res, pageable, products.size());
+        return new PageImpl<>(res, pageable, total);
     }
 
     private BooleanExpression eqAdminId(UUID adminId) {
