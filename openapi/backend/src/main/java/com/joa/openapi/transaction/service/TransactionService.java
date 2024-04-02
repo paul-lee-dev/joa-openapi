@@ -165,11 +165,18 @@ public class TransactionService {
         Long toPrevBalance = 0L;
         Long toBalance = 0L;
 
-        if(req.getDepositorName() != null)
+        if(req.getDepositorName() != null) {
             transaction.updateDepositorName(req.getDepositorName());
-        transaction.updateAmount(req.getAmount());
-        transaction.updateFromAccount(null);
-        transaction.updateToAccount(transaction.getToAccount());
+        }
+        if(req.getAmount() != null) {
+            transaction.updateAmount(req.getAmount());
+        }
+        if (req.getFromAccount() != null) {
+            transaction.updateFromAccount(req.getFromAccount());
+        }
+        if (req.getToAccount() != null) {
+            transaction.updateToAccount(req.getToAccount());
+        }
 
         if(req.getFromAccount() == null && req.getToAccount() != null){
             Account toAccount = accountRepository.findById(req.getToAccount()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
