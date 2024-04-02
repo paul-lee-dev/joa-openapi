@@ -217,7 +217,7 @@ public class AdminService implements UserDetailsService {
 
         UUID newApiKey = UUID.randomUUID();
 
-        apiRepository.updateApiKey(adminId, newApiKey.toString());
+        apiRepository.updateApiKey(UUID.fromString(adminId), newApiKey);
 
         return newApiKey.toString();
     }
