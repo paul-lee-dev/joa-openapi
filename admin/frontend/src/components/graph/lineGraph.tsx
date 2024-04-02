@@ -164,7 +164,7 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
           options={option}
           series={series}
           height={320}
-          width="200%"
+          width="225%"
         />
       </div>
       <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
