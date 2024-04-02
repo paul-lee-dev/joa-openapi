@@ -166,7 +166,7 @@ public class TransactionService {
         Long toBalance = 0L;
 
         if(req.getDepositorName() != null)
-            transaction.updateDepositorName(transaction.getDepositorName());
+            transaction.updateDepositorName(req.getDepositorName());
         transaction.updateAmount(req.getAmount());
         transaction.updateFromAccount(null);
         transaction.updateToAccount(transaction.getToAccount());
