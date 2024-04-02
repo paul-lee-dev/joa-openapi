@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 public interface ApiRepository extends JpaRepository<Api, String> {
 
     @Modifying
-    @Query(value = "UPDATE api SET api_key = :apiKey AND is_deleted = 0 WHERE admin_id = :adminId", nativeQuery = true)
-    void updateApiKey(@Param("adminId")String adminId, @Param("apiKey")String apiKey);
+    @Query(value = "UPDATE api SET api_key = :apiKey WHERE admin_id = :adminId AND is_deleted = 0", nativeQuery = true)
+    void updateApiKey(@Param("adminId")UUID adminId, @Param("apiKey")UUID apiKey);
 
     @Query(value = "SELECT COUNT(*) FROM api WHERE admin_id = :adminId AND is_deleted = 0", nativeQuery = true)
     Integer countByAdminId(UUID adminId);

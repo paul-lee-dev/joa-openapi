@@ -32,8 +32,8 @@ export const dummyMemberContent = {
   ],
   requestExample: `
     {
-      "count" : 10,
-      "bankId" : "ede41a11-4e6e-48bd-aae5-86086e0f2d34"
+      "count" : "3",
+      "bankId" : "3cf6f866-3fbd-46c8-85a1-96ab39551a35"
   }
     `,
   responseParam: [
@@ -145,20 +145,13 @@ export const dummyAccountContent = {
     },
   ],
   requestExample: `
-    {
-      "count" : 10,
-      "bankId" : "5ed3b36b-0f67-4559-907e-c8de72596a72",
-      "users" : ["09436f28-c9f7-42fb-a83c-6599901409ee",
-                "228c8680-324e-4b44-9c25-f77ad93e7d6e",
-                "390a4af0-f902-4744-abca-bf7d1cc38aa9",
-                "533959cc-0dfa-4a2f-9529-ac721d616081",
-                "576cf967-41d0-4071-b318-63060ec72d2b",
-                "6741a8ae-c190-422f-8881-f2cb8eea3f2a",
-                "71924425-a40a-48cf-95af-9790b29d0dc7",
-                "9422f351-58a9-4ca8-94db-08279c6576cf",
-                "fa06c8ed-cda5-4c63-ad0a-c1b0b83689b6",
-                "fce65ccc-8eba-42c5-a76d-269f0d743ecc"
-                ]
+  {
+    "count" : "3",
+    "bankId" : "3cf6f866-3fbd-46c8-85a1-96ab39551a35",
+    "users" : ["4318993d-94f7-41a2-8d6b-1ec9dfe41005",
+               "4637ceff-6180-4714-92a8-7a2f78ef99ae",
+                "c32fb8bb-8a8f-40bb-9178-b3dee8196363"
+              ]
   }
     `,
   responseParam: [
@@ -290,20 +283,14 @@ export const dummyTransactionContent = {
   ],
   requestExample: `
     {
-      "count" : 25,
+      "count" : 3,
       "name" : null,
       "term" : null,
-      "bankId" : "60520162-9139-43aa-87e4-aaaa0af77cf6",
-      "users" : ["76f55a51-1dbf-4130-a586-fd2e98df346a",
-                "b6ef6401-858d-44ed-8386-a51170bb0b8d",
-                "4a5960f0-ae41-4d65-b484-9e6fa91dd40e",
-                "fa37dc82-914f-49bb-b129-a8e880d6695d",
-                "fced4414-4ed0-4f2b-bdce-0a141fce2de3",
-                "444d663c-ba36-4904-b92d-e70d9d409b7e",
-                "6bf822ca-f1a4-4fa1-bb78-8f0dadcbbc51",
-                "ebace22a-f4f3-42f0-8430-109d8c404c29",
-                "6f19772f-57dc-45ab-a0d6-d5969afd5021",
-                "19c68b26-73f1-4506-aadd-e804d25cd0ff"]
+      "bankId" : "3cf6f866-3fbd-46c8-85a1-96ab39551a35",
+      "users" : ["4318993d-94f7-41a2-8d6b-1ec9dfe41005",
+      "4637ceff-6180-4714-92a8-7a2f78ef99ae",
+       "c32fb8bb-8a8f-40bb-9178-b3dee8196363"
+     ]
   }
     `,
   responseParam: [
