@@ -125,7 +125,7 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
             <View className="flex space-y-2">
               <Text className="font-bold text-lg text-gray-700">회원가입</Text>
               <Text className="font-semibold text-xs text-gray-700">
-                조아은행이 처음이신가요?
+                {bankData.bankName}이 처음이신가요?
               </Text>
             </View>
           </TouchableOpacity>
