@@ -45,6 +45,7 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
         config => {
           config.headers.memberId = member.id;
           config.headers.apiKey = bankData.apiKey;
+          console.log(config.headers);
           return config;
         },
         error => {
@@ -100,7 +101,7 @@ function Intro({navigation}: IntroScreenProps): React.JSX.Element {
       <View className="w-full h-80 flex-grow bg-gray-100 pt-36 px-6 pb-24 flex justify-between">
         <View className="w-full flex px-4 space-y-2">
           <Text className="w-full font-semibold text-xl text-gray-700">
-            조아은행에
+            {bankData.bankName}에
           </Text>
           <Text className="w-full font-semibold text-xl text-gray-700">
             오신 것을 환영합니다.
