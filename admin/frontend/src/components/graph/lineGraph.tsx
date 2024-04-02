@@ -40,6 +40,10 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
     },
   };
 
+  const configDate = ["-", "-", "-", "-", "-", "-", "-"];
+
+  const [date, setDate] = useState(configDate);
+
   const configSeries = [
     {
       name: "입금",
@@ -68,15 +72,39 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
     const timeData = bankStat.totalTransactionList.map((transaction) =>
       transaction.time.slice(5, 10)
     );
-    setSeries([
-      { name: "입금", data: depositData },
-      { name: "출금", data: withdrawData },
-    ]);
 
-    setOption((prevOptions) => ({
-      chart: prevOptions.chart,
-      xaxis: { categories: timeData },
-    }));
+    if (timeData.length < 7) {
+      let tmpDate: string[] = [];
+      let tmpDeposit: number[] = [];
+      let tmpWithdraw: number[] = [];
+      for (let i = 0; i < 7 - timeData.length; i++) {
+        tmpDate.push("");
+        tmpDeposit.push(0);
+        tmpWithdraw.push(0);
+      }
+      tmpDate = tmpDate.concat(timeData);
+      tmpDeposit = tmpDeposit.concat(depositData);
+      tmpWithdraw = tmpWithdraw.concat(withdrawData);
+      // console.log("tmp: ", tmp);
+      setOption((prevOptions) => ({
+        chart: prevOptions.chart,
+        xaxis: { categories: tmpDate },
+      }));
+      setSeries([
+        { name: "입금", data: tmpDeposit },
+        { name: "출금", data: tmpWithdraw },
+      ]);
+    } else {
+      setSeries([
+        { name: "입금", data: depositData },
+        { name: "출금", data: withdrawData },
+      ]);
+
+      setOption((prevOptions) => ({
+        chart: prevOptions.chart,
+        xaxis: { categories: timeData },
+      }));
+    }
   }, [bankStat.totalTransactionList]);
 
   return (
@@ -136,7 +164,7 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
           options={option}
           series={series}
           height={320}
-          width={400}
+          width="200%"
         />
       </div>
       <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">

@@ -22,6 +22,15 @@ interface Bank {
   updatedAt: string;
 }
 
+interface BankPage {
+  content: Bank[];
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  last: boolean;
+}
+
 export interface BankStat {
   totalTransactionCnt: number;
   totalMemberCnt: number;
@@ -55,10 +64,11 @@ const Dashboard = () => {
         const response: AxiosResponse<{
           status: string;
           message: string;
-          data: Bank[];
-          page: null;
+          data: null;
+          page: BankPage;
         }> = await localAxios.get("/bank/search");
-        setBankList(response.data.data);
+        setBankList(response.data.page.content);
+        console.log("bankList: ", response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
