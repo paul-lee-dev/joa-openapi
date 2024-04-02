@@ -177,24 +177,26 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
 
     @Override
     public Long searchBanksTotalWithdrawCustom(UUID bankId) {
-        return jpaQueryFactory
+        Long query = jpaQueryFactory
                 .select(transaction.amount.sum())
                 .from(transaction)
                 .distinct()
                 .innerJoin(account).on(transaction.fromAccount.eq(account.id))
                 .where(account.bankId.eq(bankId))
                 .fetchOne();
+        return query == null ? 0 : query;
     }
 
     @Override
     public Long searchBanksTotalDepositCustom(UUID bankId) {
-        return jpaQueryFactory
+        Long query = jpaQueryFactory
                 .select(transaction.amount.sum())
                 .from(transaction)
                 .distinct()
                 .innerJoin(account).on(transaction.toAccount.eq(account.id))
                 .where(account.bankId.eq(bankId))
                 .fetchOne();
+        return query == null ? 0 : query;
     }
 
     @Override
