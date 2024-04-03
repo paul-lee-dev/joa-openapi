@@ -1,4 +1,3 @@
-
 //bankCreateContent
 //bankreadContent
 //bankUpdateContent
@@ -92,7 +91,20 @@ export const bankCreateContent = {
     },
   ],
   responseExample: `
-  { "status": "SUCCESS", "message": "은행생성에 성공했습니다.", "data": { "bankId": "6e132d42-082c-4971-b67a-9b9e70d3ab16", "adminId": "7354e642-9472-4dd5-8455-742503378beb", "name": "조은은행", "description": "JOA OPEN API 테스트베드를 위한 샘플 은행", "uri": "logo.png", "createdAt": "2024-04-03 09:36", "updatedAt": "2024-04-03 09:36" }, "page": null }
+  { 
+    "status": "SUCCESS", 
+    "message": "은행생성에 성공했습니다.", 
+    "data": { 
+      "bankId": "6e132d42-082c-4971-b67a-9b9e70d3ab16", 
+      "adminId": "7354e642-9472-4dd5-8455-742503378beb", 
+      "name": "조은은행", 
+      "description": "JOA OPEN API 테스트베드를 위한 샘플 은행", 
+      "uri": "logo.png", 
+      "createdAt": "2024-04-03 09:36", 
+      "updatedAt": "2024-04-03 09:36" 
+    }, 
+    "page": null 
+  }
     `,
   errorCode: [],
 };
@@ -156,7 +168,20 @@ export const bankReadContent = {
     },
   ],
   responseExample: `
-  { "status": "SUCCESS", "message": "특정은행검색에 성공했습니다.", "data": { "bankId": "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2", "adminId": "7354e642-9472-4dd5-8455-742503378beb", "name": "조은은행", "description": "JOA OPEN API 테스트베드를 위한 샘플 은행", "uri": "modified.png", "createdAt": "2024-04-03 09:41", "updatedAt": "2024-04-03 09:46" }, "page": null }
+  { 
+    "status": "SUCCESS", 
+    "message": "특정은행검색에 성공했습니다.", 
+    "data": { 
+      "bankId": "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2", 
+      "adminId": "7354e642-9472-4dd5-8455-742503378beb", 
+      "name": "조은은행", 
+      "description": "JOA OPEN API 테스트베드를 위한 샘플 은행", 
+      "uri": "modified.png", 
+      "createdAt": "2024-04-03 09:41", 
+      "updatedAt": "2024-04-03 09:46" 
+    }, 
+    "page": null 
+  }
     `,
   errorCode: [],
 };

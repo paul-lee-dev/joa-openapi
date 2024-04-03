@@ -20,8 +20,11 @@ interface JoinForm {
 
 export default function SignUpPage() {
   const router = useRouter();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [verificationCode, setVerificationCode] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [emailValid, setEmailValid] = useState<boolean>(false);
+  const [emailCodeValid, setEmailCodeValid] = useState<boolean>(false);
+  const [sendingEmail, setSendingEmail] = useState<boolean>(false);
+  const [verificationCode, setVerificationCode] = useState<string>("");
   const joinMutation = useMutation({
     mutationFn: join,
     onSuccess: (data) => {
@@ -63,13 +66,14 @@ export default function SignUpPage() {
   };
 
   const onSubmit = (data: JoinForm) => {
-    if (data.password !== data.password2) {
-      setError(
-        "password2",
-        { message: "비밀번호가 일치하지 않습니다." },
-        { shouldFocus: true }
-      );
-    }
+    // if (!emailCodeValid) {
+    //   setError(
+    //     "email",
+    //     { message: "이메일 인증을 완료해주세요." },
+    //     { shouldFocus: true }
+    //   );
+    //   return;
+    // }
     joinMutation.mutate({
       email: data.email,
       name: data.name,
@@ -99,9 +103,9 @@ export default function SignUpPage() {
                     },
                   })}
                 />
-                <PhoneCallCheckBtn type="button" onClick={toggleModal}>
+                {/* <PhoneCallCheckBtn type="button" onClick={toggleModal}>
                   확인
-                </PhoneCallCheckBtn>
+                </PhoneCallCheckBtn> */}
               </InputContainerWithButton>
               <ErrorMsg>{errors?.email?.message}</ErrorMsg>
             </InputFormWrapper>
