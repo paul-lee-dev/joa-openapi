@@ -692,7 +692,7 @@ text-xs font-bold p-3 mt-4
 `;
 
 const BarItemContainer = tw.div`
-mr-12 rounded-md hover:bg-gray-100 
+mr-12 rounded-md hover:bg-slate-100 
 `;
 
 const BarItem = tw.div`
@@ -700,5 +700,5 @@ p-2 flex space-4 font-bold
 `;
 
 const BarSubItem = tw.a`
-p-2 flex space-2 text-xs hover:font-bold cursor-pointer
+p-2 flex space-2 text-xs hover:text-pink-500 hover:font-bold cursor-pointer
 `;
