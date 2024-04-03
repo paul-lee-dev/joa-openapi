@@ -108,7 +108,7 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
   }, [bankStat.totalTransactionList]);
 
   return (
-    <div className="max-w w-full bg-warmGray-50 rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+    <div className="max-w-full w-full bg-stone-50 rounded-lg shadow dark:bg-gray-800 p-2 md:p-4">
       <div className="flex justify-between mb-5">
         <div>
           <h5 className="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
@@ -163,12 +163,12 @@ export const WeekTransactionLineGraph: React.FC<WeekTransactionGraphProps> = ({
           type="line"
           options={option}
           series={series}
-          height={320}
-          width="225%"
+          height={180}
+          width="100%"
         />
       </div>
-      <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
-        <div className="flex justify-between items-center pt-5">
+      <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-2">
+        <div className="flex justify-between items-center pt-2">
           {/* Button */}
           <button
             id="dropdownDefaultButton"

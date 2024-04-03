@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import { WeekTransactionLineGraph } from "@/components/graph/lineGraph";
 import { WeekTransactionGraph } from "@/components/graph/barGraph";
+import { formatAmount } from "@/util";
 
 interface Bank {
   bankId: string;
@@ -46,14 +47,6 @@ export interface BankStat {
 }
 
 export default function Admin() {
-  const api: AxiosInstance = axios.create({
-    baseURL: "https://joa13.site/v1",
-    headers: {
-      apiKey: "638b26db-a6d9-4f08-be30-5ce9f248067e",
-      "Content-Type": "application/json",
-    },
-  });
-
   const [bankList, setBankList] = useState<Bank[]>([]);
   const [selectedBankId, setSelectedBankId] = useState<string | null>(null);
   const [bankStat, setBankStat] = useState<BankStat | undefined>(undefined);
@@ -93,7 +86,7 @@ export default function Admin() {
   };
   return (
     <div>
-      <div className="flex-end">
+      <div className="flex pt-10 pb-5 justify-between">
         <Select id="banks" onChange={(e) => handleBankChange(e.target.value)}>
           {bankList.map((bank) => (
             <option key={bank.bankId} value={bank.bankId}>
@@ -103,58 +96,64 @@ export default function Admin() {
         </Select>
       </div>
       <StatCardContainer id="statCards">
-        <StatCard>
-          <CircleIcon className="bg-yellow-100">
-            <FaExchangeAlt size="50" color="#FFBB38" />
-          </CircleIcon>
-          <div className="">
-            <StatCardTitle>총 거래횟수 </StatCardTitle>
-            <StatCardContent>
-              {"\n"}
-              {bankStat && bankStat.totalTransactionCnt}
-            </StatCardContent>
-          </div>
-        </StatCard>
-        <StatCard>
-          <CircleIcon className="bg-blue-200">
-            <FaUsers size="50" color="#396AFF" />
-          </CircleIcon>
-          <div>
-            <StatCardTitle>고객 수 </StatCardTitle>
-            <StatCardContent>
-              {"\n"}
-              {bankStat && bankStat.totalMemberCnt}
-            </StatCardContent>
-          </div>
-        </StatCard>
-        <StatCard>
-          <CircleIcon className="bg-pink-200">
-            <FaMoneyBillAlt size="50" color="#FF82AC" />
-          </CircleIcon>
-          <div>
-            <StatCardTitle>총 출금 </StatCardTitle>
-            <StatCardContent>
-              {"\n"}
-              {bankStat && bankStat.totalWithdrawAmount}
-            </StatCardContent>
-          </div>
-        </StatCard>
-        <StatCard>
-          <CircleIcon className="bg-green-200">
-            <FaMoneyCheckAlt size="45" color="#16DBCC" />
-          </CircleIcon>
-          <div>
-            <StatCardTitle>총 입금 </StatCardTitle>
-            <StatCardContent>
-              {"\n"}
-              {bankStat && bankStat.totalDepositAmount}
-            </StatCardContent>
-          </div>
-        </StatCard>
+        <div className="flex space-x-6 w-full">
+          <StatCard>
+            <CircleIcon className="bg-yellow-100">
+              <FaExchangeAlt size="40" color="#FFBB38" />
+            </CircleIcon>
+            <div className="flex flex-col items-end justify-center space-y-1">
+              <StatCardTitle>총 거래횟수 </StatCardTitle>
+              <StatCardContent>
+                {bankStat && formatAmount(bankStat.totalTransactionCnt)}
+                <span className="text-sm ml-2">회</span>
+              </StatCardContent>
+            </div>
+          </StatCard>
+          <StatCard>
+            <CircleIcon className="bg-blue-200">
+              <FaUsers size="40" color="#396AFF" />
+            </CircleIcon>
+            <div className="flex flex-col items-end justify-center space-y-1">
+              <StatCardTitle>고객 수 </StatCardTitle>
+              <StatCardContent>
+                {bankStat && formatAmount(bankStat.totalMemberCnt)}
+                <span className="text-sm ml-2">명</span>
+              </StatCardContent>
+            </div>
+          </StatCard>
+        </div>
+        <div className="flex space-x-6 w-full">
+          <StatCard>
+            <CircleIcon className="bg-pink-200">
+              <FaMoneyBillAlt size="40" color="#FF82AC" />
+            </CircleIcon>
+            <div className="flex flex-col items-end justify-center space-y-1">
+              <StatCardTitle>총 출금 </StatCardTitle>
+              <StatCardContent>
+                {bankStat && formatAmount(bankStat.totalWithdrawAmount ?? 0)}
+                <span className="text-sm ml-2">원</span>
+              </StatCardContent>
+            </div>
+          </StatCard>
+          <StatCard>
+            <CircleIcon className="bg-green-200">
+              <FaMoneyCheckAlt size="40" color="#16DBCC" />
+            </CircleIcon>
+            <div className="flex flex-col items-end justify-center space-y-1">
+              <StatCardTitle>총 입금 </StatCardTitle>
+              <StatCardContent>
+                {bankStat && formatAmount(bankStat.totalDepositAmount ?? 0)}
+                <span className="text-sm ml-2">원</span>
+              </StatCardContent>
+            </div>
+          </StatCard>
+        </div>
       </StatCardContainer>
-      <div className="flex gap-16 py-9">
-        <div>{bankStat && <WeekTransactionGraph bankStat={bankStat} />}</div>
-        <div>
+      <div className="flex pt-6">
+        <div className="w-1/2 pr-3">
+          {bankStat && <WeekTransactionGraph bankStat={bankStat} />}
+        </div>
+        <div className="w-1/2 pl-3">
           {bankStat && <WeekTransactionLineGraph bankStat={bankStat} />}
         </div>
       </div>
@@ -163,48 +162,55 @@ export default function Admin() {
 }
 
 const Select = tw.select`
-block 
-rounded-md 
 border-0 
-px-1.5
-py-1.5
 text-gray-700
-ring-1
-ring-inset 
-ring-gray-300 
 placeholder:text-gray-400 
 focus:outline-none
-focus:ring-2 
-focus:ring-inset 
-focus:ring-pink-500 
-sm:text-sm 
-sm:leading-6
+focus:ring-0
+text-2xl
+font-bold
 `;
 
 const StatCard = tw.div`
+min-w-60
 flex
+justify-between
+px-10
+items-center
 w-full
 gap-3
-bg-warmGray-50
+bg-stone-50
 shadow-md
-p-3
 h-28
 rounded-lg
 text-left
 `;
 
 const StatCardContainer = tw.div`
-flex justify-between gap-11 m-3
+flex
+flex-col
+xl:flex-row
+justify-between
+space-x-0
+xl:space-x-6
+space-y-4
+xl:space-y-0
 `;
 
 const StatCardTitle = tw.span`
 text-sm
 text-gray-400
+overflow-clip
+overflow-ellipsis
+break-words
+line-clamp-1
 `;
 
 const CircleIcon = tw.div`
-w-20
-h-20
+w-16
+h-16
+min-w-16
+min-h-16
 rounded-full
 flex
 items-center
@@ -215,4 +221,8 @@ const StatCardContent = tw.span`
 whitespace-pre-wrap
 text-2xl
 text-10
+overflow-clip
+overflow-ellipsis
+break-words
+line-clamp-1
 `;
