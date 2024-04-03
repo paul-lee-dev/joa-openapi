@@ -53,25 +53,25 @@ const Dashboard = () => {
         <>
           <div className="flex pt-10 pb-5 justify-between">
             <h1 className="text-2xl font-bold">거래내역</h1>
-            <form className="flex items-center space-x-2">
-              <BankMultiSearchSelect
-                placeholder={"은행검색"}
-                label={""}
-                htmlFor={""}
-              ></BankMultiSearchSelect>
-              <MemberMultiSearch
-                placeholder={"고객 검색"}
-                label={""}
-                htmlFor={""}
-              ></MemberMultiSearch>
-              <AccountMultiSearchSelect
-                placeholder={""}
-                label={""}
-                htmlFor={""}
-              ></AccountMultiSearchSelect>
-
-              {/* <TransactionGroupSearch></TransactionGroupSearch> */}
-              <Button id={"submit"} name={"검색"} onClick={() => {}}></Button>
+            <form
+              className="flex items-center space-x-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setPage(1);
+                setSearchWord(keyword);
+              }}
+            >
+              <div className="w-52 h-10">
+                <input
+                  type="text"
+                  autoComplete="off"
+                  className="w-full h-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => setKeyword(e.target.value)}
+                  value={keyword}
+                  placeholder="입금자 명"
+                />
+              </div>
+              <Button id={"search"} name={"검색"}></Button>
             </form>
           </div>
           {data?.page?.content && (
