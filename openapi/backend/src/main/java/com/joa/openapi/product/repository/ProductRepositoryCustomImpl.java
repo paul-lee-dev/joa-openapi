@@ -64,9 +64,10 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
 
         // 정렬 조건 처리
         OrderSpecifier<?> orderBySpecifier = eqOrderBy(req.getOrderBy());
-        if (orderBySpecifier != null) {
+        if(orderBySpecifier == null){
+            query.orderBy(product.createdAt.desc());
+        } else
             query.orderBy(orderBySpecifier);
-        }
 
         long total = query.fetchCount();
 
