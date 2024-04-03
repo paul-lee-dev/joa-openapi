@@ -182,26 +182,13 @@ public class AccountService {
     public Page<AccountGetAccountsResponseDto> getAccounts(UUID apiKey, UUID memberId, Pageable pageable) {
         // apiKey로부터 adminId 조회
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
-        List<UUID> bankIds =  bankRepository.findByAdminId(adminId).stream().map(Bank::getId).toList();
+        List<UUID> bankIds =  bankRepository.findByAdminId(adminId, pageable).stream().map(Bank::getId).toList();
 
-        // memberId에 해당하는 계좌 조회
-        Page<Account> accountsPage = accountRepository.findByHolderId(memberId, pageable);
-
-        // 필터링을 위해 스트림 사용
-        List<AccountGetAccountsResponseDto> filteredAccounts = accountsPage.getContent().stream()
-                .filter(account -> {
-                    // 각 계좌의 bankId로 은행 조회
-                    Bank bank = bankRepository.findById(account.getBankId()).orElse(null);
-                    // 은행의 adminId와 비교
-                    return bank != null && bank.getAdminId().equals(adminId);
-                })
-                .map(AccountGetAccountsResponseDto::toDto)
-                .collect(Collectors.toList());
-
-        // Page 객체 생성 방법은 구현 환경에 따라 다를 수 있음
-        return new PageImpl<>(filteredAccounts, pageable, filteredAccounts.size());
-        //return accountsPage.map(AccountGetAccountsResponseDto.toDto(filteredAccounts));
+        return accountRepository.searchAccountByMemberCustom(bankIds, memberId, pageable);
+        
     }
+
+
 
     public Page<AccountSearchResponseDto> search(UUID apiKey, AccountSearchRequestDto req, Pageable pageable) {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
