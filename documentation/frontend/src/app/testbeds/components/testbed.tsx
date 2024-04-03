@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
-import { postAxios, getAxios, deleteAxios, patchAxios } from "../api/http-common";
+import { postAxios, getAxios, patchAxios } from "./http-common";
 import tw from "tailwind-styled-components";
+import ScrollToTopButton from "@/components/top";
 import {
   bankCreateContent,
   bankReadContent,
@@ -255,11 +256,28 @@ export default function Testbed() {
         setContent(bankCreateContent); // Set content to null if selectedItem doesn't match any case
     }
     setSelectedItem(index);
+    setFormData({ ...formData, text: '' });
+
+  };
+
+  //테스트베드 인풋 커스텀 가능하게 
+  interface customInputText {
+    text: string;
+  }
+
+  const [formData, setFormData] = useState<customInputText>({
+    text: ''
+  });
+
+  const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   return (
     <>
       <div>
+      <ScrollToTopButton/>
         <SidebarWrapper>
           <BarTitleContainer>
             <BarTitle>API Descriptions</BarTitle>
@@ -359,8 +377,16 @@ export default function Testbed() {
         <form className="space-y-6" onSubmit={(e) => {
           e.preventDefault();
           var uri = content.uri;
+          var requestData = content.requestExample;
+
           const postFunc = async (params: string) => {
-            const response = await postAxios(uri, JSON.parse(params));
+
+            const jsonParam = (function () {
+              if (params.length === 0) { return null; }
+              else { return JSON.parse(params); }
+            })();
+
+            const response = await postAxios(uri, jsonParam);
             setResponseContent({
               ...responseContent,
               status: response.data.status,
@@ -457,16 +483,20 @@ export default function Testbed() {
 
           switch (content.method) {
             case "GET":
-              getFunc(content.requestExample);
+              getFunc(requestData);
               break;
             case "POST":
-              postFunc(content.requestExample);
+              // if (formData.text != '') requestData = formData.text;
+              requestData = formData.text;
+              postFunc(requestData);
               break;
             case "PATCH":
-              patchFunc(content.requestExample);
+              // if (formData.text != '') requestData = formData.text;
+              requestData = formData.text;
+              patchFunc(requestData);
               break;
             case "DELETE":
-              // deleteFunc(content.requestExample);
+              // deleteFunc(requestData);
               setResponseContent({
                 ...responseContent,
                 status: "SUCCESS",
@@ -481,7 +511,8 @@ export default function Testbed() {
         }
         }>
           <Subtitle>테스트베드</Subtitle>
-          <RequestItem>{content.requestExample}</RequestItem>
+          <TextItem>POST 또는 PATCH METHOD의 요청이라면 request data를 JSON 방식으로 입력 후 요청 보내기 버튼을 클릭하세요. 어떻게 보내야 할지 잘 모르겠다면 요청 예시를 복사해서 붙여넣기하거나 필요에 따라 수정해서 활용해 보세요.</TextItem>
+          <TextArea name="text" value={formData.text} onChange={handleTextArea}></TextArea>
           <ButtonItem type='submit'>요청 보내기</ButtonItem>
         </form>
         <Subtitle>응답 status</Subtitle>
@@ -567,6 +598,17 @@ text-xs font-semibold text-white shadow-sm
 hover:bg-gray-50 hover:text-pink-400 
 focus-visible:outline focus-visible:outline-2 
 focus-visible:outline-offset-2 focus-visible:outline-pink-600
+`;
+
+const TextArea = tw.textarea`
+bg-transparent 
+w-full
+text-xs
+bg-blue-200 
+hover:bg-blue-300
+rounded-lg
+p-8
+leading-6
 `;
 
 const SidebarWrapper = tw.div`

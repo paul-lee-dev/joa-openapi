@@ -1,4 +1,3 @@
-//목록 조회/검색 제외 완료 
 
 //productCreateContent
 //productreadContent
@@ -444,15 +443,7 @@ export const productDeleteContent = {
             etc: 'PathVariable',
         },
     ],
-    requestExample: `
-    {
-        "email":"ssafy@ssafy.com",
-        "phone":"01012341234",
-        "password":"1234",
-        "name":"김싸피",
-        "bankId":"3bade572-121c-4d12-bee2-64027898765b"
-    }
-    `,
+    requestExample: ``,
     responseParam: [
         {
             name: 'productId',

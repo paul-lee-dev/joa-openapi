@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import tw from "tailwind-styled-components";
 import dynamic from "next/dynamic";
 import { ComponentType } from "react";
+import ScrollToTopButton from "@/components/top";
 
 const DocComponents: ComponentType<{}>[] = [
   dynamic(() => import("@/app/docs/components/docs0")),
@@ -33,34 +34,35 @@ const Docs: React.FC = () => {
   return (
     <Wrapper>
       <SubWrapper>
-      <SidebarContainer>
-        <SidebarWrapper>
-          <BarTitleContainer>
-            <BarTitle>Docs</BarTitle>
-            <Ver>V 1.0</Ver>
-          </BarTitleContainer>
-          <BarSubTitle>Overview</BarSubTitle>
-          <BarItem onClick={() => handleItemClick(0)}>시작하기</BarItem>
-          <BarItem onClick={() => handleItemClick(1)}>용어 정의</BarItem>
-          <BarItem onClick={() => handleItemClick(2)}>프로젝트 구조</BarItem>
+        <SidebarContainer>
+          <SidebarWrapper>
+            <BarTitleContainer>
+              <BarTitle>Docs</BarTitle>
+              <Ver>V 1.0</Ver>
+            </BarTitleContainer>
+            <BarSubTitle>Overview</BarSubTitle>
+            <BarItem onClick={() => handleItemClick(0)}>시작하기</BarItem>
+            <BarItem onClick={() => handleItemClick(1)}>용어 정의</BarItem>
+            <BarItem onClick={() => handleItemClick(2)}>프로젝트 구조</BarItem>
 
-          <BarSubTitle>Getting Started</BarSubTitle>
-          <BarItem onClick={() => handleItemClick(3)}>API 명세 및 테스트베드</BarItem>
-          <BarItem onClick={() => handleItemClick(4)}>관리자 대시보드 이용법</BarItem>
-          <BarItem onClick={() => handleItemClick(5)}>샘플 앱 이용법</BarItem>
-          <BarItem onClick={() => handleItemClick(6)}>커스텀 방법</BarItem>
-          <BarItem onClick={() => handleItemClick(7)}>버전 정보</BarItem>
-        </SidebarWrapper>
-      </SidebarContainer>
-      <MainContainer>
-        <Children>
-          {DocComponents.map((DocComponent, index) => (
-            <div key={index} ref={docRefs[index]}>
-              <DocComponent />
-            </div>
-          ))}
-        </Children>
-      </MainContainer>
+            <BarSubTitle>Getting Started</BarSubTitle>
+            <BarItem onClick={() => handleItemClick(3)}>API 명세 및 테스트베드</BarItem>
+            <BarItem onClick={() => handleItemClick(4)}>관리자 대시보드 이용법</BarItem>
+            <BarItem onClick={() => handleItemClick(5)}>샘플 앱 이용법</BarItem>
+            <BarItem onClick={() => handleItemClick(6)}>커스텀 방법</BarItem>
+            <BarItem onClick={() => handleItemClick(7)}>버전 정보</BarItem>
+          </SidebarWrapper>
+        </SidebarContainer>
+        <MainContainer>
+          <Children>
+            {DocComponents.map((DocComponent, index) => (
+              <div key={index} ref={docRefs[index]}>
+                <DocComponent />
+              </div>
+            ))}
+          </Children>
+          <ScrollToTopButton/>
+        </MainContainer>
       </SubWrapper>
     </Wrapper>
   );

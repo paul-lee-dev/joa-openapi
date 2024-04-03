@@ -39,6 +39,7 @@ export const postAxios = async (url: string, params?: any) => {
   catch (error) {
     if (error instanceof AxiosError) {
       console.log(error.response?.data.message);
+      throw new Error("request data 입력 값이 잘못되었습니다.");
     }
     return Promise.reject(error)
   }

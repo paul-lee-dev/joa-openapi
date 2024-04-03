@@ -1,4 +1,3 @@
-//에러코드 제외 완료
 
 //bankCreateContent
 //bankreadContent

@@ -1,5 +1,6 @@
 "use client";
 
+import ScrollToTopButton from "@/components/top";
 import tw from "tailwind-styled-components";
 
 export default function Joa({ children }: { children: React.ReactNode }) {
@@ -8,6 +9,7 @@ export default function Joa({ children }: { children: React.ReactNode }) {
       <HomeContainer>
         <MainContainer>
           <Children>{children}</Children>
+          <ScrollToTopButton/>
         </MainContainer>
       </HomeContainer>
     </Wrapper>
