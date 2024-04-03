@@ -20,7 +20,7 @@ import ChangeAccountLimit from '@/pages/ChangeAccountLimit';
 import AccountDetail from '@/pages/AccountDetail';
 import AccountList from '@/pages/AccountList';
 import {IAccount} from '@/models';
-import {bankDataAtom, memberDataAtom} from '@/store/atoms';
+import {memberDataAtom} from '@/store/atoms';
 import History from './pages/History';
 import ChangeBankId from './pages/ChangeBankId';
 import EditProfile from './pages/EditProfile';
@@ -28,7 +28,6 @@ import DeleteAccount from './pages/DeleteAccount';
 import SplashScreen from 'react-native-splash-screen';
 import {IProduct, ProductType} from './models/product';
 import ProductList from './pages/ProductList';
-import {axiosInstance} from './api';
 
 export type RootStackParamList = {
   AccountDetail: {
@@ -93,21 +92,9 @@ const globalOption = {options: {headerShown: false}};
 
 function Router(): React.JSX.Element {
   const memberData = useRecoilValue(memberDataAtom);
-  const bankData = useRecoilValue(bankDataAtom);
   useEffect(() => {
-    axiosInstance.interceptors.request.clear();
-    axiosInstance.interceptors.request.use(
-      config => {
-        config.headers.memberId = memberData.member?.id;
-        config.headers.apiKey = bankData.apiKey;
-        return config;
-      },
-      error => {
-        return Promise.reject(error);
-      },
-    );
     SplashScreen.hide();
-  }, [memberData, bankData]);
+  }, []);
 
   return (
     <NavigationContainer>

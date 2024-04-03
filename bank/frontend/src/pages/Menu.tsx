@@ -13,8 +13,8 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import clsx from 'clsx';
 import Header from '@/components/Header';
 import {RootStackParamList} from '@/Router';
-import {memberDataAtom} from '@/store/atoms';
-import {useRecoilState} from 'recoil';
+import {bankDataAtom, memberDataAtom} from '@/store/atoms';
+import {useRecoilState, useRecoilValue} from 'recoil';
 import {useMutation} from '@tanstack/react-query';
 import {logout} from '@/api/member';
 import {axiosInstance} from '@/api';
@@ -24,6 +24,7 @@ type MenuType = '뱅킹' | '이체' | '조회';
 
 function Menu({navigation}: MenuScreenProps): React.JSX.Element {
   const [memberData, setMemberData] = useRecoilState(memberDataAtom);
+  const bankData = useRecoilValue(bankDataAtom);
   const [keyword, setKeyword] = useState<string>('');
   const [menu, setMenu] = useState<MenuType>('뱅킹');
   const mutation = useMutation({
@@ -34,6 +35,7 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
       axiosInstance.interceptors.request.use(
         config => {
           config.headers.memberId = '';
+          config.headers.apiKey = bankData.apiKey;
           return config;
         },
         error => {

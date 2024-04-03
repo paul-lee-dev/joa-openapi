@@ -17,7 +17,12 @@ export default function Home({}) {
   useEffect(() => {
     if (adminData) {
       if (adminData.isLogin) {
-        redirect("/admin");
+        if (adminData.apiKey) {
+          redirect("/admin");
+        } else {
+          alert("서비스를 이용하려면 apiKey를 먼저 발급해주세요.");
+          redirect("/admin/setting");
+        }
       } else {
         redirect("/login");
       }

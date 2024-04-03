@@ -14,12 +14,22 @@ const MemberList = () => {
   const router = useRouter();
   const params = useSearchParams();
   const [page, setPage] = useState<number>(Number(params.get("page")) || 1);
-  const [keyword, setKeyword] = useState<string>(params.get("memberName") ?? "");
-  const [searchWord, setSearchWord] = useState<string>(params.get("memberName") ?? "");
+  const [keyword, setKeyword] = useState<string>(
+    params.get("memberName") ?? ""
+  );
+  const [searchWord, setSearchWord] = useState<string>(
+    params.get("memberName") ?? ""
+  );
   const [bankId, setBankId] = useState<string>(params.get("bankId") ?? "");
   const [isDummy, setIsDummy] = useState<string>(params.get("isDummy") ?? "");
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["MemberList", searchWord || "all", page, bankId || "all", isDummy || "all"],
+    queryKey: [
+      "MemberList",
+      searchWord || "all",
+      page,
+      bankId || "all",
+      isDummy || "all",
+    ],
     queryFn: () => {
       return searchMemberList({
         memberName: searchWord,
@@ -68,7 +78,10 @@ const MemberList = () => {
             >
               <div className="flex space-x-2 items-center">
                 <BankSelect bankId={bankId} setBankId={setBankId} />
-                <Select value={isDummy} onChange={(e: any) => setIsDummy(e.target.value)}>
+                <Select
+                  value={isDummy}
+                  onChange={(e: any) => setIsDummy(e.target.value)}
+                >
                   <option value={""}>더미데이터 여부</option>
                   <option value={"true"}>더미 데이터만</option>
                   <option value={"false"}>실제 데이터만</option>
@@ -88,14 +101,18 @@ const MemberList = () => {
             </form>
           </div>
 
-          <MemberTable memberList={data.page.content} />
+          {data?.page?.content && (
+            <MemberTable memberList={data.page.content} />
+          )}
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
-              <Pagination
-                currentPage={page}
-                totalPages={data.page.totalPages}
-                onPageChange={setPage}
-              />
+              {data?.page?.totalPages && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={data.page.totalPages}
+                  onPageChange={setPage}
+                />
+              )}
             </div>
             <div className="flex gap-3 px-3">
               <Button

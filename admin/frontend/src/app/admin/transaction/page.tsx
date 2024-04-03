@@ -16,8 +16,12 @@ const Dashboard = () => {
   const router = useRouter();
   const params = useSearchParams();
   const [page, setPage] = useState<number>(Number(params.get("page")) || 1);
-  const [keyword, setKeyword] = useState<string>(params.get("depositorNameKeyword") ?? "");
-  const [searchWord, setSearchWord] = useState<string>(params.get("depositorNameKeyword") ?? "");
+  const [keyword, setKeyword] = useState<string>(
+    params.get("depositorNameKeyword") ?? ""
+  );
+  const [searchWord, setSearchWord] = useState<string>(
+    params.get("depositorNameKeyword") ?? ""
+  );
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["TransactionList", searchWord || "all", page],
     queryFn: () => {
@@ -70,15 +74,18 @@ const Dashboard = () => {
               <Button id={"submit"} name={"검색"} onClick={() => {}}></Button>
             </form>
           </div>
-
-          <TransactionTable transactionList={data.page.content} />
+          {data?.page?.content && (
+            <TransactionTable transactionList={data.page.content} />
+          )}
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
-              <Pagination
-                currentPage={page}
-                totalPages={data.page.totalPages}
-                onPageChange={setPage}
-              />
+              {data?.page?.totalPages && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={data.page.totalPages}
+                  onPageChange={setPage}
+                />
+              )}
             </div>
             <div className="flex gap-3 px-3">
               <Button

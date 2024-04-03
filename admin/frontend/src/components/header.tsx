@@ -1,5 +1,5 @@
 import tw from "tailwind-styled-components";
-import { redirect, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import NavbarImg from "@/asset/img/navbar.png";
 import UserImg from "@/asset/img/user.png";
@@ -10,6 +10,7 @@ import { adminDataAtom } from "@/store/atom";
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const [adminData, setClientAdminData] = useState<IAdminData | null>(null);
   const [recoilAdminData, setAdminData] = useRecoilState(adminDataAtom);
 
@@ -21,9 +22,11 @@ export default function Header() {
     if (adminData) {
       if (!adminData.isLogin) {
         redirect("/login");
+      } else if (!adminData.apiKey && pathname !== "/admin/setting") {
+        redirect("/admin/setting");
       }
     }
-  }, [adminData]);
+  }, [adminData, pathname]);
 
   return (
     <Wrapper>
