@@ -1,16 +1,12 @@
 "use client";
 
 import Button from "@/components/button/button";
-import InputText, {
-  CommonErrorMsg,
-  CommonInput,
-} from "@/components/input/inputText";
+import InputText, { CommonErrorMsg, CommonInput } from "@/components/input/inputText";
 import BankSelect from "@/components/select/bankSelect";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
-import { sendTransaction } from "@/api/Transaction";
 import MemberSelect from "../select/memberSelect";
 import { searchMemberList } from "@/api/Membr";
 import CommonLabel from "../commonLabel";
@@ -79,9 +75,7 @@ export default function CreateDummyAccount() {
       users: data.page.content
         .filter(
           (member: IMember) =>
-            getValues("users").findIndex(
-              (user) => user === member.memberName
-            ) !== -1
+            getValues("users").findIndex((user) => user === member.memberName) !== -1
         )
         .map((member: IMember) => member.memberId),
     });
@@ -126,21 +120,11 @@ export default function CreateDummyAccount() {
           />
           <CommonErrorMsg>{errors.bankId?.message}</CommonErrorMsg>
         </div>
-        <MemberSelect
-          bankId={watch("bankId")}
-          setMemberId={addMember}
-          memberId={""}
-          name
-          all
-        />
+        <MemberSelect bankId={watch("bankId")} setMemberId={addMember} memberId={""} name all />
 
         <div className="flex w-full items-center flex-wrap">
           {watch("users").map((name) => (
-            <CommonLabel
-              key={name}
-              title={name}
-              onClick={() => removeMember(name)}
-            />
+            <CommonLabel key={name} title={name} onClick={() => removeMember(name)} />
           ))}
           {watch("users").length > 0 && (
             <h1
@@ -163,8 +147,7 @@ export default function CreateDummyAccount() {
             {...register("count", {
               required: "생성할 더미 계좌 수을 입력해주세요.",
               validate: {
-                minimum: (value) =>
-                  value > 0 ? true : "생성할 더미 고객 수를 입력해주세요",
+                minimum: (value) => (value > 0 ? true : "생성할 더미 고객 수를 입력해주세요"),
               },
             })}
           />
@@ -174,18 +157,8 @@ export default function CreateDummyAccount() {
       </div>
 
       <div className="flex gap-6 justify-end">
-        <Button
-          type="button"
-          onClick={() => router.back()}
-          id={"create"}
-          name={"취소"}
-        />
-        <Button
-          type="submit"
-          id={"create"}
-          name={"등록"}
-          onClick={handleSubmit(onSubmit)}
-        />
+        <Button type="button" onClick={() => router.back()} id={"create"} name={"취소"} />
+        <Button type="submit" id={"create"} name={"등록"} onClick={handleSubmit(onSubmit)} />
       </div>
     </form>
   );

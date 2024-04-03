@@ -40,6 +40,7 @@ flex
 flex-col
 w-full
 overflow-y-scroll
+scrollbar-hide
 `;
 
 const Children = tw.div`

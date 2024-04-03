@@ -4,28 +4,39 @@ import { useState, useEffect, ChangeEvent } from "react";
 import BankTable from "@/components/table/bankTable";
 import Pagination from "@/components/pagination";
 import Button from "@/components/button/button";
-import { createBank, searchBankList } from "@/api/Bank";
-import BankGroupSearch from "@/components/search/bankGroupSearch";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { searchBankList } from "@/api/Bank";
+import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/loadingSpinner";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const BankList = () => {
   const router = useRouter();
-  const [keyword, setKeyword] = useState<string>("");
-  const [searchWord, setSearchWord] = useState<string>("");
+  const params = useSearchParams();
+  const [page, setPage] = useState<number>(Number(params.get("page")) || 1);
+  const [keyword, setKeyword] = useState<string>(params.get("name") ?? "");
+  const [searchWord, setSearchWord] = useState<string>(params.get("name") ?? "");
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["BankList", searchWord],
+    queryKey: ["BankList", searchWord || "all", page],
     queryFn: () => {
-      return searchBankList({ name: searchWord });
+      return searchBankList({ name: searchWord, page });
     },
   });
 
   useEffect(() => {
     refetch();
   }, [refetch]);
+
+  useEffect(() => {
+    const newParams = new URLSearchParams();
+    if (page > 1) {
+      newParams.set("page", String(page));
+    }
+    if (searchWord !== "") {
+      newParams.set("name", searchWord);
+    }
+    console.log(newParams);
+    router.replace(`/admin/bank?${newParams.toString()}`);
+  }, [router, page, searchWord]);
 
   const onChangeKeyword = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e);
@@ -38,34 +49,40 @@ const BankList = () => {
         <LoadingSpinner />
       ) : (
         <>
-          <div className="flex flex-col pt-10">
+          <div className="flex pt-10 pb-5 justify-between">
             <h1 className="text-2xl font-bold">은행</h1>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setPage(1);
+                setSearchWord(keyword);
+              }}
+              className="flex space-x-2 items-center"
+            >
+              <div className="w-52 h-10">
+                <input
+                  type="text"
+                  autoComplete="off"
+                  className="w-full h-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={onChangeKeyword}
+                  value={keyword}
+                  placeholder="은행 명"
+                />
+              </div>
+              <Button id={"button"} name={"검색"} />
+            </form>
           </div>
-          <form className="flex justify-end m-2 space-x-2 items-center">
-            <div className="w-52 h-10">
-              <input
-                type="text"
-                name="searchQuery"
-                id="searchQuery"
-                autoComplete="off"
-                className="w-full h-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                onChange={onChangeKeyword}
-                value={keyword}
-                placeholder="은행 명"
-              />
-            </div>
-            <Button id={"submit"} name={"검색"} onClick={() => setSearchWord(keyword)} />
-          </form>
+
           <BankTable bankList={data.page.content ?? []} />
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
-              {/* <Pagination
-                currentPage={0}
-                totalPages={5}
-                onPageChange={function (page: number): void {}}
-              ></Pagination> */}
+              <Pagination
+                currentPage={page}
+                totalPages={data.page.totalPages}
+                onPageChange={setPage}
+              />
             </div>
-            <div className="flex gap-3 px-3">
+            <div className="flex px-3">
               <Button
                 onClick={() => {
                   router.push("bank/create");

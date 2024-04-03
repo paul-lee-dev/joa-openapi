@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { HiEmojiSad } from "react-icons/hi";
 import { IBank } from "@/models/Bank.interface";
 import Image from "next/image";
+import { HiBanknotes } from "react-icons/hi2";
 
 interface BankTableProps {
   bankList: IBank[];
@@ -21,16 +22,16 @@ export default function BankTable({ bankList }: BankTableProps) {
       <table className="w-full text-sm text-left text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" className="px-6 py-4 w-1/12">
+            <th scope="col" className="px-6 py-2 w-1/12">
               은행로고
             </th>
-            <th scope="col" className="px-6 py-4 w-3/12">
+            <th scope="col" className="px-6 py-2 w-3/12">
               은행 코드
             </th>
-            <th scope="col" className="px-6 py-4 w-2/12">
+            <th scope="col" className="px-6 py-2 w-2/12">
               은행명
             </th>
-            <th scope="col" className="px-6 py-4 w-3/12">
+            <th scope="col" className="px-6 py-2 w-3/12">
               은행설명
             </th>
             {/* <th scope="col" className="px-6 py-4">
@@ -49,14 +50,19 @@ export default function BankTable({ bankList }: BankTableProps) {
               className="border-b transition duration-300 ease-in-out hover:bg-pink-300"
             >
               <TableData>
-                <Image
-                  src={
-                    "https://i.namu.wiki/i/I6G5oLx9hCbvGF6htSULqBcJcus4UGhTJoc-Q-szN69Y5vSfVM9-ULdIxjBpFvFbHWgW6Z93dlOc75_TtTf8eQ.svg"
-                  }
-                  alt="bank_uri"
-                  width={35}
-                  height={35}
-                />
+                {bank.uri ? (
+                  <img
+                    src={
+                      bank.uri ||
+                      "https://lawstrust.com/sites/default/files/u1250/ico_otkrytie_schyota.png"
+                    }
+                    alt="bank_uri"
+                    width={35}
+                    height={35}
+                  />
+                ) : (
+                  <HiBanknotes className="w-10 h-10" />
+                )}
               </TableData>
               <TableData>
                 <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
@@ -95,5 +101,5 @@ export default function BankTable({ bankList }: BankTableProps) {
 
 const TableData = tw.td`
 px-5
-py-3
+py-2
 `;

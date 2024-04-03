@@ -7,7 +7,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import tw from "tailwind-styled-components";
-import { sendTransaction } from "@/api/Transaction";
 import MemberSelect from "../select/memberSelect";
 import { searchMemberList } from "@/api/Membr";
 import CommonLabel from "../commonLabel";
@@ -31,7 +30,7 @@ export default function CreateDummyTransaction() {
     mutationFn: createDummyTransaction,
     onSuccess: (data) => {
       console.log(data);
-      alert("더미 계좌가 생성되었습니다.");
+      alert("더미 거래내역이 생성되었습니다.");
       router.replace("/admin/dummy");
     },
     onError: (err) => alert(err.message),

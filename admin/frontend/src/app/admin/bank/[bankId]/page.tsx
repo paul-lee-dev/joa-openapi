@@ -120,7 +120,20 @@ export default function BankDetail({ params: { bankId } }: IProps) {
             <div className="p-4 pb-0 flex justify-between items-end">
               <div className="flex flex-col space-y-2">
                 <div className="flex space-x-4 items-center text-gray-600">
-                  <HiBanknotes className="w-10 h-10" />
+                  {data?.data?.uri ? (
+                    <img
+                      src={
+                        data?.data?.uri ||
+                        "https://lawstrust.com/sites/default/files/u1250/ico_otkrytie_schyota.png"
+                      }
+                      alt="bank_uri"
+                      width={35}
+                      height={35}
+                    />
+                  ) : (
+                    <HiBanknotes className="w-10 h-10" />
+                  )}
+
                   <h1 className="font-bold text-2xl">{watch("name")}</h1>
                 </div>
                 <h1 className="font-light text-xs text-gray-400">{data?.data?.bankId}</h1>

@@ -10,18 +10,20 @@ import BankSelect from "@/components/select/bankNoLabel";
 import ProductTypeMultiSearchSelect from "@/components/select/productTypeMultiSearchSelect";
 import ProductTable from "@/components/table/productTable";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const ProductList = () => {
   const router = useRouter();
-  const [keyword, setKeyword] = useState<string>("");
-  const [searchWord, setSearchWord] = useState<string>("");
+  const params = useSearchParams();
+  const [page, setPage] = useState<number>(Number(params.get("page")) || 1);
+  const [keyword, setKeyword] = useState<string>(params.get("productKeyword") ?? "");
+  const [searchWord, setSearchWord] = useState<string>(params.get("productKeyword") ?? "");
   const [bankId, setBankId] = useState<string>("");
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["ProductList"],
+    queryKey: ["ProductList", searchWord || "all", page],
     queryFn: () => {
-      return searchProductList({});
+      return searchProductList({ productKeyword: searchWord, page });
     },
   });
 
@@ -29,35 +31,48 @@ const ProductList = () => {
     refetch();
   }, [refetch]);
 
+  useEffect(() => {
+    const newParams = new URLSearchParams();
+    if (page > 1) {
+      newParams.set("page", String(page));
+    }
+    if (searchWord !== "") {
+      newParams.set("productKeyword", searchWord);
+    }
+    console.log(newParams);
+    router.replace(`/admin/product?${newParams.toString()}`);
+  }, [router, page, searchWord]);
+
   return (
     <>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
         <>
-          <div className="flex flex-col pt-10">
+          <div className="flex pt-10 pb-5 justify-between">
             <h1 className="text-2xl font-bold">상품</h1>
+            <form>
+              <div className="flex space-x-2 items-center">
+                <BankSelect />
+                <ProductTypeMultiSearchSelect
+                  placeholder={""}
+                  label={""}
+                  htmlFor={""}
+                ></ProductTypeMultiSearchSelect>
+                <ProductGroupSearch></ProductGroupSearch>
+                <Button id={"search"} name={"검색"} onClick={() => {}}></Button>
+              </div>
+            </form>
           </div>
-          <form>
-            <div className="flex gap-6 justify-end mt-3 mb-5">
-              <BankSelect />
-              <ProductTypeMultiSearchSelect
-                placeholder={""}
-                label={""}
-                htmlFor={""}
-              ></ProductTypeMultiSearchSelect>
-              <ProductGroupSearch></ProductGroupSearch>
-              <Button id={"search"} name={"검색"} onClick={() => {}}></Button>
-            </div>
-          </form>
+
           <ProductTable productList={data.page.content} />
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
               <Pagination
-                currentPage={0}
-                totalPages={5}
-                onPageChange={function (page: number): void {}}
-              ></Pagination>
+                currentPage={page}
+                totalPages={data.page.totalPages}
+                onPageChange={setPage}
+              />
             </div>
             <div className="flex gap-3 px-3">
               <Button
