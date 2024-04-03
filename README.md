@@ -1,4 +1,4 @@
-# 핀테크 프로젝트를 위한 B2B 가상은행 플랫폼 JOA OpenAPI
+# 핀테크 프로젝트를 위한 금융 OpenAPI  JOA OpenAPI
 
 
 # 목차
@@ -10,12 +10,13 @@
 5. [**시연 영상**](#시연-영상)
 6. [**기술 스택**](#기술-스택)
 7. [**프로젝트 일정 및 산출물**](#프로젝트-산출물)
-8. [**회고**](#회고)
+8. [**UCC**](#UCC)
+9. [**참고**](#참고)
 
 # 서비스 소개
-- 기간 : 
-- 인원 : 
-- 개요 :
+- 기간 : 2024.03.~
+- 인원 : 6명
+- 개요 : 핀테크 프로젝트를 위한 금융 OpenAPI 제공
 - 타겟 : 핀테크 개발자
 
 
@@ -23,6 +24,11 @@
 - 제한된 API 종류
 - API가 유료이거나 신청이 복잡함
 - 데이터 셋을 만드는 것이 번거로움
+
+# 기능 소개
+- Docs : 공식 문서 가이드, API 테스트베드 제공
+- Admin : 데이터 통계를 확인할 수 있는 관리자 대시보드 제공, 더미데이터 생성
+- App : OpenAPI를 쉽게 테스트 할 수 있는 앱 (계좌 조회, 거래내역 조회, 이체 등)
 
 # 팀 구성
 | [조아영](https://github.com/benyy0101)                                                    | [구본승](https://github.com/rheeeuro)                                                     | [고수림](https://github.com/JHyeon-a)                                                                                          | [김희연](https://github.com/heeyeon3050)                                                   | [이유로](https://github.com/Damongsanga)                                                   | [이정호](https://github.com/Zerotay)                                                      |
@@ -74,10 +80,6 @@
 
 <br/>
 
-# 기능 소개
-- Docs : 공식 문서 가이드, API 테스트베드 제공
-- Admin : 데이터 통계를 확인할 수 있는 관리자 대시보드 제공, 더미데이터 생성
-- App : OpenAPI를 쉽게 테스트 할 수 있는 앱 (계좌 조회, 거래내역 조회, 이체 등)
 
 # 아키텍처
 
@@ -91,79 +93,87 @@
 
 1. 메인화면
 <br/>
-<img src="./assets/Docs/Docs-Home.gif" style="height : 150;"/>
+![메인화면](./assets/Docs/Docs-Home.gif){: width="50%" height="50%"}
+<br/>
 2. Docs
 <br/>
-<img src="./assets/Docs/Docs-Docs.gif" style="height : 150;"/>
+![Docs](./assets/Docs/Docs-Docs.gif){: width="50%" height="50%"}
+<br/>
 3. APIs
 <br/>
-<img src="./assets/Docs/Docs-APIs.gif" style="height : 150;"/>
+![APIs](./assets/Docs/Docs-APIs.gif){: width="50%" height="50%"}
+<br/>
 
 ### **Admin**
 
 1. 설정
 <br/>
-<img src="./assets/Admin/Admin-SignupGetAPIKey.gif" style="height : 150;"/>
+![설정](./assets/Admin/Admin-SignupGetAPIKey.gif){: width="50%" height="50%"}
+<br/>
 2. 대시보드
 <br/>
-<img src="./assets/Admin/Admin-Dashboard.gif" style="height : 150;"/>
+![대시보드]](./assets/Admin/Admin-Dashboard.gif){: width="50%" height="50%"}
+<br/>
 3. 은행
 <br/>
-<img src="./assets/Admin/Admin-CreateBank.gif" style="height : 150;"/>
+![은행](./assets/Admin/Admin-CreateBank.gif){: width="50%" height="50%"}
+<br/>
 4. 상품
 <br/>
-<img src="./assets/Admin/Admin-CreateProduct.gif" style="height : 150;"/>
+![상품](./assets/Admin/Admin-CreateProduct.gif){: width="50%" height="50%"}
+<br/>
 5. 계좌
 <br/>
-<img src="./assets/Admin/Admin-CreateAccount.gif" style="height : 150;"/>
+![계좌](./assets/Admin/Admin-CreateAccount.gif){: width="50%" height="50%"}
+<br/>
 6. 고객
 <br/>
-<img src="./assets/Admin/Admin-CreateMember.gif" style="height : 150;"/>
+![고객](./assets/Admin/Admin-CreateMember.gif){: width="50%" height="50%"}
+<br/>
 7. 거래내역
 <br/>
-<img src="./assets/Admin/Admin-CreateTransaction.gif" style="height : 150;"/>
+![거래내역](./assets/Admin/Admin-CreateTransaction.gif){: width="50%" height="50%"}
+<br/>
 8. 더미데이터
 <br/>
-<img src="./assets/Admin/Admin-CreateDummyMember.gif" style="height : 150;"/>
-<img src="./assets/Admin/Admin-CreateDummyAccount.gif" style="height : 150;"/>
-<img src="./assets/Admin/Admin-CreateDummyTransaction.gif" style="height : 150;"/>
+![더미멤버](./assets/Admin/Admin-CreateDummyMember.gif){: width="50%" height="50%"}
+![더미계좌](./assets/Admin/Admin-CreateDummyAccount.gif){: width="50%" height="50%"}
+![더미내역](./assets/Admin/Admin-CreateDummyTransaction.gif){: width="50%" height="50%"}
+<br/>
 
 ### **App**
 
 1. 회원가입 / 로그인
 <br/>
-<img src="./assets/App/회원가입1.gif" style="height : 150;"/>
-<img src="./assets/App/회원가입2.gif" style="height : 150;"/>
-<img src="./assets/App/로그인 최종.gif" style="height : 150;"/>
+![회원가입1](./assets/App/회원가입1.gif){: width="30%" height="30%"}
+![회원가입2](./assets/App/회원가입2.gif){: width="30%" height="30%"}
+![로그인](./assets/App/로그인 최종.gif){: width="30%" height="30%"}
+<br/>
 2. 계좌생성
 <br/>
-<img src="./assets/App/적금계좌생성.gif" style="height : 150;"/>
-<img src="./assets/App/상품 자세히보기.gif" style="height : 150;"/>
+![적금생성](./assets/App/적금계좌생성.gif){: width="30%" height="30%"}
+![상품상세](./assets/App/상품 자세히보기.gif){: width="30%" height="30%"}
+<br/>
 3. 계좌조회
 <br/>
-<img src="./assets/App/계좌조회.gif" style="height : 150;"/>
-<img src="./assets/App/계좌조회 메뉴.gif" style="height : 150;"/>
+![슬라이드](./assets/App/계좌조회.gif){: width="30%" height="30%"}
+![메뉴보기](./assets/App/계좌조회 메뉴.gif){: width="30%" height="30%"}
+<br/>
 4. 이체
 <br/>
-<img src="./assets/App/이체.gif" style="height : 150;"/>
+![이체](./assets/App/이체.gif){: width="30%" height="30%"}
+<br/>
 5. 거래내역 조회
 <br/>
-<img src="./assets/App/거래내역조회.gif" style="height : 150;"/>
+![거래내역](./assets/App/거래내역조회.gif){: width="30%" height="30%"}
+<br/>
 6. 은행코드 변경
 <br/>
-<img src="./assets/App/은행코드바꾸기.gif" style="height : 150;"/>
+![로그인](./assets/App/은행코드바꾸기.gif){: width="30%" height="30%"}
+<br/>
 
-## 개발 환경
+# UCC
 
-## CI/CD 배포 환경
-
-# 프로젝트 산출물
-
-## 프로젝트 진행
-
-### 1. Git flow
-
-### 2. Jira
 
 # 프로젝트 산출물
 
