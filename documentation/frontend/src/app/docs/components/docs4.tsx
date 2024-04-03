@@ -61,8 +61,8 @@ export default function docs() {
             {memberSearchQueryString.map((str) => (
               <TrItem key={str.name}>
                 <TdItem>{str.name}</TdItem>
-                <TdItem>{str.type}</TdItem>
                 <TdItem>{str.desc}</TdItem>
+                <TdItem>{str.type}</TdItem>
                 <TdItem>{str.etc}</TdItem>
               </TrItem>
             ))}
@@ -83,8 +83,8 @@ export default function docs() {
             {productSearchQueryString.map((str) => (
               <TrItem key={str.name}>
                 <TdItem>{str.name}</TdItem>
-                <TdItem>{str.type}</TdItem>
                 <TdItem>{str.desc}</TdItem>
+                <TdItem>{str.type}</TdItem>
                 <TdItem>{str.etc}</TdItem>
               </TrItem>
             ))}
@@ -105,8 +105,8 @@ export default function docs() {
             {accountSearchQueryString.map((str) => (
               <TrItem key={str.name}>
                 <TdItem>{str.name}</TdItem>
-                <TdItem>{str.type}</TdItem>
                 <TdItem>{str.desc}</TdItem>
+                <TdItem>{str.type}</TdItem>
                 <TdItem>{str.etc}</TdItem>
               </TrItem>
             ))}
@@ -127,8 +127,8 @@ export default function docs() {
             {transactionSearchQueryString.map((str) => (
               <TrItem key={str.name}>
                 <TdItem>{str.name}</TdItem>
-                <TdItem>{str.type}</TdItem>
                 <TdItem>{str.desc}</TdItem>
+                <TdItem>{str.type}</TdItem>
                 <TdItem>{str.etc}</TdItem>
               </TrItem>
             ))}
@@ -149,8 +149,8 @@ export default function docs() {
             {dummySearchQueryString.map((str) => (
               <TrItem key={str.name}>
                 <TdItem>{str.name}</TdItem>
-                <TdItem>{str.type}</TdItem>
                 <TdItem>{str.desc}</TdItem>
+                <TdItem>{str.type}</TdItem>
                 <TdItem>{str.etc}</TdItem>
               </TrItem>
             ))}
