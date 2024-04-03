@@ -50,6 +50,7 @@ public class BankService {
     @Transactional
     public BankResponseDto create(BankRequestDto req, UUID apiKey) {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
+        String bankName;
         Bank bank = Bank.builder()
                 .adminId(adminId)
                 .description(req.getDescription())
@@ -57,8 +58,9 @@ public class BankService {
                 .uri(req.getUri())
                 .build();
         Bank saved = bankRepository.save(bank);
+        bankName = bank.getName();
         ProductCreateRequestDto dto = ProductCreateRequestDto.builder()
-                .name("보통 예금")
+                .name(bankName + " 보통 예금")
                 .description("은행 생성 시 자동 생성 되는 보통 예금")
                 .minAmount(0L)
                 .maxAmount(100000000L)
