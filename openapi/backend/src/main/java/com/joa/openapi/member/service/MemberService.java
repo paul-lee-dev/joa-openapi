@@ -45,17 +45,13 @@ public class MemberService {
     @Transactional
     public MemberIdResponseDto addMember(UUID apiKey, MemberJoinRequestDto request) {
 
+        Bank bank = bankRepository.findById(request.getBankId()).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
+
         // 이메일이 이미 사용 중인지 확인
-        if (memberRepository.findByEmail(request.getEmail()) != null) {
+        if (memberRepository.findByBankIdAndEmail(bank.getId(), request.getEmail()) != null) {
             throw new RestApiException(MemberErrorCode.EMAIL_CONFLICT);
         }
 
-        // 전화번호가 이미 사용 중인지 확인
-        if (memberRepository.findByPhone(request.getPhone()) != null) {
-            throw new RestApiException(MemberErrorCode.PHONE_CONFLICT);
-        }
-
-        Bank bank = bankRepository.findById(request.getBankId()).orElseThrow(()->new RestApiException(BankErrorCode.NO_BANK));
         bankAuthorityValidation(apiKey, bank.getId());
         Member member = Member.builder()
                 .name(request.getName())
