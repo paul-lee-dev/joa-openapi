@@ -90,6 +90,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
         return jpaQueryFactory
                 .selectFrom(product)
                 .where(eqAdminId(adminId), eqBankId(bankId))
+                .orderBy(product.createdAt.desc())
                 .fetchFirst().getId();
     }
 
