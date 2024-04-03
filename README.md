@@ -75,16 +75,22 @@
 7. 거래내역
 ![거래내역생성](./assets/Admin/Admin-CreateTransaction.gif)
 8. 더미데이터
-|![더미멤버](./assets/Admin/Admin-CreateDummyMember.gif)|![더미계좌](./assets/Admin/Admin-CreateDummyAccount.gif)|![더미거래내역](./assets/Admin/Admin-CreateDummyTransaction.gif)|
+<img src="./assets/Admin/Admin-CreateDummyMember.gif" style="height : 500;"/>
+<img src="./assets/Admin/Admin-CreateDummyAccount.gif" style="height : 500;"/>
+<img src="./assets/Admin/Admin-CreateDummyTransaction.gif" style="height : 500;"/>
 
 ### **App**
 
 1. 회원가입 / 로그인
-|![회원가입1](./assets/App/회원가입1.gif)|![회원가입2](./assets/App/회원가입2.gif)|![로그인](./assets/App/로그인최종.gif)|
-2. 계좌생성 (예적금으로 보여주기)
-|![계좌생성](./assets/App/적금계좌생성.gif)|![상품상세보기](./assets/App/상품 자세히보기.gif)|
-3. 계좌조회 (메인에서 옆으로 슬라이드)
-|![계좌조회메인](./asstes/App/계좌조회.gif)|![계좌조회메뉴](./asstes/App/계좌조회 메뉴.gif)|
+<img src="./assets/App/회원가입1.gif" style="height : 500;"/>
+<img src="./assets/App/회원가입2.gif" style="height : 500;"/>
+<img src="/assets/App/로그인최종.gif" style="height : 500;"/>
+2. 계좌생성
+<img src="./assets/App/적금계좌생성.gif" style="height : 500;"/>
+<img src="./assets/App/상품 자세히보기.gif" style="height : 500;"/>
+3. 계좌조회
+<img src="./assets/App/계좌조회.gif" style="height : 500;"/>
+<img src="./assets/App/계좌조회 메뉴.gif" style="height : 500;"/>
 4. 이체
 ![이체](./assets/App/이체.gif)
 5. 거래내역 조회
