@@ -97,7 +97,6 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
       tmpDate = tmpDate.concat(timeData);
       tmpDeposit = tmpDeposit.concat(depositData);
       tmpWithdraw = tmpWithdraw.concat(withdrawData);
-      // console.log("tmp: ", tmp);
       setOption((prevOptions) => ({
         chart: prevOptions.chart,
         xaxis: { categories: tmpDate },
