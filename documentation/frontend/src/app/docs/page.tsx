@@ -124,7 +124,9 @@ cursor-pointer
 `;
 
 const BarItem = tw.div`
-lg:mr-12 p-2 flex space-4 rounded-md hover:bg-gray-100 hover:font-bold focus:bg-gray-100 focus:font-bold 
+lg:mr-12 p-2 flex space-4 rounded-md 
+hover:bg-slate-100 hover:text-purple-500 hover:font-bold
+focus:bg-slate-100 focus:text-purple-500 focus:font-bold
 cursor-pointer
 `;
 
