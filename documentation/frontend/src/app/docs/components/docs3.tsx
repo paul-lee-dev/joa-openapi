@@ -46,28 +46,7 @@ export default function docs() {
             ))}
           </TbodyItem>
         </TableItem>
-
-        <Subtitle>쿼리 스트링 명세</Subtitle>
-        <TextItem>쿼리 스트링 사용이 가능한 요청의 경우 사용할 수 있는 옵션에 대한 설명이 기술됩니다. 테스트베드에서는 쿼리 스트링 이용이 제한됩니다. 자세한 사항은 좌측 메뉴의 쿼리 스트링 항목을 참조하세요.</TextItem>
-        <TableItem>
-          <TheadItem>
-            <TrItem>
-              <ThItem>변수명</ThItem>
-              <ThItem>설명</ThItem>
-              <ThItem>타입</ThItem>
-              <ThItem>비고</ThItem>
-            </TrItem>
-          </TheadItem>
-          <TbodyItem>
-            <TrItem>
-              <TdItem>해당 변수의 명칭 </TdItem>
-              <TdItem>해당 변수에 대한 설명</TdItem>
-              <TdItem>해당 변수의 자료형 타입</TdItem>
-              <TdItem>제약 등의 비고사항</TdItem>
-            </TrItem>
-          </TbodyItem>
-        </TableItem>
-
+        
         <Subtitle>요청 메시지 data 명세</Subtitle>
         <TextItem>
           Request Body에 포함되어야 하는 변수들이 있을 경우 그에 대한 설명이 기술됩니다.

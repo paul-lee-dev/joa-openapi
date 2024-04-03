@@ -605,8 +605,9 @@ text-xs
 bg-blue-200 
 hover:bg-blue-300
 rounded-lg
-p-8
-leading-6
+px-8
+py-3
+leading-5
 `;
 
 const ResponseItem = tw.pre`
@@ -614,8 +615,9 @@ text-xs
 bg-purple-200 
 hover:bg-purple-300
 rounded-lg
-p-8
-leading-6
+px-8
+py-3
+leading-5
 `;
 
 const TableItem = tw.table`

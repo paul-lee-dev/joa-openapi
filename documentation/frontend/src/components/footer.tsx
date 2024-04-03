@@ -6,12 +6,12 @@ export default function Header() {
   return (
     <>
       <Wrapper>
-        <Title>joa-openapi</Title>
+        {/* <Title>joa-openapi</Title>
         <ContactContainer>
         <HiOutlineMail />
           <ContactItem>ssafy@ssafy.com</ContactItem>
           </ContactContainer>
-        <Copyright>Copyright ⓒ SSAFY 10기 특화 A503</Copyright>
+        <Copyright>Copyright ⓒ SSAFY 10기 특화 A503</Copyright> */}
       </Wrapper>
     </>
   );
