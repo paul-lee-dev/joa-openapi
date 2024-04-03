@@ -93,7 +93,7 @@
 
 1. 메인화면
 <br/>
-<img src="./assets/Docs/Docs-Home.gif" style="height : 50;"/>
+![메인화면](./assets/Docs/Docs-Home.gif){: width="100px" height="100px"}
 2. Docs
 <br/>
 <img src="./assets/Docs/Docs-Docs.gif" style="height : 50;"/>
