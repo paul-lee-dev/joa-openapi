@@ -18,12 +18,24 @@ const ProductList = () => {
   const router = useRouter();
   const params = useSearchParams();
   const [page, setPage] = useState<number>(Number(params.get("page")) || 1);
-  const [keyword, setKeyword] = useState<string>(params.get("productKeyword") ?? "");
-  const [searchWord, setSearchWord] = useState<string>(params.get("productKeyword") ?? "");
+  const [keyword, setKeyword] = useState<string>(
+    params.get("productKeyword") ?? ""
+  );
+  const [searchWord, setSearchWord] = useState<string>(
+    params.get("productKeyword") ?? ""
+  );
   const [bankId, setBankId] = useState<string>(params.get("bankId") ?? "");
-  const [productType, setProductType] = useState<string>(params.get("productType") ?? "");
+  const [productType, setProductType] = useState<string>(
+    params.get("productType") ?? ""
+  );
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["ProductList", searchWord || "all", page, bankId || "all", productType || "all"],
+    queryKey: [
+      "ProductList",
+      searchWord || "all",
+      page,
+      bankId || "all",
+      productType || "all",
+    ],
     queryFn: () => {
       return searchProductList({
         productKeyword: searchWord,
@@ -72,7 +84,10 @@ const ProductList = () => {
             >
               <div className="flex space-x-2 items-center">
                 <BankSelect bankId={bankId} setBankId={setBankId} />
-                <Select value={productType} onChange={(e) => setProductType(e.target.value)}>
+                <Select
+                  value={productType}
+                  onChange={(e) => setProductType(e.target.value)}
+                >
                   <option value={""}>상품타입 선택</option>
                   <option value={"ORDINARY_DEPOSIT"}>보통 예금</option>
                   <option value={"TERM_DEPOSIT"}>정기 예금</option>
@@ -93,14 +108,18 @@ const ProductList = () => {
             </form>
           </div>
 
-          <ProductTable productList={data.page.content} />
+          {data?.page?.content && (
+            <ProductTable productList={data.page.content} />
+          )}
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
-              <Pagination
-                currentPage={page}
-                totalPages={data.page.totalPages}
-                onPageChange={setPage}
-              />
+              {data?.page?.totalPages && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={data.page.totalPages}
+                  onPageChange={setPage}
+                />
+              )}
             </div>
             <div className="flex gap-3 px-3">
               <Button

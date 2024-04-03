@@ -14,7 +14,9 @@ const BankList = () => {
   const params = useSearchParams();
   const [page, setPage] = useState<number>(Number(params.get("page")) || 1);
   const [keyword, setKeyword] = useState<string>(params.get("name") ?? "");
-  const [searchWord, setSearchWord] = useState<string>(params.get("name") ?? "");
+  const [searchWord, setSearchWord] = useState<string>(
+    params.get("name") ?? ""
+  );
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["BankList", searchWord || "all", page],
     queryFn: () => {
@@ -67,14 +69,16 @@ const BankList = () => {
             </form>
           </div>
 
-          <BankTable bankList={data.page.content ?? []} />
+          {data?.page?.content && <BankTable bankList={data.page.content} />}
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
-              <Pagination
-                currentPage={page}
-                totalPages={data.page.totalPages}
-                onPageChange={setPage}
-              />
+              {data?.page?.totalPages && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={data.page.totalPages}
+                  onPageChange={setPage}
+                />
+              )}
             </div>
             <div className="flex px-3">
               <Button
