@@ -105,8 +105,8 @@ export const accountCreateContent = {
         "password": "1234",
         "balance" : "0",
         "amount" : "20",
-        "bankId": "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2",
-        "productId" : "23589bc9-02fd-4f16-bf0e-0acad006efe1",
+        "bankId": "aa01973d-0fa6-4d2b-ab92-32ff227d8677",
+        "productId" : "d788a18f-5051-429f-9952-09de153197b4",
         "taxType": "NO_TAX"
     }
     `,
@@ -284,7 +284,7 @@ export const accountReadContent = {
   ],
   requestExample: `
     {
-        "accountId":"42411027228551"
+        "accountId":"43410423524413"
     }
     `,
   responseParam: [
@@ -460,7 +460,7 @@ export const accountRemainReadContent = {
   ],
   requestExample: `
     {
-        "accountId":"42411027228551"
+        "accountId":"43410423524413"
     }
     `,
   responseParam: [
@@ -551,7 +551,7 @@ export const accountUpdateContent = {
   ],
   requestExample: `
     {
-        "accountId": "42411027228551",
+        "accountId": "43410423524413",
         "nickname": "김싸피의 아주 멋진 새 적금"
     }
     `,
@@ -710,7 +710,7 @@ export const accountLimitUpdateContent = {
   ],
   requestExample: `
     {
-        "accountId": "42411027228551",
+        "accountId": "43410423524413",
         "transferLimit": "200"
     }
     `,
@@ -770,7 +770,7 @@ export const accountPasswordUpdateContent = {
   ],
   requestExample: `
     {
-        "accountId": "42411027228551",
+        "accountId": "43410423524413",
         "password": "5555"
     }
     `,
@@ -1138,7 +1138,7 @@ export const accountDeleteContent = {
   ],
   requestExample: `
     {
-        "accountId": "42411027228551",
+        "accountId": "43410423524413",
         "password": "5555"
     }
     `,

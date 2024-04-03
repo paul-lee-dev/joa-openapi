@@ -30,7 +30,7 @@ export default function docs() {
         </TextItem>
         <Subtitle>테스트베드 체험하기</Subtitle>
         <TextItem>
-          별도의 가입 절차를 진행하지 않고도 테스트베드를 통해 JOA OPEN API가 제공하는 다양한 API들을 직접 사용해볼 수 있습니다. 자세한 사항은 좌측 메뉴 중 <b>API 명세 & 테스트베드</b> 항목을 참조하세요.
+          별도의 가입 절차를 진행하지 않고도 테스트베드를 통해 JOA OPEN API가 제공하는 다양한 API들을 직접 사용해볼 수 있습니다. 자세한 사항은 좌측 메뉴 중 <b>API 명세 및 테스트베드</b> 항목을 참조하세요.
         </TextItem>
 
         <Subtitle>본격적으로 서비스 이용하기</Subtitle>
