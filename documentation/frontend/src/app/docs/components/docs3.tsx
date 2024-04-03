@@ -22,7 +22,7 @@ export default function docs() {
 
         <Subtitle>공통 헤더 명세</Subtitle>
         <TextItem>
-          헤더에 포함되어야 하는 변수들이 있을 경우 그에 대한 설명이 기술됩니다.
+          헤더에 포함되어야 하는 변수들이 있을 경우 그에 대한 설명이 기술됩니다. 테스트베드에서는 헤더에 포함되는 변수들이 임의의 값으로 고정되어 변경이 불가합니다. 
         </TextItem>
         <TableItem>
           <TheadItem>
@@ -48,7 +48,7 @@ export default function docs() {
         </TableItem>
 
         <Subtitle>쿼리 스트링 명세</Subtitle>
-        <TextItem>쿼리 스트링 사용이 가능한 요청의 경우 사용할 수 있는 옵션에 대한 설명이 기술됩니다.</TextItem>
+        <TextItem>쿼리 스트링 사용이 가능한 요청의 경우 사용할 수 있는 옵션에 대한 설명이 기술됩니다. 테스트베드에서는 쿼리 스트링 이용이 제한됩니다.</TextItem>
         <TableItem>
           <TheadItem>
             <TrItem>
@@ -181,7 +181,15 @@ export default function docs() {
           </TbodyItem>
         </TableItem>
         <Subtitle>테스트베드</Subtitle>
-        <RequestItem>각 API 명세 문서에서 요청 보내기 버튼을 누르면 여기에 있는 데이터를 담은 요청이 서버의 해당 엔드포인트로 전송됩니다.</RequestItem>
+        <TextItem>
+        - 각 API 명세 문서에서 요청 보내기 버튼을 누르면 아래의 칸에 입력한 데이터를 담은 요청이 서버의 해당 엔드포인트로 전송됩니다.<br/>
+        - GET, DELETE 메소드 요청일 경우 빈칸으로 남겨두세요.<br/>
+        - POST 또는 PATCH METHOD의 요청이라면 request data를 JSON 방식으로 입력 후 요청 보내기 버튼을 클릭하세요.<br/>
+        - 어떻게 보내야 할지 잘 모르겠다면 요청 예시를 복사해서 붙여넣기하거나 필요에 따라 수정해서 활용해 보세요.<br/>
+        - 데이터의 원활한 조회, 수정 기능 작동을 위해 테스트베드의 DELETE 요청은 실제로 작동하지 않도록 되어 있습니다.<br/>
+        - 공개 테스트베드이므로 여기에 입력된 데이터는 누구나 열람 가능합니다. 민감한 개인 정보는 입력하지 않도록 주의하세요.
+        </TextItem>
+        <RequestItem></RequestItem>
         <ButtonItem>요청 보내기</ButtonItem>
         <Subtitle>응답 status</Subtitle>
         <ResponseItem>전송한 요청에 대한 응답 status가 표시됩니다.</ResponseItem>
