@@ -44,7 +44,8 @@ import {
   transaction1wonConfirmContent,
   transactionUpdateContent,
   transactionListContent,
-  transactionDeleteContent
+  transactionDeleteContent,
+  transactionReadContent
 } from "../contents/transactionContent";
 import {
   dummyMemberContent,
@@ -223,6 +224,9 @@ export default function Testbed() {
       case 48:
         setContent(transactionDeleteContent);
         break;
+      case 49:
+        setContent(transactionReadContent);
+        break;
       case 51:
         setContent(dummyMemberContent);
         break;
@@ -316,7 +320,6 @@ export default function Testbed() {
               <ThItem>변수명</ThItem>
               <ThItem>설명</ThItem>
               <ThItem>타입</ThItem>
-              <ThItem>필수 여부</ThItem>
               <ThItem>비고</ThItem>
             </TrItem>
           </TheadItem>
@@ -326,7 +329,6 @@ export default function Testbed() {
                 <TdItem>{p.name}</TdItem>
                 <TdItem>{p.desc}</TdItem>
                 <TdItem>{p.type}</TdItem>
-                <TdItem>{p.required}</TdItem>
                 <TdItem>{p.etc}</TdItem>
               </TrItem>
             ))}
@@ -356,8 +358,17 @@ export default function Testbed() {
 
         <form className="space-y-6" onSubmit={(e) => {
           e.preventDefault();
-          const uri = content.uri;
+          var uri = content.uri;
           const postFunc = async (params: string) => {
+
+            switch (content.uri) {
+              case "account/{bankId}":
+                uri = "bank/" + "26181252-036d-4edb-8729-204e15b0215b";
+                break;
+              default:
+                break;
+            }
+
             const response = await postAxios(uri, JSON.parse(params));
             setResponseContent({
               ...responseContent,
@@ -369,44 +380,119 @@ export default function Testbed() {
           };
           const getFunc = async (params: string) => {
 
+            switch (content.uri) {
+              case "bank/{bankId}":
+                uri = "bank/" + "26181252-036d-4edb-8729-204e15b0215b";
+                break;
+              case "member/{memberId}":
+                uri = "member/" + "4318993d-94f7-41a2-8d6b-1ec9dfe41005";
+                break;
+              case "member/email/{keyword}/{bankId}":
+                uri = "member/email/" + "tetetest@testt.com" + "/" + "3cf6f866-3fbd-46c8-85a1-96ab39551a35";
+                break;
+              case "member/phone/{keyword}":
+                uri = "member/phone/" + "01015885588";
+                break;
+              case "product/{productId}":
+                uri = "product/" + "fae4998a-bbb1-47dc-b6f5-6030b1df77d9";
+                break;
+              case "transaction/{transactionId}":
+                uri = "transaction/" + "35b17f49-606a-42ad-be6b-d751b8e8a997";
+                break;
+              case "dummy/{dummyId}":
+                uri = "dummy/" + "7aaf4873-e9cd-46a0-966e-235c854ac5a0";
+                break;
+              default:
+                break;
+            }
+
             const jsonParam = (function () {
-              if (params.length===0) {return null;} 
-              else {return JSON.parse(params);}
+              if (params.length === 0) { return null; }
+              else { return JSON.parse(params); }
             })();
             const response = await getAxios(uri, jsonParam);
             setResponseContent({
               ...responseContent,
               status: response.data.status,
               message: response.data.message,
-              data: JSON.stringify(response.data.data,null,2)
+              data: JSON.stringify(response.data.data, null, 2)
             });
-            if (response.data.data===null && response.data.page!=null) {
+            if (response.data.data === null && response.data.page != null) {
               setResponseContent({
                 ...responseContent,
-                message:response.data.message,
-                status:response.data.status,
-                data: JSON.stringify(response.data.page,null,2)
+                message: response.data.message,
+                status: response.data.status,
+                data: JSON.stringify(response.data.page, null, 2)
               })
             }
             return response.data;
           };
           const patchFunc = async (params: string) => {
-            const response = await patchAxios(uri, JSON.parse(params));
+
+            switch (content.uri) {
+              case "bank/{bankId}":
+                uri = "bank/" + "26181252-036d-4edb-8729-204e15b0215b";
+                break;
+              case "member/{memberId}":
+                uri = "member/" + "4318993d-94f7-41a2-8d6b-1ec9dfe41005";
+                break;
+              case "product/{productId}":
+                uri = "product/" + "fae4998a-bbb1-47dc-b6f5-6030b1df77d9";
+                break;
+              case "transaction/{transactionId}":
+                uri = "transaction/" + "35b17f49-606a-42ad-be6b-d751b8e8a997";
+                break;
+              case "dummy/{dummyId}":
+                uri = "dummy/" + "7aaf4873-e9cd-46a0-966e-235c854ac5a0";
+                break;
+              default:
+                break;
+            }
+
+            const jsonParam = (function () {
+              if (params.length === 0) { return null; }
+              else { return JSON.parse(params); }
+            })();
+
+            const response = await patchAxios(uri, jsonParam);
             setResponseContent({
               ...responseContent,
               status: response.data.status,
               message: response.data.message,
-              data: JSON.stringify(response.data.data,null,2)
+              data: JSON.stringify(response.data.data, null, 2)
             });
             return response.data;
           };
           const deleteFunc = async (params: string) => {
-            const response = await deleteAxios(uri, JSON.parse(params));
+
+            switch (content.uri) {
+              case "bank/{bankId}":
+                uri = "bank/" + "7032c6bf-9eea-48de-94eb-50498cf897b2";
+                break;
+              case "member/{memberId}":
+                uri = "member/" + "4318993d-94f7-41a2-8d6b-1ec9dfe41005";
+                break;
+              case "product/{productId}":
+                uri = "product/" + "fae4998a-bbb1-47dc-b6f5-6030b1df77d9";
+                break;
+              case "dummy/{dummyId}":
+                uri = "dummy/" + "e9779481-b016-42af-b81d-36109a06d823";
+                break;
+              default:
+                break;
+            }
+
+            const jsonParam = (function () {
+              if (params.length === 0) { return null; }
+              else { return JSON.parse(params); }
+            })();
+
+            const response = await deleteAxios(uri, jsonParam);
             setResponseContent({
               ...responseContent,
               status: response.data.status,
               message: response.data.message,
-              data: JSON.stringify(response.data.data,null,2)
+              data: JSON.stringify(response.data.data, null, 2)
             });
             return response.data;
           };
