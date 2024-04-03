@@ -79,7 +79,7 @@ public class AccountService {
         Account account = Account.builder()
                 .id(accountId)
                 .name((req.getNickname() == null) ? product.getName() : req.getNickname())
-                .balance((req.getAmount() == 0) ? req.getBalance() : req.getAmount())
+                .balance(req.getBalance())
                 .password(req.getPassword())
                 .isDormant(false)
                 .transferLimit(req.getTransferLimit())
