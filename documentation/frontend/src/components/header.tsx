@@ -1,20 +1,36 @@
+"use client";
+
 import tw from "tailwind-styled-components";
-import Link from 'next/link';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathname = usePathname();
   return (
     <>
       <Wrapper>
-        <Title><Link href="/"><img className='w-[16rem]' src='/logo1.png' alt='joa-openapi'/></Link></Title>
+        <Title>
+          <Link href="/">
+            <img className="w-[16rem]" src="/logo1.png" alt="joa-openapi" />
+          </Link>
+        </Title>
         <MenuContainer>
-        <NavContainer>
-          <NavItem><Link href="/">Home</Link></NavItem>
-          <NavItem><Link href="/docs">Docs</Link></NavItem>
-          <NavItem><Link href="/testbeds">APIs</Link></NavItem>
-        </NavContainer>
-        <ButtonContainer>
-          <ButtonItem><a href="https://admin.joa13.site/">Admin</a></ButtonItem>
-        </ButtonContainer>
+          <NavContainer>
+            <NavItem $selected={pathname === "/home"}>
+              <Link href="/">Home</Link>
+            </NavItem>
+            <NavItem $selected={pathname === "/docs"}>
+              <Link href="/docs">Docs</Link>
+            </NavItem>
+            <NavItem $selected={pathname === "/testbeds"}>
+              <Link href="/testbeds">APIs</Link>
+            </NavItem>
+          </NavContainer>
+          <ButtonContainer>
+            <ButtonItem>
+              <a href="https://admin.joa13.site/">Admin</a>
+            </ButtonItem>
+          </ButtonContainer>
         </MenuContainer>
       </Wrapper>
     </>
@@ -50,10 +66,14 @@ mx-2
 opacity-75
 `;
 
-const NavItem = tw.span`
+const NavItem = tw.div<{ $selected: boolean }>`
+w-10
+flex
+justify-center
+items-center
 m-2
 mx-6
-hover:font-bold
+${(p) => (p.$selected ? "font-bold" : "hover:font-bold")}
 `;
 
 const ButtonContainer = tw.div`
