@@ -93,67 +93,67 @@
 
 1. 메인화면
 <br/>
-<img src="./assets/Docs/Docs-Home.gif" style="height : 150;"/>
+<img src="./assets/Docs/Docs-Home.gif" style="height : 50;"/>
 2. Docs
 <br/>
-<img src="./assets/Docs/Docs-Docs.gif" style="height : 150;"/>
+<img src="./assets/Docs/Docs-Docs.gif" style="height : 50;"/>
 3. APIs
 <br/>
-<img src="./assets/Docs/Docs-APIs.gif" style="height : 150;"/>
+<img src="./assets/Docs/Docs-APIs.gif" style="height : 50;"/>
 
 ### **Admin**
 
 1. 설정
 <br/>
-<img src="./assets/Admin/Admin-SignupGetAPIKey.gif" style="height : 150;"/>
+<img src="./assets/Admin/Admin-SignupGetAPIKey.gif" style="height : 50;"/>
 2. 대시보드
 <br/>
-<img src="./assets/Admin/Admin-Dashboard.gif" style="height : 150;"/>
+<img src="./assets/Admin/Admin-Dashboard.gif" style="height : 50;"/>
 3. 은행
 <br/>
-<img src="./assets/Admin/Admin-CreateBank.gif" style="height : 150;"/>
+<img src="./assets/Admin/Admin-CreateBank.gif" style="height : 50;"/>
 4. 상품
 <br/>
-<img src="./assets/Admin/Admin-CreateProduct.gif" style="height : 150;"/>
+<img src="./assets/Admin/Admin-CreateProduct.gif" style="height : 50;"/>
 5. 계좌
 <br/>
-<img src="./assets/Admin/Admin-CreateAccount.gif" style="height : 150;"/>
+<img src="./assets/Admin/Admin-CreateAccount.gif" style="height : 50;"/>
 6. 고객
 <br/>
-<img src="./assets/Admin/Admin-CreateMember.gif" style="height : 150;"/>
+<img src="./assets/Admin/Admin-CreateMember.gif" style="height : 50;"/>
 7. 거래내역
 <br/>
-<img src="./assets/Admin/Admin-CreateTransaction.gif" style="height : 150;"/>
+<img src="./assets/Admin/Admin-CreateTransaction.gif" style="height : 50;"/>
 8. 더미데이터
 <br/>
-<img src="./assets/Admin/Admin-CreateDummyMember.gif" style="height : 150;"/>
-<img src="./assets/Admin/Admin-CreateDummyAccount.gif" style="height : 150;"/>
-<img src="./assets/Admin/Admin-CreateDummyTransaction.gif" style="height : 150;"/>
+<img src="./assets/Admin/Admin-CreateDummyMember.gif" style="height : 50;"/>
+<img src="./assets/Admin/Admin-CreateDummyAccount.gif" style="height : 50;"/>
+<img src="./assets/Admin/Admin-CreateDummyTransaction.gif" style="height : 50;"/>
 
 ### **App**
 
 1. 회원가입 / 로그인
 <br/>
-<img src="./assets/App/회원가입1.gif" style="height : 150;"/>
-<img src="./assets/App/회원가입2.gif" style="height : 150;"/>
-<img src="./assets/App/로그인 최종.gif" style="height : 150;"/>
+<img src="./assets/App/회원가입1.gif" style="height : 50;"/>
+<img src="./assets/App/회원가입2.gif" style="height : 50;"/>
+<img src="./assets/App/로그인 최종.gif" style="height : 50;"/>
 2. 계좌생성
 <br/>
-<img src="./assets/App/적금계좌생성.gif" style="height : 150;"/>
-<img src="./assets/App/상품 자세히보기.gif" style="height : 150;"/>
+<img src="./assets/App/적금계좌생성.gif" style="height : 50;"/>
+<img src="./assets/App/상품 자세히보기.gif" style="height : 50;"/>
 3. 계좌조회
 <br/>
-<img src="./assets/App/계좌조회.gif" style="height : 150;"/>
-<img src="./assets/App/계좌조회 메뉴.gif" style="height : 150;"/>
+<img src="./assets/App/계좌조회.gif" style="height : 50;"/>
+<img src="./assets/App/계좌조회 메뉴.gif" style="height : 50;"/>
 4. 이체
 <br/>
-<img src="./assets/App/이체.gif" style="height : 150;"/>
+<img src="./assets/App/이체.gif" style="height : 50;"/>
 5. 거래내역 조회
 <br/>
-<img src="./assets/App/거래내역조회.gif" style="height : 150;"/>
+<img src="./assets/App/거래내역조회.gif" style="height : 50;"/>
 6. 은행코드 변경
 <br/>
-<img src="./assets/App/은행코드바꾸기.gif" style="height : 150;"/>
+<img src="./assets/App/은행코드바꾸기.gif" style="height : 50;"/>
 
 # UCC
 
