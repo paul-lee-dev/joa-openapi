@@ -18,7 +18,7 @@ export default function docs() {
 
         <Subtitle>문의 및 지원</Subtitle>
         <TextItem>
-          API 사용에 관해 지원이 필요한 경우, 웹사이트 하단의 이메일로 문의하시기 바랍니다.
+          API 또는 샘플 앱 사용에 관하여 지원이 필요한 경우 이메일로 문의하시기 바랍니다.
         </TextItem>
       </Wrapper>
 

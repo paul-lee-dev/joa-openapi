@@ -1,6 +1,6 @@
 import tw from "tailwind-styled-components";
 import { HiArrowDown } from "react-icons/hi";
-import { posts, stats, post2, qna } from './items';
+import { posts, stats, qna } from './items';
 import { IoMdDownload } from "react-icons/io";
 
 
@@ -16,7 +16,7 @@ const Home = () => {
               <PurpleButtonItem href="/docs">시작하기</PurpleButtonItem>
             </ButtonContainer>
           </SubContainer>
-          <a href='https://admin.joa13.site/'><ImageItem src="/sample.png" alt="Product screenshot" /></a>
+          <a href='https://admin.joa13.site/'><ImageItem src="/dashboard.png" alt="Product screenshot" /></a>
         </MainContainer>
       </Wrapper>
 
@@ -61,7 +61,7 @@ const Home = () => {
           <SubTitleItem>샘플 앱을 다운받아<br/>사용해 보세요</SubTitleItem>
         </SubWrapper2>
         <MainContainer>
-          <a href='https://drive.google.com/file/d/1NkIEsYFl08CIaXb5NmtYruOxnIm-jjvH/view'><ImageItem2 src='/bank.png' /></a>
+          <a href='https://drive.google.com/file/d/1YvjMbzyCdh7u62DD3d0909x68kEIU1i9/view'><ImageItem2 src='/bank.png' /></a>
           <SubContainer2>
             <MainTitleItem>Joa Bank</MainTitleItem>
             <MainTextItem>
@@ -71,7 +71,7 @@ const Home = () => {
             <FeatureContainer2>
               <FeatureItem2>
                 <FeatureIconContainer>
-                  <a href="https://drive.google.com/file/d/1NkIEsYFl08CIaXb5NmtYruOxnIm-jjvH/view"><IoMdDownload className="text-2xl text-white drop-shadow" /></a>
+                  <a href='https://drive.google.com/file/d/1YvjMbzyCdh7u62DD3d0909x68kEIU1i9/view'><IoMdDownload className="text-2xl text-white drop-shadow" /></a>
                 </FeatureIconContainer>
                 <div>
                   <FeatureTitle2>APK 다운로드</FeatureTitle2>
@@ -151,7 +151,7 @@ text-center font-semibold shadow-md focus:ring-2 focus:ring-offset-2 rounded-ful
 `;
 
 const ImageItem = tw.img`
-rounded-xl shadow-xl z-10
+rounded-xl shadow-xl z-10 object-cover
 `;
 
 const SubTitleItem = tw.h3`

@@ -14,7 +14,7 @@ export const posts = [
       title: '샘플 어플리케이션',
       description:
         '클라이언트 개발 기간을 단축할 수 있도록 샘플 앱과 도커 이미지 등을 오픈 소스로 제공합니다.',
-        url:'https://drive.google.com/file/d/1NkIEsYFl08CIaXb5NmtYruOxnIm-jjvH/view',
+        url:'https://drive.google.com/file/d/1YvjMbzyCdh7u62DD3d0909x68kEIU1i9/view',
       image: {
         url: '/post4.png',
       },
@@ -37,10 +37,10 @@ export const posts = [
   }
   
   export const stats: Stat[] = [
-    { id: 1, name: '서비스 이용자 수', value: '10' },
-    { id: 2, name: '생성된 가상은행 수', value: '30' },
-    { id: 3, name: '생성된 가상유저 수', value: '120' },
-    { id: 4, name: '앱 다운로드 횟수', value: '0' }
+    { id: 1, name: '서비스 이용자 수', value: '20' },
+    { id: 2, name: '생성된 가상은행 수', value: '50' },
+    { id: 3, name: '생성된 가상유저 수', value: '130' },
+    { id: 4, name: '앱 다운로드 횟수', value: '10' }
   ];
   
   export const post2 = [

@@ -6,6 +6,7 @@ export default function docs() {
       <Wrapper>
         <Title>관리자 대시보드 이용법</Title>
         <Subtitle>개요</Subtitle>
+        <img src='dashboard1.png'/>
         <NumberTitle>대시보드를 통해 은행 고객과 거래 내역 등에 대한 다양한 통계를 한눈에 살펴보세요.</NumberTitle>
         <TextItem>
           1. 관리자 사이트에 로그인 후, 좌측 메뉴에서 대시보드 항목을 클릭해서 엽니다.<br />
