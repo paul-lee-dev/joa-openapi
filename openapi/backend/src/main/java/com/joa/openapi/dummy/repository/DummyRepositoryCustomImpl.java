@@ -40,6 +40,7 @@ public class DummyRepositoryCustomImpl implements DummyRepositoryCustom {
                 .leftJoin(dummy.transactionList)
                 .fetchJoin()
                 .where(eqSearchKeyWord(req.getSearchKeyWord()), eqIsAdmin(adminId), eqIsType(req))
+                .groupBy(dummy.Id)
                 .orderBy(dummy.createdAt.desc());
 
         long total = query.fetchCount();

@@ -1,0 +1,23 @@
+
+포트 정보
+
+22: ssh
+80: nginx - proxy
+443: SSL
+
+admin-front ; 8083
+docs-front ; 8082
+
+openapi ; 8040
+admin ; 8030
+bank ; 8010
+
+node:20 ; 8000
+
+mysql:8.2 ; 3306
+
+jenkins ; 8888
+grafana ; 8900
+prometheus ; 8901
+node-exporter ; 8902
+redis ; 6379
