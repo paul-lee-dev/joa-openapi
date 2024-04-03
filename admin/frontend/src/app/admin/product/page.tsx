@@ -11,7 +11,8 @@ import ProductTypeMultiSearchSelect from "@/components/select/productTypeMultiSe
 import ProductTable from "@/components/table/productTable";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
+import tw from "tailwind-styled-components";
 
 const ProductList = () => {
   const router = useRouter();
@@ -19,11 +20,17 @@ const ProductList = () => {
   const [page, setPage] = useState<number>(Number(params.get("page")) || 1);
   const [keyword, setKeyword] = useState<string>(params.get("productKeyword") ?? "");
   const [searchWord, setSearchWord] = useState<string>(params.get("productKeyword") ?? "");
-  const [bankId, setBankId] = useState<string>("");
+  const [bankId, setBankId] = useState<string>(params.get("bankId") ?? "");
+  const [productType, setProductType] = useState<string>(params.get("productType") ?? "");
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["ProductList", searchWord || "all", page],
+    queryKey: ["ProductList", searchWord || "all", page, bankId || "all", productType || "all"],
     queryFn: () => {
-      return searchProductList({ productKeyword: searchWord, page });
+      return searchProductList({
+        productKeyword: searchWord,
+        page,
+        bankId: bankId || null,
+        productType: productType || null,
+      });
     },
   });
 
@@ -39,9 +46,14 @@ const ProductList = () => {
     if (searchWord !== "") {
       newParams.set("productKeyword", searchWord);
     }
-    console.log(newParams);
+    if (bankId !== "") {
+      newParams.set("bankId", bankId);
+    }
+    if (productType !== "") {
+      newParams.set("productType", productType);
+    }
     router.replace(`/admin/product?${newParams.toString()}`);
-  }, [router, page, searchWord]);
+  }, [router, page, searchWord, bankId, productType]);
 
   return (
     <>
@@ -51,16 +63,32 @@ const ProductList = () => {
         <>
           <div className="flex pt-10 pb-5 justify-between">
             <h1 className="text-2xl font-bold">상품</h1>
-            <form>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setPage(1);
+                setSearchWord(keyword);
+              }}
+            >
               <div className="flex space-x-2 items-center">
-                <BankSelect />
-                <ProductTypeMultiSearchSelect
-                  placeholder={""}
-                  label={""}
-                  htmlFor={""}
-                ></ProductTypeMultiSearchSelect>
-                <ProductGroupSearch></ProductGroupSearch>
-                <Button id={"search"} name={"검색"} onClick={() => {}}></Button>
+                <BankSelect bankId={bankId} setBankId={setBankId} />
+                <Select value={productType} onChange={(e) => setProductType(e.target.value)}>
+                  <option value={""}>상품타입 선택</option>
+                  <option value={"ORDINARY_DEPOSIT"}>보통 예금</option>
+                  <option value={"TERM_DEPOSIT"}>정기 예금</option>
+                  <option value={"FIXED_DEPOSIT"}>정기 적금</option>
+                </Select>
+                <div className="w-52 h-10">
+                  <input
+                    type="text"
+                    autoComplete="off"
+                    className="w-full h-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    onChange={(e) => setKeyword(e.target.value)}
+                    value={keyword}
+                    placeholder="상품 명"
+                  />
+                </div>
+                <Button id={"button"} name={"검색"} />
               </div>
             </form>
           </div>
@@ -90,5 +118,26 @@ const ProductList = () => {
     </>
   );
 };
+
+const Select = tw.select`
+block 
+w-40 
+h-10
+rounded-md 
+border-0 
+px-1.5
+py-1.5
+text-gray-700
+ring-1
+ring-inset 
+ring-gray-300 
+placeholder:text-gray-400 
+focus:outline-none
+focus:ring-2 
+focus:ring-inset 
+focus:ring-pink-500 
+sm:text-sm 
+sm:leading-6
+`;
 
 export default ProductList;

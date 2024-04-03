@@ -9,16 +9,24 @@ import MemberTable from "@/components/table/memberTable";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import tw from "tailwind-styled-components";
 const MemberList = () => {
   const router = useRouter();
   const params = useSearchParams();
   const [page, setPage] = useState<number>(Number(params.get("page")) || 1);
   const [keyword, setKeyword] = useState<string>(params.get("memberName") ?? "");
   const [searchWord, setSearchWord] = useState<string>(params.get("memberName") ?? "");
+  const [bankId, setBankId] = useState<string>(params.get("bankId") ?? "");
+  const [isDummy, setIsDummy] = useState<string>(params.get("isDummy") ?? "");
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["MemberList", searchWord || "all", page],
+    queryKey: ["MemberList", searchWord || "all", page, bankId || "all", isDummy || "all"],
     queryFn: () => {
-      return searchMemberList({ memberName: searchWord, page });
+      return searchMemberList({
+        memberName: searchWord,
+        page,
+        bankId: bankId || null,
+        isDummy: isDummy || null,
+      });
     },
   });
 
@@ -34,9 +42,14 @@ const MemberList = () => {
     if (searchWord !== "") {
       newParams.set("memberName", searchWord);
     }
-    console.log(newParams);
+    if (bankId !== "") {
+      newParams.set("bankId", bankId);
+    }
+    if (isDummy !== "") {
+      newParams.set("isDummy", isDummy);
+    }
     router.replace(`/admin/member?${newParams.toString()}`);
-  }, [router, page, searchWord]);
+  }, [router, page, searchWord, bankId, isDummy]);
 
   return (
     <>
@@ -46,10 +59,32 @@ const MemberList = () => {
         <>
           <div className="flex pt-10 pb-5 justify-between">
             <h1 className="text-2xl font-bold">고객</h1>
-            <form className="flex items-center space-x-2">
-              <BankSelect></BankSelect>
-              <GroupSearch></GroupSearch>
-              <Button id={"search"} name={"검색"} onClick={() => {}}></Button>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setPage(1);
+                setSearchWord(keyword);
+              }}
+            >
+              <div className="flex space-x-2 items-center">
+                <BankSelect bankId={bankId} setBankId={setBankId} />
+                <Select value={isDummy} onChange={(e: any) => setIsDummy(e.target.value)}>
+                  <option value={""}>더미데이터 여부</option>
+                  <option value={"true"}>더미 데이터만</option>
+                  <option value={"false"}>실제 데이터만</option>
+                </Select>
+                <div className="w-52 h-10">
+                  <input
+                    type="text"
+                    autoComplete="off"
+                    className="w-full h-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    onChange={(e) => setKeyword(e.target.value)}
+                    value={keyword}
+                    placeholder="고객 명"
+                  />
+                </div>
+                <Button id={"search"} name={"검색"}></Button>
+              </div>
             </form>
           </div>
 
@@ -77,5 +112,26 @@ const MemberList = () => {
     </>
   );
 };
+
+const Select = tw.select`
+block 
+w-40 
+h-10
+rounded-md 
+border-0 
+px-1.5
+py-1.5
+text-gray-700
+ring-1
+ring-inset 
+ring-gray-300 
+placeholder:text-gray-400 
+focus:outline-none
+focus:ring-2 
+focus:ring-inset 
+focus:ring-pink-500 
+sm:text-sm 
+sm:leading-6
+`;
 
 export default MemberList;

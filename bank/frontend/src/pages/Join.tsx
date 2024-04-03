@@ -49,7 +49,7 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
     onError: err => console.log(err),
   });
   const emailMutation = useMutation({
-    mutationFn: emailConfirm,
+    mutationFn: (params: string) => emailConfirm(params, bankData.bankId),
     onSuccess: data => {
       console.log(data);
       clearErrors('email');
@@ -102,8 +102,21 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
 
   const checkEmailValid = () => {
     const emailValue = getValues('email');
+    const emailRegex = new RegExp(
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/,
+    );
     if (emailValue === '') {
-      setError('email', {type: 'required', message: '이메일을 입력해주세요.'});
+      setError('email', {
+        type: 'required',
+        message: '이메일을 입력해주세요.',
+      });
+      return;
+    }
+    if (!emailRegex.test(emailValue)) {
+      setError('email', {
+        type: 'pattern',
+        message: '올바른 이메일 형식이 아닙니다.',
+      });
       return;
     }
     emailMutation.mutate(emailValue);

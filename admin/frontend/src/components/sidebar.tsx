@@ -48,15 +48,6 @@ export default function Sidebar() {
             <ListName>상품</ListName>
           </ListAnchor>
           <ListAnchor
-            $selected={pathname.startsWith("/admin/account")}
-            onClick={() => {
-              router.push("/admin/account");
-            }}
-          >
-            <MdAccountBalanceWallet></MdAccountBalanceWallet>
-            <ListName>계좌</ListName>
-          </ListAnchor>
-          <ListAnchor
             $selected={pathname.startsWith("/admin/member")}
             onClick={() => {
               router.push("/admin/member");
@@ -65,6 +56,16 @@ export default function Sidebar() {
             <FaUserFriends></FaUserFriends>
             <ListName>고객</ListName>
           </ListAnchor>
+          <ListAnchor
+            $selected={pathname.startsWith("/admin/account")}
+            onClick={() => {
+              router.push("/admin/account");
+            }}
+          >
+            <MdAccountBalanceWallet></MdAccountBalanceWallet>
+            <ListName>계좌</ListName>
+          </ListAnchor>
+
           <ListAnchor
             $selected={pathname.startsWith("/admin/transaction")}
             onClick={() => {

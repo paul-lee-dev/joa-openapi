@@ -15,9 +15,11 @@ export default function AccountGroupSearch() {
             name="options"
             className="h-full rounded-md border-0 bg-transparent py-0 pl-4 pr-2 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
           >
-            <option value="accountId">계좌번호</option>
-            <option value="nickname">계좌이름</option>
-            <option value="dummyId">더미이름</option>
+            <option value="ACCOUNT_ID">계좌번호</option>
+            <option value="ACCOUNT_NAME">계좌이름</option>
+            <option value="HOLDER_NAME">고객이름</option>
+            <option value="PRODUCT_NAME">상품이름</option>
+            <option value="DUMMY_NAME">더미이름</option>
           </select>
         </div>
       </div>

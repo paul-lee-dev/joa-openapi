@@ -1,24 +1,31 @@
 import { searchBankList } from "@/api/Bank";
 import { IBank } from "@/models/Bank.interface";
 import { useQuery } from "@tanstack/react-query";
+import { ChangeEventHandler } from "react";
 import tw from "tailwind-styled-components";
 
 interface IProps {
   bankList?: IBank[];
+  bankId: string;
+  setBankId: (value: string) => void;
 }
 
-export default function BankSelect({ bankList }: IProps) {
+export default function BankSelect({ bankList, bankId, setBankId }: IProps) {
   const { data: bankData } = useQuery({
     queryKey: ["BankList"],
     queryFn: () => {
       return searchBankList({});
     },
   });
+
+  const onChangeOption: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    setBankId(e.target.value);
+  };
   return (
     <InputContainer>
-      <Select id="banks" defaultValue={"all"}>
-        <option key={"all"} value={"all"}>
-          전체
+      <Select id="banks" value={bankId} onChange={onChangeOption} aria-placeholder="은행 선택">
+        <option key={"all"} value={""}>
+          은행 선택
         </option>
         {bankData?.page.content.map((bank: IBank) => (
           <option key={bank.bankId} value={bank.bankId}>
@@ -31,12 +38,13 @@ export default function BankSelect({ bankList }: IProps) {
 }
 
 const InputContainer = tw.div`
-mt-2
+h-10
 `;
 
 const Select = tw.select`
 block 
-w-full 
+w-40
+h-10
 rounded-md 
 border-0 
 px-1.5
