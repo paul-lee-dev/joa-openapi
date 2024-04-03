@@ -183,13 +183,9 @@ export default function docs() {
         <Subtitle>테스트베드</Subtitle>
         <TextItem>
         - 각 API 명세 문서에서 요청 보내기 버튼을 누르면 아래의 칸에 입력한 데이터를 담은 요청이 서버의 해당 엔드포인트로 전송됩니다.<br/>
-        - GET, DELETE 메소드 요청일 경우 빈칸으로 남겨두세요.<br/>
-        - POST 또는 PATCH METHOD의 요청이라면 request data를 JSON 방식으로 입력 후 요청 보내기 버튼을 클릭하세요.<br/>
-        - 어떻게 보내야 할지 잘 모르겠다면 요청 예시를 복사해서 붙여넣기하거나 필요에 따라 수정해서 활용해 보세요.<br/>
-        - 데이터의 원활한 조회, 수정 기능 작동을 위해 테스트베드의 DELETE 요청은 실제로 작동하지 않도록 되어 있습니다.<br/>
-        - 공개 테스트베드이므로 여기에 입력된 데이터는 누구나 열람 가능합니다. 민감한 개인 정보는 입력하지 않도록 주의하세요.
+        - 공개 테스트베드이므로 여기에 입력된 데이터는 누구나 조회 가능합니다. 민감한 개인 정보는 입력하지 않도록 주의하세요.
         </TextItem>
-        <RequestItem></RequestItem>
+        <RequestItem>GET 또는 DELETE 메소드 요청이라면 빈칸으로 남겨두세요. POST 또는 PATCH 메소드 요청이라면 여기에 request data를 JSON 방식으로 입력 후 요청 보내기 버튼을 클릭하세요. 어떻게 보내야 할지 잘 모르겠다면 요청 예시 항목의 내용을 복사하여 붙여넣기하거나 필요에 따라 수정해서 활용해 보세요.</RequestItem>
         <ButtonItem>요청 보내기</ButtonItem>
         <Subtitle>응답 status</Subtitle>
         <ResponseItem>전송한 요청에 대한 응답 status가 표시됩니다.</ResponseItem>

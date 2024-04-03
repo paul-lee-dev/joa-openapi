@@ -591,7 +591,50 @@ export const transactionReadContent = {
     uri: 'transaction/{transactionId}',
     requestParam: [],
     requestExample: '',
-    responseParam: [],
+    responseParam: [
+        {
+            name: 'transactionId',
+            desc: '거래내역 아이디',
+            type: 'String',
+            required: 'Y',
+            etc: '',
+        },
+        {
+            name: 'amount',
+            desc: '금액',
+            type: 'String',
+            required: 'Y',
+            etc: '',
+        },
+        {
+            name: 'depositorName',
+            desc: '입금주명',
+            type: 'String',
+            required: 'Y',
+            etc: '',
+        },
+        {
+            name: 'fromAccount',
+            desc: '보내는 계좌번호',
+            type: 'String',
+            required: 'Y',
+            etc: '',
+        },
+        {
+            name: 'toAccount',
+            desc: '받는 계좌번호',
+            type: 'String',
+            required: 'Y',
+            etc: '',
+        },
+        {
+            name: 'createdAt',
+            desc: '거래내역 발생일',
+            type: 'String',
+            required: 'Y',
+            etc: '',
+        },
+    ],
     responseExample: `
     {
         "status": "SUCCESS",
