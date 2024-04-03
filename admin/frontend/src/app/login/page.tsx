@@ -109,7 +109,7 @@ export default function LoginPage() {
               <SignUpAnchor>회원가입</SignUpAnchor>
             </Link>
           </SignUpParagraph>
-          <SignUpParagraph>
+          {/* <SignUpParagraph>
             비밀번호를 잊어버리셨나요?{" "}
             <Link
               href={{
@@ -118,7 +118,7 @@ export default function LoginPage() {
             >
               <SignUpAnchor>비밀번호 찾기</SignUpAnchor>
             </Link>
-          </SignUpParagraph>
+          </SignUpParagraph> */}
         </div>
       </MainContainer>
     </Wrapper>
