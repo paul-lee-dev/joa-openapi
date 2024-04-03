@@ -31,9 +31,42 @@
 ## 의의
 
 # 개발 멤버 및 일정 소개
-|사진|사진|사진|사진|사진|사진|
-|조아영(팀장)|고수림|구본승|김희연|이유로|이정호|
-|Back-end, Front-end|Infra|Bank-end|Back-end|Front-end|Front-end|
+<table>
+    <tr>
+        <td>
+        조아영
+        </td>
+        <td>
+        고수림
+        </td>
+        <td>
+        구본승
+        </td>
+        <td>
+        김희연
+        </td>
+        <td>
+        이유로
+        </td>
+        <td>
+        이정호
+        </td>
+    </tr>
+    <tr>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+    </tr>
+</table>
 
 ## 프로젝트 기간
 
@@ -52,51 +85,68 @@
 ### **Docs**
 
 1. 메인화면
-![메인화면](./assets/Docs/Docs-Home.gif)
+<br/>
+<img src="./assets/Docs/Docs-Home.gif" style="height : 150;"/>
 2. Docs
-![Docs](./assets/Docs/Docs-Docs.gif)
+<br/>
+<img src="./assets/Docs/Docs-Docs.gif" style="height : 150;"/>
 3. APIs
-![APIs](./assets/Docs/Docs-APIs.gif)
+<br/>
+<img src="./assets/Docs/Docs-APIs.gif" style="height : 150;"/>
 
 ### **Admin**
 
 1. 설정
-![설정](./assets/Admin/Admin-SignupGetAPIKey)
+<br/>
+<img src="./assets/Admin/Admin-SignupGetAPIKey.gif" style="height : 150;"/>
 2. 대시보드
-![대시보드](./assets/Admin/Admin-Dashboard.gif)
+<br/>
+<img src="./assets/Admin/Admin-Dashboard.gif" style="height : 150;"/>
 3. 은행
-![은행생성](./assets/Admin/Admin-CreateBank.gif)
+<br/>
+<img src="./assets/Admin/Admin-CreateBank.gif" style="height : 150;"/>
 4. 상품
-![상품생성](./assets/Admin/Admin-CreateProduct.gif)
+<br/>
+<img src="./assets/Admin/Admin-CreateProduct.gif" style="height : 150;"/>
 5. 계좌
-![계좌생성](./assets/Admin/Admin-CreateAccount.gif)
+<br/>
+<img src="./assets/Admin/Admin-CreateAccount.gif" style="height : 150;"/>
 6. 고객
-![고객생성](./assets/Admin/Admin-CreateMember.gif)
+<br/>
+<img src="./assets/Admin/Admin-CreateMember.gif" style="height : 150;"/>
 7. 거래내역
-![거래내역생성](./assets/Admin/Admin-CreateTransaction.gif)
+<br/>
+<img src="./assets/Admin/Admin-CreateTransaction.gif" style="height : 150;"/>
 8. 더미데이터
-<img src="./assets/Admin/Admin-CreateDummyMember.gif" style="height : 500;"/>
-<img src="./assets/Admin/Admin-CreateDummyAccount.gif" style="height : 500;"/>
-<img src="./assets/Admin/Admin-CreateDummyTransaction.gif" style="height : 500;"/>
+<br/>
+<img src="./assets/Admin/Admin-CreateDummyMember.gif" style="height : 150;"/>
+<img src="./assets/Admin/Admin-CreateDummyAccount.gif" style="height : 150;"/>
+<img src="./assets/Admin/Admin-CreateDummyTransaction.gif" style="height : 150;"/>
 
 ### **App**
 
 1. 회원가입 / 로그인
-<img src="./assets/App/회원가입1.gif" style="height : 500;"/>
-<img src="./assets/App/회원가입2.gif" style="height : 500;"/>
-<img src="/assets/App/로그인최종.gif" style="height : 500;"/>
+<br/>
+<img src="./assets/App/회원가입1.gif" style="height : 150;"/>
+<img src="./assets/App/회원가입2.gif" style="height : 150;"/>
+<img src="./assets/App/로그인 최종.gif" style="height : 150;"/>
 2. 계좌생성
-<img src="./assets/App/적금계좌생성.gif" style="height : 500;"/>
-<img src="./assets/App/상품 자세히보기.gif" style="height : 500;"/>
+<br/>
+<img src="./assets/App/적금계좌생성.gif" style="height : 150;"/>
+<img src="./assets/App/상품 자세히보기.gif" style="height : 150;"/>
 3. 계좌조회
-<img src="./assets/App/계좌조회.gif" style="height : 500;"/>
-<img src="./assets/App/계좌조회 메뉴.gif" style="height : 500;"/>
+<br/>
+<img src="./assets/App/계좌조회.gif" style="height : 150;"/>
+<img src="./assets/App/계좌조회 메뉴.gif" style="height : 150;"/>
 4. 이체
-![이체](./assets/App/이체.gif)
+<br/>
+<img src="./assets/App/이체.gif" style="height : 150;"/>
 5. 거래내역 조회
-![거래내역조회](./assets/App/거래내역조회.gif)
+<br/>
+<img src="./assets/App/거래내역조회.gif" style="height : 150;"/>
 6. 은행코드 변경
-![은행코드 변경](./assets/App/은행코드바꾸기.gif)
+<br/>
+<img src="./assets/App/은행코드바꾸기.gif" style="height : 150;"/>
 
 # 기술 스택
 <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=#007396" style="height : auto; margin-left : 10px; margin-right : 10px;"/> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/> <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white" style="height : auto; margin-left : 10px; margin-right : 10px;"/>
