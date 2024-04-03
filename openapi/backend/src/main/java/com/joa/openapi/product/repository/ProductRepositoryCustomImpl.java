@@ -85,9 +85,19 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
         return new PageImpl<>(res, pageable, total);
     }
 
+    @Override
+    public UUID searchBankFirstProductCustom(UUID adminId, UUID bankId) {
+        return jpaQueryFactory
+                .selectFrom(product)
+                .where(eqAdminId(adminId), eqBankId(bankId))
+                .fetchFirst().getId();
+    }
+
     private BooleanExpression eqAdminId(UUID adminId) {
         return product.productsBank.adminId.eq(adminId);
     }
+
+    private BooleanExpression eqBankId(UUID bankId) { return product.productsBank.id.eq(bankId); }
 
     private BooleanExpression eqSearchProductKeyword(String productKeyword) {
         if (productKeyword == null || productKeyword.isBlank()) {
