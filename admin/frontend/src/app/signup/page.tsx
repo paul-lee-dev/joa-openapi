@@ -6,6 +6,9 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { join } from "@/api/Admin";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import NavbarImg from "@/asset/img/navbar.png";
+import Image from "next/image";
 
 interface JoinForm {
   email: string;
@@ -32,6 +35,7 @@ export default function SignUpPage() {
     handleSubmit,
     formState: { errors },
     setError,
+    getValues,
   } = useForm<JoinForm>({
     defaultValues: {
       email: "",
@@ -78,6 +82,9 @@ export default function SignUpPage() {
     <>
       <Wrapper>
         <MainContainer>
+          <div className="w-full flex justify-center items-center">
+            <Image src={NavbarImg} alt="Admin" draggable={false} />
+          </div>
           <LoginFormContainer onSubmit={handleSubmit(onSubmit)}>
             <InputFormWrapper>
               <LoginLabel htmlFor="email">이메일</LoginLabel>
@@ -148,6 +155,12 @@ export default function SignUpPage() {
                   type="password"
                   {...register("password2", {
                     required: "비밀번호를 한번 더 입력해주세요.",
+                    validate: {
+                      correct: (value) =>
+                        value === getValues("password")
+                          ? true
+                          : "비밀번호가 일치하지 않습니다.",
+                    },
                   })}
                 />
               </InputContainer>
@@ -157,6 +170,18 @@ export default function SignUpPage() {
               <Button type="submit">회원가입</Button>
             </InputFormWrapper>
           </LoginFormContainer>
+          <div className="pt-12">
+            <LoginParagraph>
+              이미 계정이 있으신가요?{" "}
+              <Link
+                href={{
+                  pathname: "/login",
+                }}
+              >
+                <LoginAnchor>로그인</LoginAnchor>
+              </Link>
+            </LoginParagraph>
+          </div>
         </MainContainer>
       </Wrapper>
       {isModalOpen && (
@@ -309,4 +334,17 @@ const ModalContent = tw.div`
   p-8
   max-w-md
   w-full
+`;
+
+const LoginParagraph = tw.p`
+text-center 
+text-sm 
+text-gray-500
+`;
+const LoginAnchor = tw.span`
+font-semibold 
+leading-6 
+text-gray-500 
+hover:text-primary
+hover:underline
 `;

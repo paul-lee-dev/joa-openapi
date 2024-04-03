@@ -71,10 +71,12 @@ export type RootStackParamList = {
   TransferAmount: {
     account: IAccount;
     toAccountId: string;
+    toAccountName: string;
   };
   TransferConfirm: {
     account: IAccount;
     toAccountId: string;
+    toAccountName: string;
     amount: number;
   };
   TransferResult: {
@@ -82,6 +84,7 @@ export type RootStackParamList = {
     depositorName: string;
     accountNickname: string;
     toAccountId: string;
+    toAccountName: string;
   };
 };
 
@@ -90,9 +93,21 @@ const globalOption = {options: {headerShown: false}};
 
 function Router(): React.JSX.Element {
   const memberData = useRecoilValue(memberDataAtom);
+  const bankData = useRecoilValue(bankDataAtom);
   useEffect(() => {
+    axiosInstance.interceptors.request.clear();
+    axiosInstance.interceptors.request.use(
+      config => {
+        config.headers.memberId = memberData.member?.id;
+        config.headers.apiKey = bankData.apiKey;
+        return config;
+      },
+      error => {
+        return Promise.reject(error);
+      },
+    );
     SplashScreen.hide();
-  }, []);
+  }, [memberData, bankData]);
 
   return (
     <NavigationContainer>

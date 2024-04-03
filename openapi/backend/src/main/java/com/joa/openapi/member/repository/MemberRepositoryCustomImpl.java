@@ -35,7 +35,8 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
                 .leftJoin(member.bank)
                 .fetchJoin()
                 //account의 은행아이디로 은행을 가져와서 은행의 어드민아이디 == apiKey로 admin가져온거랑
-                .where(eqAdminId(adminId), eqBankName(req.getBankName()), eqMemberName(req.getMemberName()), eqDummy(req.getIsDummy()));
+                .where(eqAdminId(adminId), eqBankId(req.getBankId()), eqMemberName(req.getMemberName()), eqDummy(req.getIsDummy()))
+                .orderBy(member.createdAt.desc());
 
         long total = query.fetchCount(); // 전체 계좌 수
 
@@ -57,11 +58,11 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
         return member.bank.adminId.eq(adminId);
     }
 
-    private BooleanExpression eqBankName(String name) {
-        if (name == null)
+    private BooleanExpression eqBankId(UUID bankId) {
+        if (bankId == null)
             return null;
 
-        return member.bank.name.eq(name);
+        return member.bank.id.eq(bankId);
     }
 
     private BooleanExpression eqMemberName(String name) {

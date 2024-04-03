@@ -20,9 +20,57 @@ export default function docs() {
           API를 제공하는 엔드포인트입니다. 엔드포인트란 웹 서비스에서 클라이언트가 서버에 특정한 작업을 요청할 때 사용되는 URL을 말합니다. 해당하는 Method로 호출하여 적절한 요청을 보낼 경우 서버는 클라이언트의 요청을 이해하고 처리할 수 있게 됩니다.
         </TextItem>
 
+        <Subtitle>공통 헤더 명세</Subtitle>
+        <TextItem>
+          헤더에 포함되어야 하는 변수들이 있을 경우 그에 대한 설명이 기술됩니다. 
+        </TextItem>
+        <TableItem>
+          <TheadItem>
+            <TrItem>
+              <ThItem>변수명</ThItem>
+              <ThItem>설명</ThItem>
+              <ThItem>타입</ThItem>
+              <ThItem>필수 여부</ThItem>
+              <ThItem>비고</ThItem>
+            </TrItem>
+          </TheadItem>
+          <TbodyItem>
+          {commonHeader.map((h) => (
+              <TrItem key={h.name}>
+                <TdItem>{h.name}</TdItem>
+                <TdItem>{h.desc}</TdItem>
+                <TdItem>{h.type}</TdItem>
+                <TdItem>{h.required}</TdItem>
+                <TdItem>{h.etc}</TdItem>
+              </TrItem>
+            ))}
+          </TbodyItem>
+        </TableItem>
+
+        <Subtitle>쿼리 스트링 명세</Subtitle>
+        <TextItem>쿼리 스트링 사용이 가능한 요청의 경우 사용할 수 있는 옵션에 대한 설명이 기술됩니다.</TextItem>
+        <TableItem>
+          <TheadItem>
+            <TrItem>
+              <ThItem>변수명</ThItem>
+              <ThItem>설명</ThItem>
+              <ThItem>타입</ThItem>
+              <ThItem>비고</ThItem>
+            </TrItem>
+          </TheadItem>
+          <TbodyItem>
+            <TrItem>
+              <TdItem>해당 변수의 명칭 </TdItem>
+              <TdItem>해당 변수에 대한 설명</TdItem>
+              <TdItem>해당 변수의 자료형 타입</TdItem>
+              <TdItem>제약 등의 비고사항</TdItem>
+            </TrItem>
+          </TbodyItem>
+        </TableItem>
+
         <Subtitle>요청 메시지 data 명세</Subtitle>
         <TextItem>
-          Request Body에 포함되어야 하는 변수들이 있을 경우 그에 대한 상세한 설명이 기술됩니다. 요청 메시지의 data가 null일 경우 없음으로 기재됩니다.
+          Request Body에 포함되어야 하는 변수들이 있을 경우 그에 대한 설명이 기술됩니다.
         </TextItem>
         <TableItem>
           <TheadItem>
@@ -63,7 +111,7 @@ export default function docs() {
 
         <Subtitle>응답 메시지 data 명세</Subtitle>
         <TextItem>
-          Response Body에 포함되는 변수들이 있을 경우 그에 대한 상세한 설명이 기술됩니다. 응답 메시지의 data가 null일 경우 없음으로 기재됩니다.
+          Response Body에 포함되는 변수들이 있을 경우 그에 대한 설명이 기술됩니다. 
         </TextItem>
         <TableItem>
           <TheadItem>
@@ -71,7 +119,6 @@ export default function docs() {
               <ThItem>변수명</ThItem>
               <ThItem>설명</ThItem>
               <ThItem>타입</ThItem>
-              <ThItem>필수 여부</ThItem>
               <ThItem>비고</ThItem>
             </TrItem>
           </TheadItem>
@@ -80,7 +127,6 @@ export default function docs() {
               <TdItem>해당 변수의 명칭 </TdItem>
               <TdItem>해당 변수에 대한 설명</TdItem>
               <TdItem>해당 변수의 자료형 타입</TdItem>
-              <TdItem>요청 메시지에 해당 변수가 필수로 포함되어야 하는지의 여부</TdItem>
               <TdItem>제약 등의 비고사항</TdItem>
             </TrItem>
           </TbodyItem>
@@ -94,7 +140,7 @@ export default function docs() {
 
         <Subtitle>에러 코드</Subtitle>
         <TextItem>
-          여기에는 본 API를 사용할 경우 발생할 수 있는 에러에 대한 설명이 기술됩니다.
+          여기에는 각 API를 사용할 경우 발생할 수 있는 에러에 대한 설명이 기술됩니다.
         </TextItem>
         <TableItem>
           <TheadItem>
@@ -112,9 +158,29 @@ export default function docs() {
             </TrItem>
           </TbodyItem>
         </TableItem>
+        <Subtitle>공통 에러 코드</Subtitle>
+        <TextItem>
+          여기에는 본 OPEN API 서비스를 사용할 경우 발생할 수 있는 공통 에러에 대한 설명이 기술됩니다.
+        </TextItem>
+        <TableItem>
+          <TheadItem>
+            <TrItem>
+              <ThItem>에러코드명</ThItem>
+              <ThItem>HttpStatus</ThItem>
+              <ThItem>메시지</ThItem>
+            </TrItem>
+          </TheadItem>
+          {commonErrorCode.map((err) => (
+              <TrItem key={err.name}>
+                <TdItem>{err.name}</TdItem>
+                <TdItem>{err.httpstatus}</TdItem>
+                <TdItem>{err.desc}</TdItem>
+              </TrItem>
+            ))}
+        </TableItem>
         <Subtitle>테스트베드</Subtitle>
-          <RequestItem>각 API 명세 문서에서 요청 보내기 버튼을 누르면 여기에 있는 데이터를 담은 요청이 서버의 해당 엔드포인트로 전송됩니다.</RequestItem>
-          <ButtonItem>요청 보내기</ButtonItem>
+        <RequestItem>각 API 명세 문서에서 요청 보내기 버튼을 누르면 여기에 있는 데이터를 담은 요청이 서버의 해당 엔드포인트로 전송됩니다.</RequestItem>
+        <ButtonItem>요청 보내기</ButtonItem>
         <Subtitle>응답 status</Subtitle>
         <ResponseItem>전송한 요청에 대한 응답 status가 표시됩니다.</ResponseItem>
         <Subtitle>응답 message</Subtitle>
@@ -194,3 +260,26 @@ hover:bg-gray-50 hover:text-pink-400
 focus-visible:outline focus-visible:outline-2 
 focus-visible:outline-offset-2 focus-visible:outline-pink-600
 `;
+
+const commonHeader = [
+  { name: 'apiKey', desc: '관리자의 API 키', type: 'string', required: 'Y', etc: '본 서비스의 모든 OPEN API 요청에 필요합니다.' },
+  { name: 'memberId', desc: '은행 고객의 ID', type: 'string', required: '', etc: '계좌(account) 카테고리에 속하는 전체 요청과 거래내역(transaction) 카테고리의 일부 요청에 필요합니다.' },
+];
+
+const queryString = [
+
+];
+
+const commonErrorCode = [
+  { name: 'WRONG_APIKEY', httpstatus: 'BAD_REQUEST', desc: '잘못된 API키입니다.' },
+  { name: 'NO_AUTHORIZATION', httpstatus: 'BAD_REQUEST', desc: '권한이 없습니다.' },
+  { name: 'ACCESS_DENIED', httpstatus: 'FORBIDDEN', desc: '권한이 없습니다.' },
+  { name: 'NO_MEMBER', httpstatus: 'BAD_REQUEST', desc: 'ID에 해당하는 사용자가 존재하지 않습니다.' },
+  { name: 'UNAUTHORIZED', httpstatus: 'UNAUTHORIZED', desc: '로그인 후 이용해 주세요.' },
+  { name: 'NO_AUTH', httpstatus: 'UNAUTHORIZED', desc: '인증 정보가 없습니다.' },
+  { name: 'TOKEN_INVALID', httpstatus: 'UNAUTHORIZED', desc: '유효하지 않은 토큰입니다.' },
+  { name: 'INVALID_PARAMETER', httpstatus: 'BAD_REQUEST', desc: '입력값이 잘못되었습니다.' },
+  { name: 'WRONG_REQUEST', httpstatus: 'BAD_REQUEST', desc: '요청이 잘못되었습니다.' },
+  { name: 'RESOURCE_NOT_FOUND', httpstatus: 'NOT_FOUND', desc: '요청한 리소스가 존재하지 않습니다.' },
+  { name: 'INTERNAL_SERVER_ERROR', httpstatus: 'INTERNAL_SERVER_ERROR', desc: '서버 에러입니다.' }
+];

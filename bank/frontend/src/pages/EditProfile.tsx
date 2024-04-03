@@ -40,7 +40,9 @@ function EditProfile({navigation}: EditProfileScreenProps): React.JSX.Element {
         menu={[{title: 'close', onPress: () => navigation.pop()}]}
       />
       <View className="w-full h-24 p-8 flex justify-center items-center">
-        <Text className="text-xl font-bold">{memberData.member?.email}</Text>
+        <Text className="text-xl font-bold text-gray-700">
+          {memberData.member?.email}
+        </Text>
       </View>
       <View className="h-48 flex justify-evenly">
         <View className="flex flex-row justify-between px-6">

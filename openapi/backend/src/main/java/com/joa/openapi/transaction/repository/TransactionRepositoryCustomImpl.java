@@ -64,6 +64,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 List<String> accountIds = jpaQueryFactory.select(account.id)
                     .from(account)
                     .where(account.bankId.in(adminBankIds))
+                    .orderBy(account.createdAt.desc())
                     .fetch();
 
                 // 은행의 계좌가 하나라도 있을 때
@@ -82,6 +83,7 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
                 List<String> accountIds = jpaQueryFactory.select(account.id)
                     .from(account)
                     .where(account.bankId.eq(bankId))
+                    .orderBy(account.createdAt.desc())
                     .fetch();
 
                 if (!accountIds.isEmpty()) {
@@ -143,7 +145,8 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
         // 쿼리 설정
         JPAQuery<Transaction> query = jpaQueryFactory
             .selectFrom(transaction)
-            .where(condition);
+            .where(condition)
+            .orderBy(transaction.createdAt.desc());
 
         // 정렬 조건 적용 orderBy
         OrderSpecifier<?> orderSpecifier = eqOrderBy(req.getOrderBy());

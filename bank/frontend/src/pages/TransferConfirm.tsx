@@ -19,7 +19,7 @@ function TransferConfirm({
   route,
   navigation,
 }: TransferConfirmScreenProps): React.JSX.Element {
-  const {account, toAccountId, amount} = route.params;
+  const {account, toAccountId, toAccountName, amount} = route.params;
   const memberData = useRecoilValue(memberDataAtom);
   const mutation = useMutation({
     mutationFn: transferSend,
@@ -30,6 +30,7 @@ function TransferConfirm({
         depositorName: memberData.member!.name,
         accountNickname: account.nickname,
         toAccountId,
+        toAccountName,
       });
     },
     onError: err => console.log(err),
@@ -56,7 +57,7 @@ function TransferConfirm({
         <View className="flex flex-grow justify-center items-center space-y-2">
           <View className="flex flex-row">
             <Text className="text-2xl font-bold text-gray-700">
-              내 입출금통장
+              {toAccountName}
             </Text>
             <Text className="text-2xl font-medium text-gray-700">으로</Text>
           </View>

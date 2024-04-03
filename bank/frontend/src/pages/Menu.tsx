@@ -1,4 +1,5 @@
 import {
+  Alert,
   Pressable,
   ScrollView,
   Text,
@@ -28,6 +29,7 @@ function Menu({navigation}: MenuScreenProps): React.JSX.Element {
   const mutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
+      Alert.alert('로그아웃 되었습니다.');
       axiosInstance.interceptors.request.clear();
       axiosInstance.interceptors.request.use(
         config => {
