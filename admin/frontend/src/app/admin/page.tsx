@@ -94,7 +94,9 @@ export default function Admin() {
           <div className="flex justify-center items-center">
             {bankList.find((b) => b.bankId === selectedBankId)?.uri ? (
               <img
-                src={bankList.find((b) => b.bankId === selectedBankId).uri}
+                src={
+                  bankList.find((b) => b.bankId === selectedBankId)?.uri || ""
+                }
                 alt="bank_uri"
                 width={40}
                 height={40}
