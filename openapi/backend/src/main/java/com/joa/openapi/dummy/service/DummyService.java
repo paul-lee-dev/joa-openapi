@@ -82,7 +82,7 @@ public class DummyService {
             UUID memberId = UUID.fromString(memberService.addMember(MJRdto, dummy.getId()).getId());
             // 더미 멤버 별 기본 입출금 계좌 생성
             Bank bank = bankRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
-            UUID productId = productRepository.getByBankId(bank).getId();
+            UUID productId = productRepository.searchBankFirstProductCustom(adminId, req.getBankId());
             AccountCreateRequestDto ACRdto = AccountCreateRequestDto.builder()
                     .nickname(makeName(4))
                     .password("dummy")
@@ -117,7 +117,7 @@ public class DummyService {
         dummyRepository.save(dummy);
 
         Bank bank = bankRepository.findById(req.getBankId()).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
-        UUID productId = productRepository.getByBankId(bank).getId();
+        UUID productId = productRepository.searchBankFirstProductCustom(adminId, req.getBankId());
         int userCount = req.getUsers().size();
         Random random = new Random();
         for (int i = 0; i < req.getCount(); i++) {

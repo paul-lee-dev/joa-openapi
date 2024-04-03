@@ -1,0 +1,227 @@
+[ 접속 URL ]
+http://j10a503.p.ssafy.io:8888
+
+[ Script ]
+
+
+pipeline{
+	
+	agent any
+    
+	tools {nodejs "NodeJS"}
+	
+	environment {
+	    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+	    repository = "sulim0314/joa"
+	}
+	
+	stages {
+		stage('gitlab Connect'){
+			steps{
+				git branch: 'dev',
+				credentialsId: 'sulim0314',
+				url: 'https://lab.ssafy.com/s10-fintech-finance-sub2/S10P22A503.git'
+			}
+		}
+
+		stage('Dockehub login') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin' // docker hub 로그인
+            }
+        }
+        
+        stage('Build Bank-Backend'){
+            steps {
+                echo "🚀 Build Bank-Backend Start !!"
+                sh '''
+                    APP_NAME=bank
+                    IMAGE=bank
+                    PORT=8010
+                
+                    cd bank/backend/
+                    cp -v /var/jenkins_home/admin_backend/application.yml ./src/main/resources/
+                    
+                    chmod +x gradlew
+                    ./gradlew clean bootJar
+                    
+                    # Application Stop
+                    if [ "$(docker ps -a -q -f name=$APP_NAME)" ]; then
+                        echo -n "🚫 Stop Docker Container : "
+                        docker rm -f $APP_NAME
+                    else
+                        echo "🚫 There is no running container named $APP_NAME"
+                    fi
+                    
+                    # Image Build
+                    if [ "$(docker images -a -q $IMAGE)" ]; then
+                        echo "🗑️ Remove Docker Image : "
+                        docker image rm $IMAGE
+                    else
+                        echo "🗑️ There is no Docker image named $IMAGE"
+                    fi
+                    docker build . -t $IMAGE
+                    
+                    # Docker Run
+                    echo -n "🚀 Docker $APP_NAME Container Start! : "
+                    docker run -d \
+                    --name $APP_NAME \
+                    -p 8010:8080 \
+                    --restart=on-failure:10 \
+                    $IMAGE
+                '''
+            }
+        }
+        
+        stage('Build Admin-Backend'){
+            steps {
+                echo "🚀 Build Admin-Backend Start !!"
+                sh '''
+                    APP_NAME=admin
+                    IMAGE=admin
+                    PORT=8030
+                
+                    cd admin/backend/
+                    cp -v /var/jenkins_home/admin_backend/application.yml ./src/main/resources/
+                    
+                    chmod +x gradlew
+                    ./gradlew clean bootJar
+                    
+                    # Application Stop
+                    if [ "$(docker ps -a -q -f name=$APP_NAME)" ]; then
+                        echo -n "🚫 Stop Docker Container : "
+                        docker rm -f $APP_NAME
+                    else
+                        echo "🚫 There is no running container named $APP_NAME"
+                    fi
+                    
+                    # Image Build
+                    if [ "$(docker images -a -q $IMAGE)" ]; then
+                        echo "🗑️ Remove Docker Image : "
+                        docker image rm $IMAGE
+                    else
+                        echo "🗑️ There is no Docker image named $IMAGE"
+                    fi
+                    docker build . -t $IMAGE
+                    
+                    # Docker Run
+                    echo -n "🚀 Docker $APP_NAME Container Start! : "
+                    docker run -d \
+                    --name $APP_NAME \
+                    -p 8030:8080 \
+                    --restart=on-failure:10 \
+                    $IMAGE
+                '''
+            }
+        }
+        
+        stage('Build OpenAPI-Backend'){
+            steps {
+                echo "🚀 Build OpenAPI-Backend Start !!"
+                sh '''
+                    APP_NAME=openapi
+                    IMAGE=openapi
+                    PORT=8040
+                
+                    cd openapi/backend/
+                    cp -v /var/jenkins_home/openapi_backend/application.yml ./src/main/resources/
+                    
+                    chmod +x gradlew
+                    ./gradlew clean bootJar
+                    
+                    # Application Stop
+                    if [ "$(docker ps -a -q -f name=$APP_NAME)" ]; then
+                        echo -n "🚫 Stop Docker Container : "
+                        docker rm -f $APP_NAME
+                    else
+                        echo "🚫 There is no running container named $APP_NAME"
+                    fi
+                    
+                    # Image Build
+                    if [ "$(docker images -a -q $IMAGE)" ]; then
+                        echo "🗑️ Remove Docker Image : "
+                        docker image rm $IMAGE
+                    else
+                        echo "🗑️ There is no Docker image named $IMAGE"
+                    fi
+                    docker build . -t $IMAGE
+                    
+                    # Docker Run
+                    echo -n "🚀 Docker $APP_NAME Container Start! : "
+                    docker run -d \
+                    --name $APP_NAME \
+                    -p 8040:8080 \
+                    --restart=on-failure:10 \
+                    $IMAGE
+                '''
+            }
+        }
+        
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+        stage('Deploy Docs-front') {
+            steps {
+                dir('documentation/frontend'){
+                    script {
+                        // 이전에 실행중인 컨테이너가 있다면 중지 및 제거
+                        sh 'docker stop docs-front || true'
+                        sh 'docker rm docs-front || true'
+                        sh 'docker rmi docs-front || true'
+                        
+                        // docs-front Docker 이미지 빌드
+                        sh 'docker build -t docs-front .'
+                        
+                        // docs-front Docker 컨테이너 실행
+                        sh 'docker run --restart=on-failure -p 8082:3000 -d --name docs-front docs-front'
+                    }
+                }
+            }
+        }
+        
+        stage('Deploy admin-front') {
+            steps {
+                dir('admin/frontend'){
+                    script {
+                        // 이전에 실행중인 컨테이너가 있다면 중지 및 제거
+                        sh 'docker stop admin-front || true'
+                        sh 'docker rm admin-front || true'
+                        sh 'docker rmi admin-front || true'
+                        
+                        // admin-front Docker 이미지 빌드
+                        sh 'docker build -t admin-front .'
+                        
+                        // admin-front Docker 컨테이너 실행
+                        sh 'docker run --restart=on-failure -p 8083:3000 -d --name admin-front admin-front'
+                    }
+                }
+            }
+        }
+        
+    } // stages
+    
+    post {
+        success {
+            script {
+                def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
+                def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+                mattermostSend (color: 'good', 
+                message: "빌드 성공: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)", 
+                endpoint: 'https://meeting.ssafy.com/hooks/km6h7mxbpf8o3eny9sbgj3kr7y', 
+                channel: '503-jenkins'
+                )
+            }
+        }
+        failure {
+            script {
+                def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
+                def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+                mattermostSend (color: 'danger', 
+                message: "빌드 실패: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)", 
+                endpoint: 'https://meeting.ssafy.com/hooks/km6h7mxbpf8o3eny9sbgj3kr7y', 
+                channel: '503-jenkins'
+                )
+            }
+        }
+    } // post
+    
+    
+}

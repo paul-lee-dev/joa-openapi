@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.joa.openapi.account.entity.QAccount.account;
 import static com.joa.openapi.dummy.entity.QDummy.dummy;
 
 @Repository
@@ -38,7 +39,8 @@ public class DummyRepositoryCustomImpl implements DummyRepositoryCustom {
                 .leftJoin(dummy.memberList)
                 .leftJoin(dummy.transactionList)
                 .fetchJoin()
-                .where(eqSearchKeyWord(req.getSearchKeyWord()), eqIsAdmin(adminId), eqIsType(req));
+                .where(eqSearchKeyWord(req.getSearchKeyWord()), eqIsAdmin(adminId), eqIsType(req))
+                .orderBy(dummy.createdAt.desc());
 
         long total = query.fetchCount();
 

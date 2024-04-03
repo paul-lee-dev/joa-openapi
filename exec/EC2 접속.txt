@@ -1,0 +1,22 @@
+[EC2 서버 접속]
+ssh -i J10A503T.pem ubuntu@j10a503.p.ssafy.io
+비밀번호 : joaopenapi
+
+[ Jenkins ]
+$ docker exec -it jenkins bash
+cd /var/jenkins_home
+
+<mysql>  
+datasource:
+    url: jdbc:mysql://j10a503.p.ssafy.io/joa?serverTimezone=UTC 
+    username: root
+    password: joaopenapi
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+< docker joa-mysql 사용법 >
+docker exec -it joa-mysql mysql -uroot -p
+비밀번호 : joaopenapi
+
+< docker redis 컨테이너 내부 접속 >
+docker exec -it redis redis-cli
+비밀번호 : redis
