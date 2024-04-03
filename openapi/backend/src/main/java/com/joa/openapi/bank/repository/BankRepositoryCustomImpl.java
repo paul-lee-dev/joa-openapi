@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static com.joa.openapi.account.entity.QAccount.account;
 import static com.joa.openapi.bank.entity.QBank.bank;
 
 @Repository
@@ -28,7 +29,8 @@ public class BankRepositoryCustomImpl implements BankRepositoryCustom {
     public Page<BankResponseDto> findByAdminIdAndNameContaining (UUID adminId, String name, Pageable pageable) {
         JPAQuery<Bank> query = jpaQueryFactory
                 .selectFrom(bank)
-                .where(bank.adminId.eq(adminId), bank.name.likeIgnoreCase("%" + name + "%"));
+                .where(bank.adminId.eq(adminId), bank.name.likeIgnoreCase("%" + name + "%"))
+                .orderBy(bank.createdAt.desc());
 
         long total = query.fetchCount();
 

@@ -35,7 +35,8 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
                 .selectFrom(account)
                 .leftJoin(account.holder)
                 .fetchJoin()
-                .where(eqBankIds(bankIds), eqMemberId(memberId));
+                .where(eqBankIds(bankIds), eqMemberId(memberId))
+                .orderBy(account.holder.createdAt.desc());
 
         long total = query.fetchCount(); // 전체 계좌 수
 
