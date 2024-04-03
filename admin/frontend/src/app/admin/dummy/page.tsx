@@ -50,7 +50,7 @@ const DummyList = () => {
           <div className="flex pt-10 pb-5 justify-between">
             <h1 className="text-2xl font-bold">더미데이터</h1>
             <form className="flex items-center space-x-2">
-              <BankSelect />
+              {/* <BankSelect /> */}
               <Button id={"search"} name={"검색"} onClick={() => {}}></Button>
             </form>
           </div>
