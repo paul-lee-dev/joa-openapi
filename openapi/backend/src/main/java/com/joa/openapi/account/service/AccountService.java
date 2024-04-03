@@ -188,9 +188,11 @@ public class AccountService {
         
     }
 
+
+
     public Page<AccountSearchResponseDto> search(UUID apiKey, AccountSearchRequestDto req, Pageable pageable) {
         UUID adminId = apiRepository.getByApiKey(apiKey).getAdminId();
-        List<UUID> bankIds =  bankRepository.findByAdminId(adminId, pageable).stream().map(Bank::getId).toList();
+        List<UUID> bankIds =  bankRepository.findByAdminId(adminId).stream().map(Bank::getId).toList();
 
         return accountRepository.searchAccountCustom(bankIds, req, pageable);
     }

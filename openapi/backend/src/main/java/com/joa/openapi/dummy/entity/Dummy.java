@@ -1,5 +1,6 @@
 package com.joa.openapi.dummy.entity;
 
+import com.joa.openapi.account.entity.Account;
 import com.joa.openapi.common.entity.BaseEntity;
 import com.joa.openapi.member.entity.Member;
 import com.joa.openapi.transaction.entity.Transaction;
@@ -34,6 +35,9 @@ public class Dummy extends BaseEntity {
 
     @OneToMany(mappedBy = "dummy")
     private List<Transaction> transactionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "dummy")
+    private List<Account> accountList = new ArrayList<>();
 
     public void updateName(String name) { this.name = name; }
 }

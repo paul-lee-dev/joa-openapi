@@ -2,19 +2,22 @@
 
 import Header from "@/components/header";
 import Sidebar from "@/components/sidebar";
+import { Suspense } from "react";
 import tw from "tailwind-styled-components";
 
 export default function Admin({ children }: { children: React.ReactNode }) {
   return (
-    <Wrapper>
-      <Header />
-      <MainContainer>
-        <Sidebar />
-        <AdminContainer>
-          <Children>{children}</Children>
-        </AdminContainer>
-      </MainContainer>
-    </Wrapper>
+    <Suspense>
+      <Wrapper>
+        <Header />
+        <MainContainer>
+          <Sidebar />
+          <AdminContainer>
+            <Children>{children}</Children>
+          </AdminContainer>
+        </MainContainer>
+      </Wrapper>
+    </Suspense>
   );
 }
 
@@ -40,9 +43,11 @@ flex
 flex-col
 w-full
 overflow-y-scroll
+scrollbar-hide
 `;
 
 const Children = tw.div`
 flex-grow
 p-14
+pt-0
 `;

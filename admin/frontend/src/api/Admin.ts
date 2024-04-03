@@ -19,3 +19,8 @@ export const reissuedApiKey = async (): Promise<any> => {
   const response = await adminLocalAxios.post("/reissuedApiKey");
   return response.data;
 };
+
+export const getAdminDetail = async (params: any): Promise<any> => {
+  const response = await adminLocalAxios.get("/", params);
+  return response.data;
+};

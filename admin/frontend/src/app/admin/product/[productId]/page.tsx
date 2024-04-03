@@ -14,6 +14,7 @@ import {
   ProductTypeName,
 } from "@/models/Product.interface";
 import { useEffect } from "react";
+import Link from "next/link";
 
 interface IProps {
   params: {
@@ -73,6 +74,23 @@ export default function ProductDetail({ params: { productId } }: IProps) {
         <LoadingSpinner />
       ) : (
         <>
+          <div className="flex flex-col py-4 h-28 justify-center">
+            <div className="flex space-x-2">
+              <Link
+                href={"/admin/product"}
+                className="text-md font-medium text-gray-500 hover:text-pink-500"
+              >
+                상품
+              </Link>
+              <h1 className="text-md font-medium text-gray-500">/</h1>
+              <Link
+                href={`/admin/product/${data.data.productId}`}
+                className="text-md font-medium text-gray-500 hover:text-pink-500"
+              >
+                {data.data.name}
+              </Link>
+            </div>
+          </div>
           <CommonForm>
             <div className="p-4 pb-0 flex justify-between items-end">
               <div className="flex flex-col space-y-2">
@@ -80,9 +98,7 @@ export default function ProductDetail({ params: { productId } }: IProps) {
                   <HiCurrencyDollar className="w-10 h-10" />
                   <h1 className="font-bold text-2xl">{data?.data.name}</h1>
                 </div>
-                <h1 className="font-light text-xs text-gray-400">
-                  {data?.data.productId}
-                </h1>
+                <h1 className="font-light text-xs text-gray-400">{data?.data.productId}</h1>
               </div>
               {/* <div className="flex flex-col">
                 <h1 className="text-sm font-light">
@@ -101,8 +117,15 @@ export default function ProductDetail({ params: { productId } }: IProps) {
                 은행 아이디: <DetailSpan>{data?.data.bankId}</DetailSpan>
               </h1>
               <h1>
+                상품 종류:{" "}
+                <DetailSpan>{ProductTypeName[data?.data.productType as ProductType]}</DetailSpan>
+              </h1>
+              <h1>
                 설명: <DetailSpan>{data?.data.description}</DetailSpan>
               </h1>
+            </div>
+            <Divider />
+            <div className="p-4 flex flex-col space-y-4 text-gray-800 font-semibold">
               <h1>
                 최소 금액: <DetailSpan>{data?.data.minAmount}</DetailSpan>
               </h1>
@@ -112,25 +135,15 @@ export default function ProductDetail({ params: { productId } }: IProps) {
               <h1>
                 비율: <DetailSpan>{data?.data.rate}</DetailSpan>
               </h1>
-              <h1>
-                상품 종류:{" "}
-                <DetailSpan>
-                  {ProductTypeName[data?.data.productType as ProductType]}
-                </DetailSpan>
-              </h1>
+
               <h1>
                 지급방식:{" "}
                 <DetailSpan>
-                  {
-                    ProductPaymentTypeName[
-                      data?.data.paymentType as ProductPaymentType
-                    ]
-                  }
+                  {ProductPaymentTypeName[data?.data.paymentType as ProductPaymentType]}
                 </DetailSpan>
               </h1>
               <h1>
-                종료 여부:{" "}
-                <DetailSpan>{data?.data.isDone ? "Y" : "N"}</DetailSpan>
+                종료 여부: <DetailSpan>{data?.data.isDone ? "Y" : "N"}</DetailSpan>
               </h1>
             </div>
             {data?.data.isDone ? (
@@ -144,12 +157,7 @@ export default function ProductDetail({ params: { productId } }: IProps) {
               </div>
             ) : (
               <div className="flex gap-6 justify-end">
-                <Button
-                  onClick={productDone}
-                  id={"done"}
-                  name={"종료"}
-                  type="button"
-                ></Button>
+                <Button onClick={productDone} id={"done"} name={"종료"} type="button"></Button>
               </div>
             )}
           </CommonForm>
@@ -165,6 +173,7 @@ const DetailSpan = tw.span`
 
 const CommonForm = tw.form`
 p-14
+pt-4
 w-full
 flex
 flex-col

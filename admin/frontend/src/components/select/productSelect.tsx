@@ -12,9 +12,9 @@ interface IProps {
 
 export default function ProductSelect({ bankId, setProductId, productId }: IProps) {
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["ProductList", bankId],
+    queryKey: ["ProductList", bankId || "none"],
     queryFn: () => {
-      if (bankId === "") return;
+      if (bankId === "") return [];
       return searchProductList({ bankId });
     },
   });

@@ -14,22 +14,22 @@ export default function TransactionTable({ transactionList }: IProps) {
       <table className="w-full text-sm text-left text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" className="px-6 py-3 w-2/12">
+            <th scope="col" className="px-6 py-2 w-2/12">
               입금주명
             </th>
-            <th scope="col" className="px-6 py-3 w-2/12">
+            <th scope="col" className="px-6 py-2 w-2/12">
               출금계좌
             </th>
-            <th scope="col" className="px-6 py-3 w-2/12">
+            <th scope="col" className="px-6 py-2 w-2/12">
               입금계좌
             </th>
-            <th scope="col" className="px-6 py-3 w-2/12">
+            <th scope="col" className="px-6 py-2 w-2/12">
               거래일자
             </th>
-            <th scope="col" className="px-6 py-3 w-2/12">
+            <th scope="col" className="px-6 py-2 w-2/12">
               거래금액
             </th>
-            <th scope="col" className="relative px-6 py-3 w-1/12">
+            <th scope="col" className="relative px-6 py-2 w-1/12">
               <span className="sr-only"> </span>
             </th>
           </tr>
@@ -85,12 +85,7 @@ export default function TransactionTable({ transactionList }: IProps) {
   );
 }
 
-const TableHeader = tw.th`
-px-6 
-py-3
-`;
-
 const TableData = tw.td`
 px-6 
-py-4
+py-3
 `;

@@ -10,6 +10,7 @@ import tw from "tailwind-styled-components";
 import { useState } from "react";
 import AccountSelect from "@/components/select/accountSelect";
 import { depositTransaction, sendTransaction, withdrawTransaction } from "@/api/Transaction";
+import Link from "next/link";
 
 interface CreateTransactionForm {
   password: string;
@@ -80,66 +81,91 @@ export default function TransactionCreate() {
   };
 
   return (
-    <CommonForm onSubmit={handleSubmit(onSubmit)}>
-      <div className="p-4 flex flex-col space-y-8">
-        <div className="p-4 space-y-4">
-          <InputText label={"출금 계좌 (from)"}>
-            <div className="p-4 flex space-x-4">
-              <BankSelect setBankId={setFromBankId} bankId={fromBankId} />
-              <AccountSelect
-                bankId={fromBankId}
-                label="출금 계좌"
-                accountId={watch("fromAccount")}
-                setAccountId={(value) => setValue("fromAccount", value)}
-              />
-            </div>
-          </InputText>
-          <InputText label={"입금 계좌 (to)"}>
-            <div className="p-4 flex space-x-4">
-              <BankSelect setBankId={setToBankId} bankId={toBankId} />
-              <AccountSelect
-                bankId={toBankId}
-                label="입금 계좌"
-                accountId={watch("toAccount")}
-                setAccountId={(value) => setValue("toAccount", value)}
-              />
-            </div>
-          </InputText>
+    <>
+      <div className="flex flex-col py-4 h-28 justify-center">
+        <div className="flex space-x-2">
+          <Link
+            href={"/admin/transaction"}
+            className="text-md font-medium text-gray-500 hover:text-pink-500"
+          >
+            거래내역
+          </Link>
+          <h1 className="text-md font-medium text-gray-500">/</h1>
+          <Link
+            href={"/admin/transaction/create"}
+            className="text-md font-medium text-gray-500 hover:text-pink-500"
+          >
+            거래내역생성
+          </Link>
         </div>
-        <Divider />
-        <div className="p-4 space-y-4">
-          <InputText label={"입금자명"}>
-            <CommonInput
-              className="w-80"
-              {...register("depositorName", {
-                required: "입금자명을 입력해주세요.",
-              })}
-            />
-            <CommonErrorMsg>{errors.depositorName?.message}</CommonErrorMsg>
-          </InputText>
-          <InputText label={"금액 (원)"}>
-            <CommonInput
-              className="w-80"
-              type="number"
-              {...register("amount", {
-                required: "상품 이름을 입력해주세요.",
-              })}
-            />
-            <CommonErrorMsg>{errors.amount?.message}</CommonErrorMsg>
-          </InputText>
-        </div>
-        <Divider />
       </div>
+      <CommonForm onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col space-y-2">
+          <h1 className="font-bold text-2xl">거래내역 생성</h1>
+          <p className="font-light text-gray-400">계좌를 선택해 거래내역을 만들어볼 수 있어요.</p>
+        </div>
+        <Divider />
+        <div className="p-4 flex flex-col space-y-8">
+          <div className="p-4 space-y-4">
+            <InputText label={"출금 계좌 (from)"}>
+              <div className="p-4 flex space-x-4">
+                <BankSelect setBankId={setFromBankId} bankId={fromBankId} />
+                <AccountSelect
+                  bankId={fromBankId}
+                  label="출금 계좌"
+                  accountId={watch("fromAccount")}
+                  setAccountId={(value) => setValue("fromAccount", value)}
+                />
+              </div>
+            </InputText>
+            <InputText label={"입금 계좌 (to)"}>
+              <div className="p-4 flex space-x-4">
+                <BankSelect setBankId={setToBankId} bankId={toBankId} />
+                <AccountSelect
+                  bankId={toBankId}
+                  label="입금 계좌"
+                  accountId={watch("toAccount")}
+                  setAccountId={(value) => setValue("toAccount", value)}
+                />
+              </div>
+            </InputText>
+          </div>
+          <Divider />
+          <div className="p-4 space-y-4">
+            <InputText label={"입금자명"}>
+              <CommonInput
+                className="w-80"
+                {...register("depositorName", {
+                  required: "입금자명을 입력해주세요.",
+                })}
+              />
+              <CommonErrorMsg>{errors.depositorName?.message}</CommonErrorMsg>
+            </InputText>
+            <InputText label={"금액 (원)"}>
+              <CommonInput
+                className="w-80"
+                type="number"
+                {...register("amount", {
+                  required: "상품 이름을 입력해주세요.",
+                })}
+              />
+              <CommonErrorMsg>{errors.amount?.message}</CommonErrorMsg>
+            </InputText>
+          </div>
+          <Divider />
+        </div>
 
-      <div className="flex gap-6 justify-end">
-        <Button type="button" onClick={() => router.back()} id={"create"} name={"취소"} />
-        <Button type="submit" id={"create"} name={"등록"} />
-      </div>
-    </CommonForm>
+        <div className="flex gap-6 justify-end">
+          <Button type="button" onClick={() => router.back()} id={"create"} name={"취소"} />
+          <Button type="submit" id={"create"} name={"등록"} />
+        </div>
+      </CommonForm>
+    </>
   );
 }
 const CommonForm = tw.form`
 p-14
+pt-4
 w-full
 flex
 flex-col

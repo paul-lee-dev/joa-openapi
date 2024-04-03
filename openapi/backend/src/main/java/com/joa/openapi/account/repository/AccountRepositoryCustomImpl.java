@@ -38,6 +38,11 @@ public class AccountRepositoryCustomImpl implements AccountRepositoryCustom{
                 .where(eqBankIds(bankIds), eqMemberId(memberId))
                 .orderBy(account.holder.createdAt.desc());
 
+//        Long total = jpaQueryFactory
+//                .select(account.count())
+//                .from(account)
+//                .fetchOne();
+
         long total = query.fetchCount(); // 전체 계좌 수
 
         // 페이징된 계좌 조회

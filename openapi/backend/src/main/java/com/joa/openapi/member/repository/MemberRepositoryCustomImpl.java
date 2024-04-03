@@ -33,6 +33,7 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
         JPAQuery<Member> query = jpaQueryFactory
                 .selectFrom(member)
                 .leftJoin(member.bank)
+                .leftJoin(member.dummy)
                 .fetchJoin()
                 //account의 은행아이디로 은행을 가져와서 은행의 어드민아이디 == apiKey로 admin가져온거랑
                 .where(eqAdminId(adminId), eqBankId(req.getBankId()), eqMemberName(req.getMemberName()), eqDummy(req.getIsDummy()))
@@ -78,8 +79,8 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
             return null;
 
         if(type)
-            return account.dummy.isNotNull();
+            return member.dummy.isNotNull();
         else
-            return account.dummy.isNull();
+            return member.dummy.isNull();
     }
 }
