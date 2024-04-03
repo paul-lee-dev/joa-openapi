@@ -66,14 +66,14 @@ export default function SignUpPage() {
   };
 
   const onSubmit = (data: JoinForm) => {
-    if (!emailCodeValid) {
-      setError(
-        "email",
-        { message: "이메일 인증을 완료해주세요." },
-        { shouldFocus: true }
-      );
-      return;
-    }
+    // if (!emailCodeValid) {
+    //   setError(
+    //     "email",
+    //     { message: "이메일 인증을 완료해주세요." },
+    //     { shouldFocus: true }
+    //   );
+    //   return;
+    // }
     joinMutation.mutate({
       email: data.email,
       name: data.name,
@@ -103,9 +103,9 @@ export default function SignUpPage() {
                     },
                   })}
                 />
-                <PhoneCallCheckBtn type="button" onClick={toggleModal}>
+                {/* <PhoneCallCheckBtn type="button" onClick={toggleModal}>
                   확인
-                </PhoneCallCheckBtn>
+                </PhoneCallCheckBtn> */}
               </InputContainerWithButton>
               <ErrorMsg>{errors?.email?.message}</ErrorMsg>
             </InputFormWrapper>
