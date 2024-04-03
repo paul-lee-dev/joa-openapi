@@ -1,4 +1,3 @@
-//목록 조회/검색 제외 완료
 
 //memberCreateContent
 //emailCheckContent

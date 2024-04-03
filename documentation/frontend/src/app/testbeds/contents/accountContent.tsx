@@ -1,4 +1,3 @@
-//목록 조회/검색 제외 완료 
 
 //accountCreateContent 계좌 개설 
 //accountReadContent 계좌 상세 조회

@@ -1,4 +1,3 @@
-//목록 조회/검색 제외 완료 
 
 //dummyMemberContent 더미 은행고객 자동 생성
 //dummyAccountContent 더미 계좌 자동 생성

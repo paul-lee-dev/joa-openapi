@@ -1,6 +1,5 @@
 "use client";
 
-import Sidebar from "@/app/testbeds/components/sidebar";
 import tw from "tailwind-styled-components";
 
 export default function Joa({ children }: { children: React.ReactNode }) {
