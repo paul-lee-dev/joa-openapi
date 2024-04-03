@@ -12,6 +12,7 @@ import tw from "tailwind-styled-components";
 import { MdAccountBalanceWallet } from "react-icons/md";
 import { formatAmount } from "@/util";
 import { useEffect } from "react";
+import Link from "next/link";
 
 interface IProps {
   params: {
@@ -89,6 +90,23 @@ export default function AccountDetail({ params: { accountId } }: IProps) {
         <LoadingSpinner />
       ) : (
         <>
+          <div className="flex flex-col py-4 h-28 justify-center">
+            <div className="flex space-x-2">
+              <Link
+                href={"/admin/account"}
+                className="text-md font-medium text-gray-500 hover:text-pink-500"
+              >
+                계좌
+              </Link>
+              <h1 className="text-md font-medium text-gray-500">/</h1>
+              <Link
+                href={`/admin/account/${data.data.accountId}`}
+                className="text-md font-medium text-gray-500 hover:text-pink-500"
+              >
+                {data.data.nickname}
+              </Link>
+            </div>
+          </div>
           <CommonForm onSubmit={handleSubmit(onSubmit)}>
             <div className="p-4 pb-0 flex justify-between items-end">
               <div className="flex flex-col space-y-2">
@@ -96,18 +114,14 @@ export default function AccountDetail({ params: { accountId } }: IProps) {
                   <MdAccountBalanceWallet className="w-10 h-10" />
                   <h1 className="font-bold text-2xl">{watch("nickname")}</h1>
                 </div>
-                <h1 className="font-light text-xs text-gray-400">
-                  {data?.data?.accountId}
-                </h1>
+                <h1 className="font-light text-xs text-gray-400">{data?.data?.accountId}</h1>
               </div>
               <div className="flex flex-col">
                 <h1 className="text-sm font-light">
-                  생성:{" "}
-                  <span className="text-gray-500">{data?.data?.createdAt}</span>
+                  생성: <span className="text-gray-500">{data?.data?.createdAt}</span>
                 </h1>
                 <h1 className="text-sm font-light">
-                  수정:{" "}
-                  <span className="text-gray-500">{data?.data?.updatedAt}</span>
+                  수정: <span className="text-gray-500">{data?.data?.updatedAt}</span>
                 </h1>
               </div>
             </div>
@@ -129,18 +143,23 @@ export default function AccountDetail({ params: { accountId } }: IProps) {
             <Divider />
             <div className="p-4 flex flex-col space-y-4 text-gray-800 font-semibold">
               <h1>
-                잔액:{" "}
-                <DetailSpan>{formatAmount(data?.data.balance)}원</DetailSpan>
+                잔액: <DetailSpan>{formatAmount(data?.data.balance)}원</DetailSpan>
               </h1>
               <h1>
-                휴면계좌 여부:{" "}
-                <DetailSpan>{data?.data.isDormant ? "Y" : "N"}</DetailSpan>
+                입금 계좌: <DetailSpan>{data?.data.depositAccount}</DetailSpan>
               </h1>
               <h1>
-                이체 한도:{" "}
-                <DetailSpan>
-                  {formatAmount(data?.data.transferLimit)}원
-                </DetailSpan>
+                출금 계좌: <DetailSpan>{data?.data.withdrawAccount}</DetailSpan>
+              </h1>
+
+              <h1>
+                이체 한도: <DetailSpan>{formatAmount(data?.data.transferLimit)}원</DetailSpan>
+              </h1>
+            </div>
+            <Divider />
+            <div className="p-4 flex flex-col space-y-4 text-gray-800 font-semibold">
+              <h1>
+                시작 금액: <DetailSpan>{formatAmount(data?.data.amount)}원</DetailSpan>
               </h1>
               <h1>
                 개설일: <DetailSpan>{data?.data.startDate}</DetailSpan>
@@ -151,15 +170,11 @@ export default function AccountDetail({ params: { accountId } }: IProps) {
               <h1>
                 기간: <DetailSpan>{data?.data.term}개월</DetailSpan>
               </h1>
+            </div>
+            <Divider />
+            <div className="p-4 flex flex-col space-y-4 text-gray-800 font-semibold">
               <h1>
-                입금 계좌: <DetailSpan>{data?.data.depositAccount}</DetailSpan>
-              </h1>
-              <h1>
-                출금 계좌: <DetailSpan>{data?.data.withdrawAccount}</DetailSpan>
-              </h1>
-              <h1>
-                시작 금액:{" "}
-                <DetailSpan>{formatAmount(data?.data.amount)}원</DetailSpan>
+                휴면계좌 여부: <DetailSpan>{data?.data.isDormant ? "Y" : "N"}</DetailSpan>
               </h1>
               {data?.data.dummyId && (
                 <h1>
@@ -202,6 +217,7 @@ const DetailSpan = tw.span`
 `;
 const CommonForm = tw.form`
 p-14
+pt-4
 w-full
 flex
 flex-col

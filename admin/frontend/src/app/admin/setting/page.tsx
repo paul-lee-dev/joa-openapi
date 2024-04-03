@@ -39,6 +39,11 @@ export default function Profile() {
 
   return (
     <Container>
+      <div className="flex flex-col space-y-2">
+        <h1 className="font-bold text-2xl">설정</h1>
+        <p className="font-light text-gray-400">API 키를 발급 / 재발급받을 수 있어요.</p>
+      </div>
+      <Divider />
       <InputText label={"API 키"}>
         <div className="flex space-x-2">
           <CommonInput disabled className="w-80" value={adminData.apiKey ?? "API키 없음"} />

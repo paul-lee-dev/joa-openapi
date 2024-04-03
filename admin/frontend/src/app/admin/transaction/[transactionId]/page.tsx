@@ -10,12 +10,9 @@ import { HiCurrencyDollar } from "react-icons/hi";
 import { useForm } from "react-hook-form";
 import { CommonInput } from "@/components/input/inputText";
 import { useEffect } from "react";
-import {
-  deleteTransaction,
-  getTransactionDetail,
-  updateTransaction,
-} from "@/api/Transaction";
+import { deleteTransaction, getTransactionDetail, updateTransaction } from "@/api/Transaction";
 import { formatAmount } from "@/util";
+import Link from "next/link";
 
 interface IProps {
   params: {
@@ -27,9 +24,7 @@ interface UpdateTransactionForm {
   depositorName: string;
 }
 
-export default function TransactionDetail({
-  params: { transactionId },
-}: IProps) {
+export default function TransactionDetail({ params: { transactionId } }: IProps) {
   const router = useRouter();
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["TransactionDetail", transactionId],
@@ -97,23 +92,35 @@ export default function TransactionDetail({
         <LoadingSpinner />
       ) : (
         <>
+          <div className="flex flex-col py-4 h-28 justify-center">
+            <div className="flex space-x-2">
+              <Link
+                href={"/admin/transaction"}
+                className="text-md font-medium text-gray-500 hover:text-pink-500"
+              >
+                거래내역
+              </Link>
+              <h1 className="text-md font-medium text-gray-500">/</h1>
+              <Link
+                href={`/admin/transaction/${transactionId}`}
+                className="text-md font-medium text-gray-500 hover:text-pink-500"
+              >
+                {data.data.depositorName}
+              </Link>
+            </div>
+          </div>
           <CommonForm onSubmit={handleSubmit(onSubmit)}>
             <div className="p-4 pb-0 flex justify-between items-end">
               <div className="flex flex-col space-y-2">
                 <div className="flex space-x-4 items-center text-gray-600">
                   <HiCurrencyDollar className="w-10 h-10" />
-                  <h1 className="font-bold text-2xl">
-                    {watch("depositorName")}
-                  </h1>
+                  <h1 className="font-bold text-2xl">{watch("depositorName")}</h1>
                 </div>
-                <h1 className="font-light text-xs text-gray-400">
-                  {data?.data.transactionId}
-                </h1>
+                <h1 className="font-light text-xs text-gray-400">{data?.data.transactionId}</h1>
               </div>
               <div className="flex flex-col">
                 <h1 className="text-sm font-light">
-                  생성:{" "}
-                  <span className="text-gray-500">{data?.data?.createdAt}</span>
+                  생성: <span className="text-gray-500">{data?.data?.createdAt}</span>
                 </h1>
               </div>
             </div>
@@ -135,18 +142,13 @@ export default function TransactionDetail({
             <Divider />
             <div className="p-4 flex flex-col space-y-4 text-gray-800 font-semibold">
               <h1>
-                출금 계좌번호:{" "}
-                <DetailSpan>{data?.data.fromAccount ?? "없음"}</DetailSpan>
+                출금 계좌번호: <DetailSpan>{data?.data.fromAccount ?? "없음"}</DetailSpan>
               </h1>
               <h1>
-                입금 계좌번호:{" "}
-                <DetailSpan>{data?.data.toAccount ?? "없음"}</DetailSpan>
+                입금 계좌번호: <DetailSpan>{data?.data.toAccount ?? "없음"}</DetailSpan>
               </h1>
               <h1>
-                금액:{" "}
-                <DetailSpan>{`${formatAmount(
-                  data?.data.amount
-                )}원`}</DetailSpan>
+                금액: <DetailSpan>{`${formatAmount(data?.data.amount)}원`}</DetailSpan>
               </h1>
             </div>
             <div className="flex gap-6 justify-end">
@@ -171,6 +173,7 @@ const DetailSpan = tw.span`
 
 const CommonForm = tw.form`
 p-14
+pt-4
 w-full
 flex
 flex-col

@@ -18,9 +18,9 @@ export default function Sidebar() {
       <SidebarContainer>
         <div className="pr-3 flex flex-col space-y-[2px]">
           <ListAnchor
-            $selected={pathname.startsWith("/admin/dashboard")}
+            $selected={pathname === "/admin"}
             onClick={() => {
-              router.push("/admin/dashboard");
+              router.push("/admin");
             }}
           >
             <GrOverview></GrOverview>

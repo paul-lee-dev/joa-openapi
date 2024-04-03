@@ -12,25 +12,22 @@ export default function DummyTable({ dummyList }: IProps) {
       <table className="w-full text-sm text-left text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" className="px-6 py-3 w-2/12">
-              더미 생성내역 ID
-            </th>
-            <th scope="col" className="px-6 py-3 w-2/12">
+            <th scope="col" className="px-6 py-2 w-3/12">
               더미 생성내역 이름
             </th>
-            <th scope="col" className="px-6 py-3 w-1/12">
+            <th scope="col" className="px-6 py-2 w-1/12">
               고객 수
             </th>
-            <th scope="col" className="px-6 py-3 w-1/12">
+            <th scope="col" className="px-6 py-2 w-1/12">
               계좌 수
             </th>
-            <th scope="col" className="px-6 py-3 w-1/12">
+            <th scope="col" className="px-6 py-2 w-1/12">
               거래내역 수
             </th>
-            <th scope="col" className="px-6 py-3 w-2/12">
+            <th scope="col" className="px-6 py-2 w-3/12">
               생성 일자
             </th>
-            <th scope="col" className="relative px-6 py-3 w-1/12">
+            <th scope="col" className="relative px-6 py-2 w-1/12">
               <span className="sr-only"> </span>
             </th>
           </tr>
@@ -41,37 +38,32 @@ export default function DummyTable({ dummyList }: IProps) {
               key={dummy.dummyId}
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100"
             >
-              <td className="px-6 py-4">
-                <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
-                  {dummy.dummyId}
-                </div>
-              </td>
-              <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+              <td className="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
                 <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {dummy.name}
                 </div>
               </td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-3">
                 <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {dummy.memberCount ?? 0}
                 </div>
               </td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-3">
                 <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {dummy.accountCount ?? 0}
                 </div>
               </td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-3">
                 <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {dummy.transactionCount ?? 0}
                 </div>
               </td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-3">
                 <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   {dummy.createdAt}
                 </div>
               </td>
-              <td className="px-6 py-4 cursor-pointer">
+              <td className="px-6 py-3 cursor-pointer">
                 <a
                   onClick={() => {
                     router.push(`dummy/${dummy.dummyId}`);

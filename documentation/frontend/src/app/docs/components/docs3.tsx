@@ -22,7 +22,7 @@ export default function docs() {
 
         <Subtitle>공통 헤더 명세</Subtitle>
         <TextItem>
-          헤더에 포함되어야 하는 변수들이 있을 경우 그에 대한 설명이 기술됩니다. 
+          헤더에 포함되어야 하는 변수들이 있을 경우 그에 대한 설명이 기술됩니다.
         </TextItem>
         <TableItem>
           <TheadItem>
@@ -35,7 +35,7 @@ export default function docs() {
             </TrItem>
           </TheadItem>
           <TbodyItem>
-          {commonHeader.map((h) => (
+            {commonHeader.map((h) => (
               <TrItem key={h.name}>
                 <TdItem>{h.name}</TdItem>
                 <TdItem>{h.desc}</TdItem>
@@ -111,7 +111,7 @@ export default function docs() {
 
         <Subtitle>응답 메시지 data 명세</Subtitle>
         <TextItem>
-          Response Body에 포함되는 변수들이 있을 경우 그에 대한 설명이 기술됩니다. 
+          Response Body에 포함되는 변수들이 있을 경우 그에 대한 설명이 기술됩니다.
         </TextItem>
         <TableItem>
           <TheadItem>
@@ -170,13 +170,15 @@ export default function docs() {
               <ThItem>메시지</ThItem>
             </TrItem>
           </TheadItem>
-          {commonErrorCode.map((err) => (
+          <TbodyItem>
+            {commonErrorCode.map((err) => (
               <TrItem key={err.name}>
                 <TdItem>{err.name}</TdItem>
                 <TdItem>{err.httpstatus}</TdItem>
                 <TdItem>{err.desc}</TdItem>
               </TrItem>
             ))}
+          </TbodyItem>
         </TableItem>
         <Subtitle>테스트베드</Subtitle>
         <RequestItem>각 API 명세 문서에서 요청 보내기 버튼을 누르면 여기에 있는 데이터를 담은 요청이 서버의 해당 엔드포인트로 전송됩니다.</RequestItem>
