@@ -35,7 +35,7 @@ public class DummyRepositoryCustomImpl implements DummyRepositoryCustom {
         log.info("{}", adminId);
 
         JPAQuery<Dummy> query = jpaQueryFactory
-                .selectFrom(dummy)
+                .selectFrom(dummy).distinct()
                 .leftJoin(dummy.memberList)
                 .leftJoin(dummy.transactionList)
                 .fetchJoin()
