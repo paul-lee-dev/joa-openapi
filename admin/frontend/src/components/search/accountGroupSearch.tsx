@@ -11,8 +11,7 @@ export default function AccountGroupSearch() {
         />
         <div className="absolute inset-y-0 left-0 flex items-center">
           <select
-            id="options"
-            name="options"
+            // value={searchType}
             className="h-full rounded-md border-0 bg-transparent py-0 pl-4 pr-2 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
           >
             <option value="ACCOUNT_ID">계좌번호</option>
