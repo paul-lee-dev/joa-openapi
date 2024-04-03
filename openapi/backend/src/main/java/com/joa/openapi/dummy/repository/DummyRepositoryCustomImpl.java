@@ -42,12 +42,7 @@ public class DummyRepositoryCustomImpl implements DummyRepositoryCustom {
                 .where(eqSearchKeyWord(req.getSearchKeyWord()), eqIsAdmin(adminId), eqIsType(req))
                 .orderBy(dummy.createdAt.desc());
 
-        //long total = query.fetchCount();
-
-        Long total = jpaQueryFactory
-                .select(dummy.count())
-                .from(dummy)
-                .fetchOne();
+        long total = query.fetchCount();
 
         List<Dummy> dummys = query
                 .offset(pageable.getOffset())
