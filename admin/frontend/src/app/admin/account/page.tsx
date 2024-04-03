@@ -7,22 +7,31 @@ import Pagination from "@/components/pagination";
 import AccountGroupSearch from "@/components/search/accountGroupSearch";
 import BankSelect from "@/components/select/bankNoLabel";
 import MemberMultiSearch from "@/components/select/memberMultiSearch";
+import MemberSelect from "@/components/select/memberSelect";
 import ProductMultiSearchSelect from "@/components/select/productMultiSearchSelect";
 import ProductTypeMultiSearchSelect from "@/components/select/productTypeMultiSearchSelect";
 import AccountTable from "@/components/table/accountTable";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import tw from "tailwind-styled-components";
 const AccountList = () => {
   const router = useRouter();
   const params = useSearchParams();
   const [page, setPage] = useState<number>(Number(params.get("page")) || 1);
   const [keyword, setKeyword] = useState<string>(params.get("searchKeyword") ?? "");
   const [searchWord, setSearchWord] = useState<string>(params.get("searchKeyword") ?? "");
+  const [bankId, setBankId] = useState<string>(params.get("bankList") ?? "");
+  const [isDormant, setIsDormant] = useState<string>(params.get("isDormant") ?? "");
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["AccountList", searchWord || "all", page],
+    queryKey: ["AccountList", searchWord || "all", page, bankId || "all", isDormant || "all"],
     queryFn: () => {
-      return searchAccountList({ searchKeyword: searchWord, page });
+      return searchAccountList({
+        searchKeyword: searchWord,
+        page,
+        bankList: bankId || null,
+        isDormant: isDormant || null,
+      });
     },
   });
 
@@ -38,9 +47,14 @@ const AccountList = () => {
     if (searchWord !== "") {
       newParams.set("searchKeyword", searchWord);
     }
-    console.log(newParams);
+    if (bankId !== "") {
+      newParams.set("bankList", bankId);
+    }
+    if (isDormant !== "") {
+      newParams.set("isDormant", isDormant);
+    }
     router.replace(`/admin/account?${newParams.toString()}`);
-  }, [router, page, searchWord]);
+  }, [router, page, searchWord, bankId, isDormant]);
 
   return (
     <>
@@ -49,10 +63,15 @@ const AccountList = () => {
       ) : (
         <>
           <div className="flex pt-10 pb-5 justify-between">
-            <h1 className="text-2xl font-bold">상품</h1>
+            <h1 className="text-2xl font-bold">계좌</h1>
             <form className="flex items-center space-x-2">
-              <BankSelect></BankSelect>
-              <MemberMultiSearch
+              <BankSelect bankId={bankId} setBankId={setBankId} />
+              <Select value={isDormant} onChange={(e: any) => setIsDormant(e.target.value)}>
+                <option value={""}>휴면계좌 여부</option>
+                <option value={"true"}>휴면계좌만</option>
+                <option value={"false"}>활성계좌만</option>
+              </Select>
+              {/* <MemberMultiSearch
                 placeholder={"고객 검색"}
                 label={""}
                 htmlFor={""}
@@ -66,7 +85,7 @@ const AccountList = () => {
                 placeholder={""}
                 label={""}
                 htmlFor={""}
-              ></ProductTypeMultiSearchSelect>
+              ></ProductTypeMultiSearchSelect> */}
               <AccountGroupSearch></AccountGroupSearch>
             </form>
           </div>
@@ -98,3 +117,23 @@ const AccountList = () => {
 };
 
 export default AccountList;
+const Select = tw.select`
+block 
+w-40 
+h-10
+rounded-md 
+border-0 
+px-1.5
+py-1.5
+text-gray-700
+ring-1
+ring-inset 
+ring-gray-300 
+placeholder:text-gray-400 
+focus:outline-none
+focus:ring-2 
+focus:ring-inset 
+focus:ring-pink-500 
+sm:text-sm 
+sm:leading-6
+`;
