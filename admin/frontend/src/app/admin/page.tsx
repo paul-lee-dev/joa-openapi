@@ -1,6 +1,11 @@
 "use client";
 import { localAxios } from "@/api/http-common";
-import { FaExchangeAlt, FaUsers, FaMoneyBillAlt, FaMoneyCheckAlt } from "react-icons/fa";
+import {
+  FaExchangeAlt,
+  FaUsers,
+  FaMoneyBillAlt,
+  FaMoneyCheckAlt,
+} from "react-icons/fa";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
@@ -78,7 +83,9 @@ export default function Admin() {
   const handleBankChange = async (bankId: string) => {
     setSelectedBankId(bankId);
     try {
-      const response: AxiosResponse<any> = await localAxios.get("/bank/dashboard/" + bankId);
+      const response: AxiosResponse<any> = await localAxios.get(
+        "/bank/dashboard/" + bankId
+      );
       setBankStat(response.data.data);
     } catch (error) {
       console.error("Error fetching bank statistics:", error);
@@ -147,7 +154,9 @@ export default function Admin() {
       </StatCardContainer>
       <div className="flex gap-16 py-9">
         <div>{bankStat && <WeekTransactionGraph bankStat={bankStat} />}</div>
-        <div>{bankStat && <WeekTransactionLineGraph bankStat={bankStat} />}</div>
+        <div>
+          {bankStat && <WeekTransactionLineGraph bankStat={bankStat} />}
+        </div>
       </div>
     </div>
   );

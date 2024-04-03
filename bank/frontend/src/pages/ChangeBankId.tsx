@@ -52,6 +52,7 @@ function ChangeBankId({
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
+      axiosInstance.interceptors.request.clear();
       axiosInstance.interceptors.request.use(
         config => {
           config.headers.memberId = '';

@@ -19,12 +19,24 @@ const AccountList = () => {
   const router = useRouter();
   const params = useSearchParams();
   const [page, setPage] = useState<number>(Number(params.get("page")) || 1);
-  const [keyword, setKeyword] = useState<string>(params.get("searchKeyword") ?? "");
-  const [searchWord, setSearchWord] = useState<string>(params.get("searchKeyword") ?? "");
+  const [keyword, setKeyword] = useState<string>(
+    params.get("searchKeyword") ?? ""
+  );
+  const [searchWord, setSearchWord] = useState<string>(
+    params.get("searchKeyword") ?? ""
+  );
   const [bankId, setBankId] = useState<string>(params.get("bankList") ?? "");
-  const [isDormant, setIsDormant] = useState<string>(params.get("isDormant") ?? "");
+  const [isDormant, setIsDormant] = useState<string>(
+    params.get("isDormant") ?? ""
+  );
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["AccountList", searchWord || "all", page, bankId || "all", isDormant || "all"],
+    queryKey: [
+      "AccountList",
+      searchWord || "all",
+      page,
+      bankId || "all",
+      isDormant || "all",
+    ],
     queryFn: () => {
       return searchAccountList({
         searchKeyword: searchWord,
@@ -66,7 +78,10 @@ const AccountList = () => {
             <h1 className="text-2xl font-bold">계좌</h1>
             <form className="flex items-center space-x-2">
               <BankSelect bankId={bankId} setBankId={setBankId} />
-              <Select value={isDormant} onChange={(e: any) => setIsDormant(e.target.value)}>
+              <Select
+                value={isDormant}
+                onChange={(e: any) => setIsDormant(e.target.value)}
+              >
                 <option value={""}>휴면계좌 여부</option>
                 <option value={"true"}>휴면계좌만</option>
                 <option value={"false"}>활성계좌만</option>
@@ -90,14 +105,18 @@ const AccountList = () => {
             </form>
           </div>
 
-          <AccountTable accountList={data.page.content} />
+          {data?.page?.content && (
+            <AccountTable accountList={data.page.content} />
+          )}
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
-              <Pagination
-                currentPage={page}
-                totalPages={data.page.totalPages}
-                onPageChange={setPage}
-              />
+              {data?.page?.totalPages && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={data.page.totalPages}
+                  onPageChange={setPage}
+                />
+              )}
             </div>
             <div className="flex gap-3 px-3">
               <Button

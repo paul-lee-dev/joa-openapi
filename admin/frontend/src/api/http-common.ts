@@ -27,7 +27,11 @@ localAxios.interceptors.request.use(
     const persistAtom = sessionStorage.getItem("persistAtom");
     if (persistAtom) {
       const json = JSON.parse(persistAtom);
-      config.headers.apiKey = json.adminData.apiKey;
+      config.headers["apiKey"] = json.adminData.apiKey;
+      config.headers["Authorization"] = `Bearer ${json.adminData.accessToken}`;
+      config.headers[
+        "Authorization-refresh"
+      ] = `Bearer ${json.adminData.refreshToken}`;
     }
     return config;
   },

@@ -16,8 +16,12 @@ const DummyList = () => {
   const router = useRouter();
   const params = useSearchParams();
   const [page, setPage] = useState<number>(Number(params.get("page")) || 1);
-  const [keyword, setKeyword] = useState<string>(params.get("searchKeyWord") ?? "");
-  const [searchWord, setSearchWord] = useState<string>(params.get("searchKeyWord") ?? "");
+  const [keyword, setKeyword] = useState<string>(
+    params.get("searchKeyWord") ?? ""
+  );
+  const [searchWord, setSearchWord] = useState<string>(
+    params.get("searchKeyWord") ?? ""
+  );
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["DummyList", searchWord || "", page],
     queryFn: () => {
@@ -54,15 +58,16 @@ const DummyList = () => {
               <Button id={"search"} name={"검색"} onClick={() => {}}></Button>
             </form>
           </div>
-
-          <DummyTable dummyList={data.page.content} />
+          {data?.page?.content && <DummyTable dummyList={data.page.content} />}
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
-              <Pagination
-                currentPage={page}
-                totalPages={data.page.totalPages}
-                onPageChange={setPage}
-              />
+              {data?.page?.totalPages && (
+                <Pagination
+                  currentPage={page}
+                  totalPages={data.page.totalPages}
+                  onPageChange={setPage}
+                />
+              )}
             </div>
             <div className="flex gap-3 px-3">
               <Button
