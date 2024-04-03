@@ -78,6 +78,7 @@ public class BankService {
         Bank bank = bankRepository.findById(bankId).orElseThrow(() -> new RestApiException(BankErrorCode.NO_BANK));
         AuthoriaztionBank(bank.getAdminId(), adminId);
         bank.update(req);
+        bankRepository.save(bank);
 
         return BankResponseDto.toDto(bank);
     }
