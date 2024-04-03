@@ -13,8 +13,8 @@ export const posts = [
     {
       title: '샘플 어플리케이션',
       description:
-        '클라이언트 개발 기간을 단축할 수 있도록 샘플 앱과 코드, 도커 이미지를 오픈 소스로 제공합니다.',
-        url:'/demos',
+        '클라이언트 개발 기간을 단축할 수 있도록 샘플 앱과 도커 이미지 등을 오픈 소스로 제공합니다.',
+        url:'https://drive.google.com/file/d/1NkIEsYFl08CIaXb5NmtYruOxnIm-jjvH/view',
       image: {
         url: '/post4.png',
       },

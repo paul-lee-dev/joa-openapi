@@ -511,7 +511,11 @@ export default function Testbed() {
         }
         }>
           <Subtitle>테스트베드</Subtitle>
-          <TextItem>POST 또는 PATCH METHOD의 요청이라면 request data를 JSON 방식으로 입력 후 요청 보내기 버튼을 클릭하세요. 어떻게 보내야 할지 잘 모르겠다면 요청 예시를 복사해서 붙여넣기하거나 필요에 따라 수정해서 활용해 보세요.</TextItem>
+          <TextItem>
+            POST 또는 PATCH METHOD의 요청이라면 request data를 JSON 방식으로 입력 후 요청 보내기 버튼을 클릭하세요. <br/>
+            어떻게 보내야 할지 잘 모르겠다면 요청 예시를 복사해서 붙여넣기하거나 필요에 따라 수정해서 활용해 보세요. <br/>
+            공개 테스트베드이므로 여기에 입력된 데이터는 누구나 열람 가능합니다. 민감한 개인 정보는 입력하지 않도록 주의하세요.
+          </TextItem>
           <TextArea name="text" value={formData.text} onChange={handleTextArea}></TextArea>
           <ButtonItem type='submit'>요청 보내기</ButtonItem>
         </form>

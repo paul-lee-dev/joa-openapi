@@ -61,7 +61,7 @@ const Home = () => {
           <SubTitleItem>샘플 앱을 다운받아<br/>사용해 보세요</SubTitleItem>
         </SubWrapper2>
         <MainContainer>
-          <a href='#'><ImageItem2 src='/bank.png' /></a>
+          <a href='https://drive.google.com/file/d/1NkIEsYFl08CIaXb5NmtYruOxnIm-jjvH/view'><ImageItem2 src='/bank.png' /></a>
           <SubContainer2>
             <MainTitleItem>Joa Bank</MainTitleItem>
             <MainTextItem>
@@ -71,7 +71,7 @@ const Home = () => {
             <FeatureContainer2>
               <FeatureItem2>
                 <FeatureIconContainer>
-                  <a href="#"><IoMdDownload className="text-2xl text-white drop-shadow" /></a>
+                  <a href="https://drive.google.com/file/d/1NkIEsYFl08CIaXb5NmtYruOxnIm-jjvH/view"><IoMdDownload className="text-2xl text-white drop-shadow" /></a>
                 </FeatureIconContainer>
                 <div>
                   <FeatureTitle2>APK 다운로드</FeatureTitle2>
@@ -83,32 +83,6 @@ const Home = () => {
           </SubContainer2>
 
         </MainContainer>
-      </Wrapper>
-
-      <Wrapper>
-        <SubWrapper>
-          <ButtonContainer>
-            <PinkButtonItem>GitHub</PinkButtonItem>
-          </ButtonContainer>
-
-          <SubTitleItem>
-            코드를 눈으로 확인하고<br />
-            직접 커스텀해서 활용하세요
-          </SubTitleItem>
-
-          <PostContainer>
-            {post2.map((post) => (
-              <PostItem key={post.id} >
-                <PostImageContainer>
-                  <a href={post.href}><PostImage src={post.image.url} /></a>
-                </PostImageContainer>
-                <PostTitle>{post.title}</PostTitle>
-                <PostDetail>{post.description}</PostDetail>
-                <PostLink href={post.href}>바로가기</PostLink>
-              </PostItem>
-            ))}
-          </PostContainer>
-        </SubWrapper>
       </Wrapper>
 
       <QnaWrapper>
