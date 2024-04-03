@@ -119,7 +119,9 @@ export default function Testbed() {
 
     setResponseContent({
       ...responseContent,
-      status: '', message: '', data: ''
+      status: '전송한 요청에 대한 응답 status가 표시됩니다.',
+      message: '전송한 요청에 대한 응답 message가 표시됩니다.',
+      data: '전송한 요청에 대한 응답 data(또는 page)가 표시됩니다.'
     });
 
     switch (index) {
@@ -258,7 +260,10 @@ export default function Testbed() {
     setSelectedItem(index);
     setFormData({ ...formData, text: '' });
 
+
   };
+
+
 
   //테스트베드 인풋 커스텀 가능하게 
   interface customInputText {
@@ -277,7 +282,7 @@ export default function Testbed() {
   return (
     <>
       <div>
-      <ScrollToTopButton/>
+        <ScrollToTopButton />
         <SidebarWrapper>
           <BarTitleContainer>
             <BarTitle>API Descriptions</BarTitle>
@@ -323,10 +328,20 @@ export default function Testbed() {
                 <TdItem>{p.etc}</TdItem>
               </TrItem>
             ))}
+            {content.requestParam.length == 0 ?
+              <TrItem>
+                <TdItem>-</TdItem>
+                <TdItem>-</TdItem>
+                <TdItem>-</TdItem>
+                <TdItem>-</TdItem>
+                <TdItem>request body에 들어가는 data가 없습니다.</TdItem>
+              </TrItem> : null}
           </TbodyItem>
         </TableItem>
         <Subtitle>요청 예시</Subtitle>
-        <RequestItem>{content.requestExample}</RequestItem>
+        <RequestItem>
+          {content.requestExample != "" ? content.requestExample : "request body에 들어가는 data가 없습니다."}
+        </RequestItem>
         <Subtitle>정상 응답 코드</Subtitle>
         <TextItem>200 OK</TextItem>
         <Subtitle>응답 Content Type</Subtitle>
@@ -350,6 +365,13 @@ export default function Testbed() {
                 <TdItem>{p.etc}</TdItem>
               </TrItem>
             ))}
+                        {content.responseParam.length == 0 ?
+              <TrItem>
+                <TdItem>-</TdItem>
+                <TdItem>-</TdItem>
+                <TdItem>-</TdItem>
+                <TdItem>response body에 들어가는 data가 없습니다.</TdItem>
+              </TrItem> : null}
           </TbodyItem>
         </TableItem>
         <Subtitle>응답 예시</Subtitle>
@@ -371,6 +393,12 @@ export default function Testbed() {
                 <TdItem>{err.desc}</TdItem>
               </TrItem>
             ))}
+            {content.errorCode.length == 0 ?
+              <TrItem>
+                <TdItem>-</TdItem>
+                <TdItem>-</TdItem>
+                <TdItem>해당 API에만 적용되는 에러 코드가 없습니다. 필요 시 공통 에러 코드를 참조하세요.</TdItem>
+              </TrItem> : null}
           </TbodyItem>
         </TableItem>
 
@@ -512,11 +540,9 @@ export default function Testbed() {
         }>
           <Subtitle>테스트베드</Subtitle>
           <TextItem>
-            POST 또는 PATCH METHOD의 요청이라면 request data를 JSON 방식으로 입력 후 요청 보내기 버튼을 클릭하세요. <br/>
-            어떻게 보내야 할지 잘 모르겠다면 요청 예시를 복사해서 붙여넣기하거나 필요에 따라 수정해서 활용해 보세요. <br/>
-            공개 테스트베드이므로 여기에 입력된 데이터는 누구나 열람 가능합니다. 민감한 개인 정보는 입력하지 않도록 주의하세요.
+            공개 테스트베드이므로 여기에 입력된 데이터는 누구나 조회 가능합니다. 민감한 개인 정보는 입력하지 않도록 주의하세요.
           </TextItem>
-          <TextArea name="text" value={formData.text} onChange={handleTextArea}></TextArea>
+          <TextArea name="text" value={formData.text} onChange={handleTextArea} placeholder='POST 또는 PATCH 메소드 요청이라면 여기에 request data를 JSON 방식으로 입력 후 요청 보내기 버튼을 클릭하세요. 잘 모르겠다면 요청 예시 항목의 내용을 복사하여 붙여넣기하거나 필요에 따라 수정해서 활용해 보세요.'></TextArea>
           <ButtonItem type='submit'>요청 보내기</ButtonItem>
         </form>
         <Subtitle>응답 status</Subtitle>
@@ -608,8 +634,10 @@ const TextArea = tw.textarea`
 bg-transparent 
 w-full
 text-xs
-bg-blue-200 
-hover:bg-blue-300
+border-2
+border-blue-200
+bg-slate-100
+hover:bg-blue-100
 rounded-lg
 p-8
 leading-6
