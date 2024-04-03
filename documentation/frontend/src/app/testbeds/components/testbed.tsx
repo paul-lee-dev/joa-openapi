@@ -443,7 +443,10 @@ export default function Testbed() {
                   uri = "member/" + "2a9da790-02ef-4bbe-b4a5-8b9636465e51";
                   break;
                 case "member/email/{keyword}/{bankId}":
-                  uri = "member/email/" + "joen2@ssafy.com" + "/" + "aa01973d-0fa6-4d2b-ab92-32ff227d8677";
+                  uri = "member/email/" + 
+                  "joen2@ssafy.com" +
+                  "/" +
+                  "aa01973d-0fa6-4d2b-ab92-32ff227d8677";
                   break;
                 case "member/phone/{keyword}":
                   uri = "member/phone/" + "01023456789";
