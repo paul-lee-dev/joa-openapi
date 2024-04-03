@@ -83,10 +83,19 @@ const ProductList = () => {
               }}
             >
               <div className="flex space-x-2 items-center">
-                <BankSelect bankId={bankId} setBankId={setBankId} />
+                <BankSelect
+                  bankId={bankId}
+                  setBankId={(value) => {
+                    setPage(1);
+                    setBankId(value);
+                  }}
+                />
                 <Select
                   value={productType}
-                  onChange={(e) => setProductType(e.target.value)}
+                  onChange={(e) => {
+                    setPage(1);
+                    setProductType(e.target.value);
+                  }}
                 >
                   <option value={""}>상품타입 선택</option>
                   <option value={"ORDINARY_DEPOSIT"}>보통 예금</option>

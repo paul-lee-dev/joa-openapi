@@ -86,10 +86,19 @@ const AccountList = () => {
                 setSearchWord(keyword);
               }}
             >
-              <BankSelect bankId={bankId} setBankId={setBankId} />
+              <BankSelect
+                bankId={bankId}
+                setBankId={(value) => {
+                  setPage(1);
+                  setBankId(value);
+                }}
+              />
               <Select
                 value={isDormant}
-                onChange={(e: any) => setIsDormant(e.target.value)}
+                onChange={(e: any) => {
+                  setPage(1);
+                  setIsDormant(e.target.value);
+                }}
               >
                 <option value={""}>휴면계좌 여부</option>
                 <option value={"true"}>휴면계좌만</option>

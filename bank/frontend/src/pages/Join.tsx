@@ -61,17 +61,6 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
       setError('email', {type: 'conflict', message: '중복된 이메일입니다.'});
     },
   });
-  const phoneMutation = useMutation({
-    mutationFn: phoneConfirm,
-    onSuccess: data => {
-      console.log(data);
-      clearErrors('phone');
-    },
-    onError: err => {
-      console.log(err);
-      setError('phone', {type: 'conflict', message: '중복된 전화번호입니다.'});
-    },
-  });
 
   const {
     control,
@@ -309,14 +298,6 @@ function Join({navigation}: JoinScreenProps): React.JSX.Element {
                   onBlur={onBlur}
                   onChangeText={t => {
                     const newT = t.replace(/[^0-9]/g, '');
-                    if (newT.length === 11) {
-                      phoneMutation.mutate(newT);
-                    } else {
-                      setError('phone', {
-                        type: 'required',
-                        message: '전화번호를 입력해주세요.',
-                      });
-                    }
                     onChange(newT);
                   }}
                   value={value}

@@ -77,10 +77,19 @@ const MemberList = () => {
               }}
             >
               <div className="flex space-x-2 items-center">
-                <BankSelect bankId={bankId} setBankId={setBankId} />
+                <BankSelect
+                  bankId={bankId}
+                  setBankId={(value) => {
+                    setPage(1);
+                    setBankId(value);
+                  }}
+                />
                 <Select
                   value={isDummy}
-                  onChange={(e: any) => setIsDummy(e.target.value)}
+                  onChange={(e: any) => {
+                    setPage(1);
+                    setIsDummy(e.target.value);
+                  }}
                 >
                   <option value={""}>더미데이터 여부</option>
                   <option value={"true"}>더미 데이터만</option>
