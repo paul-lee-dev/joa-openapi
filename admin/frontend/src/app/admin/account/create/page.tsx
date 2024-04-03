@@ -13,6 +13,7 @@ import MemberSelect from "@/components/select/memberSelect";
 import AccountSelect from "@/components/select/accountSelect";
 import { ChangeEventHandler } from "react";
 import Button from "@/components/button/button";
+import Link from "next/link";
 
 interface CreateAccountForm {
   memberId: string;
@@ -90,110 +91,137 @@ export default function AccountCreate() {
   };
 
   return (
-    <CommonForm onSubmit={handleSubmit(onSubmit)}>
-      <div className="p-4 flex flex-col space-y-8">
-        <BankSelect
-          setBankId={(value: string) => setValue("bankId", value)}
-          bankId={watch("bankId")}
-        />
-        <div className="flex space-x-4">
-          <ProductSelect
-            bankId={watch("bankId")}
-            setProductId={(value: string) => setValue("productId", value)}
-            productId={watch("productId")}
-          />
-          <MemberSelect
-            bankId={watch("bankId")}
-            setMemberId={(value: string) => setValue("memberId", value)}
-            memberId={watch("memberId")}
-          />
-        </div>
-        <InputText label={"계좌 이름"}>
-          <CommonInput
-            className="w-80"
-            {...register("nickname", {
-              required: "계좌 이름을 입력해주세요.",
-            })}
-          />
-          <CommonErrorMsg>{errors.nickname?.message}</CommonErrorMsg>
-        </InputText>
-        <div className="flex space-x-4">
-          <InputText label={"비밀번호"}>
-            <CommonInput
-              className="w-80"
-              type="password"
-              {...register("password", {
-                required: "비밀번호를 입력해주세요.",
-              })}
-            />
-          </InputText>
-          <InputText label={"비밀번호 확인"}>
-            <CommonInput
-              className="w-80"
-              type="password"
-              {...register("password2", {
-                required: "비밀번호를 한번 더 입력해주세요.",
-                validate: {
-                  correct: (value) =>
-                    value === getValues("password") ? true : "비밀번호가 일치하지 않습니다.",
-                },
-              })}
-            />
-          </InputText>
+    <>
+      <div className="flex flex-col py-4 h-28 justify-center">
+        <div className="flex space-x-2">
+          <Link
+            href={"/admin/account"}
+            className="text-md font-medium text-gray-500 hover:text-pink-500"
+          >
+            계좌
+          </Link>
+          <h1 className="text-md font-medium text-gray-500">/</h1>
+          <Link
+            href={"/admin/account/create"}
+            className="text-md font-medium text-gray-500 hover:text-pink-500"
+          >
+            계좌생성
+          </Link>
         </div>
       </div>
-      <Divider />
-      {productData?.data?.productType && productData?.data?.productType !== "ORDINARY_DEPOSIT" && (
-        <>
-          <div className="p-4 flex flex-col space-y-8">
-            <AccountSelect
-              label="출금계좌"
+      <CommonForm onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col space-y-2">
+          <h1 className="font-bold text-2xl">계좌 생성</h1>
+          <p className="font-light text-gray-400">
+            내가 만든 은행의 상품과 고객을 선택해 계좌를 개설할 수 있어요.
+          </p>
+        </div>
+        <Divider />
+        <div className="p-4 flex flex-col space-y-8">
+          <BankSelect
+            setBankId={(value: string) => setValue("bankId", value)}
+            bankId={watch("bankId")}
+          />
+          <div className="flex space-x-4">
+            <ProductSelect
               bankId={watch("bankId")}
-              setAccountId={(value: string) => setValue("withdrawAccount", value)}
-              accountId={watch("withdrawAccount")}
+              setProductId={(value: string) => setValue("productId", value)}
+              productId={watch("productId")}
             />
-            <InputText label={"기간 (개월)"}>
-              <CommonInput
-                type="number"
-                className="w-80"
-                {...register("term", {
-                  required: "기간을 입력해주세요.",
-                })}
-              />
-              <CommonErrorMsg>{errors.nickname?.message}</CommonErrorMsg>
-            </InputText>
-            <InputText label={"시작금액 (원)"}>
-              <CommonInput
-                type="number"
-                className="w-80"
-                {...register("amount", {
-                  required: "기간을 입력해주세요.",
-                })}
-              />
-              <CommonErrorMsg>{errors.nickname?.message}</CommonErrorMsg>
-            </InputText>
-            <Wrapper>
-              <Label htmlFor="taxType">지급 방식</Label>
-              <InputContainer>
-                <Select id="taxType" value={watch("taxType")} onChange={onChangeTaxType}>
-                  <option key={"TAX"} value={"TAX"}>
-                    과세
-                  </option>
-                  <option key={"NO_TAX"} value={"NO_TAX"}>
-                    비과세
-                  </option>
-                </Select>
-              </InputContainer>
-            </Wrapper>
+            <MemberSelect
+              bankId={watch("bankId")}
+              setMemberId={(value: string) => setValue("memberId", value)}
+              memberId={watch("memberId")}
+            />
           </div>
-          <Divider />
-        </>
-      )}
-      <div className="flex gap-6 justify-end">
-        <Button type="button" onClick={() => router.back()} id={"create"} name={"취소"} />
-        <Button type="submit" id={"create"} name={"등록"} />
-      </div>
-    </CommonForm>
+          <InputText label={"계좌 이름"}>
+            <CommonInput
+              className="w-80"
+              {...register("nickname", {
+                required: "계좌 이름을 입력해주세요.",
+              })}
+            />
+            <CommonErrorMsg>{errors.nickname?.message}</CommonErrorMsg>
+          </InputText>
+          <div className="flex space-x-4">
+            <InputText label={"비밀번호"}>
+              <CommonInput
+                className="w-80"
+                type="password"
+                {...register("password", {
+                  required: "비밀번호를 입력해주세요.",
+                })}
+              />
+            </InputText>
+            <InputText label={"비밀번호 확인"}>
+              <CommonInput
+                className="w-80"
+                type="password"
+                {...register("password2", {
+                  required: "비밀번호를 한번 더 입력해주세요.",
+                  validate: {
+                    correct: (value) =>
+                      value === getValues("password") ? true : "비밀번호가 일치하지 않습니다.",
+                  },
+                })}
+              />
+            </InputText>
+          </div>
+        </div>
+        <Divider />
+        {productData?.data?.productType &&
+          productData?.data?.productType !== "ORDINARY_DEPOSIT" && (
+            <>
+              <div className="p-4 flex flex-col space-y-8">
+                <AccountSelect
+                  label="출금계좌"
+                  bankId={watch("bankId")}
+                  setAccountId={(value: string) => setValue("withdrawAccount", value)}
+                  accountId={watch("withdrawAccount")}
+                />
+                <InputText label={"기간 (개월)"}>
+                  <CommonInput
+                    type="number"
+                    className="w-80"
+                    {...register("term", {
+                      required: "기간을 입력해주세요.",
+                    })}
+                  />
+                  <CommonErrorMsg>{errors.nickname?.message}</CommonErrorMsg>
+                </InputText>
+                <InputText label={"시작금액 (원)"}>
+                  <CommonInput
+                    type="number"
+                    className="w-80"
+                    {...register("amount", {
+                      required: "기간을 입력해주세요.",
+                    })}
+                  />
+                  <CommonErrorMsg>{errors.nickname?.message}</CommonErrorMsg>
+                </InputText>
+                <Wrapper>
+                  <Label htmlFor="taxType">지급 방식</Label>
+                  <InputContainer>
+                    <Select id="taxType" value={watch("taxType")} onChange={onChangeTaxType}>
+                      <option key={"TAX"} value={"TAX"}>
+                        과세
+                      </option>
+                      <option key={"NO_TAX"} value={"NO_TAX"}>
+                        비과세
+                      </option>
+                    </Select>
+                  </InputContainer>
+                </Wrapper>
+              </div>
+              <Divider />
+            </>
+          )}
+        <div className="flex gap-6 justify-end">
+          <Button type="button" onClick={() => router.back()} id={"create"} name={"취소"} />
+          <Button type="submit" id={"create"} name={"등록"} />
+        </div>
+      </CommonForm>
+    </>
   );
 }
 
@@ -235,6 +263,7 @@ sm:leading-6
 `;
 const CommonForm = tw.form`
 p-14
+pt-4
 w-full
 flex
 flex-col

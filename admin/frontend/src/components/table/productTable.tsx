@@ -1,11 +1,7 @@
 import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
 import { FaSort } from "react-icons/fa6";
-import {
-  IProduct,
-  ProductPaymentTypeName,
-  ProductTypeName,
-} from "@/models/Product.interface";
+import { IProduct, ProductPaymentTypeName, ProductTypeName } from "@/models/Product.interface";
 import { formatAmount } from "@/util";
 
 interface IProps {
@@ -24,32 +20,32 @@ export default function ProductTable({ productList }: IProps) {
       <table className="w-full text-sm text-left text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" className="px-6 py-3 w-2/12">
+            <th scope="col" className="px-6 py-2 w-2/12">
               은행코드
             </th>
-            <th scope="col" className="px-6 py-3 w-1/12">
+            <th scope="col" className="px-6 py-2 w-1/12">
               상품종류
             </th>
-            <th scope="col" className="px-6 py-3 w-1/12">
+            <th scope="col" className="px-6 py-2 w-1/12">
               상품명
             </th>
-            <th scope="col" className="px-6 py-3 w-2/12">
+            <th scope="col" className="px-6 py-2 w-2/12">
               상품 내용
             </th>
-            <th scope="col" className="px-6 py-3 w-1/12">
+            <th scope="col" className="px-6 py-2 w-1/12">
               상품 이율
             </th>
 
-            <th scope="col" className="px-6 py-3 w-1/12">
+            <th scope="col" className="px-6 py-2 w-1/12">
               지급 방식
             </th>
-            <th scope="col" className="px-6 py-3 w-1/12">
+            <th scope="col" className="px-6 py-2 w-1/12">
               최소 금액
             </th>
-            <th scope="col" className="px-6 py-3 w-1/12">
-              <span className="flex gap-3">최대 금액</span>
+            <th scope="col" className="px-6 py-2 w-1/12">
+              <span className="flex gap-2">최대 금액</span>
             </th>
-            <th scope="col" className="relative px-6 py-3 w-1/12">
+            <th scope="col" className="relative px-6 py-2 w-1/12">
               <span className="sr-only"> </span>
             </th>
           </tr>
@@ -125,5 +121,5 @@ const TableHeader = tw.th`
 
 const TableData = tw.td`
 px-6 
-py-4
+py-3
 `;

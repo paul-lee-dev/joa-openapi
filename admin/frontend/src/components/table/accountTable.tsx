@@ -16,43 +16,43 @@ export default function AccountTable({ accountList }: IProps) {
       <table className="w-full text-sm text-left text-gray-500 ">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" className="px-6 py-3 w-1/12">
+            <th scope="col" className="px-6 py-2 w-1/12">
               계좌번호
             </th>
-            <th scope="col" className="px-6 py-3 w-2/12">
+            <th scope="col" className="px-6 py-2 w-2/12">
               은행코드
             </th>
-            <th scope="col" className="px-6 py-3 w-2/12">
+            <th scope="col" className="px-6 py-2 w-2/12">
               계좌별명
             </th>
-            <th scope="col" className="px-6 py-3 w-1/12">
+            <th scope="col" className="px-6 py-2 w-1/12">
               고객이름
             </th>
-            <th scope="col" className="px-6 py-3 w-1/12">
+            <th scope="col" className="px-6 py-2 w-1/12">
               상품명
             </th>
-            <th scope="col" className="px-6 py-3  gap-3 w-1/12">
-              <span className="flex gap-3">
+            <th scope="col" className="px-6 py-2  gap-2 w-1/12">
+              <span className="flex gap-2">
                 신규일자
                 <FaSort></FaSort>
               </span>
             </th>
-            <th scope="col" className="px-6 py-3 w-1/12">
-              <span className="flex gap-3">
+            <th scope="col" className="px-6 py-2 w-1/12">
+              <span className="flex gap-2">
                 만기일자
                 <FaSort></FaSort>
               </span>
             </th>
-            <th scope="col" className="px-6 py-3 gap-3 w-1/12">
-              <span className="flex gap-3">
+            <th scope="col" className="px-6 py-2 gap-2 w-1/12">
+              <span className="flex gap-2">
                 잔액
                 <FaSort></FaSort>
               </span>
             </th>
-            {/* <th scope="col" className="px-6 py-3">
+            {/* <th scope="col" className="px-6 py-2">
               최근거래금액
             </th> */}
-            <th scope="col" className="relative px-6 py-3 w-1/12">
+            <th scope="col" className="relative px-6 py-2 w-1/12">
               <span className="sr-only"> </span>
             </th>
           </tr>
@@ -103,7 +103,7 @@ export default function AccountTable({ accountList }: IProps) {
                   {formatAmount(account.balance)}원
                 </div>
               </TableData>
-              <td className="px-6 py-4">
+              <TableData>
                 <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">
                   <a
                     onClick={() => {
@@ -114,7 +114,7 @@ export default function AccountTable({ accountList }: IProps) {
                     자세히
                   </a>
                 </div>
-              </td>
+              </TableData>
             </tr>
           ))}
         </tbody>
@@ -129,5 +129,5 @@ const TableHeader = tw.th`
 
 const TableData = tw.td`
 px-6 
-py-4
+py-3
 `;

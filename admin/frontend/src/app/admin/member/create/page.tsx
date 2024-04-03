@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { createMember } from "@/api/Membr";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface CreateMemberForm {
   name: string;
@@ -59,88 +60,113 @@ export default function MemberCreate() {
   };
 
   return (
-    <CommonForm onSubmit={handleSubmit(onSubmit)}>
-      <div className="p-4 flex flex-col space-y-8">
-        <BankSelect
-          setBankId={(value: string) => setValue("bankId", value)}
-          bankId={watch("bankId")}
-        />
+    <>
+      <div className="flex flex-col py-4 h-28 justify-center">
+        <div className="flex space-x-2">
+          <Link
+            href={"/admin/member"}
+            className="text-md font-medium text-gray-500 hover:text-pink-500"
+          >
+            고객
+          </Link>
+          <h1 className="text-md font-medium text-gray-500">/</h1>
+          <Link
+            href={"/admin/member/create"}
+            className="text-md font-medium text-gray-500 hover:text-pink-500"
+          >
+            고객생성
+          </Link>
+        </div>
+      </div>
+      <CommonForm onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col space-y-2">
+          <h1 className="font-bold text-2xl">고객 생성</h1>
+          <p className="font-light text-gray-400">나만의 은행에 고객을 만들어보세요.</p>
+        </div>
+        <Divider />
+        <div className="p-4 flex flex-col space-y-8">
+          <BankSelect
+            setBankId={(value: string) => setValue("bankId", value)}
+            bankId={watch("bankId")}
+          />
 
-        <InputText label={"고객 이름"}>
-          <CommonInput
-            className="w-80"
-            {...register("name", {
-              required: "고객 이름을 입력해주세요.",
-              maxLength: {
-                value: 8,
-                message: "이름을 최대 8자이내로 작성해주세요",
-              },
-            })}
-          />
-          <CommonErrorMsg>{errors.name?.message}</CommonErrorMsg>
-        </InputText>
-        <InputText label={"이메일"}>
-          <CommonInput
-            className="w-80"
-            {...register("email", {
-              required: "이메일을 입력해주세요.",
-              pattern: {
-                value:
-                  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/,
-                message: "올바른 이메일 형식이 아닙니다.",
-              },
-            })}
-          />
-          <CommonErrorMsg>{errors.email?.message}</CommonErrorMsg>
-        </InputText>
-        <InputText label={"전화번호"}>
-          <CommonInput
-            className="w-80"
-            {...register("phone", {
-              required: "전화번호를 입력해주세요.",
-              pattern: {
-                value: /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
-                message: "올바른 전화번호 형식이 아닙니다.",
-              },
-            })}
-          />
-          <CommonErrorMsg>{errors.phone?.message}</CommonErrorMsg>
-        </InputText>
-        <div className="flex space-x-4">
-          <InputText label={"비밀번호"}>
+          <InputText label={"고객 이름"}>
             <CommonInput
               className="w-80"
-              type="password"
-              {...register("password", {
-                required: "비밀번호를 입력해주세요.",
-              })}
-            />
-          </InputText>
-          <InputText label={"비밀번호 확인"}>
-            <CommonInput
-              className="w-80"
-              type="password"
-              {...register("password2", {
-                required: "비밀번호를 한번 더 입력해주세요.",
-                validate: {
-                  correct: (value) =>
-                    value === getValues("password") ? true : "비밀번호가 일치하지 않습니다.",
+              {...register("name", {
+                required: "고객 이름을 입력해주세요.",
+                maxLength: {
+                  value: 8,
+                  message: "이름을 최대 8자이내로 작성해주세요",
                 },
               })}
             />
+            <CommonErrorMsg>{errors.name?.message}</CommonErrorMsg>
           </InputText>
+          <InputText label={"이메일"}>
+            <CommonInput
+              className="w-80"
+              {...register("email", {
+                required: "이메일을 입력해주세요.",
+                pattern: {
+                  value:
+                    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/,
+                  message: "올바른 이메일 형식이 아닙니다.",
+                },
+              })}
+            />
+            <CommonErrorMsg>{errors.email?.message}</CommonErrorMsg>
+          </InputText>
+          <InputText label={"전화번호"}>
+            <CommonInput
+              className="w-80"
+              {...register("phone", {
+                required: "전화번호를 입력해주세요.",
+                pattern: {
+                  value: /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
+                  message: "올바른 전화번호 형식이 아닙니다.",
+                },
+              })}
+            />
+            <CommonErrorMsg>{errors.phone?.message}</CommonErrorMsg>
+          </InputText>
+          <div className="flex space-x-4">
+            <InputText label={"비밀번호"}>
+              <CommonInput
+                className="w-80"
+                type="password"
+                {...register("password", {
+                  required: "비밀번호를 입력해주세요.",
+                })}
+              />
+            </InputText>
+            <InputText label={"비밀번호 확인"}>
+              <CommonInput
+                className="w-80"
+                type="password"
+                {...register("password2", {
+                  required: "비밀번호를 한번 더 입력해주세요.",
+                  validate: {
+                    correct: (value) =>
+                      value === getValues("password") ? true : "비밀번호가 일치하지 않습니다.",
+                  },
+                })}
+              />
+            </InputText>
+          </div>
+          <Divider />
+          <div className="flex gap-6 justify-end">
+            <Button type="button" onClick={() => router.back()} id={"create"} name={"취소"} />
+            <Button type="submit" id={"create"} name={"등록"} />
+          </div>
         </div>
-        <Divider />
-        <div className="flex gap-6 justify-end">
-          <Button type="button" onClick={() => router.back()} id={"create"} name={"취소"} />
-          <Button type="submit" id={"create"} name={"등록"} />
-        </div>
-      </div>
-    </CommonForm>
+      </CommonForm>
+    </>
   );
 }
 const CommonForm = tw.form`
 p-14
+pt-4
 w-full
 flex
 flex-col

@@ -1,10 +1,7 @@
 "use client";
 
 import Button from "@/components/button/button";
-import InputText, {
-  CommonErrorMsg,
-  CommonInput,
-} from "@/components/input/inputText";
+import InputText, { CommonErrorMsg, CommonInput } from "@/components/input/inputText";
 import { LoadingSpinner } from "@/components/loadingSpinner";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -13,6 +10,7 @@ import tw from "tailwind-styled-components";
 import { deleteMember, getMemberDetail, updateMember } from "@/api/Membr";
 import { FaUserFriends } from "react-icons/fa";
 import { useEffect } from "react";
+import Link from "next/link";
 
 interface IProps {
   params: {
@@ -106,6 +104,23 @@ export default function MemberDetail({ params: { memberId } }: IProps) {
         <LoadingSpinner />
       ) : (
         <>
+          <div className="flex flex-col py-4 h-28 justify-center">
+            <div className="flex space-x-2">
+              <Link
+                href={"/admin/member"}
+                className="text-md font-medium text-gray-500 hover:text-pink-500"
+              >
+                고객
+              </Link>
+              <h1 className="text-md font-medium text-gray-500">/</h1>
+              <Link
+                href={`/admin/member/${memberId}`}
+                className="text-md font-medium text-gray-500 hover:text-pink-500"
+              >
+                {data.data.name}
+              </Link>
+            </div>
+          </div>
           <CommonForm onSubmit={handleSubmit(onSubmit)}>
             <div className="p-4 pb-0 flex justify-between items-end">
               <div className="flex flex-col space-y-2">
@@ -113,18 +128,14 @@ export default function MemberDetail({ params: { memberId } }: IProps) {
                   <FaUserFriends className="w-10 h-10" />
                   <h1 className="font-bold text-2xl">{watch("name")}</h1>
                 </div>
-                <h1 className="font-light text-xs text-gray-400">
-                  {data?.data?.memberId}
-                </h1>
+                <h1 className="font-light text-xs text-gray-400">{data?.data?.memberId}</h1>
               </div>
               <div className="flex flex-col">
                 <h1 className="text-sm font-light">
-                  생성:{" "}
-                  <span className="text-gray-500">{data?.data?.createdAt}</span>
+                  생성: <span className="text-gray-500">{data?.data?.createdAt}</span>
                 </h1>
                 <h1 className="text-sm font-light">
-                  수정:{" "}
-                  <span className="text-gray-500">{data?.data?.updatedAt}</span>
+                  수정: <span className="text-gray-500">{data?.data?.updatedAt}</span>
                 </h1>
               </div>
             </div>
@@ -163,8 +174,7 @@ export default function MemberDetail({ params: { memberId } }: IProps) {
                   {...register("phone", {
                     required: "전화번호를 입력해주세요.",
                     pattern: {
-                      value:
-                        /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
+                      value: /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
                       message: "올바른 전화번호 형식이 아닙니다.",
                     },
                   })}
@@ -203,6 +213,7 @@ text-red-400
 `;
 const CommonForm = tw.form`
 p-14
+pt-4
 w-full
 flex
 flex-col
