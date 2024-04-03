@@ -10,5 +10,5 @@ import java.util.UUID;
 public interface ProductRepositoryCustom {
 
     Page<ProductSearchResponseDto> searchProductCustom(UUID adminId, ProductSearchRequestDto req, Pageable pageable);
-
+    UUID searchBankFirstProductCustom(UUID adminId, UUID bankId);
 }
