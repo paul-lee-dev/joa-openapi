@@ -21,6 +21,9 @@ interface WeekTransactionGraphProps {
 export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
   bankStat,
 }) => {
+  let queryWidth = window.innerWidth;
+  console.log(queryWidth);
+
   const configOption = {
     chart: {
       id: "apexchart-example",
@@ -188,14 +191,14 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
           </dd>
         </dl>
       </div>
-      <div>
+      <div style={{ width: "100%", maxWidth: "250%" }}>
         <ApexCharts
           type="bar"
           options={option}
           series={series}
           height={320}
-          width="160%"
-        />{" "}
+          width={ queryWidth/2.77 }
+        />
       </div>
       <div className="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between mt-5">
         <div className="flex justify-between items-center pt-5">
