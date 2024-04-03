@@ -1,0 +1,69 @@
+프로젝트 버전 정보
+
+Frontend
+
+- Node.js: 20.11.1 LTS
+- NPM: 10.2.4
+- VSCode
+    - Extension
+        - Material Icon Theme
+        - Auto Rename Tag
+        - ESLint
+        - Prettier
+        - TailwindCSS IntelliSense
+            
+            VSC setting.json에 tw관련 설정 추가
+            
+            ```json
+              "tailwindCSS.experimental.classRegex": [
+                "tw`([^`]*)", // tw`...`
+                "tw\\.[^`]+`([^`]*)`", // tw.xxx<xxx>`...`
+                "tw\\(.*?\\).*?`([^`]*)" // tw(Component)<xxx>`...`
+              ],
+            ```
+            
+- setting.json
+    ```json
+    	"prettier.printWidth": 100,
+      "javascript.preferences.quoteStyle": "double",
+      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.formatOnSave": true,
+      "workbench.iconTheme": "material-icon-theme",
+    ```
+    
+- tsconfig.json
+    ```json
+    {
+      "compilerOptions": {
+        "target": "es5",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "baseUrl": "src",
+      },
+      "include": ["src", "src/**/*.ts", "src/components"],
+    }
+    ```
+    
+- Android Studio: 2023.2.1 Iguana
+- Android Studio JDK: jdk-17.0.10.7-hotspot
+
+
+
+## Backend
+
+SpringBoot : 3.2.3
+IntelliJ : 2023.3.2
+DB : MySQL Server 8.2 / MySQL Workbench 8.0 CE
+openjdk version : corretto-17
