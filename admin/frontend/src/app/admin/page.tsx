@@ -1,11 +1,6 @@
 "use client";
 import { localAxios } from "@/api/http-common";
-import {
-  FaExchangeAlt,
-  FaUsers,
-  FaMoneyBillAlt,
-  FaMoneyCheckAlt,
-} from "react-icons/fa";
+import { FaExchangeAlt, FaUsers, FaMoneyBillAlt, FaMoneyCheckAlt } from "react-icons/fa";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
@@ -77,9 +72,7 @@ export default function Admin() {
   const handleBankChange = async (bankId: string) => {
     setSelectedBankId(bankId);
     try {
-      const response: AxiosResponse<any> = await localAxios.get(
-        "/bank/dashboard/" + bankId
-      );
+      const response: AxiosResponse<any> = await localAxios.get("/bank/dashboard/" + bankId);
       setBankStat(response.data.data);
     } catch (error) {
       console.error("Error fetching bank statistics:", error);
@@ -94,9 +87,7 @@ export default function Admin() {
           <div className="flex justify-center items-center">
             {bankList.find((b) => b.bankId === selectedBankId)?.uri ? (
               <img
-                src={
-                  bankList.find((b) => b.bankId === selectedBankId)?.uri || ""
-                }
+                src={bankList.find((b) => b.bankId === selectedBankId)?.uri || ""}
                 alt="bank_uri"
                 width={40}
                 height={40}
@@ -157,8 +148,16 @@ export default function Admin() {
             <div className="flex flex-col items-end justify-center space-y-1">
               <StatCardTitle>총 출금 </StatCardTitle>
               <StatCardContent>
-                {bankStat && formatAmount(bankStat.totalWithdrawAmount ?? 0)}
-                <span className="text-sm ml-2">원</span>
+                {bankStat &&
+                  bankStat.totalWithdrawAmount &&
+                  (bankStat.totalWithdrawAmount > 100000
+                    ? formatAmount(Math.floor(bankStat.totalWithdrawAmount / 10000))
+                    : formatAmount(bankStat.totalWithdrawAmount))}
+                <span className="text-sm ml-2">
+                  {bankStat?.totalWithdrawAmount && bankStat?.totalWithdrawAmount > 100000
+                    ? "만원"
+                    : "원"}
+                </span>
               </StatCardContent>
             </div>
           </StatCard>
@@ -169,17 +168,23 @@ export default function Admin() {
             <div className="flex flex-col items-end justify-center space-y-1">
               <StatCardTitle>총 입금 </StatCardTitle>
               <StatCardContent>
-                {bankStat && formatAmount(bankStat.totalDepositAmount ?? 0)}
-                <span className="text-sm ml-2">원</span>
+                {bankStat &&
+                  bankStat.totalDepositAmount &&
+                  (bankStat.totalDepositAmount > 100000
+                    ? formatAmount(Math.floor(bankStat.totalDepositAmount / 10000))
+                    : formatAmount(bankStat.totalDepositAmount))}
+                <span className="text-sm ml-2">
+                  {bankStat?.totalDepositAmount && bankStat?.totalDepositAmount > 100000
+                    ? "만원"
+                    : "원"}
+                </span>
               </StatCardContent>
             </div>
           </StatCard>
         </div>
       </StatCardContainer>
       <div className="flex pt-6">
-        <div className="w-1/2 pr-3">
-          {bankStat && <WeekTransactionGraph bankStat={bankStat} />}
-        </div>
+        <div className="w-1/2 pr-3">{bankStat && <WeekTransactionGraph bankStat={bankStat} />}</div>
         <div className="w-1/2 pl-3">
           {bankStat && <WeekTransactionLineGraph bankStat={bankStat} />}
         </div>
