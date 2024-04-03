@@ -55,7 +55,7 @@ export const transactionDepositContent = {
     {
         "password": "5555",
         "amount" : "5000000",
-        "toAccount" : "42411027228551"
+        "toAccount" : "43410423524413"
     }
     `
     ,
@@ -209,7 +209,7 @@ export const transactionWithdrawContent = {
     {
         "password": "5555",
         "amount" : "1500",
-        "fromAccount" : "42411027228551"
+        "fromAccount" : "43410423524413"
     }
     `,
     responseParam: [
@@ -369,8 +369,8 @@ export const transactionSendContent = {
     {
         "password": "5555",
         "amount" : "2000",
-        "fromAccount" : "42411027228551",
-        "toAccount" : "42411027228551"
+        "fromAccount" : "43410423524413",
+        "toAccount" : "43410423524413"
     }
     `,
     responseParam: [
@@ -493,7 +493,7 @@ export const transaction1wonSendContent = {
     ],
     requestExample: `
     {
-        "accountId" : "42411027228551"
+        "accountId" : "43410423524413"
     }
     `,
     responseParam: [
@@ -693,8 +693,8 @@ export const transactionUpdateContent = {
         "transactionId" : "0f5dd9e9-d19c-4be9-8ed5-efdb079f62ab",
         "amount" : "500",
         "depositorName" : "거래내역 수정",
-        "fromAccount": "42411027228551",
-        "toAccount" : "42411027228551"
+        "fromAccount": "43410423524413",
+        "toAccount" : "43410423524413"
       }
     `,
     responseParam: [],
@@ -799,7 +799,7 @@ export const transactionDeleteContent = {
     ],
     requestExample: `
     {
-        "transactionId": "48b5712f-82d4-475d-9be8-0e59ecfe05c9"
+        "transactionId": "b370f1f3-3b5f-420e-966d-eb6a55ffd69e"
     }
     `,
     responseParam: [],

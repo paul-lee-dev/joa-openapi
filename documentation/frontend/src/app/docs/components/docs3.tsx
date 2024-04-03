@@ -48,7 +48,7 @@ export default function docs() {
         </TableItem>
 
         <Subtitle>쿼리 스트링 명세</Subtitle>
-        <TextItem>쿼리 스트링 사용이 가능한 요청의 경우 사용할 수 있는 옵션에 대한 설명이 기술됩니다. 테스트베드에서는 쿼리 스트링 이용이 제한됩니다.</TextItem>
+        <TextItem>쿼리 스트링 사용이 가능한 요청의 경우 사용할 수 있는 옵션에 대한 설명이 기술됩니다. 테스트베드에서는 쿼리 스트링 이용이 제한됩니다. 자세한 사항은 좌측 메뉴의 쿼리 스트링 항목을 참조하세요.</TextItem>
         <TableItem>
           <TheadItem>
             <TrItem>

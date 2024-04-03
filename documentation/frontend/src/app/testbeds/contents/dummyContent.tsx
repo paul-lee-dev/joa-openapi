@@ -32,7 +32,7 @@ export const dummyMemberContent = {
   requestExample: `
     {
       "count" : "3",
-      "bankId" : "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2"
+      "bankId" : "aa01973d-0fa6-4d2b-ab92-32ff227d8677"
   }
     `,
   responseParam: [
@@ -146,10 +146,10 @@ export const dummyAccountContent = {
   requestExample: `
   {
     "count" : "3",
-    "bankId" : "3cf6f866-3fbd-46c8-85a1-96ab39551a35",
-    "users" : ["4318993d-94f7-41a2-8d6b-1ec9dfe41005",
-               "4637ceff-6180-4714-92a8-7a2f78ef99ae",
-                "c32fb8bb-8a8f-40bb-9178-b3dee8196363"
+    "bankId" : "aa01973d-0fa6-4d2b-ab92-32ff227d8677",
+    "users" : ["d44e7ed9-52d5-475a-83bf-794018d9ce44",
+               "f15e6710-9d3a-4f3a-a45d-e69e3d450c45",
+                "f482b9eb-16b6-4c87-ad79-5e3791f59d45"
               ]
   }
     `,
@@ -285,11 +285,11 @@ export const dummyTransactionContent = {
       "count" : 3,
       "name" : null,
       "term" : null,
-      "bankId" : "3cf6f866-3fbd-46c8-85a1-96ab39551a35",
-      "users" : ["4318993d-94f7-41a2-8d6b-1ec9dfe41005",
-      "4637ceff-6180-4714-92a8-7a2f78ef99ae",
-       "c32fb8bb-8a8f-40bb-9178-b3dee8196363"
-     ]
+      "bankId" : "aa01973d-0fa6-4d2b-ab92-32ff227d8677",
+      "users" : ["d44e7ed9-52d5-475a-83bf-794018d9ce44",
+                 "f15e6710-9d3a-4f3a-a45d-e69e3d450c45",
+                  "f482b9eb-16b6-4c87-ad79-5e3791f59d45"
+                ]
   }
     `,
   responseParam: [

@@ -51,7 +51,7 @@ export const posts = [
       description:
         'GitHub에서 샘플 코드를 둘러보세요.',
       image: {
-        url: '/github.png',
+        url: '/sample.png',
       },
     },
     {
@@ -61,7 +61,7 @@ export const posts = [
       description:
         '기능의 Docs에 기재된 것과 다르게 동작하는 경우, GitHub에 Issue를 생성하여 알려주세요. 문제 해결을 위해 노력하겠습니다.',
       image: {
-        url: '/github1.png',
+        url: '/sample.png',
       },
     },
   ]

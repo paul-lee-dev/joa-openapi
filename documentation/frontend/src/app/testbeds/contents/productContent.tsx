@@ -77,7 +77,7 @@ export const productCreateContent = {
         "rate" : "10",
         "productType" : "TERM_DEPOSIT",
         "paymentType" : "SIMPLE",
-        "bankId" : "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2"
+        "bankId" : "aa01973d-0fa6-4d2b-ab92-32ff227d8677"
     }
     `,
     responseParam: [
@@ -160,13 +160,7 @@ export const productCreateContent = {
         "page": null
     }
     `,
-    errorCode: [
-        {
-            name: '',
-            httpstatus: '',
-            desc: '',
-        },
-    ],
+    errorCode: [],
 }
 
 export const productReadContent = {
@@ -174,15 +168,7 @@ export const productReadContent = {
     desc: '등록되어있는 예적금상품의 정보를 상세조회하는 API입니다. 예적금상품을 신청하기 전, 예적금상품의 정보를 확인하고 신청할 수 있습니다.',
     method: 'GET',
     uri: 'product/{productId}',
-    requestParam: [
-        {
-            name: 'productId',
-            desc: '상품 아이디',
-            type: 'String',
-            required: 'Y',
-            etc: 'PathVariable',
-        },
-    ],
+    requestParam: [],
     requestExample: '',
     responseParam: [
         {

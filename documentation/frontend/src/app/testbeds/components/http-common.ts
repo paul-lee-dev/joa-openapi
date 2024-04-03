@@ -1,14 +1,12 @@
 import axios, { AxiosInstance, AxiosError } from "axios";
 
 const baseURL: string = "https://joa13.site/v1";
-const testAdmin: string = "7354e642-9472-4dd5-8455-742503378beb";
-const testMember: string = "7a5b903c-5fd6-4192-885d-6b8e4fd400e9";
-const testApiKey: string = "a2e3e331-5e4c-4260-a7aa-53ff14844700";
+const testMember: string = "2a9da790-02ef-4bbe-b4a5-8b9636465e51";
+const testApiKey: string = "cde35c0d-726d-4b43-bff2-36e0258dd014";
 
 export const useAxios: AxiosInstance = axios.create({
   baseURL,
   headers: {
-    adminId: testAdmin,
     memberId: testMember,
     apiKey: testApiKey,
     "Content-Type": "application/json",
