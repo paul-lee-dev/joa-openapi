@@ -12,6 +12,8 @@ import tw from "tailwind-styled-components";
 import { WeekTransactionLineGraph } from "@/components/graph/lineGraph";
 import { WeekTransactionGraph } from "@/components/graph/barGraph";
 import { formatAmount } from "@/util";
+import { HiBanknotes } from "react-icons/hi2";
+import { useRouter } from "next/navigation";
 
 interface Bank {
   bankId: string;
@@ -47,6 +49,7 @@ export interface BankStat {
 }
 
 export default function Admin() {
+  const router = useRouter();
   const [bankList, setBankList] = useState<Bank[]>([]);
   const [selectedBankId, setSelectedBankId] = useState<string | null>(null);
   const [bankStat, setBankStat] = useState<BankStat | undefined>(undefined);
@@ -61,11 +64,9 @@ export default function Admin() {
           page: BankPage;
         }> = await localAxios.get("/bank/search");
         setBankList(response.data.page.content);
-        console.log("bankList: ", response.data.data);
-        const nextResponse: AxiosResponse<any> = await localAxios.get(
-          "/bank/dashboard/" + response.data.page.content[0].bankId
-        );
-        setBankStat(nextResponse.data.data);
+        if (response.data.page.content.length > 0) {
+          handleBankChange(response.data.page.content[0].bankId);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -84,16 +85,40 @@ export default function Admin() {
       console.error("Error fetching bank statistics:", error);
     }
   };
+  console.log(selectedBankId);
+  console.log(bankList.find((b) => b.bankId === selectedBankId));
   return (
     <div>
-      <div className="flex pt-10 pb-5 justify-between">
-        <Select id="banks" onChange={(e) => handleBankChange(e.target.value)}>
-          {bankList.map((bank) => (
-            <option key={bank.bankId} value={bank.bankId}>
-              {bank.name}
-            </option>
-          ))}
-        </Select>
+      <div className="flex justify-between">
+        <div className="flex space-x-2 pt-10 pb-5">
+          <div className="flex justify-center items-center">
+            {bankList.find((b) => b.bankId === selectedBankId)?.uri ? (
+              <img
+                src={bankList.find((b) => b.bankId === selectedBankId).uri}
+                alt="bank_uri"
+                width={40}
+                height={40}
+              />
+            ) : (
+              <HiBanknotes className="w-10 h-10" />
+            )}
+          </div>
+          <Select id="banks" onChange={(e) => handleBankChange(e.target.value)}>
+            {bankList.map((bank) => (
+              <option key={bank.bankId} value={bank.bankId}>
+                {bank.name}
+              </option>
+            ))}
+          </Select>
+        </div>
+        <div className="flex items-center pr-2 pt-10 pb-5">
+          <h1
+            onClick={() => router.push(`/admin/bank/${selectedBankId ?? ""}`)}
+            className="text-sm font-light text-gray-400 select-none cursor-pointer"
+          >
+            자세히보기
+          </h1>
+        </div>
       </div>
       <StatCardContainer id="statCards">
         <div className="flex space-x-6 w-full">

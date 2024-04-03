@@ -183,11 +183,12 @@ export const WeekTransactionGraph: React.FC<WeekTransactionGraphProps> = ({
           </dt>
           <dd className="text-gray-900 text-sm dark:text-white font-semibold">
             {bankStat.totalDepositAmount !== null &&
-            bankStat.totalWithdrawAmount !== null
+            bankStat.totalWithdrawAmount !== null &&
+            bankStat.totalWithdrawAmount !== 0
               ? (
                   bankStat.totalDepositAmount / bankStat.totalWithdrawAmount
-                ).toFixed(4) + "%"
-              : "0"}
+                ).toFixed(2) + "%"
+              : "0%"}
           </dd>
         </dl>
       </div>

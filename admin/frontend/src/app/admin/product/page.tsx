@@ -113,7 +113,7 @@ const ProductList = () => {
           )}
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
-              {data?.page?.totalPages && (
+              {data?.page?.content && (
                 <Pagination
                   currentPage={page}
                   totalPages={data.page.totalPages}

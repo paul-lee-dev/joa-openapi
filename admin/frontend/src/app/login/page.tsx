@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import tw from "tailwind-styled-components";
 import NavbarImg from "@/asset/img/navbar.png";
+import LoginImg from "@/asset/img/login.png";
 import Image from "next/image";
 
 interface ILoginForm {
@@ -54,62 +55,67 @@ export default function LoginPage() {
   };
   return (
     <Wrapper>
-      <TitleContainer>
-        <div className="w-full flex justify-center items-center">
-          <Image src={NavbarImg} alt="Admin" draggable={false} />
+      <div className="flex w-full h-screen">
+        <div className="hidden lg:flex w-full h-full border-r justify-center items-center">
+          <Image width={400} src={LoginImg} alt="Admin" draggable={false} />
         </div>
-      </TitleContainer>
-      <MainContainer>
-        <LoginFormContainer onSubmit={handleSubmit(onSubmit)}>
-          <InputFormWrapper>
-            <LoginLabel htmlFor="email">이메일</LoginLabel>
-            <InputContainer>
-              <Input
-                {...register("email", {
-                  required: "이메일을 입력해주세요.",
-                  pattern: {
-                    value:
-                      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/,
-                    message: "올바른 이메일 형식이 아닙니다.",
-                  },
-                })}
-              />
-            </InputContainer>
-            <ErrorMsg>{errors?.email?.message}</ErrorMsg>
-          </InputFormWrapper>
+        <div className="w-full h-full flex flex-col justify-center items-center">
+          <TitleContainer>
+            <div className="w-full flex justify-center items-center">
+              <Image src={NavbarImg} alt="Admin" draggable={false} />
+            </div>
+          </TitleContainer>
+          <MainContainer>
+            <LoginFormContainer onSubmit={handleSubmit(onSubmit)}>
+              <InputFormWrapper>
+                <LoginLabel htmlFor="email">이메일</LoginLabel>
+                <InputContainer>
+                  <Input
+                    {...register("email", {
+                      required: "이메일을 입력해주세요.",
+                      pattern: {
+                        value:
+                          /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/,
+                        message: "올바른 이메일 형식이 아닙니다.",
+                      },
+                    })}
+                  />
+                </InputContainer>
+                <ErrorMsg>{errors?.email?.message}</ErrorMsg>
+              </InputFormWrapper>
 
-          <InputFormWrapper>
-            <PasswordAlign>
-              <LoginLabel htmlFor="password">비밀번호</LoginLabel>
-            </PasswordAlign>
-            <InputContainer>
-              <Input
-                type="password"
-                {...register("password", {
-                  required: "비밀번호를 입력해주세요.",
-                })}
-              />
-            </InputContainer>
-            <ErrorMsg>{errors?.password?.message}</ErrorMsg>
-          </InputFormWrapper>
+              <InputFormWrapper>
+                <PasswordAlign>
+                  <LoginLabel htmlFor="password">비밀번호</LoginLabel>
+                </PasswordAlign>
+                <InputContainer>
+                  <Input
+                    type="password"
+                    {...register("password", {
+                      required: "비밀번호를 입력해주세요.",
+                    })}
+                  />
+                </InputContainer>
+                <ErrorMsg>{errors?.password?.message}</ErrorMsg>
+              </InputFormWrapper>
 
-          <InputFormWrapper>
-            <Button type="submit">로그인</Button>
-          </InputFormWrapper>
-        </LoginFormContainer>
+              <InputFormWrapper>
+                <Button type="submit">로그인</Button>
+              </InputFormWrapper>
+            </LoginFormContainer>
 
-        <div className="pt-10 flex flex-col space-y-2">
-          <SignUpParagraph>
-            계정이 없으십니까?{" "}
-            <Link
-              href={{
-                pathname: "/signup",
-              }}
-            >
-              <SignUpAnchor>회원가입</SignUpAnchor>
-            </Link>
-          </SignUpParagraph>
-          {/* <SignUpParagraph>
+            <div className="pt-10 flex flex-col space-y-2">
+              <SignUpParagraph>
+                계정이 없으십니까?{" "}
+                <Link
+                  href={{
+                    pathname: "/signup",
+                  }}
+                >
+                  <SignUpAnchor>회원가입</SignUpAnchor>
+                </Link>
+              </SignUpParagraph>
+              {/* <SignUpParagraph>
             비밀번호를 잊어버리셨나요?{" "}
             <Link
               href={{
@@ -119,15 +125,17 @@ export default function LoginPage() {
               <SignUpAnchor>비밀번호 찾기</SignUpAnchor>
             </Link>
           </SignUpParagraph> */}
+            </div>
+          </MainContainer>
         </div>
-      </MainContainer>
+      </div>
     </Wrapper>
   );
 }
 
 const Wrapper = tw.div`
 flex 
-min-h-full 
+h-screen
 flex-1 
 flex-col 
 justify-center 

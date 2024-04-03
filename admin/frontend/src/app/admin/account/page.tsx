@@ -39,7 +39,8 @@ const AccountList = () => {
     ],
     queryFn: () => {
       return searchAccountList({
-        searchKeyword: searchWord,
+        searchKeyword: searchWord || null,
+        keywordType: searchWord === "" ? null : "ACCOUNT_NAME",
         page,
         bankList: bankId || null,
         isDormant: isDormant || null,
@@ -58,6 +59,7 @@ const AccountList = () => {
     }
     if (searchWord !== "") {
       newParams.set("searchKeyword", searchWord);
+      newParams.set("keywordType", "ACCOUNT_NAME");
     }
     if (bankId !== "") {
       newParams.set("bankList", bankId);
@@ -76,7 +78,14 @@ const AccountList = () => {
         <>
           <div className="flex pt-10 pb-5 justify-between">
             <h1 className="text-2xl font-bold">계좌</h1>
-            <form className="flex items-center space-x-2">
+            <form
+              className="flex items-center space-x-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setPage(1);
+                setSearchWord(keyword);
+              }}
+            >
               <BankSelect bankId={bankId} setBankId={setBankId} />
               <Select
                 value={isDormant}
@@ -86,22 +95,17 @@ const AccountList = () => {
                 <option value={"true"}>휴면계좌만</option>
                 <option value={"false"}>활성계좌만</option>
               </Select>
-              {/* <MemberMultiSearch
-                placeholder={"고객 검색"}
-                label={""}
-                htmlFor={""}
-              ></MemberMultiSearch>
-              <ProductMultiSearchSelect
-                placeholder={""}
-                label={""}
-                htmlFor={""}
-              ></ProductMultiSearchSelect>
-              <ProductTypeMultiSearchSelect
-                placeholder={""}
-                label={""}
-                htmlFor={""}
-              ></ProductTypeMultiSearchSelect> */}
-              <AccountGroupSearch></AccountGroupSearch>
+              <div className="w-52 h-10">
+                <input
+                  type="text"
+                  autoComplete="off"
+                  className="w-full h-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => setKeyword(e.target.value)}
+                  value={keyword}
+                  placeholder="계좌 별명"
+                />
+              </div>
+              <Button id={"search"} name={"검색"}></Button>
             </form>
           </div>
 
@@ -110,7 +114,7 @@ const AccountList = () => {
           )}
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
-              {data?.page?.totalPages && (
+              {data?.page?.content && (
                 <Pagination
                   currentPage={page}
                   totalPages={data.page.totalPages}

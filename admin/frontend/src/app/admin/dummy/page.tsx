@@ -53,15 +53,31 @@ const DummyList = () => {
         <>
           <div className="flex pt-10 pb-5 justify-between">
             <h1 className="text-2xl font-bold">더미데이터</h1>
-            <form className="flex items-center space-x-2">
-              {/* <BankSelect /> */}
-              <Button id={"search"} name={"검색"} onClick={() => {}}></Button>
+            <form
+              className="flex items-center space-x-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                setPage(1);
+                setSearchWord(keyword);
+              }}
+            >
+              <div className="w-52 h-10">
+                <input
+                  type="text"
+                  autoComplete="off"
+                  className="w-full h-full rounded-md border-0 py-1.5 px-4 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => setKeyword(e.target.value)}
+                  value={keyword}
+                  placeholder="생성내역 명"
+                />
+              </div>
+              <Button id={"search"} name={"검색"}></Button>
             </form>
           </div>
           {data?.page?.content && <DummyTable dummyList={data.page.content} />}
           <div className="flex mt-5 justify-between gap-5">
             <div className="flex">
-              {data?.page?.totalPages && (
+              {data?.page?.content && (
                 <Pagination
                   currentPage={page}
                   totalPages={data.page.totalPages}
