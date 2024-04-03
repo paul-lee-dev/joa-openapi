@@ -24,7 +24,7 @@ import {
   productReadContent,
   productUpdateContent,
   productListContent,
-  productDeleteContent
+  productDeleteContent,
 } from "../contents/productContent";
 import {
   accountCreateContent,
@@ -35,7 +35,7 @@ import {
   accountPasswordUpdateContent,
   accountMemberListContent,
   accountListContent,
-  accountDeleteContent
+  accountDeleteContent,
 } from "../contents/accountContent";
 import {
   transactionDepositContent,
@@ -46,7 +46,7 @@ import {
   transactionUpdateContent,
   transactionListContent,
   transactionDeleteContent,
-  transactionReadContent
+  transactionReadContent,
 } from "../contents/transactionContent";
 import {
   dummyMemberContent,
@@ -56,12 +56,13 @@ import {
   dummyListContent,
   dummyUpdateContent,
   dummyDeleteContent,
-  dummyDeleteAllContent
+  dummyDeleteAllContent,
 } from "../contents/dummyContent";
 import { components } from "./sidebar";
 
 export interface Content {
-  queryString?: QueryString[];
+  params?: any;
+  response?: any;
   title: string;
   desc: string;
   method: string;
@@ -71,13 +72,6 @@ export interface Content {
   responseParam: ResponseParam[];
   responseExample: string;
   errorCode: ErrorCode[];
-}
-
-export interface QueryString {
-  name: string;
-  desc: string;
-  type: string;
-  etc: string;
 }
 
 export interface RequestParam {
@@ -103,18 +97,17 @@ export interface ErrorCode {
 }
 
 export interface responseContent {
-  status: string,
-  message: string,
+  status: string;
+  message: string;
   data?: any;
 }
 
 export default function Testbed() {
-
   //테스트베드 요청 및 응답 연결을 위한 변수
   const [responseContent, setResponseContent] = useState<responseContent>({
     status: "",
     message: "",
-    data: ""
+    data: "",
   });
 
   //사이드바 클릭 시 렌더링 설정
@@ -122,12 +115,11 @@ export default function Testbed() {
   const [selectedItem, setSelectedItem] = useState(1);
 
   const handleItemClick = (index: number) => {
-
     setResponseContent({
       ...responseContent,
-      status: '전송한 요청에 대한 응답 status가 표시됩니다.',
-      message: '전송한 요청에 대한 응답 message가 표시됩니다.',
-      data: '전송한 요청에 대한 응답 data(또는 page)가 표시됩니다.'
+      status: "전송한 요청에 대한 응답 status가 표시됩니다.",
+      message: "전송한 요청에 대한 응답 message가 표시됩니다.",
+      data: "전송한 요청에 대한 응답 data(또는 page)가 표시됩니다.",
     });
 
     switch (index) {
@@ -264,20 +256,16 @@ export default function Testbed() {
         setContent(bankCreateContent); // Set content to null if selectedItem doesn't match any case
     }
     setSelectedItem(index);
-    setFormData({ ...formData, text: '' });
-
-
+    setFormData({ ...formData, text: "" });
   };
 
-
-
-  //테스트베드 인풋 커스텀 가능하게 
+  //테스트베드 인풋 커스텀 가능하게
   interface customInputText {
     text: string;
   }
 
   const [formData, setFormData] = useState<customInputText>({
-    text: ''
+    text: "",
   });
 
   const handleTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -300,7 +288,12 @@ export default function Testbed() {
             <BarItemContainer key={item.name}>
               <BarItem>{item.name}</BarItem>
               {item.sub?.map((sub) => (
-                <BarSubItem key={sub.id} onClick={() => handleItemClick(sub.id)}>{sub.title}</BarSubItem>
+                <BarSubItem
+                  key={sub.id}
+                  onClick={() => handleItemClick(sub.id)}
+                >
+                  {sub.title}
+                </BarSubItem>
               ))}
             </BarItemContainer>
           ))}
@@ -334,19 +327,22 @@ export default function Testbed() {
                 <TdItem>{p.etc}</TdItem>
               </TrItem>
             ))}
-            {content.requestParam.length == 0 ?
+            {content.requestParam.length == 0 ? (
               <TrItem>
                 <TdItem>-</TdItem>
                 <TdItem>-</TdItem>
                 <TdItem>-</TdItem>
                 <TdItem>-</TdItem>
                 <TdItem>request body에 들어가는 data가 없습니다.</TdItem>
-              </TrItem> : null}
+              </TrItem>
+            ) : null}
           </TbodyItem>
         </TableItem>
         <Subtitle>요청 예시</Subtitle>
         <RequestItem>
-          {content.requestExample != "" ? content.requestExample : "request body에 들어가는 data가 없습니다."}
+          {content.requestExample != ""
+            ? content.requestExample
+            : "request body에 들어가는 data가 없습니다."}
         </RequestItem>
         <Subtitle>정상 응답 코드</Subtitle>
         <TextItem>200 OK</TextItem>
@@ -371,13 +367,14 @@ export default function Testbed() {
                 <TdItem>{p.etc}</TdItem>
               </TrItem>
             ))}
-            {content.responseParam.length == 0 ?
+            {content.responseParam.length == 0 ? (
               <TrItem>
                 <TdItem>-</TdItem>
                 <TdItem>-</TdItem>
                 <TdItem>-</TdItem>
                 <TdItem>response body에 들어가는 data가 없습니다.</TdItem>
-              </TrItem> : null}
+              </TrItem>
+            ) : null}
           </TbodyItem>
         </TableItem>
         <Subtitle>응답 예시</Subtitle>
@@ -399,157 +396,179 @@ export default function Testbed() {
                 <TdItem>{err.desc}</TdItem>
               </TrItem>
             ))}
-            {content.errorCode.length == 0 ?
+            {content.errorCode.length == 0 ? (
               <TrItem>
                 <TdItem>-</TdItem>
                 <TdItem>-</TdItem>
-                <TdItem>해당 API에만 적용되는 에러 코드가 없습니다. 필요 시 공통 에러 코드를 참조하세요.</TdItem>
-              </TrItem> : null}
+                <TdItem>
+                  해당 API에만 적용되는 에러 코드가 없습니다. 필요 시 공통 에러
+                  코드를 참조하세요.
+                </TdItem>
+              </TrItem>
+            ) : null}
           </TbodyItem>
         </TableItem>
 
-        <form className="space-y-6" onSubmit={(e) => {
-          e.preventDefault();
-          var uri = content.uri;
-          var requestData = content.requestExample;
+        <form
+          className="space-y-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+            var uri = content.uri;
+            var requestData = content.requestExample;
 
-          const postFunc = async (params: string) => {
+            const postFunc = async (params: string) => {
+              const jsonParam = (function () {
+                if (params.length === 0) {
+                  return null;
+                } else {
+                  return JSON.parse(params);
+                }
+              })();
 
-            const jsonParam = (function () {
-              if (params.length === 0) { return null; }
-              else { return JSON.parse(params); }
-            })();
-
-            const response = await postAxios(uri, jsonParam);
-            setResponseContent({
-              ...responseContent,
-              status: response.data.status,
-              message: response.data.message,
-              data: JSON.stringify(response.data.data, null, 2)
-            });
-            return response.data;
-          };
-          const getFunc = async (params: string) => {
-
-            switch (content.uri) {
-              case "bank/{bankId}":
-                uri = "bank/" + "aa01973d-0fa6-4d2b-ab92-32ff227d8677";
-                break;
-              case "member/{memberId}":
-                uri = "member/" + "2a9da790-02ef-4bbe-b4a5-8b9636465e51";
-                break;
-              case "member/email/{keyword}/{bankId}":
-                uri = "member/email/" + "joen2@ssafy.com" + "/" + "aa01973d-0fa6-4d2b-ab92-32ff227d8677";
-                break;
-              case "member/phone/{keyword}":
-                uri = "member/phone/" + "01023456789";
-                break;
-              case "product/{productId}":
-                uri = "product/" + "d788a18f-5051-429f-9952-09de153197b4";
-                break;
-              case "transaction/{transactionId}":
-                uri = "transaction/" + "b370f1f3-3b5f-420e-966d-eb6a55ffd69e";
-                break;
-              case "dummy/{dummyId}":
-                uri = "dummy/" + "800369d2-3a89-4652-b3cd-668e47490b68";
-                break;
-              default:
-                break;
-            }
-
-            const jsonParam = (function () {
-              if (params.length === 0) { return null; }
-              else { return JSON.parse(params); }
-            })();
-            const response = await getAxios(uri, jsonParam);
-            setResponseContent({
-              ...responseContent,
-              status: response.data.status,
-              message: response.data.message,
-              data: JSON.stringify(response.data.data, null, 2)
-            });
-            if (response.data.data === null && response.data.page != null) {
+              const response = await postAxios(uri, jsonParam);
               setResponseContent({
                 ...responseContent,
-                message: response.data.message,
                 status: response.data.status,
-                data: JSON.stringify(response.data.page, null, 2)
-              })
-            }
-            return response.data;
-          };
-          const patchFunc = async (params: string) => {
+                message: response.data.message,
+                data: JSON.stringify(response.data.data, null, 2),
+              });
+              return response.data;
+            };
+            const getFunc = async (params: string) => {
+              switch (content.uri) {
+                case "bank/{bankId}":
+                  uri = "bank/" + "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2";
+                  break;
+                case "member/{memberId}":
+                  uri = "member/" + "7a5b903c-5fd6-4192-885d-6b8e4fd400e9";
+                  break;
+                case "member/email/{keyword}/{bankId}":
+                  uri =
+                    "member/email/" +
+                    "joen2@ssafy.com" +
+                    "/" +
+                    "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2";
+                  break;
+                case "member/phone/{keyword}":
+                  uri = "member/phone/" + "01023456789";
+                  break;
+                case "product/{productId}":
+                  uri = "product/" + "23589bc9-02fd-4f16-bf0e-0acad006efe1";
+                  break;
+                case "transaction/{transactionId}":
+                  uri = "transaction/" + "013d21f5-2b88-49d6-b8e1-4300bba44bdf";
+                  break;
+                case "dummy/{dummyId}":
+                  uri = "dummy/" + "7aaf4873-e9cd-46a0-966e-235c854ac5a0";
+                  break;
+                default:
+                  break;
+              }
 
-            switch (content.uri) {
-              case "bank/{bankId}":
-                uri = "bank/" + "aa01973d-0fa6-4d2b-ab92-32ff227d8677";
+              const jsonParam = (function () {
+                if (params.length === 0) {
+                  return null;
+                } else {
+                  return JSON.parse(params);
+                }
+              })();
+              const response = await getAxios(uri, jsonParam);
+              setResponseContent({
+                ...responseContent,
+                status: response.data.status,
+                message: response.data.message,
+                data: JSON.stringify(response.data.data, null, 2),
+              });
+              if (response.data.data === null && response.data.page != null) {
+                setResponseContent({
+                  ...responseContent,
+                  message: response.data.message,
+                  status: response.data.status,
+                  data: JSON.stringify(response.data.page, null, 2),
+                });
+              }
+              return response.data;
+            };
+            const patchFunc = async (params: string) => {
+              switch (content.uri) {
+                case "bank/{bankId}":
+                  uri = "bank/" + "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2";
+                  break;
+                case "member/{memberId}":
+                  uri = "member/" + "7a5b903c-5fd6-4192-885d-6b8e4fd400e9";
+                  break;
+                case "product/{productId}":
+                  uri = "product/" + "23589bc9-02fd-4f16-bf0e-0acad006efe1";
+                  break;
+                case "transaction/{transactionId}":
+                  uri = "transaction/" + "013d21f5-2b88-49d6-b8e1-4300bba44bdf";
+                  break;
+                case "dummy/{dummyId}":
+                  uri = "dummy/" + "7aaf4873-e9cd-46a0-966e-235c854ac5a0";
+                  break;
+                default:
+                  break;
+              }
+
+              const jsonParam = (function () {
+                if (params.length === 0) {
+                  return null;
+                } else {
+                  return JSON.parse(params);
+                }
+              })();
+
+              const response = await patchAxios(uri, jsonParam);
+              setResponseContent({
+                ...responseContent,
+                status: response.data.status,
+                message: response.data.message,
+                data: JSON.stringify(response.data.data, null, 2),
+              });
+              return response.data;
+            };
+
+            switch (content.method) {
+              case "GET":
+                getFunc(requestData);
                 break;
-              case "member/{memberId}":
-                uri = "member/" + "2a9da790-02ef-4bbe-b4a5-8b9636465e51";
+              case "POST":
+                // if (formData.text != '') requestData = formData.text;
+                requestData = formData.text;
+                postFunc(requestData);
                 break;
-              case "product/{productId}":
-                uri = "product/" + "d788a18f-5051-429f-9952-09de153197b4";
+              case "PATCH":
+                // if (formData.text != '') requestData = formData.text;
+                requestData = formData.text;
+                patchFunc(requestData);
                 break;
-              case "transaction/{transactionId}":
-                uri = "transaction/" + "b370f1f3-3b5f-420e-966d-eb6a55ffd69e";
-                break;
-              case "dummy/{dummyId}":
-                uri = "dummy/" + "800369d2-3a89-4652-b3cd-668e47490b68";
+              case "DELETE":
+                // deleteFunc(requestData);
+                setResponseContent({
+                  ...responseContent,
+                  status: "SUCCESS",
+                  message: "실제 실행 시 삭제 완료를 알리는 문구가 출력됩니다.",
+                  data: "실제 실행 시에는 삭제 요청에 대한 응답 데이터가 있는 경우 출력됩니다.",
+                });
                 break;
               default:
                 break;
             }
-
-            const jsonParam = (function () {
-              if (params.length === 0) { return null; }
-              else { return JSON.parse(params); }
-            })();
-
-            const response = await patchAxios(uri, jsonParam);
-            setResponseContent({
-              ...responseContent,
-              status: response.data.status,
-              message: response.data.message,
-              data: JSON.stringify(response.data.data, null, 2)
-            });
-            return response.data;
-          };
-
-          switch (content.method) {
-            case "GET":
-              getFunc(requestData);
-              break;
-            case "POST":
-              // if (formData.text != '') requestData = formData.text;
-              requestData = formData.text;
-              postFunc(requestData);
-              break;
-            case "PATCH":
-              // if (formData.text != '') requestData = formData.text;
-              requestData = formData.text;
-              patchFunc(requestData);
-              break;
-            case "DELETE":
-              // deleteFunc(requestData);
-              setResponseContent({
-                ...responseContent,
-                status: "SUCCESS",
-                message: "실제 실행 시 삭제 완료를 알리는 문구가 출력됩니다.",
-                data: "실제 실행 시에는 삭제 요청에 대한 응답 데이터가 있는 경우 출력됩니다."
-              });
-              break;
-            default:
-              break;
-          }
-          // postFunc(content.requestExample);
-        }
-        }>
+            // postFunc(content.requestExample);
+          }}
+        >
           <Subtitle>테스트베드</Subtitle>
           <TextItem>
-            공개 테스트베드이므로 여기에 입력된 데이터는 누구나 조회 가능합니다. 민감한 개인 정보는 입력하지 않도록 주의하세요.
+            공개 테스트베드이므로 여기에 입력된 데이터는 누구나 조회 가능합니다.
+            민감한 개인 정보는 입력하지 않도록 주의하세요.
           </TextItem>
-          <TextArea name="text" value={formData.text} onChange={handleTextArea} placeholder='POST 또는 PATCH 메소드 요청이라면 여기에 request data를 JSON 방식으로 입력 후 요청 보내기 버튼을 클릭하세요. 잘 모르겠다면 요청 예시 항목의 내용을 복사하여 붙여넣기하거나 필요에 따라 수정해서 활용해 보세요.'></TextArea>
-          <ButtonItem type='submit'>요청 보내기</ButtonItem>
+          <TextArea
+            name="text"
+            value={formData.text}
+            onChange={handleTextArea}
+            placeholder="POST 또는 PATCH 메소드 요청이라면 여기에 request data를 JSON 방식으로 입력 후 요청 보내기 버튼을 클릭하세요. 잘 모르겠다면 요청 예시 항목의 내용을 복사하여 붙여넣기하거나 필요에 따라 수정해서 활용해 보세요."
+          ></TextArea>
+          <ButtonItem type="submit">요청 보내기</ButtonItem>
         </form>
         <Subtitle>응답 status</Subtitle>
         <ResponseItem>{responseContent.status}</ResponseItem>
@@ -582,7 +601,7 @@ const TextItem = tw.div`
 leading-7
 `;
 
-const RequestItem = tw.div`
+const RequestItem = tw.pre`
 text-xs
 bg-blue-200 
 hover:bg-blue-300
@@ -591,7 +610,7 @@ p-8
 leading-6
 `;
 
-const ResponseItem = tw.div`
+const ResponseItem = tw.pre`
 text-xs
 bg-purple-200 
 hover:bg-purple-300
