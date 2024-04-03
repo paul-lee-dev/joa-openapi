@@ -14,7 +14,7 @@ export const accountCreateContent = {
     title: '계좌 개설',
     desc: '은행에 가입하여 계좌를 등록하는 API입니다. 해당 은행에 등록된 예적금상품을 바탕으로 등록할 수 있습니다.',
     method: 'POST',
-    uri: 'account/{bankId}',
+    uri: 'account',
     requestParam: [
         {
             name: 'nickname',
@@ -41,8 +41,8 @@ export const accountCreateContent = {
             name: 'term',
             desc: '계약 기간',
             type: 'String',
-            required: 'Y',
-            etc: '개월 단위',
+            required: 'N',
+            etc: '개월 단위, 미입력 시 기본 12개월',
         },
         {
             name: 'transferLimit',
@@ -103,12 +103,12 @@ export const accountCreateContent = {
     ],
     requestExample: `
     {
-        "nickname": "기본 계좌",
+        "nickname": "김싸피의 새 적금 계좌",
         "password": "1234",
-        "balance" : 3000,
-        "term" : 30,
-        "bankId": "26181252-036d-4edb-8729-204e15b0215b",
-        "productId" : "fae49998-bbb1-47dc-b6f5-6030b1df77d9",
+        "balance" : "0",
+        "amount" : "20",
+        "bankId": "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2",
+        "productId" : "23589bc9-02fd-4f16-bf0e-0acad006efe1",
         "taxType": "NO_TAX"
     }
     `,
@@ -230,24 +230,7 @@ export const accountCreateContent = {
     {
         "status": "SUCCESS",
         "message": "계좌 개설에 성공했습니다.",
-        "data": {
-            "accountId": "5781660823306134",
-            "productName": "보통예금",
-            "nickname": "예시 설명",
-            "balance": 0,
-            "isDormant": 1000000,
-            "transferLimit": 5.0,
-            "startDate": "03/30/2024",
-            "endDate": "03/30/2025",
-            "term": 12,
-            "depositAccount": "5781660823306134",
-            "withdrawAccount": "5781660823306134",
-            "amount": 0,
-            "dummyId": null,
-            "bankId": "ef67408b-3107-45b8-9ff5-ac1305a34b47",
-            "productId": "64f8f3ce-103a-4815-a388-eddaf2333cfb",
-            "taxType": "NO_TAX"
-        },
+        "data": { "accountId": "42411027228551", "productName": "싸피조아적금", "nickname": "김싸피의 새 적금 계좌", "balance": 20, "isDormant": false, "transferLimit": 100, "startDate": "04/03/2024", "endDate": "04/02/2025", "term": 12, "depositAccount": "42411027228551", "withdrawAccount": "42411027228551", "amount": 20, "dummyId": null, "bankId": "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2", "productId": "23589bc9-02fd-4f16-bf0e-0acad006efe1", "taxType": "NO_TAX" },
         "page": null
     }
     `,
@@ -286,7 +269,7 @@ export const accountReadContent = {
     ],
     requestExample: `
     {
-        "accountId":"424442390225045537"
+        "accountId":"42411027228551"
     }
     `,
     responseParam: [
@@ -407,24 +390,7 @@ export const accountReadContent = {
     {
         "status": "SUCCESS",
         "message": "계좌 상세 조회에 성공했습니다.",
-        "data": {
-            "accountId": "5781660823306134",
-            "productName": "보통예금",
-            "nickname": "예시 설명",
-            "balance": 0,
-            "isDormant": 1000000,
-            "transferLimit": 5.0,
-            "startDate": "03/30/2024",
-            "endDate": "03/30/2025",
-            "term": 12,
-            "depositAccount": "5781660823306134",
-            "withdrawAccount": "5781660823306134",
-            "amount": 0,
-            "dummyId": null,
-            "bankId": "ef67408b-3107-45b8-9ff5-ac1305a34b47",
-            "productId": "64f8f3ce-103a-4815-a388-eddaf2333cfb",
-            "taxType": "NO_TAX"
-        },
+        "data": { "productId": "23589bc9-02fd-4f16-bf0e-0acad006efe1", "name": "싸피조아적금", "description": "싸피 교육지원금 매달 일정 금액 적금을 장려하는 상품", "minAmount": 10000, "maxAmount": 500000, "rate": 10, "productType": "TERM_DEPOSIT", "paymentType": "SIMPLE", "isDone": false, "bankId": "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2" },
         "page": null
     }
     `,
@@ -468,7 +434,7 @@ export const accountRemainReadContent = {
     ],
     requestExample: `
     {
-        "accountId":"424442390202548348"
+        "accountId":"42411027228551"
     }
     `,
     responseParam: [
@@ -498,11 +464,7 @@ export const accountRemainReadContent = {
     {
         "status": "SUCCESS",
         "message": "계좌 잔액 조회에 성공했습니다.",
-        "data": {
-            "accountId": "5781660823306134",
-            "nickname": "예시 설명",
-            "balance": 10000
-        },
+        "data": { "accountId": "42411027228551", "nickname": "김싸피의 새 적금 계좌", "balance": 20 },
         "page": null
     }
     `,
@@ -559,8 +521,8 @@ export const accountUpdateContent = {
     ],
     requestExample: `
     {
-        "accountId": "424442390202548348",
-        "nickname": "수정된 계좌 이름"
+        "accountId": "42411027228551",
+        "nickname": "김싸피의 아주 멋진 새 적금"
     }
     `,
     responseParam: [
@@ -667,22 +629,7 @@ export const accountUpdateContent = {
     {
         "status": "SUCCESS",
         "message": "계좌 수정에 성공했습니다.",
-        "data": {
-            "accountId": "8363553868882094",
-            "nickname": "수정된 계좌 이름",
-            "balance": 100000,
-            "isDormant": false,
-            "transferLimit": 100,
-            "startDate": "03/30/2024",
-            "endDate": "03/29/2025",
-            "term": 12,
-            "depositAccount": "8363553868882094",
-            "withdrawAccount": "8363553868882094",
-            "amount": 0,
-            "dummyId": "195127ce-39f7-442e-b3ff-6b737650c33d",
-            "createdAt": "2024-03-30 21:57",
-            "updatedAt": "2024-03-30 21:57"
-        },
+        "data": { "accountId": "42411027228551", "nickname": "김싸피의 아주 멋진 새 적금", "balance": 20, "isDormant": false, "transferLimit": 100, "startDate": "04/03/2024", "endDate": "04/02/2025", "term": 12, "depositAccount": "42411027228551", "withdrawAccount": "42411027228551", "amount": 20, "dummyId": null, "createdAt": "2024-04-03 10:27", "updatedAt": "2024-04-03 10:27" },
         "page": null
     }
     `,
@@ -718,7 +665,7 @@ export const accountLimitUpdateContent = {
     ],
     requestExample: `
     {
-        "accountId": "424442390202548348",
+        "accountId": "42411027228551",
         "transferLimit": "200"
     }
     `,
@@ -726,8 +673,8 @@ export const accountLimitUpdateContent = {
     responseExample: `
     {
         "status": "SUCCESS",
-        "message": "이체한도 변경에 성공했습니다.",
-        "data": 200 //변경된 이체한도,
+        "message": "계좌 수정에 성공했습니다.",
+        "data": { "accountId": "42411027228551", "nickname": "김싸피의 아주 멋진 새 적금", "balance": 20, "isDormant": false, "transferLimit": 100, "startDate": "04/03/2024", "endDate": "04/02/2025", "term": 12, "depositAccount": "42411027228551", "withdrawAccount": "42411027228551", "amount": 20, "dummyId": null, "createdAt": "2024-04-03 10:27", "updatedAt": "2024-04-03 10:30" },
         "page": null
     }
     `,
@@ -763,7 +710,7 @@ export const accountPasswordUpdateContent = {
     ],
     requestExample: `
     {
-        "accountId": "424442390202548348",
+        "accountId": "42411027228551",
         "password": "5555"
     }
     `,
@@ -889,25 +836,8 @@ export const accountMemberListContent = {
     {
         "status": "SUCCESS",
         "message": "계좌 조회에 성공했습니다.",
-        "data": {
-            "accountId": "5781660823306134",
-            "productName": "보통예금",
-            "nickname": "예시 설명",
-            "balance": 0,
-            "isDormant": 1000000,
-            "transferLimit": 5.0,
-            "startDate": "03/30/2024",
-            "endDate": "03/30/2025",
-            "term": 12,
-            "depositAccount": "5781660823306134",
-            "withdrawAccount": "5781660823306134",
-            "amount": 0,
-            "dummyId": null,
-            "bankId": "ef67408b-3107-45b8-9ff5-ac1305a34b47",
-            "productId": "64f8f3ce-103a-4815-a388-eddaf2333cfb",
-            "taxType": "NO_TAX"
-        },
-        "page": null
+        "data": null,
+        "page": { "content": [ { "accountId": "42411027228551", "nickname": "김싸피의 아주 멋진 새 적금", "balance": 20, "isDormant": false, "transferLimit": 100, "startDate": "04/03/2024", "endDate": "04/02/2025", "term": 12, "depositAccount": "42411027228551", "withdrawAccount": "42411027228551", "amount": 20, "dummyId": null, "createdAt": "2024-04-03 10:27", "updatedAt": "2024-04-03 10:30" } ], "page": 0, "size": 10, "totalElements": 1, "totalPages": 1, "last": true }
     }
     `,
     errorCode: [
@@ -1124,8 +1054,8 @@ export const accountDeleteContent = {
     ],
     requestExample: `
     {
-        "accountId": "424442390202548348",
-        "password": 5555
+        "accountId": "42411027228551",
+        "password": "5555"
     }
     `,
     responseParam: [],
@@ -1133,7 +1063,7 @@ export const accountDeleteContent = {
     {
         "status": "SUCCESS",
         "message": "계좌 해지에 성공했습니다.",
-        "data": "424442390202548348",
+        "data": "42411027228551",
         "page": null
     }
     `,

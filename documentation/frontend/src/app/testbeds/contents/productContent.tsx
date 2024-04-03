@@ -71,14 +71,14 @@ export const productCreateContent = {
     ],
     requestExample: `
     {
-        "name" : "보통예금",
-        "description" : "예시 설명",
+        "name" : "싸피조아적금",
+        "description" : "싸피 교육지원금 매달 일정 금액 적금을 장려하는 상품",
         "minAmount" : "10000",
-        "maxAmount" : "1000000",
-        "rate" : "5",
-        "productType" : "ORDINARY_DEPOSIT",
+        "maxAmount" : "500000",
+        "rate" : "10",
+        "productType" : "TERM_DEPOSIT",
         "paymentType" : "SIMPLE",
-        "bankId" : "3cf6f866-3fbd-46c8-85a1-96ab39551a35"
+        "bankId" : "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2"
     }
     `,
     responseParam: [
@@ -157,19 +157,7 @@ export const productCreateContent = {
     {
         "status": "SUCCESS",
         "message": "상품 등록에 성공했습니다.",
-        "data": {
-            "productId": "64f8f3ce-103a-4815-a388-eddaf2333cfb",
-            "name": "보통예금",
-            "description": "예시 설명",
-            "minAmount": 0,
-            "maxAmount": 1000000,
-            "rate": 5.0,
-            "productType": "ORDINARY_DEPOSIT",
-            "paymentType": "SIMPLE",
-            "isDone": false,
-            "createdAt": "2024-03-30 17:34",
-            "updatedAt": "2024-03-30 17:34"
-        },
+        "data": { "productId": "23589bc9-02fd-4f16-bf0e-0acad006efe1", "name": "싸피조아적금", "description": "싸피 교육지원금 매달 일정 금액 적금을 장려하는 상품", "minAmount": 10000, "maxAmount": 500000, "rate": 10, "productType": "TERM_DEPOSIT", "paymentType": "SIMPLE", "isDone": false, "createdAt": "2024-04-03 10:17", "updatedAt": "2024-04-03 10:17" },
         "page": null
     }
     `,
@@ -273,18 +261,7 @@ export const productReadContent = {
     {
         "status": "SUCCESS",
         "message": "예적금 상품 상세 조회에 성공했습니다.",
-        "data": {
-            "productId": "64f8f3ce-103a-4815-a388-eddaf2333cfb",
-            "name": "보통예금",
-            "description": "예시 설명",
-            "minAmount": 0,
-            "maxAmount": 1000000,
-            "rate": 5.0,
-            "productType": "ORDINARY_DEPOSIT",
-            "paymentType": "SIMPLE",
-            "isDone": false,
-            "bankId": "ef67408b-3107-45b8-9ff5-ac1305a34b47"
-        },
+        "data": { "productId": "64f8f3ce-103a-4815-a388-eddaf2333cfb", "name": "보통예금", "description": "예시 설명", "minAmount": 0, "maxAmount": 1000000, "rate": 5.0, "productType": "ORDINARY_DEPOSIT", "paymentType": "SIMPLE", "isDone": false, "bankId": "ef67408b-3107-45b8-9ff5-ac1305a34b47" },
         "page": null
     }
     `,
@@ -369,8 +346,87 @@ export const productListContent = {
     uri: 'product/search',
     requestParam: [],
     requestExample: '',
-    responseParam: [],
-    responseExample: '',
+    responseParam: [{
+        name: 'productId',
+        desc: '상품 아이디',
+        type: 'String',
+        required: 'Y',
+        etc: 'UUID',
+    },
+    {
+        name: 'name',
+        desc: '상품 이름',
+        type: 'String',
+        required: 'Y',
+        etc: '',
+    },
+    {
+        name: 'description',
+        desc: '상품 설명',
+        type: 'String',
+        required: 'Y',
+        etc: '',
+    },
+    {
+        name: 'minAmount',
+        desc: '입금 최소 한도',
+        type: 'Long',
+        required: 'Y',
+        etc: '',
+    },
+    {
+        name: 'maxAmount',
+        desc: '입금 최대 한도',
+        type: 'Long',
+        required: 'Y',
+        etc: '',
+    },
+    {
+        name: 'rate',
+        desc: '금리',
+        type: 'Double',
+        required: 'Y',
+        etc: '% 단위',
+    },
+    {
+        name: 'productType',
+        desc: '상품 타입',
+        type: 'String',
+        required: 'Y',
+        etc: 'ORDINARY_DEPOSIT, TERM_DEPOSIT, FIXED_DEPOSIT',
+    },
+    {
+        name: 'paymentType',
+        desc: '지급 타입',
+        type: 'String',
+        required: 'Y',
+        etc: 'SIMPLE, COMPOUND',
+    },
+    {
+        name: 'bankId',
+        desc: '은행 아이디',
+        type: 'String',
+        required: 'Y',
+        etc: 'UUID ',
+    },
+    {
+        name: 'isDone',
+        desc: '종료 여부',
+        type: 'Boolean',
+        required: 'Y',
+        etc: ' ',
+    },
+],
+    responseExample: `
+    {
+        "status": "SUCCESS",
+        "message": "예적금 상품 조회에 성공했습니다.",
+        "data": null,
+        "page": {
+            "content": [ { "productId": "1026d98a-b6be-4cf5-9dc0-c96c310a5e1e", "name": "보통 예금", "description": "은행 생성 시 자동 생성 되는 보통 예금", "minAmount": 0, "maxAmount": 100000000, "rate": 1, "productType": "ORDINARY_DEPOSIT", "paymentType": "SIMPLE", "isDone": false, "bankId": "3cf6f866-3fbd-46c8-85a1-96ab39551a35" }, { "productId": "23589bc9-02fd-4f16-bf0e-0acad006efe1", "name": "싸피조아적금", "description": "싸피 교육지원금 매달 일정 금액 적금을 장려하는 상품", "minAmount": 10000, "maxAmount": 500000, "rate": 10, "productType": "TERM_DEPOSIT", "paymentType": "SIMPLE", "isDone": false, "bankId": "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2" }], "page": 0, "size": 10, "totalElements": 16, "totalPages": 2, "last": false }
+        }
+    }
+    `,
     errorCode: [],
 }
 
