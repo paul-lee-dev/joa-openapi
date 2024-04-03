@@ -9,7 +9,7 @@ export const getBankDetail = async ({
   apiKey: string;
 }): Promise<any> => {
   const response = await axios.get(`${API_URL}/bank/${bankId}`, {
-    headers: {apiKey},
+    headers: {'Content-Type': 'application/json', apiKey},
   });
   return response.data;
 };

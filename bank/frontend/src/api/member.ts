@@ -17,8 +17,11 @@ export const logout = async (): Promise<any> => {
   return response.data;
 };
 
-export const emailConfirm = async (email: string): Promise<any> => {
-  const response = await axiosInstance.get(`/member/email/${email}`);
+export const emailConfirm = async (
+  email: string,
+  bankId: string,
+): Promise<any> => {
+  const response = await axiosInstance.get(`/member/email/${email}/${bankId}`);
   return response.data;
 };
 
