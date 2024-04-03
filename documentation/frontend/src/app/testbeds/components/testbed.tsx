@@ -360,15 +360,6 @@ export default function Testbed() {
           e.preventDefault();
           var uri = content.uri;
           const postFunc = async (params: string) => {
-
-            switch (content.uri) {
-              case "account/{bankId}":
-                uri = "bank/" + "26181252-036d-4edb-8729-204e15b0215b";
-                break;
-              default:
-                break;
-            }
-
             const response = await postAxios(uri, JSON.parse(params));
             setResponseContent({
               ...responseContent,
@@ -382,22 +373,22 @@ export default function Testbed() {
 
             switch (content.uri) {
               case "bank/{bankId}":
-                uri = "bank/" + "26181252-036d-4edb-8729-204e15b0215b";
+                uri = "bank/" + "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2";
                 break;
               case "member/{memberId}":
-                uri = "member/" + "4318993d-94f7-41a2-8d6b-1ec9dfe41005";
+                uri = "member/" + "7a5b903c-5fd6-4192-885d-6b8e4fd400e9";
                 break;
               case "member/email/{keyword}/{bankId}":
-                uri = "member/email/" + "tetetest@testt.com" + "/" + "3cf6f866-3fbd-46c8-85a1-96ab39551a35";
+                uri = "member/email/" + "joen2@ssafy.com" + "/" + "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2";
                 break;
               case "member/phone/{keyword}":
-                uri = "member/phone/" + "01015885588";
+                uri = "member/phone/" + "01023456789";
                 break;
               case "product/{productId}":
-                uri = "product/" + "fae4998a-bbb1-47dc-b6f5-6030b1df77d9";
+                uri = "product/" + "23589bc9-02fd-4f16-bf0e-0acad006efe1";
                 break;
               case "transaction/{transactionId}":
-                uri = "transaction/" + "35b17f49-606a-42ad-be6b-d751b8e8a997";
+                uri = "transaction/" + "013d21f5-2b88-49d6-b8e1-4300bba44bdf";
                 break;
               case "dummy/{dummyId}":
                 uri = "dummy/" + "7aaf4873-e9cd-46a0-966e-235c854ac5a0";
@@ -431,16 +422,16 @@ export default function Testbed() {
 
             switch (content.uri) {
               case "bank/{bankId}":
-                uri = "bank/" + "26181252-036d-4edb-8729-204e15b0215b";
+                uri = "bank/" + "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2";
                 break;
               case "member/{memberId}":
-                uri = "member/" + "4318993d-94f7-41a2-8d6b-1ec9dfe41005";
+                uri = "member/" + "7a5b903c-5fd6-4192-885d-6b8e4fd400e9";
                 break;
               case "product/{productId}":
-                uri = "product/" + "fae4998a-bbb1-47dc-b6f5-6030b1df77d9";
+                uri = "product/" + "23589bc9-02fd-4f16-bf0e-0acad006efe1";
                 break;
               case "transaction/{transactionId}":
-                uri = "transaction/" + "35b17f49-606a-42ad-be6b-d751b8e8a997";
+                uri = "transaction/" + "013d21f5-2b88-49d6-b8e1-4300bba44bdf";
                 break;
               case "dummy/{dummyId}":
                 uri = "dummy/" + "7aaf4873-e9cd-46a0-966e-235c854ac5a0";
@@ -463,39 +454,6 @@ export default function Testbed() {
             });
             return response.data;
           };
-          const deleteFunc = async (params: string) => {
-
-            switch (content.uri) {
-              case "bank/{bankId}":
-                uri = "bank/" + "7032c6bf-9eea-48de-94eb-50498cf897b2";
-                break;
-              case "member/{memberId}":
-                uri = "member/" + "4318993d-94f7-41a2-8d6b-1ec9dfe41005";
-                break;
-              case "product/{productId}":
-                uri = "product/" + "fae4998a-bbb1-47dc-b6f5-6030b1df77d9";
-                break;
-              case "dummy/{dummyId}":
-                uri = "dummy/" + "e9779481-b016-42af-b81d-36109a06d823";
-                break;
-              default:
-                break;
-            }
-
-            const jsonParam = (function () {
-              if (params.length === 0) { return null; }
-              else { return JSON.parse(params); }
-            })();
-
-            const response = await deleteAxios(uri, jsonParam);
-            setResponseContent({
-              ...responseContent,
-              status: response.data.status,
-              message: response.data.message,
-              data: JSON.stringify(response.data.data, null, 2)
-            });
-            return response.data;
-          };
 
           switch (content.method) {
             case "GET":
@@ -508,7 +466,13 @@ export default function Testbed() {
               patchFunc(content.requestExample);
               break;
             case "DELETE":
-              deleteFunc(content.requestExample);
+              // deleteFunc(content.requestExample);
+              setResponseContent({
+                ...responseContent,
+                status: "SUCCESS",
+                message: "실제 실행 시 삭제 완료를 알리는 문구가 출력됩니다.",
+                data: "실제 실행 시에는 삭제 요청에 대한 응답 데이터가 있는 경우 출력됩니다."
+              });
               break;
             default:
               break;

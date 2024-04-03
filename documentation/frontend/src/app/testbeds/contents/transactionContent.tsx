@@ -58,9 +58,9 @@ export const transactionDepositContent = {
     ],
     requestExample: `
     {
-        "password": "1234",
-        "amount" : "1500",
-        "toAccount" : "424442390202548348"
+        "password": "5555",
+        "amount" : "5000000",
+        "toAccount" : "42411027228551"
     }
     `
     ,
@@ -140,20 +140,7 @@ export const transactionDepositContent = {
     {
         "status": "SUCCESS",
         "message": "계좌 입금에 성공했습니다.",
-        "data": {
-            "transactionId": "3e08c449-21f8-4ec8-bb9c-c84f15117155",
-            "amount": 1500,
-            "depositorName": "입금주명",
-            "fromAccount": null,
-            "fromPrevBalance": null,
-            "fromBalance": null,
-            "toAccount": "5091018390",
-            "toPrevBalance": 3000,
-            "toBalance": 4500,
-            "dummyId": null,
-            "createdAt": "2024-03-30 18:37",
-            "updatedAt": "2024-03-30 18:37"
-        },
+        "data": { "transactionId": "0f5dd9e9-d19c-4be9-8ed5-efdb079f62ab", "amount": 5000000, "depositorName": "입금", "fromAccount": null, "fromPrevBalance": null, "fromBalance": null, "toAccount": "42411027228551", "toPrevBalance": 20, "toBalance": 1520, "dummyId": null, "createdAt": "2024-04-03 10:48", "updatedAt": "2024-04-03 10:48" },
         "page": null
     }
     `,
@@ -225,9 +212,9 @@ export const transactionWithdrawContent = {
     ],
     requestExample: `
     {
-        "password": "1234",
+        "password": "5555",
         "amount" : "1500",
-        "fromAccount" : "424442390202548348"
+        "fromAccount" : "42411027228551"
     }
     `,
     responseParam: [
@@ -306,20 +293,7 @@ export const transactionWithdrawContent = {
     {
         "status": "SUCCESS",
         "message": "계좌 출금에 성공했습니다.",
-        "data": {
-            "transactionId": "3e08c449-21f8-4ec8-bb9c-c84f15117155",
-            "amount": 1500,
-            "depositorName": "입금주명",
-            "fromAccount": 07519673423949533,
-            "fromPrevBalance": null,
-            "fromBalance": null,
-            "toAccount": null,
-            "toPrevBalance": 3000,
-            "toBalance": 1500,
-            "dummyId": null,
-            "createdAt": "2024-03-30 18:37",
-            "updatedAt": "2024-03-30 18:37"
-        },
+        "data": { "transactionId": "a47dbb76-1f65-4446-811f-6f598d1db02c", "amount": 1500, "depositorName": "출금", "fromAccount": "42411027228551", "fromPrevBalance": 5000020, "fromBalance": 4998520, "toAccount": null, "toPrevBalance": null, "toBalance": null, "dummyId": null, "createdAt": "2024-04-03 10:49", "updatedAt": "2024-04-03 10:49" },
         "page": null
     }
     `,
@@ -398,10 +372,10 @@ export const transactionSendContent = {
     ],
     requestExample: `
     {
-        "password": "1234",
-        "amount" : "1500",
-        "fromAccount" : "424442390202548348",
-        "toAccount" : "424442390202548348"
+        "password": "5555",
+        "amount" : "2000",
+        "fromAccount" : "42411027228551",
+        "toAccount" : "42411027228551"
     }
     `,
     responseParam: [
@@ -480,20 +454,7 @@ export const transactionSendContent = {
     {
         "status": "SUCCESS",
         "message": "계좌 출금에 성공했습니다.",
-        "data": {
-            "transactionId": "3e08c449-21f8-4ec8-bb9c-c84f15117155",
-            "amount" : 1500,
-            "depositorName": "입금주명",
-            "fromAccount": 07519673423949533,
-            "fromPrevBalance": 3000,
-            "fromBalance": 1500,
-            "toAccount": 06588471019380,
-            "toPrevBalance": 5000,
-            "toBalance": 6500,
-            "dummyId": null,
-            "createdAt": "2024-03-30 18:37",
-            "updatedAt": "2024-03-30 18:37"
-        },
+        "data": { "transactionId": "013d21f5-2b88-49d6-b8e1-4300bba44bdf", "amount": 1500, "depositorName": "출금", "fromAccount": "42411027228551", "fromPrevBalance": 5000520, "fromBalance": 4999020, "toAccount": null, "toPrevBalance": null, "toBalance": null, "dummyId": null, "createdAt": "2024-04-03 10:54", "updatedAt": "2024-04-03 10:54" },
         "page": null
     }
     `,
@@ -537,7 +498,7 @@ export const transaction1wonSendContent = {
     ],
     requestExample: `
     {
-        "accountId" : "424442390202548348"
+        "accountId" : "42411027228551"
     }
     `,
     responseParam: [
@@ -559,11 +520,8 @@ export const transaction1wonSendContent = {
     responseExample: `
     {
         "status": "SUCCESS",
-        "message": "계좌 출금에 성공했습니다.",
-        "data": {
-            "word": "노란우산",
-            "transactionId": "1d20aba9-ee39-4444-92e4-c542a6aa417d"
-        },
+        "message": "1원 인증 4글자 전송에 성공했습니다.",
+        "data": { "word": "두루마리", "transactionId": "bc5c657b-d820-4d9c-b0bc-1ad262149b6e" },
         "page": null
     }
     `,
@@ -599,8 +557,8 @@ export const transaction1wonConfirmContent = {
     ],
     requestExample: `
     {
-        "word" : "부정행위",
-        "transactionId" : "d8d08829-152a-41ec-83f9-078baf9e23b0"
+        "word" : "두루마리",
+        "transactionId" : "bc5c657b-d820-4d9c-b0bc-1ad262149b6e"
     }
     `,
     responseParam: [],
@@ -643,7 +601,7 @@ export const transactionReadContent = {
     {
         "status": "SUCCESS",
         "message": "거래내역 상세 조회에 성공했습니다."
-        "data": { "transactionId": "35b17f49-606a-42ad-be6b-d751b8e8a997", "amount": 32812, "depositorName": "쉥밑활", "fromAccount": "424442450159465506", "toAccount": "424442390159463251", "createdAt": "2024-04-02 12:28" },
+        "data": { "transactionId": "013d21f5-2b88-49d6-b8e1-4300bba44bdf", "amount": 500, "depositorName": "거래내역 수정", "fromAccount": "42411027228551", "toAccount": "42411027228551", "createdAt": "2024-04-03 10:54" },
         "page": null
     }
     `,
@@ -694,11 +652,11 @@ export const transactionUpdateContent = {
     ],
     requestExample: `
     {
-        "transactionId" : "35b17f49-606a-42ad-be6b-d751b8e8a997",
-        "amount" : 3333,
+        "transactionId" : "0f5dd9e9-d19c-4be9-8ed5-efdb079f62ab",
+        "amount" : "500",
         "depositorName" : "거래내역 수정",
-        "fromAccount": "0.22887087866260403",
-        "toAccount" : "0.44020096888170424"
+        "fromAccount": "42411027228551",
+        "toAccount" : "42411027228551"
       }
     `,
     responseParam: [],
@@ -706,7 +664,7 @@ export const transactionUpdateContent = {
     {
         "status": "SUCCESS",
         "message": "거래내역 수정에 성공했습니다.",
-        "data": null,
+        "data": { "transactionId": "013d21f5-2b88-49d6-b8e1-4300bba44bdf", "amount": 500, "depositorName": "거래내역 수정", "fromAccount": "42411027228551", "fromPrevBalance": 4999021, "fromBalance": 4999021, "toAccount": "42411027228551", "toPrevBalance": 4999021, "toBalance": 4999021, "isDummy": false, "createdAt": "2024-04-03 10:54", "updatedAt": "2024-04-03 11:08" },
         "page": null
     }
     `,
@@ -781,23 +739,7 @@ export const transactionListContent = {
         "status": "SUCCESS",
         "message": "거래내역 조회에 성공했습니다."
         "data": null,
-        "page": {
-            "content": [
-                {
-                    "transactionId": "c4dadcf5-a8b0-42cc-bc9d-103d00d1637b",
-                    "amount": 1000,
-                    "depositorName": "수림1to수림2",
-                    "fromAccount": "0.22887087866260403",
-                    "toAccount": "0.44020096888170424",
-                    "createdAt": "2024-03-29 15:42"
-                }
-            ],
-            "page": 0,
-            "size": 10,
-            "totalElements": 1,
-            "totalPages": 1,
-            "last": true
-        }
+        "page": { "content": [ { "transactionId": "bc5c657b-d820-4d9c-b0bc-1ad262149b6e", "amount": 1, "depositorName": "두루마리", "fromAccount": null, "toAccount": "42411027228551", "createdAt": "2024-04-03 10:55" }, { "transactionId": "013d21f5-2b88-49d6-b8e1-4300bba44bdf", "amount": 500, "depositorName": "거래내역 수정", "fromAccount": "42411027228551", "toAccount": "42411027228551", "createdAt": "2024-04-03 10:54" }, { "transactionId": "6972aa39-2496-4fca-8705-06166caa4aac", "amount": 2000, "depositorName": "이싸피", "fromAccount": "42411027228551", "toAccount": "42411027228551", "createdAt": "2024-04-03 10:51" }, { "transactionId": "a47dbb76-1f65-4446-811f-6f598d1db02c", "amount": 1500, "depositorName": "출금", "fromAccount": "42411027228551", "toAccount": null, "createdAt": "2024-04-03 10:49" } ], "page": 0, "size": 10, "totalElements": 13, "totalPages": 2, "last": false }
     }
     `,
     errorCode: [],

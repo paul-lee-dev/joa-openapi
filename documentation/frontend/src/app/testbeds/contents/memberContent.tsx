@@ -52,21 +52,18 @@ export const memberCreateContent = {
     ],
     requestExample: `
     {
-        "email":"samsungwa@do.com",
-        "phone":"01095955959",
+        "email":"joen@ssafy.com",
+        "phone":"01012345678",
         "password":"1234",
-        "name":"틱낫한",
-        "bankId":"3cf6f866-3fbd-46c8-85a1-96ab39551a35"
+        "name":"김싸피",
+        "bankId":"50708cd7-a6b4-4cf6-8fa5-46952c79e3f2"
     }
     `,
     responseParam: [],
     responseExample: `
-    {
-        "status": "SUCCESS",
-        "message": "회원 가입에 성공했습니다.",
-        "data": null,
-        "page": null
-    }
+    { "status": "SUCCESS", "message": "회원 가입에 성공했습니다.", "data": { "id": "7a5b903c-5fd6-4192-885d-6b8e4fd400e9", "createdAt": "2024-04-03 09:49", "updatedAt": "2024-04-03 09:49" }, "page": null }
+
+
     `,
     errorCode: [
         {
@@ -186,11 +183,7 @@ export const memberReadContent = {
         "status": "SUCCESS",
         "message": "회원 정보 조회에 성공했습니다.",
         "data": {
-            "name": "조쌒피",
-            "email": "chocho@ssafy.com",
-            "phone": "01098765432",
-            "createdAt": "2024-03-30T16:02:30.043151",
-            "updatedAt": "2024-03-30T16:02:30.043151"
+            "name": "김싸피", "email": "joen@ssafy.com", "phone": "01012345678", "createdAt": "2024-04-03T09:49:53.861457", "updatedAt": "2024-04-03T09:49:53.861457"
         },
         "page": null
     }
@@ -241,10 +234,10 @@ export const memberUpdateContent = {
     ],
     requestExample: `
     {
-        "name": "조쌒히",
+        "name": "이싸피",
         "email": "",
         "phone": "",
-        "password":"1234"
+        "password":"5555"
     }
     `,
     responseParam: [
@@ -288,13 +281,7 @@ export const memberUpdateContent = {
     {
         "status": "SUCCESS",
         "message": "회원 정보 수정에 성공했습니다.",
-        "data": {
-            "name": "조쌒히",
-            "email": "chocho@ssafy.com",
-            "phone": "01098765432",
-            "createdAt": "2024-03-30T16:02:30.043151",
-            "updatedAt": "2024-03-30T16:39:05.819411"
-        },
+        "data": { "name": "이싸피", "email": "joen@ssafy.com", "phone": "01012345678", "createdAt": "2024-04-03T09:49:53.861457", "updatedAt": "2024-04-03T09:49:53.861457" },
         "page": null
     }
     `,
@@ -364,15 +351,9 @@ export const memberListContent = {
     responseExample: `
     {
         "status": "SUCCESS",
-        "message": "회원 정보 조회에 성공했습니다.",
-        "data": {
-            "name": "조쌒피",
-            "email": "chocho@ssafy.com",
-            "phone": "01098765432",
-            "createdAt": "2024-03-30T16:02:30.043151",
-            "updatedAt": "2024-03-30T16:02:30.043151"
-        },
-        "page": null
+        "message": "회원 검색에 성공했습니다.",
+        "data": null,
+        "page": { "content": [ { "memberName": "틱낫한", "memberId": "c21e517f-66e2-458b-8781-bda8c469ee1f", "email": "samsungwa@do.com", "phone": "01095955959", "bankName": "아무은행", "createdAt": "2024/04/03" }, { "memberName": "이싸피", "memberId": "7a5b903c-5fd6-4192-885d-6b8e4fd400e9", "email": "joen@ssafy.com", "phone": "01012345678", "bankName": "조은은행", "createdAt": "2024/04/03" } ], "page": 0, "size": 10, "totalElements": 2, "totalPages": 1, "last": true }
     }
     `,
     errorCode: [

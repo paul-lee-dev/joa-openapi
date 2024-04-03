@@ -33,7 +33,7 @@ export const dummyMemberContent = {
   requestExample: `
     {
       "count" : "3",
-      "bankId" : "3cf6f866-3fbd-46c8-85a1-96ab39551a35"
+      "bankId" : "50708cd7-a6b4-4cf6-8fa5-46952c79e3f2"
   }
     `,
   responseParam: [
