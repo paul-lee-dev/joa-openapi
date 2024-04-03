@@ -39,8 +39,8 @@ export default function docs() {
             {bankSearchQueryString.map((str) => (
               <TrItem key={str.name}>
                 <TdItem>{str.name}</TdItem>
-                <TdItem>{str.type}</TdItem>
                 <TdItem>{str.desc}</TdItem>
+                <TdItem>{str.type}</TdItem>
                 <TdItem>{str.etc}</TdItem>
               </TrItem>
             ))}
