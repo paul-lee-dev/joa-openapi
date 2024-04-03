@@ -3,6 +3,7 @@ import tw from "tailwind-styled-components";
 import { useRouter } from "next/navigation";
 import { HiEmojiSad } from "react-icons/hi";
 import { IBank } from "@/models/Bank.interface";
+import Image from "next/image";
 
 interface BankTableProps {
   bankList: IBank[];
@@ -23,13 +24,13 @@ export default function BankTable({ bankList }: BankTableProps) {
             <th scope="col" className="px-6 py-4 w-1/12">
               은행로고
             </th>
-            <th scope="col" className="px-6 py-4 w-2/12">
+            <th scope="col" className="px-6 py-4 w-3/12">
               은행 코드
             </th>
             <th scope="col" className="px-6 py-4 w-2/12">
               은행명
             </th>
-            <th scope="col" className="px-6 py-4 w-4/12">
+            <th scope="col" className="px-6 py-4 w-3/12">
               은행설명
             </th>
             {/* <th scope="col" className="px-6 py-4">
@@ -48,13 +49,14 @@ export default function BankTable({ bankList }: BankTableProps) {
               className="border-b transition duration-300 ease-in-out hover:bg-pink-300"
             >
               <TableData>
-                {/* <Image
-                  src={bank.uri}
+                <Image
+                  src={
+                    "https://i.namu.wiki/i/I6G5oLx9hCbvGF6htSULqBcJcus4UGhTJoc-Q-szN69Y5vSfVM9-ULdIxjBpFvFbHWgW6Z93dlOc75_TtTf8eQ.svg"
+                  }
                   alt="bank_uri"
-                  width={50}
-                  height={50}
-                ></Image> */}
-                <HiEmojiSad></HiEmojiSad>
+                  width={35}
+                  height={35}
+                />
               </TableData>
               <TableData>
                 <div className="overflow-clip overflow-ellipsis break-words line-clamp-1">

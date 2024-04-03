@@ -13,6 +13,7 @@ import { useState } from "react";
 import CreateDummyMember from "@/components/dummyCreate/createDummyMember";
 import CreateDummyAccount from "@/components/dummyCreate/createDummyAccount";
 import CreateDummyTransaction from "@/components/dummyCreate/createDummyTransaction";
+import Link from "next/link";
 
 interface CreateDummyMemberForm {
   name: string;
@@ -38,31 +39,58 @@ export default function DummyCreate() {
   const router = useRouter();
   const [menu, setMenu] = useState<"MEMBER" | "ACCOUNT" | "TRANSACTION">("MEMBER");
   return (
-    <Container>
-      <div className="p-4">
-        <InputText label={"더미생성 종류"}>
-          <div className="flex p-4">
-            <MenuButton disabled={menu === "MEMBER"} onClick={() => setMenu("MEMBER")}>
-              고객
-            </MenuButton>
-            <MenuButton disabled={menu === "ACCOUNT"} onClick={() => setMenu("ACCOUNT")}>
-              계좌
-            </MenuButton>
-            <MenuButton disabled={menu === "TRANSACTION"} onClick={() => setMenu("TRANSACTION")}>
-              거래내역
-            </MenuButton>
-          </div>
-        </InputText>
+    <>
+      <div className="flex flex-col py-4 h-28 justify-center">
+        <div className="flex space-x-2">
+          <Link
+            href={"/admin/dummy"}
+            className="text-md font-medium text-gray-500 hover:text-pink-500"
+          >
+            더미데이터
+          </Link>
+          <h1 className="text-md font-medium text-gray-500">/</h1>
+          <Link
+            href={"/admin/dummy/create"}
+            className="text-md font-medium text-gray-500 hover:text-pink-500"
+          >
+            더미데이터생성
+          </Link>
+        </div>
       </div>
-      <Divider />
-      {menu === "MEMBER" && <CreateDummyMember />}
-      {menu === "ACCOUNT" && <CreateDummyAccount />}
-      {menu === "TRANSACTION" && <CreateDummyTransaction />}
-    </Container>
+      <Container>
+        <div className="flex flex-col space-y-2">
+          <h1 className="font-bold text-2xl">더미데이터 생성</h1>
+          <p className="font-light text-gray-400">
+            한 번에 필요한 만큼의 더미 고객 / 더미 계좌 / 더미 거래내역을 만들어볼 수 있어요.
+          </p>
+        </div>
+        <Divider />
+        <div className="p-4">
+          <InputText label={"더미생성 종류"}>
+            <div className="flex p-4">
+              <MenuButton disabled={menu === "MEMBER"} onClick={() => setMenu("MEMBER")}>
+                고객
+              </MenuButton>
+              <MenuButton disabled={menu === "ACCOUNT"} onClick={() => setMenu("ACCOUNT")}>
+                계좌
+              </MenuButton>
+              <MenuButton disabled={menu === "TRANSACTION"} onClick={() => setMenu("TRANSACTION")}>
+                거래내역
+              </MenuButton>
+            </div>
+          </InputText>
+        </div>
+        <Divider />
+        {menu === "MEMBER" && <CreateDummyMember />}
+        {menu === "ACCOUNT" && <CreateDummyAccount />}
+        {menu === "TRANSACTION" && <CreateDummyTransaction />}
+      </Container>
+    </>
   );
 }
 const Container = tw.div`
 p-14
+pt-4
 w-full
 flex
 flex-col

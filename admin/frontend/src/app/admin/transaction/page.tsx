@@ -33,6 +33,9 @@ const Dashboard = () => {
         <LoadingSpinner />
       ) : (
         <>
+          <div className="flex flex-col pt-10">
+            <h1 className="text-2xl font-bold">거래내역</h1>
+          </div>
           <form className="flex justify-end m-2">
             <div className="flex gap-8 ">
               <BankMultiSearchSelect

@@ -1,10 +1,7 @@
 "use client";
 
 import Button from "@/components/button/button";
-import InputText, {
-  CommonErrorMsg,
-  CommonInput,
-} from "@/components/input/inputText";
+import InputText, { CommonErrorMsg, CommonInput } from "@/components/input/inputText";
 import BankSelect from "@/components/select/bankSelect";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -81,9 +78,7 @@ export default function CreateDummyTransaction() {
       users: data.page.content
         .filter(
           (member: IMember) =>
-            getValues("users").findIndex(
-              (user) => user === member.memberName
-            ) !== -1
+            getValues("users").findIndex((user) => user === member.memberName) !== -1
         )
         .map((member: IMember) => member.memberId),
     });
@@ -133,21 +128,11 @@ export default function CreateDummyTransaction() {
           />
           <CommonErrorMsg>{errors.bankId?.message}</CommonErrorMsg>
         </div>
-        <MemberSelect
-          bankId={watch("bankId")}
-          setMemberId={addMember}
-          memberId={""}
-          name
-          all
-        />
+        <MemberSelect bankId={watch("bankId")} setMemberId={addMember} memberId={""} name all />
 
         <div className="flex w-full space-x-2 items-center flex-wrap">
           {watch("users").map((name) => (
-            <CommonLabel
-              key={name}
-              title={name}
-              onClick={() => removeMember(name)}
-            />
+            <CommonLabel key={name} title={name} onClick={() => removeMember(name)} />
           ))}
           {watch("users").length > 0 && (
             <h1
@@ -158,7 +143,7 @@ export default function CreateDummyTransaction() {
             </h1>
           )}
         </div>
-
+        <Divider />
         <InputText label={"생성내역 이름 (선택)"}>
           <CommonInput className="w-80" {...register("name")} />
           <CommonErrorMsg>{errors.name?.message}</CommonErrorMsg>
@@ -175,12 +160,7 @@ export default function CreateDummyTransaction() {
         </InputText>
         <Divider />
         <InputText label={"생성 주기"}>
-          <Select
-            id="members"
-            className="w-80"
-            value={watch("term")}
-            onChange={onChangeTerm}
-          >
+          <Select id="members" className="w-80" value={watch("term")} onChange={onChangeTerm}>
             <option key={"null"} value={"null"}>
               즉시
             </option>
@@ -200,12 +180,7 @@ export default function CreateDummyTransaction() {
       </div>
 
       <div className="flex gap-6 justify-end">
-        <Button
-          type="button"
-          onClick={() => router.back()}
-          id={"create"}
-          name={"취소"}
-        />
+        <Button type="button" onClick={() => router.back()} id={"create"} name={"취소"} />
         <Button type="submit" id={"create"} name={"등록"} />
       </div>
     </form>

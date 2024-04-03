@@ -10,6 +10,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { LoadingSpinner } from "@/components/loadingSpinner";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const BankList = () => {
   const router = useRouter();
@@ -37,6 +38,9 @@ const BankList = () => {
         <LoadingSpinner />
       ) : (
         <>
+          <div className="flex flex-col pt-10">
+            <h1 className="text-2xl font-bold">은행</h1>
+          </div>
           <form className="flex justify-end m-2 space-x-2 items-center">
             <div className="w-52 h-10">
               <input

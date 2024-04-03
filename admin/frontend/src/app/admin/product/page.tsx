@@ -35,6 +35,9 @@ const ProductList = () => {
         <LoadingSpinner />
       ) : (
         <>
+          <div className="flex flex-col pt-10">
+            <h1 className="text-2xl font-bold">상품</h1>
+          </div>
           <form>
             <div className="flex gap-6 justify-end mt-3 mb-5">
               <BankSelect />

@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { LoadingSpinner } from "@/components/loadingSpinner";
 import { CommonInput } from "@/components/input/inputText";
 import { HiBanknotes } from "react-icons/hi2";
+import Link from "next/link";
 
 interface IProps {
   params: {
@@ -98,6 +99,23 @@ export default function BankDetail({ params: { bankId } }: IProps) {
         <LoadingSpinner />
       ) : (
         <>
+          <div className="flex flex-col py-4 h-28 justify-center">
+            <div className="flex space-x-2">
+              <Link
+                href={"/admin/bank"}
+                className="text-md font-medium text-gray-500 hover:text-pink-500"
+              >
+                은행
+              </Link>
+              <h1 className="text-md font-medium text-gray-500">/</h1>
+              <Link
+                href={`/admin/bank/${data.data.bankId}`}
+                className="text-md font-medium text-gray-500 hover:text-pink-500"
+              >
+                {data.data.name}
+              </Link>
+            </div>
+          </div>
           <CommonForm onSubmit={handleSubmit(onSubmit)}>
             <div className="p-4 pb-0 flex justify-between items-end">
               <div className="flex flex-col space-y-2">
@@ -203,6 +221,7 @@ sm:leading-6
 `;
 const CommonForm = tw.form`
 p-14
+pt-4
 w-full
 flex
 flex-col
