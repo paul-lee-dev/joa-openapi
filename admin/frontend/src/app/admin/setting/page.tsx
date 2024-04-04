@@ -6,7 +6,9 @@ import InputText, { CommonInput } from "@/components/input/inputText";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { adminDataAtom } from "@/store/atom";
 import { useMutation } from "@tanstack/react-query";
-import { issuedApiKey, reissuedApiKey } from "@/api/Admin";
+import { issuedApiKey, logout, reissuedApiKey } from "@/api/Admin";
+import { defaultAdminData } from "@/models/Admin.interface";
+import { redirect } from "next/navigation";
 
 export default function Profile() {
   const [adminData, setAdminData] = useRecoilState(adminDataAtom);
@@ -14,8 +16,8 @@ export default function Profile() {
     mutationFn: issuedApiKey,
     onSuccess: (data) => {
       console.log(data);
-      alert("API 키가 발급되었습니다.");
-      setAdminData({ ...adminData, apiKey: data.data });
+      alert("API 키가 발급되었습니다. 최초 발급 시 재로그인이 필요합니다.");
+      logoutMutation.mutate();
     },
     onError: (err) => alert(err.message),
   });
@@ -25,6 +27,15 @@ export default function Profile() {
       console.log(data);
       alert("API 키가 재발급되었습니다.");
       setAdminData({ ...adminData, apiKey: data.data });
+    },
+    onError: (err) => alert(err.message),
+  });
+
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      setAdminData(defaultAdminData);
+      redirect("/");
     },
     onError: (err) => alert(err.message),
   });
@@ -41,24 +52,13 @@ export default function Profile() {
     <Container>
       <div className="flex flex-col space-y-2">
         <h1 className="font-bold text-2xl">설정</h1>
-        <p className="font-light text-gray-400">
-          API 키를 발급 / 재발급받을 수 있어요.
-        </p>
+        <p className="font-light text-gray-400">API 키를 발급 / 재발급받을 수 있어요.</p>
       </div>
       <Divider />
       <InputText label={"API 키"}>
         <div className="flex space-x-2">
-          <CommonInput
-            disabled
-            className="w-80"
-            value={adminData.apiKey ?? "API키 없음"}
-          />
-          <Button
-            type="button"
-            id={"create"}
-            name={"발급"}
-            onClick={getApiKey}
-          />
+          <CommonInput disabled className="w-80" value={adminData.apiKey ?? "API키 없음"} />
+          <Button type="button" id={"create"} name={"발급"} onClick={getApiKey} />
         </div>
       </InputText>
     </Container>

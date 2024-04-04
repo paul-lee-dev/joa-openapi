@@ -24,26 +24,26 @@ export default function ProductTable({ productList }: IProps) {
               은행코드
             </th>
             <th scope="col" className="px-6 py-2 w-1/12">
-              상품종류
+              종류
             </th>
             <th scope="col" className="px-6 py-2 w-1/12">
               상품명
             </th>
             <th scope="col" className="px-6 py-2 w-2/12">
-              상품 내용
+              설명
             </th>
             <th scope="col" className="px-6 py-2 w-1/12">
-              상품 이율
+              이율
             </th>
 
             <th scope="col" className="px-6 py-2 w-1/12">
-              지급 방식
+              지급
             </th>
             <th scope="col" className="px-6 py-2 w-1/12">
-              최소 금액
+              최소
             </th>
             <th scope="col" className="px-6 py-2 w-1/12">
-              <span className="flex gap-2">최대 금액</span>
+              <span className="flex gap-2">최대</span>
             </th>
             <th scope="col" className="relative px-6 py-2 w-1/12">
               <span className="sr-only"> </span>

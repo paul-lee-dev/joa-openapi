@@ -61,7 +61,7 @@ public class BankService {
         bankName = bank.getName();
         ProductCreateRequestDto dto = ProductCreateRequestDto.builder()
                 .name(bankName + " 보통 예금")
-                .description("은행 생성 시 자동 생성 되는 보통 예금")
+                .description("예치금액과 기간에 제한이 없는 입출금이 자유로운 통장")
                 .minAmount(0L)
                 .maxAmount(100000000L)
                 .rate(1D)
