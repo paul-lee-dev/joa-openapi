@@ -1,21 +1,23 @@
+( for test )
+조아은행 은행코드: 0d939872-7b2a-4120-8024-60ea13eeaa30
+api Key:51f0272a-3138-4b07-9a3d-e7b0fd16ad05
+
+대시보드 그래프
+아이디: rnqhstmd0219@gmail.com
+비밀번호: 1234
+
+조아은행 주인장
+아이디: eurohand@naver.com
+비밀번호: qwe123
 
 [ JOA Open API ] 
 - https://joa13.site
-
-( for test )
-admin eamil : eurohand@naver.com
-admin pwd : 1234
-memberId: 90240424-7a53-460c-8d4e-f786eda65fbb
-bankId: bdbbfe2c-dc15-4c85-8706-dac0299e7ff6
-apiKey: 9c485803-0697-4235-8014-a08d3aea77f4
-
 
 [ JOA Admin Dashboard ]
 - https://admin.joa13.site
 
 [ JOA Bank App ]
-- https://drive.google.com/file/d/1NkIEsYFl08CIaXb5NmtYruOxnIm-jjvH/view?usp=sharing
--* 앱 배포 후 다시 작성하기
+- https://drive.google.com/file/d/14zcwTOFKuocn7d-K7AYUOGm90UDOBzw3/view?usp=sharing
 
 [ Jenkins ]
 - http://j10a503.p.ssafy.io:8888
