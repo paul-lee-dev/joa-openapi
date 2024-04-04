@@ -1,5 +1,5 @@
 # 핀테크 프로젝트를 위한 금융 OpenAPI JOA OpenAPI
-![joa-openeapi](./assets/docs/joa-openapi.PNG) {: width="30%" height="20%"}
+![joa-openeapi](./assets/docs/joa-openapi.PNG){: width="30%" height="20%"}
 
 
 # 목차
@@ -10,7 +10,7 @@
 4. [**기능 소개**](#기능-소개)
 5. [**시연 영상**](#시연-영상)
 6. [**기술 스택**](#기술-스택)
-7. [**프로젝트 일정 및 산출물**](#프로젝트-산출물)
+7. [**프로젝트 산출물**](#프로젝트-산출물)
 8. [**UCC**](#UCC)
 9. [**참고**](#참고)
 
@@ -77,8 +77,8 @@
 
 
 # 아키텍처
-![아키텍처]](./assets/Architecture.PNG){: width="50%" height="50%"}
-
+![아키텍처](./assets/Architecture.PNG){: width="50%" height="50%"}
+<br/>
 
 # 주요기능
 
@@ -94,6 +94,7 @@
 
 ### 3. APIs
 ![APIs](./assets/Docs/Docs-APIs.gif){: width="50%" height="50%"}
+<br/>
 <br/>
 
 ## **Admin**
@@ -124,6 +125,7 @@
 ![더미계좌](./assets/Admin/Admin-CreateDummyAccount.gif){: width="50%" height="50%"}
 ![더미내역](./assets/Admin/Admin-CreateDummyTransaction.gif){: width="50%" height="50%"}
 <br/>
+<br/>
 
 ## **App**
 
@@ -149,6 +151,7 @@
 ### 6. 은행코드 변경
 ![로그인](./assets/App/은행코드바꾸기.gif){: width="20%" height="20%"}
 <br/>
+<br/>
 
 # 시연영상
 <br/>
@@ -156,18 +159,19 @@
 # UCC
 [![Video Label](./assets/docs/joa-openapi.PNG){: width="60%" height="40%"}
 ](https://www.youtube.com/watch?v=fE_YQiPRDG8)
-
+<br/>
 
 # 프로젝트 산출물
 
-### 1. ERD
+### [1. 요구사항 명세서](https://joyous-panther-248.notion.site/ecbdfe5401f544fabd2ef787d504a2e7?v=c37ca8d9e0614a699c0b7d4fd5053977&pvs=4)
+![Required](./assets/Required.PNG){: width="60%" height="40%"}
+
+### [2. ERD](https://joyous-panther-248.notion.site/ERD-87128130a6a24b09a8fb751879ec867d?pvs=4)
 ![ERD](./assets/ERD.PNG){: width="60%" height="40%"}
 
-### 2. API 문서
+### [3. API 명세서](https://joyous-panther-248.notion.site/API-2eab3ac9ef1b46c780b53af9c3ae6854?pvs=4)
 ![API](./assets/API.PNG){: width="60%" height="40%"}
-
-### 3. 요구사항 명세서
-![Required](./assets/Required.PNG){: width="60%" height="40%"}
+<br/>
 
 # 참고
 [노션](https://joyous-panther-248.notion.site/A503-13-7e43baa015974b2eb153f22c622f4c84?pvs=4)
