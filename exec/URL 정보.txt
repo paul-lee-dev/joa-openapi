@@ -17,7 +17,7 @@ api Key:51f0272a-3138-4b07-9a3d-e7b0fd16ad05
 - https://admin.joa13.site
 
 [ JOA Bank App ]
-- https://drive.google.com/file/d/14zcwTOFKuocn7d-K7AYUOGm90UDOBzw3/view?usp=sharing
+- https://drive.google.com/file/d/154STelYIvu4ngiB31qEfrOPei9ddebw2/view?usp=sharing 
 
 [ Jenkins ]
 - http://j10a503.p.ssafy.io:8888
