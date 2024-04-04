@@ -71,7 +71,7 @@ const Home = () => {
             <FeatureContainer2>
               <FeatureItem2>
                 <FeatureIconContainer>
-                  <a href='https://drive.google.com/file/d/1YvjMbzyCdh7u62DD3d0909x68kEIU1i9/view'><IoMdDownload className="text-2xl text-white drop-shadow" /></a>
+                  <a href='https://drive.google.com/file/d/14zcwTOFKuocn7d-K7AYUOGm90UDOBzw3/view'><IoMdDownload className="text-2xl text-white drop-shadow" /></a>
                 </FeatureIconContainer>
                 <div>
                   <FeatureTitle2>APK 다운로드</FeatureTitle2>
