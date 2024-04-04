@@ -1,4 +1,5 @@
-# 핀테크 프로젝트를 위한 금융 OpenAPI  JOA OpenAPI
+# 핀테크 프로젝트를 위한 금융 OpenAPI JOA OpenAPI
+![joa-openeapi](./assets/docs/joa-openapi.PNG) {: width="30%" height="20%"}
 
 
 # 목차
@@ -14,11 +15,9 @@
 9. [**참고**](#참고)
 
 # 서비스 소개
-- 기간 : 2024.03.~
-- 인원 : 6명
+- 기간 : 2024.02.19 ~ 2024.04.05 (7주)
 - 개요 : 핀테크 프로젝트를 위한 금융 OpenAPI 제공
 - 타겟 : 핀테크 개발자
-
 
 # 기획 배경
 - 제한된 API 종류
@@ -31,11 +30,11 @@
 - App : OpenAPI를 쉽게 테스트 할 수 있는 앱 (계좌 조회, 거래내역 조회, 이체 등)
 
 # 팀 구성
-| [조아영](https://github.com/benyy0101)                                                    | [구본승](https://github.com/rheeeuro)                                                     | [고수림](https://github.com/JHyeon-a)                                                                                          | [김희연](https://github.com/heeyeon3050)                                                   | [이유로](https://github.com/Damongsanga)                                                   | [이정호](https://github.com/Zerotay)                                                      |
+| [조아영](https://github.com/aycho00)                                                    | [구본승](https://github.com/rheeeuro)                                                     | [고수림](https://github.com/JHyeon-a)                                                                                          | [김희연](https://github.com/heeyeon3050)                                                   | [이유로](https://github.com/Damongsanga)                                                   | [이정호](https://github.com/Zerotay)                                                      |
 | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
 | <img src="https://avatars.githubusercontent.com/u/65917479?v=4" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/47638660?v=4" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/139304856?v=4cd575a38-8fc4-4470-889b-b920862f2e30" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/111184269?v=4" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/110401199?v=4" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/67823010?v=4" width="150" height="150"> |
-| Leader, Front                                                                             | Front, Back                                                                               | Front                                                                                                                          | Back                                                                                       | Back                                                                                       | CI&CD, Front                                                                              |
-| PM<br/>로그인 페이지<br/>방 목록 페이지<br/>채널, 라운지 페이지                                                            | 캠/화면 공유<br/>방 동시성 구현<br/>코드 동시 편집<br/>메인페이지                                    | UI/UX<br/>게시판 페이지<br/>유저페이지<br/>S3 이미지 업로드                           | 캠/화면 공유<br/> 방 동시성 구현<br/>실시간 채팅<br/>게시판 CRUD                         | 인증/인가<br/> 방 CRUD<br/>채널, 라운지 CRUD<br/> 메타데이터 로직                                                | 인프라 구축<br/> CI/CD<br/>API 연동<br/>게시판 페이지                                                                   |
+| 팀장, 풀스택                                                                             | 백엔드                                                                               | 인프라, 백엔드                                                                                                                          | 백엔드 리더                                                                                       |이유로                                                                                       | 이정호                                                                              |
+| 팀장, 풀스택<br/>Docs 페이지 구현<br/>사용자 인증/인가<br/>          | 은행 생성 API 개발<br/>더미데이터 API 개발<br/>                                 | CI/CD 구축<br/>이메일 인증 및 검색 API 개발<br/>| 계좌, 상품 API 개발<br/> 거래내역 API 개발<br/>                       | 애플리케이션 구현<br/>Admin 페이지 API 연동                                            | Admin 레이아웃 구현<br/> 대시보드 구현<br/>     |
 
 <br/>
 
@@ -58,8 +57,6 @@
 <br/>
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white" width="auto" height="25">
 <img src="https://img.shields.io/badge/redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" width="auto" height="25">
-<img src="https://img.shields.io/badge/mongodb-4479A1?style=for-the-badge&logo=mongodb&logoColor=white" height="25">
-<img src="https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=white" width="auto" height="25">
 
 **Environment**
 <br/>
@@ -67,10 +64,8 @@
 <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" width="auto" height="25">
 <img src="https://img.shields.io/badge/EC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white" width="auto" height="25">
 <img src="https://img.shields.io/badge/jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white" width="auto" height="25">
-<img src="https://img.shields.io/badge/sonarqube-4E9BCD?style=for-the-badge&logo=sonarqube&logoColor=white" width="auto" height="25">
 <img src="https://img.shields.io/badge/prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white" width="auto" height="25">
 <img src="https://img.shields.io/badge/grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white" width="auto" height="25">
-<img src="https://img.shields.io/badge/openvidu-F46800?style=for-the-badge&logoColor=white" width="auto" height="25">
 
 **Cooperation**
 <br/>
