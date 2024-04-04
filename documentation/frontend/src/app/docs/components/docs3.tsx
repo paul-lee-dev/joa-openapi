@@ -17,7 +17,7 @@ export default function docs() {
 
         <Subtitle>요청 URI</Subtitle>
         <TextItem>
-          API를 제공하는 엔드포인트입니다. 엔드포인트란 웹 서비스에서 클라이언트가 서버에 특정한 작업을 요청할 때 사용되는 URL을 말합니다. 해당하는 Method로 호출하여 적절한 요청을 보낼 경우 서버는 클라이언트의 요청을 이해하고 처리할 수 있게 됩니다.
+          API를 제공하는 엔드포인트입니다. 엔드포인트란 웹 서비스에서 클라이언트가 서버에 특정한 작업을 요청할 때 사용되는 URL을 말합니다. 해당하는 Method로 호출하여 적절한 요청을 보낼 경우 서버는 클라이언트의 요청을 이해하고 처리할 수 있게 됩니다. Base URL은 https://joa13.site/v1 입니다. 
         </TextItem>
 
         <Subtitle>공통 헤더 명세</Subtitle>
