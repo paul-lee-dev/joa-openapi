@@ -152,8 +152,8 @@ public class AccountService {
     }
 
     @Transactional
-    public String delete(UUID apiKey, AccountDeleteRequestDto req) {
-        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+    public String delete(UUID apiKey, String accountId) {
+        Account account = accountRepository.findById(accountId).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
 
         bankAuthorityValidation(apiKey, account.getBankId());
         // checkPassword(account, req.getPassword());
@@ -162,6 +162,7 @@ public class AccountService {
 
         return account.getId();
     }
+
 
     public AccountGetBalanceResponseDto getBalance(UUID apiKey, UUID memberId, AccountGetBalanceRequestDto req) {
         Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));

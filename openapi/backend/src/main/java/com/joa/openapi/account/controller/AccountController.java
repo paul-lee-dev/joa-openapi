@@ -44,10 +44,9 @@ public class AccountController {
         return ResponseEntity.ok(ApiResponse.success("비밀번호 변경에 성공했습니다."));
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestHeader("apiKey") UUID apiKey, @RequestBody AccountDeleteRequestDto req) {
-        String accountId = accountService.delete(apiKey, req);
-        return ResponseEntity.ok(ApiResponse.success("계좌 해지에 성공했습니다.", accountId));
+    @DeleteMapping("/{accountId}")
+    public ResponseEntity<?> delete(@RequestHeader("apiKey") UUID apiKey, @PathVariable(value = "accountId") String accountId) {
+        return ResponseEntity.ok(ApiResponse.success("계좌 해지에 성공했습니다.", accountService.delete(apiKey, accountId)));
     }
 
     @PostMapping("/balance")
