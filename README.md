@@ -1,5 +1,5 @@
 # 핀테크 프로젝트를 위한 금융 OpenAPI JOA OpenAPI
-![joa-openeapi](./assets/docs/joa-openapi.PNG){: width="60%" height="40%"}
+![joa-openeapi](./assets/joa-openapi.PNG){: width="60%" height="40%"}
 
 
 # 목차
