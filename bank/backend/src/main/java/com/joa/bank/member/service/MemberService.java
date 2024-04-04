@@ -29,7 +29,10 @@ public class MemberService {
         String email = request.getEmail();
         String password = request.getPassword();
         UUID bankId = request.getBankId();
-        Member member = memberRepository.findByEmailandAndBankId(email, bankId).orElseThrow(() -> new RestApiException(MemberErrorCode.NO_MEMBER));
+        Member member = memberRepository.findByBankIdAndEmail(bankId, email);
+        if (member == null) {
+            throw new RestApiException(MemberErrorCode.NO_MEMBER);
+        }
         if (member.getIsDeleted()==true) throw new RestApiException(MemberErrorCode.NO_MEMBER);
         if (!password.equals(member.getPassword())) throw new RestApiException(MemberErrorCode.WRONG_PASSWORD);
         if (!bankId.equals(member.getBankId())) throw new RestApiException(MemberErrorCode.NO_MEMBER);
