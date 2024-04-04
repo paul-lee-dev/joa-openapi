@@ -1,5 +1,5 @@
 # 핀테크 프로젝트를 위한 금융 OpenAPI JOA OpenAPI
-![joa-openeapi](./assets/docs/joa-openapi.PNG){: width="30%" height="20%"}
+![joa-openeapi](./assets/docs/joa-openapi.PNG){: width="60%" height="40%"}
 
 
 # 목차
@@ -30,7 +30,7 @@
 - App : OpenAPI를 쉽게 테스트 할 수 있는 앱 (계좌 조회, 거래내역 조회, 이체 등)
 
 # 팀 구성
-| [조아영](https://github.com/aycho00)                                                    | [구본승](https://github.com/rheeeuro)                                                     | [고수림](https://github.com/JHyeon-a)                                                                                          | [김희연](https://github.com/heeyeon3050)                                                   | [이유로](https://github.com/Damongsanga)                                                   | [이정호](https://github.com/Zerotay)                                                      |
+| [조아영](https://github.com/aycho00)                                                    | [구본승](https://github.com/kbs3103)                                                     | [고수림](https://github.com/sulim0314)                                                                                          | [김희연](https://github.com/heeyeon3050)                                                   | [이유로](https://github.com/rheeeuro)                                                   | [이정호](https://github.com/paul-lee-dev)                                                      |
 | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
 | <img src="https://avatars.githubusercontent.com/u/65917479?v=4" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/47638660?v=4" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/139304856?v=4cd575a38-8fc4-4470-889b-b920862f2e30" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/111184269?v=4" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/110401199?v=4" width="150" height="150"> | <img src="https://avatars.githubusercontent.com/u/67823010?v=4" width="150" height="150"> |
 | 팀장, 풀스택                                                                             | 백엔드                                                                               | 인프라, 백엔드                                                                                                                          | 백엔드 리더                                                                                       |이유로                                                                                       | 이정호                                                                              |
@@ -85,45 +85,45 @@
 ## **Docs**
 
 ### 1. 메인화면
-![메인화면](./assets/Docs/Docs-Home.gif){: width="50%" height="50%"}
+![메인화면](./assets/Docs/Docs-Home.gif){: width="50%" height="40%"}
 <br/>
 
 ### 2. Docs
-![Docs](./assets/Docs/Docs-Docs.gif){: width="50%" height="50%"}
+![Docs](./assets/Docs/Docs-Docs.gif){: width="50%" height="40%"}
 <br/>
 
 ### 3. APIs
-![APIs](./assets/Docs/Docs-APIs.gif){: width="50%" height="50%"}
+![APIs](./assets/Docs/Docs-APIs.gif){: width="50%" height="40%"}
 <br/>
 <br/>
 
 ## **Admin**
 
 ### 1. 설정
-![설정](./assets/Admin/Admin-SignupGetAPIKey.gif){: width="50%" height="50%"}
+![설정](./assets/Admin/Admin-SignupGetAPIKey.gif){: width="50%" height="40%"}
 <br/>
 ### 2. 대시보드
-![대시보드]](./assets/Admin/Admin-Dashboard.gif){: width="50%" height="50%"}
+![대시보드](./assets/Admin/Admin-Dashboard.gif){: width="50%" height="40%"}
 <br/>
 ### 3. 은행
-![은행](./assets/Admin/Admin-CreateBank.gif){: width="50%" height="50%"}
+![은행](./assets/Admin/Admin-CreateBank.gif){: width="50%" height="40%"}
 <br/>
 ### 4. 상품
-![상품](./assets/Admin/Admin-CreateProduct.gif){: width="50%" height="50%"}
+![상품](./assets/Admin/Admin-CreateProduct.gif){: width="50%" height="40%"}
 <br/>
 ### 5. 계좌
-![계좌](./assets/Admin/Admin-CreateAccount.gif){: width="50%" height="50%"}
+![계좌](./assets/Admin/Admin-CreateAccount.gif){: width="50%" height="40%"}
 <br/>
 ### 6. 고객
-![고객](./assets/Admin/Admin-CreateMember.gif){: width="50%" height="50%"}
+![고객](./assets/Admin/Admin-CreateMember.gif){: width="50%" height="40%"}
 <br/>
 ### 7. 거래내역
-![거래내역](./assets/Admin/Admin-CreateTransaction.gif){: width="50%" height="50%"}
+![거래내역](./assets/Admin/Admin-CreateTransaction.gif){: width="50%" height="40%"}
 <br/>
 ### 8. 더미데이터
-![더미멤버](./assets/Admin/Admin-CreateDummyMember.gif){: width="50%" height="50%"}
-![더미계좌](./assets/Admin/Admin-CreateDummyAccount.gif){: width="50%" height="50%"}
-![더미내역](./assets/Admin/Admin-CreateDummyTransaction.gif){: width="50%" height="50%"}
+![더미멤버](./assets/Admin/Admin-CreateDummyMember.gif){: width="50%" height="40%"}
+![더미계좌](./assets/Admin/Admin-CreateDummyAccount.gif){: width="50%" height="40%"}
+![더미내역](./assets/Admin/Admin-CreateDummyTransaction.gif){: width="50%" height="40%"}
 <br/>
 <br/>
 
@@ -174,4 +174,4 @@
 <br/>
 
 # 참고
-[노션](https://joyous-panther-248.notion.site/A503-13-7e43baa015974b2eb153f22c622f4c84?pvs=4)
+### [노션](https://joyous-panther-248.notion.site/A503-13-7e43baa015974b2eb153f22c622f4c84?pvs=4)
