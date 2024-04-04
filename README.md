@@ -86,14 +86,19 @@
 ## **Docs**
 
 ### 1. 메인화면
+- Docs의 다양한 기능들을 Overview로 제공
 ![메인화면](./assets/Docs/Docs-Home.gif){: width="50%" height="40%"}
 <br/>
 
 ### 2. Docs
+- API를 쉽게 사용할 수 있도록 사용법 제공
+- 시작하기, 용어 정의, 프로젝트 구조, 커스텀 방법, 샘플 앱 이용법
 ![Docs](./assets/Docs/Docs-Docs.gif){: width="50%" height="40%"}
 <br/>
 
 ### 3. APIs
+- 43개의 API의 Request, Response 정보 제공
+- Request, Response 정보를 제공하고, 이를 바탕으로 테스트베드 사용
 ![APIs](./assets/Docs/Docs-APIs.gif){: width="50%" height="40%"}
 <br/>
 <br/>
@@ -101,9 +106,12 @@
 ## **Admin**
 
 ### 1. 설정
+- 설정에서 API 키 발급/재발급 가능
 ![설정](./assets/Admin/Admin-SignupGetAPIKey.gif){: width="50%" height="40%"}
 <br/>
 ### 2. 대시보드
+- 총 거래횟수, 고객수, 총 출금액, 총 입금액 통계 제공
+- 데이터를 바탕으로 한 차트 제공. 파일 export 가능
 ![대시보드](./assets/Admin/Admin-Dashboard.gif){: width="50%" height="40%"}
 <br/>
 ### 3. 은행
