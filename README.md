@@ -121,27 +121,33 @@
 <br/>
 ### 3. 은행
 - 은행 생성 시, 자동으로 기본 입출금통장 생성
+<br/>
 ![은행](./assets/admin/Admin-CreateBank.gif){: width="50%" height="40%"}
 <br/>
 ### 4. 상품
 - 상품 생성 시: 상품 종류 선택, 금리 설정, 이자율 설정, 지급 방법 선택
+<br/>
 ![상품](./assets/admin/Admin-CreateProduct.gif){: width="50%" height="40%"}
 <br/>
 ### 5. 계좌
 - 계좌 신청 시: 출금 계좌 선택, 입금 금액 입력, 기간 선택, 과세 유형 선택, 비밀번호 입력
+<br/>
 ![계좌](./assets/admin/Admin-CreateAccount.gif){: width="50%" height="40%"}
 <br/>
 - 은행에 등록된 고객들에 대한 조회
+<br/>
 ![고객](./assets/admin/Admin-CreateMember.gif){: width="50%" height="40%"}
 <br/>
 ### 7. 거래내역
 - 입금, 출금, 이체, 이자에 대한 내역들 조회
+<br/>
 ![거래내역](./assets/admin/Admin-CreateTransaction.gif){: width="50%" height="40%"}
 <br/>
 ### 8. 더미데이터
 - 은행, 계좌, 거래내역 편하게 생성
 - 더미데이터 개수 입력
 - 원하는 주기에 자동으로 생성
+<br/>
 ![더미멤버](./assets/admin/Admin-CreateDummyMember.gif){: width="50%" height="40%"}
 ![더미계좌](./assets/admin/Admin-CreateDummyAccount.gif){: width="50%" height="40%"}
 ![더미내역](./assets/admin/Admin-CreateDummyTransaction.gif){: width="50%" height="40%"}
@@ -151,7 +157,6 @@
 ## **App**
 
 ### 1. 회원가입 / 로그인
-- 이메일 인증을 통한 회원가입
 ![회원가입1](./assets/app/회원가입1.gif){: width="20%" height="20%"}
 ![회원가입2](./assets/app/회원가입2.gif){: width="20%" height="20%"}
 ![로그인](./assets/app/로그인 최종.gif){: width="20%" height="20%"}
