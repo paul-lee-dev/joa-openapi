@@ -158,20 +158,20 @@
 <br/>
 
 # UCC
-[![Video Label](./assets/docs/joa-openapi.PNG){: width="60%" height="40%"}
+[![Video Label](./assets/docs/joa-openapi.PNG){: width="50%" height="30%"}
 ](https://www.youtube.com/watch?v=fE_YQiPRDG8)
 <br/>
 
 # 프로젝트 산출물
 
 ### [1. 요구사항 명세서](https://joyous-panther-248.notion.site/ecbdfe5401f544fabd2ef787d504a2e7?v=c37ca8d9e0614a699c0b7d4fd5053977&pvs=4)
-![Required](./assets/Required.PNG){: width="60%" height="40%"}
+![Required](./assets/Required.PNG){: width="50%" height="30%"}
 
 ### [2. ERD](https://joyous-panther-248.notion.site/ERD-87128130a6a24b09a8fb751879ec867d?pvs=4)
-![ERD](./assets/ERD.PNG){: width="60%" height="40%"}
+![ERD](./assets/ERD.PNG){: width="50%" height="30%"}
 
 ### [3. API 명세서](https://joyous-panther-248.notion.site/API-2eab3ac9ef1b46c780b53af9c3ae6854?pvs=4)
-![API](./assets/API.PNG){: width="60%" height="40%"}
+![API](./assets/API.PNG){: width="50%" height="30%"}
 <br/>
 
 # 참고
