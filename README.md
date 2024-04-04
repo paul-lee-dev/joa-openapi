@@ -196,8 +196,7 @@
 <br/>
 
 # UCC
-[![Video Label](./assets/docs/joa-openapi.PNG){: width="50%" height="30%"}
-](https://www.youtube.com/watch?v=fE_YQiPRDG8)
+[![Video Label](./assets/joa-openapi.PNG){: width="50%" height="40%"}](https://www.youtube.com/watch?v=fE_YQiPRDG8)
 <br/>
 
 # 프로젝트 산출물
