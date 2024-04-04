@@ -117,6 +117,7 @@
 ![설정](./assets/admin/Admin-SignupGetAPIKey.gif){: width="50%" height="40%"}
 <br/>
 <br/>
+
 ### 2. 대시보드
 <br/>
 - 총 거래횟수, 고객수, 총 출금액, 총 입금액 통계 제공
@@ -125,6 +126,7 @@
 ![대시보드](./assets/admin/Admin-Dashboard.gif){: width="50%" height="40%"}
 <br/>
 <br/>
+
 ### 3. 은행
 <br/>
 - 은행 생성 시, 자동으로 기본 입출금통장 생성
@@ -132,6 +134,7 @@
 ![은행](./assets/admin/Admin-CreateBank.gif){: width="50%" height="40%"}
 <br/>
 <br/>
+
 ### 4. 상품
 <br/>
 - 상품 생성 시: 상품 종류 선택, 금리 설정, 이자율 설정, 지급 방법 선택
@@ -139,6 +142,7 @@
 ![상품](./assets/admin/Admin-CreateProduct.gif){: width="50%" height="40%"}
 <br/>
 <br/>
+
 ### 5. 계좌
 <br/>
 - 계좌 신청 시: 출금 계좌 선택, 입금 금액 입력, 기간 선택, 과세 유형 선택, 비밀번호 입력
@@ -150,6 +154,7 @@
 ![고객](./assets/admin/Admin-CreateMember.gif){: width="50%" height="40%"}
 <br/>
 <br/>
+
 ### 6. 거래내역
 <br/>
 - 입금, 출금, 이체, 이자에 대한 내역들 조회
@@ -157,6 +162,7 @@
 ![거래내역](./assets/admin/Admin-CreateTransaction.gif){: width="50%" height="40%"}
 <br/>
 <br/>
+
 ### 7. 더미데이터
 <br/>
 - 은행, 계좌, 거래내역 편하게 생성
