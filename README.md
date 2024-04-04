@@ -111,7 +111,6 @@
 ## **Admin**
 
 ### 1. 설정
-<br/>
 - 설정에서 API 키 발급/재발급 가능
 <br/>
 ![설정](./assets/admin/Admin-SignupGetAPIKey.gif){: width="50%" height="40%"}
@@ -194,9 +193,6 @@
 ### 6. 은행코드 변경
 ![로그인](./assets/app/은행코드바꾸기.gif){: width="20%" height="20%"}
 <br/>
-<br/>
-
-# 시연영상
 <br/>
 
 # UCC
