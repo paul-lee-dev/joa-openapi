@@ -22,8 +22,8 @@ export const updateAccount = async (params: any): Promise<any> => {
   return response.data;
 };
 
-export const deleteAccount = async (accountId: string): Promise<any> => {
-  const response = await localAxios.delete(`/account/${accountId}`);
+export const deleteAccount = async (params: any): Promise<any> => {
+  const response = await localAxios.delete("/account/", params);
   return response.data;
 };
 
