@@ -10,5 +10,6 @@ import java.util.UUID;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, String> {
 
-    Optional<Member> findByEmail(String email);
+    Optional<Member> findByEmailandAndBankId(String email, UUID bankId);
+
 }
