@@ -90,12 +90,14 @@
 <br/>
 ![메인화면](./assets/docs/Docs-Home.gif){: width="50%" height="40%"}
 <br/>
+<br/>
 
 ### 2. Docs
 - API를 쉽게 사용할 수 있도록 사용법 제공
 - 시작하기, 용어 정의, 프로젝트 구조, 커스텀 방법, 샘플 앱 이용법
 <br/>
 ![Docs](./assets/docs/Docs-Docs.gif){: width="50%" height="40%"}
+<br/>
 <br/>
 
 ### 3. APIs
@@ -113,23 +115,29 @@
 <br/>
 ![설정](./assets/admin/Admin-SignupGetAPIKey.gif){: width="50%" height="40%"}
 <br/>
+<br/>
 ### 2. 대시보드
 - 총 거래횟수, 고객수, 총 출금액, 총 입금액 통계 제공
 - 데이터를 바탕으로 한 차트 제공. 파일 export 가능
 <br/>
 ![대시보드](./assets/admin/Admin-Dashboard.gif){: width="50%" height="40%"}
 <br/>
+<br/>
 ### 3. 은행
+<br/>
 - 은행 생성 시, 자동으로 기본 입출금통장 생성
 <br/>
 ![은행](./assets/admin/Admin-CreateBank.gif){: width="50%" height="40%"}
+<br/>
 <br/>
 ### 4. 상품
 - 상품 생성 시: 상품 종류 선택, 금리 설정, 이자율 설정, 지급 방법 선택
 <br/>
 ![상품](./assets/admin/Admin-CreateProduct.gif){: width="50%" height="40%"}
 <br/>
+<br/>
 ### 5. 계좌
+<br/>
 - 계좌 신청 시: 출금 계좌 선택, 입금 금액 입력, 기간 선택, 과세 유형 선택, 비밀번호 입력
 <br/>
 ![계좌](./assets/admin/Admin-CreateAccount.gif){: width="50%" height="40%"}
@@ -138,12 +146,15 @@
 <br/>
 ![고객](./assets/admin/Admin-CreateMember.gif){: width="50%" height="40%"}
 <br/>
-### 7. 거래내역
+<br/>
+### 6. 거래내역
+<br/>
 - 입금, 출금, 이체, 이자에 대한 내역들 조회
 <br/>
 ![거래내역](./assets/admin/Admin-CreateTransaction.gif){: width="50%" height="40%"}
 <br/>
-### 8. 더미데이터
+<br/>
+### 7. 더미데이터
 - 은행, 계좌, 거래내역 편하게 생성
 - 더미데이터 개수 입력
 - 원하는 주기에 자동으로 생성
