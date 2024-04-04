@@ -151,9 +151,9 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    @Transactional
-    public String delete(UUID apiKey, String accountId) {
-        Account account = accountRepository.findById(accountId).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+    public String delete(UUID apiKey, AccountDeleteRequestDto req) {
+        Account account = accountRepository.findById(req.getAccountId()).orElseThrow(() -> new RestApiException(AccountErrorCode.NO_ACCOUNT));
+
 
         bankAuthorityValidation(apiKey, account.getBankId());
         // checkPassword(account, req.getPassword());

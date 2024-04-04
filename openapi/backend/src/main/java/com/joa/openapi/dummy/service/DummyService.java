@@ -282,7 +282,12 @@ public class DummyService {
         } else if (dummy.getAccountCount() != null) {
             List<Account> accountList = accountRepository.findByDummyId(dummyId);
             for (Account account: accountList) {
-                accountService.delete(apiKey, account.getId());
+                AccountDeleteRequestDto dto = AccountDeleteRequestDto.builder()
+                        .accountId(account.getId())
+                        .password(account.getPassword())
+                        .build();
+                accountService.delete(apiKey, dto);
+
             }
         } else if (dummy.getTransactionCount() != null) {
             List<Transaction> transactionsList = transactionRepository.findByDummyId(dummyId);
