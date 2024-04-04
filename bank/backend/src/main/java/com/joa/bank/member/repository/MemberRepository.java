@@ -10,6 +10,8 @@ import java.util.UUID;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, String> {
 
-    Optional<Member> findByEmailandAndBankId(String email, UUID bankId);
+    @Query(value = "SELECT * FROM member WHERE bank_id = :bankId and email = :email", nativeQuery = true)
+    Member findByBankIdAndEmail(UUID bankId, String email);
+
 
 }
