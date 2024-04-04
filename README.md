@@ -87,19 +87,19 @@
 
 ### 1. 메인화면
 - Docs의 다양한 기능들을 Overview로 제공
-![메인화면](./assets/Docs/Docs-Home.gif){: width="50%" height="40%"}
+![메인화면](./assets/docs/Docs-Home.gif){: width="50%" height="40%"}
 <br/>
 
 ### 2. Docs
 - API를 쉽게 사용할 수 있도록 사용법 제공
 - 시작하기, 용어 정의, 프로젝트 구조, 커스텀 방법, 샘플 앱 이용법
-![Docs](./assets/Docs/Docs-Docs.gif){: width="50%" height="40%"}
+![Docs](./assets/docs/Docs-Docs.gif){: width="50%" height="40%"}
 <br/>
 
 ### 3. APIs
 - 43개의 API의 Request, Response 정보 제공
 - Request, Response 정보를 제공하고, 이를 바탕으로 테스트베드 사용
-![APIs](./assets/Docs/Docs-APIs.gif){: width="50%" height="40%"}
+![APIs](./assets/docs/Docs-APIs.gif){: width="50%" height="40%"}
 <br/>
 <br/>
 
@@ -107,58 +107,58 @@
 
 ### 1. 설정
 - 설정에서 API 키 발급/재발급 가능
-![설정](./assets/Admin/Admin-SignupGetAPIKey.gif){: width="50%" height="40%"}
+![설정](./assets/admin/Admin-SignupGetAPIKey.gif){: width="50%" height="40%"}
 <br/>
 ### 2. 대시보드
 - 총 거래횟수, 고객수, 총 출금액, 총 입금액 통계 제공
 - 데이터를 바탕으로 한 차트 제공. 파일 export 가능
-![대시보드](./assets/Admin/Admin-Dashboard.gif){: width="50%" height="40%"}
+![대시보드](./assets/admin/Admin-Dashboard.gif){: width="50%" height="40%"}
 <br/>
 ### 3. 은행
-![은행](./assets/Admin/Admin-CreateBank.gif){: width="50%" height="40%"}
+![은행](./assets/admin/Admin-CreateBank.gif){: width="50%" height="40%"}
 <br/>
 ### 4. 상품
-![상품](./assets/Admin/Admin-CreateProduct.gif){: width="50%" height="40%"}
+![상품](./assets/admin/Admin-CreateProduct.gif){: width="50%" height="40%"}
 <br/>
 ### 5. 계좌
-![계좌](./assets/Admin/Admin-CreateAccount.gif){: width="50%" height="40%"}
+![계좌](./assets/admin/Admin-CreateAccount.gif){: width="50%" height="40%"}
 <br/>
 ### 6. 고객
-![고객](./assets/Admin/Admin-CreateMember.gif){: width="50%" height="40%"}
+![고객](./assets/admin/Admin-CreateMember.gif){: width="50%" height="40%"}
 <br/>
 ### 7. 거래내역
-![거래내역](./assets/Admin/Admin-CreateTransaction.gif){: width="50%" height="40%"}
+![거래내역](./assets/admin/Admin-CreateTransaction.gif){: width="50%" height="40%"}
 <br/>
 ### 8. 더미데이터
-![더미멤버](./assets/Admin/Admin-CreateDummyMember.gif){: width="50%" height="40%"}
-![더미계좌](./assets/Admin/Admin-CreateDummyAccount.gif){: width="50%" height="40%"}
-![더미내역](./assets/Admin/Admin-CreateDummyTransaction.gif){: width="50%" height="40%"}
+![더미멤버](./assets/admin/Admin-CreateDummyMember.gif){: width="50%" height="40%"}
+![더미계좌](./assets/admin/Admin-CreateDummyAccount.gif){: width="50%" height="40%"}
+![더미내역](./assets/admin/Admin-CreateDummyTransaction.gif){: width="50%" height="40%"}
 <br/>
 <br/>
 
 ## **App**
 
 ### 1. 회원가입 / 로그인
-![회원가입1](./assets/App/회원가입1.gif){: width="20%" height="20%"}
-![회원가입2](./assets/App/회원가입2.gif){: width="20%" height="20%"}
-![로그인](./assets/App/로그인 최종.gif){: width="20%" height="20%"}
+![회원가입1](./assets/app/회원가입1.gif){: width="20%" height="20%"}
+![회원가입2](./assets/app/회원가입2.gif){: width="20%" height="20%"}
+![로그인](./assets/app/로그인 최종.gif){: width="20%" height="20%"}
 <br/>
 ### 2. 계좌생성
-![적금생성](./assets/App/적금계좌생성.gif){: width="20%" height="20%"}
-![상품상세](./assets/App/상품 자세히보기.gif){: width="20%" height="20%"}
+![적금생성](./assets/app/적금계좌생성.gif){: width="20%" height="20%"}
+![상품상세](./assets/app/상품 자세히보기.gif){: width="20%" height="20%"}
 <br/>
 ### 3. 계좌조회
-![슬라이드](./assets/App/계좌조회.gif){: width="20%" height="20%"}
-![메뉴보기](./assets/App/계좌조회 메뉴.gif){: width="20%" height="20%"}
+![슬라이드](./assets/app/계좌조회.gif){: width="20%" height="20%"}
+![메뉴보기](./assets/app/계좌조회 메뉴.gif){: width="20%" height="20%"}
 <br/>
 ### 4. 이체
-![이체](./assets/App/이체.gif){: width="20%" height="20%"}
+![이체](./assets/app/이체.gif){: width="20%" height="20%"}
 <br/>
 ### 5. 거래내역 조회
-![거래내역](./assets/App/거래내역조회.gif){: width="20%" height="20%"}
+![거래내역](./assets/app/거래내역조회.gif){: width="20%" height="20%"}
 <br/>
 ### 6. 은행코드 변경
-![로그인](./assets/App/은행코드바꾸기.gif){: width="20%" height="20%"}
+![로그인](./assets/app/은행코드바꾸기.gif){: width="20%" height="20%"}
 <br/>
 <br/>
 
