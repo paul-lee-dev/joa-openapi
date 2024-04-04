@@ -77,9 +77,7 @@
 
 
 # 아키텍처
-
-
-# 시연 영상
+![아키텍처]](./assets/Architecture.PNG){: width="50%" height="50%"}
 
 
 # 주요기능
@@ -140,34 +138,38 @@
 
 1. 회원가입 / 로그인
 <br/>
-![회원가입1](./assets/App/회원가입1.gif){: width="30%" height="30%"}
-![회원가입2](./assets/App/회원가입2.gif){: width="30%" height="30%"}
-![로그인](./assets/App/로그인 최종.gif){: width="30%" height="30%"}
+![회원가입1](./assets/App/회원가입1.gif){: width="20%" height="20%"}
+![회원가입2](./assets/App/회원가입2.gif){: width="20%" height="20%"}
+![로그인](./assets/App/로그인 최종.gif){: width="20%" height="20%"}
 <br/>
 2. 계좌생성
 <br/>
-![적금생성](./assets/App/적금계좌생성.gif){: width="30%" height="30%"}
-![상품상세](./assets/App/상품 자세히보기.gif){: width="30%" height="30%"}
+![적금생성](./assets/App/적금계좌생성.gif){: width="20%" height="20%"}
+![상품상세](./assets/App/상품 자세히보기.gif){: width="20%" height="20%"}
 <br/>
 3. 계좌조회
 <br/>
-![슬라이드](./assets/App/계좌조회.gif){: width="30%" height="30%"}
-![메뉴보기](./assets/App/계좌조회 메뉴.gif){: width="30%" height="30%"}
+![슬라이드](./assets/App/계좌조회.gif){: width="20%" height="20%"}
+![메뉴보기](./assets/App/계좌조회 메뉴.gif){: width="20%" height="20%"}
 <br/>
 4. 이체
 <br/>
-![이체](./assets/App/이체.gif){: width="30%" height="30%"}
+![이체](./assets/App/이체.gif){: width="20%" height="20%"}
 <br/>
 5. 거래내역 조회
 <br/>
-![거래내역](./assets/App/거래내역조회.gif){: width="30%" height="30%"}
+![거래내역](./assets/App/거래내역조회.gif){: width="20%" height="20%"}
 <br/>
 6. 은행코드 변경
 <br/>
-![로그인](./assets/App/은행코드바꾸기.gif){: width="30%" height="30%"}
+![로그인](./assets/App/은행코드바꾸기.gif){: width="20%" height="20%"}
 <br/>
 
+# 시연영상
+
 # UCC
+[![Video Label](![joa-openeapi](./assets/docs/joa-openapi.PNG) {: width="30%" height="20%"}
+)](https://www.youtube.com/watch?v=fE_YQiPRDG8)
 
 
 # 프로젝트 산출물
