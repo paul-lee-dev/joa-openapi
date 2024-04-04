@@ -54,7 +54,7 @@ export const memberCreateContent = {
         "phone":"01012345678",
         "password":"1234",
         "name":"김싸피",
-        "bankId":"50708cd7-a6b4-4cf6-8fa5-46952c79e3f2"
+        "bankId":"aa01973d-0fa6-4d2b-ab92-32ff227d8677"
     }
     `,
   responseParam: [],
