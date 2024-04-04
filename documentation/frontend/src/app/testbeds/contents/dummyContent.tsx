@@ -146,9 +146,9 @@ export const dummyAccountContent = {
   {
     "count" : "3",
     "bankId" : "aa01973d-0fa6-4d2b-ab92-32ff227d8677",
-    "users" : ["d44e7ed9-52d5-475a-83bf-794018d9ce44",
-               "f15e6710-9d3a-4f3a-a45d-e69e3d450c45",
-                "f482b9eb-16b6-4c87-ad79-5e3791f59d45"
+    "users" : ["5a186277-40c3-4988-97b6-d0cd8f670383",
+               "7c07dece-b9f2-41da-8d0a-a9b20ce67f17",
+                "f4faee2b-6e15-43f2-bf52-dd435be45608"
               ]
   }
     `,
@@ -285,9 +285,9 @@ export const dummyTransactionContent = {
       "name" : null,
       "term" : null,
       "bankId" : "aa01973d-0fa6-4d2b-ab92-32ff227d8677",
-      "users" : ["d44e7ed9-52d5-475a-83bf-794018d9ce44",
-                 "f15e6710-9d3a-4f3a-a45d-e69e3d450c45",
-                  "f482b9eb-16b6-4c87-ad79-5e3791f59d45"
+      "users" : ["5a186277-40c3-4988-97b6-d0cd8f670383",
+                  "7c07dece-b9f2-41da-8d0a-a9b20ce67f17",
+                  "f4faee2b-6e15-43f2-bf52-dd435be45608"
                 ]
   }
     `,
