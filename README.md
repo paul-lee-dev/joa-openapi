@@ -173,9 +173,13 @@
 # 프로젝트 산출물
 
 ### 1. ERD
+![ERD](./assets/ERD.PNG){: width="60%" height="40%"}
 
 ### 2. API 문서
+![API](./assets/API.PNG){: width="60%" height="40%"}
 
 ### 3. 요구사항 명세서
+![Required](./assets/Required.PNG){: width="60%" height="40%"}
 
 # 참고
+[노션](https://joyous-panther-248.notion.site/A503-13-7e43baa015974b2eb153f22c622f4c84?pvs=4)
