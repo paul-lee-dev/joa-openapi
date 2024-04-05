@@ -213,7 +213,7 @@
 
 ![회원가입1](./assets/app/회원가입1.gif)
 ![회원가입2](./assets/app/회원가입2.gif)
-![로그인](./assets/app/로그인 최종.gif)
+![로그인](./assets/app/로그인최종.gif)
 <br/>
 
 ### 2. 계좌생성
