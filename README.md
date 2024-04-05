@@ -94,7 +94,7 @@
 
 # 🎨 아키텍처
 
-![아키텍처](./assets/Architecture.PNG){: width="50%" height="50%"}
+![아키텍처](./assets/Architecture.PNG)
 <br/>
 
 # 💡 주요기능
@@ -106,7 +106,7 @@
 - Docs의 다양한 기능들을 Overview로 제공
   <br/>
 
-![메인화면](./assets/docs/Docs-Home.gif){: width="50%" height="40%"}
+![메인화면](./assets/docs/Docs-Home.gif)
 <br/>
 <br/>
 
@@ -116,7 +116,7 @@
 - 시작하기, 용어 정의, 프로젝트 구조, 커스텀 방법, 샘플 앱 이용법
   <br/>
 
-![Docs](./assets/docs/Docs-Docs.gif){: width="50%" height="40%"}
+![Docs](./assets/docs/Docs-Docs.gif)
 <br/>
 <br/>
 
@@ -126,7 +126,7 @@
 - Request, Response 정보를 제공하고, 이를 바탕으로 테스트베드 사용
   <br/>
 
-![APIs](./assets/docs/Docs-APIs.gif){: width="50%" height="40%"}
+![APIs](./assets/docs/Docs-APIs.gif)
 <br/>
 <br/>
 
@@ -137,7 +137,7 @@
 - 설정에서 API 키 발급/재발급 가능
   <br/>
 
-![설정](./assets/admin/Admin-APIKey.gif){: width="50%" height="40%"}
+![설정](./assets/admin/Admin-APIKey.gif)
 <br/>
 <br/>
 
@@ -147,7 +147,7 @@
 - 데이터를 바탕으로 한 차트 제공. 파일 export 가능
   <br/>
 
-![대시보드](./assets/admin/Admin-Dashboard.gif){: width="50%" height="40%"}
+![대시보드](./assets/admin/Admin-Dashboard.gif)
 <br/>
 <br/>
 
@@ -156,7 +156,7 @@
 - 은행 생성 시, 자동으로 기본 입출금통장 생성
   <br/>
 
-![은행](./assets/admin/Admin-Bank.gif){: width="50%" height="40%"}
+![은행](./assets/admin/Admin-Bank.gif)
 <br/>
 <br/>
 
@@ -165,7 +165,7 @@
 - 상품 생성 시: 상품 종류 선택, 금리 설정, 이자율 설정, 지급 방법 선택
   <br/>
 
-![상품](./assets/admin/Admin-Product.gif){: width="50%" height="40%"}
+![상품](./assets/admin/Admin-Product.gif)
 <br/>
 <br/>
 
@@ -174,7 +174,7 @@
 - 계좌 신청 시: 출금 계좌 선택, 입금 금액 입력, 기간 선택, 과세 유형 선택, 비밀번호 입력
   <br/>
 
-![계좌](./assets/admin/Admin-Account.gif){: width="50%" height="40%"}
+![계좌](./assets/admin/Admin-Account.gif)
 <br/>
 <br/>
 
@@ -183,7 +183,7 @@
 - 은행에 등록된 고객들에 대한 조회
   <br/>
 
-![고객](./assets/admin/Admin-Member.gif){: width="50%" height="40%"}
+![고객](./assets/admin/Admin-Member.gif)
 <br/>
 <br/>
 
@@ -192,7 +192,7 @@
 - 입금, 출금, 이체, 이자에 대한 내역들 조회
   <br/>
 
-![거래내역](./assets/admin/Admin-Transaction.gif){: width="50%" height="40%"}
+![거래내역](./assets/admin/Admin-Transaction.gif)
 <br/>
 <br/>
 
@@ -203,7 +203,7 @@
 - 원하는 주기에 자동으로 생성
   <br/>
 
-![더미멤버](./assets/admin/Admin-Dummy.gif){: width="50%" height="40%"}
+![더미멤버](./assets/admin/Admin-Dummy.gif)
 <br/>
 <br/>
 
@@ -211,57 +211,57 @@
 
 ### 1. 회원가입 / 로그인
 
-![회원가입1](./assets/app/회원가입1.gif){: width="20%" height="20%"}
-![회원가입2](./assets/app/회원가입2.gif){: width="20%" height="20%"}
-![로그인](./assets/app/로그인 최종.gif){: width="20%" height="20%"}
+![회원가입1](./assets/app/회원가입1.gif)
+![회원가입2](./assets/app/회원가입2.gif)
+![로그인](./assets/app/로그인 최종.gif)
 <br/>
 
 ### 2. 계좌생성
 
-![적금생성](./assets/app/적금계좌생성.gif){: width="20%" height="20%"}
-![상품상세](./assets/app/상품 자세히보기.gif){: width="20%" height="20%"}
+![적금생성](./assets/app/적금계좌생성.gif)
+![상품상세](./assets/app/상품자세히보기.gif)
 <br/>
 
 ### 3. 계좌조회
 
-![슬라이드](./assets/app/계좌조회.gif){: width="20%" height="20%"}
-![메뉴보기](./assets/app/계좌조회 메뉴.gif){: width="20%" height="20%"}
+![슬라이드](./assets/app/계좌조회.gif)
+![메뉴보기](./assets/app/계좌조회메뉴.gif)
 <br/>
 
 ### 4. 이체
 
-![이체](./assets/app/이체.gif){: width="20%" height="20%"}
+![이체](./assets/app/이체.gif)
 <br/>
 
 ### 5. 거래내역 조회
 
-![거래내역](./assets/app/거래내역조회.gif){: width="20%" height="20%"}
+![거래내역](./assets/app/거래내역조회.gif)
 <br/>
 
 ### 6. 은행코드 변경
 
-![로그인](./assets/app/은행코드바꾸기.gif){: width="20%" height="20%"}
+![로그인](./assets/app/은행코드바꾸기.gif)
 <br/>
 <br/>
 
 # 🎬 UCC
 
-[![Video Label](./assets/joa-openapi.PNG){: width="50%" height="40%"}](https://www.youtube.com/watch?v=fE_YQiPRDG8)
+[![Video Label](./assets/joa-openapi.PNG)](https://www.youtube.com/watch?v=fE_YQiPRDG8)
 <br/>
 
 # 📄 프로젝트 산출물
 
 ### [1. 요구사항 명세서](https://joyous-panther-248.notion.site/ecbdfe5401f544fabd2ef787d504a2e7?v=c37ca8d9e0614a699c0b7d4fd5053977&pvs=4)
 
-![Required](./assets/Required.PNG){: width="50%" height="30%"}
+![Required](./assets/Required.PNG)
 
 ### [2. ERD](https://joyous-panther-248.notion.site/ERD-87128130a6a24b09a8fb751879ec867d?pvs=4)
 
-![ERD](./assets/ERD.PNG){: width="50%" height="30%"}
+![ERD](./assets/ERD.PNG)
 
 ### [3. API 명세서](https://joyous-panther-248.notion.site/API-2eab3ac9ef1b46c780b53af9c3ae6854?pvs=4)
 
-![API](./assets/API.PNG){: width="50%" height="30%"}
+![API](./assets/API.PNG)
 <br/>
 
 # 참고
